@@ -3,8 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello Bill</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css" media="all">
 </head>
 <body>
-服务启动成功
+<div class="layui-inline">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username" lay-verify="username" autocomplete="off"
+                       placeholder="用户名"
+                       class="layui-input" autofocus>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" lay-verify="password" placeholder="密码"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="login">登录</button>
+        </div>
+    </form>
+</div>
+
+<script src="lib/layui/layui.js" charset="utf-8"></script>
+<script src="js/web.js" charset="utf-8"></script>
+<script src="js/index.js" charset="utf-8"></script>
 </body>
 </html>

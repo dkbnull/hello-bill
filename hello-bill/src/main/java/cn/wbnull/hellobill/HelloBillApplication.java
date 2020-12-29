@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 入口类
  *
  * @author dukunbiao(null)  2020-12-28
+ * https://github.com/dkbnull/HelloBill
  */
 @SpringBootApplication
 public class HelloBillApplication {
