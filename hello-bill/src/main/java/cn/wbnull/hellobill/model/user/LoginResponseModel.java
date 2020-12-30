@@ -4,7 +4,7 @@ import cn.wbnull.hellobill.db.entity.UserInfo;
 import lombok.Data;
 
 /**
- * 登录接口响应参数
+ * 用户登录接口响应参数
  *
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill

@@ -7,7 +7,7 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * 登录接口请求参数
+ * 用户登录接口请求参数
  *
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill
@@ -16,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
 public class LoginRequestModel extends RequestModel {
 
     @NotEmpty(message = "password 不能为空")
-    protected String password;
+    private String password;
 
     @Override
     public String toString() {

@@ -21,7 +21,7 @@ layui.use(['layer', 'form'], function () {
     });
 
     form.on('submit(login)', function (data) {
-        doPost("/user/login", data.field, callback)
+        doPost("user/login", data.field, callback)
         return false;
     });
 });
