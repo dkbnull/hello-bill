@@ -1,17 +1,15 @@
 package cn.wbnull.hellobill.db.entity;
 
-import cn.wbnull.hellobill.common.constant.UtilConstants;
-import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
+import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 /**
@@ -20,9 +18,9 @@ import java.util.UUID;
  * </p>
  *
  * @author dukunbiao(null)
- * @since 2020-12-31
+ * @since 2021-01-01
  */
-public class ExpendInfo extends Model<ExpendInfo> {
+public class IncomeInfo extends Model<IncomeInfo> {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,9 +29,8 @@ public class ExpendInfo extends Model<ExpendInfo> {
 
     private String username;
 
-    @JsonFormat(pattern = UtilConstants.DATE_FORMAT)
-    @TableField("expendTime")
-    private LocalDateTime expendTime;
+    @TableField("incomeDate")
+    private LocalDate incomeDate;
 
     @TableField("topClass")
     private String topClass;
@@ -47,18 +44,18 @@ public class ExpendInfo extends Model<ExpendInfo> {
 
     private String remark;
 
-    public static ExpendInfo build(AddRequestModel request, String topClass) {
-        ExpendInfo expendInfo = new ExpendInfo();
-        expendInfo.uuid = UUID.randomUUID().toString();
-        expendInfo.username = request.getUsername();
-        expendInfo.expendTime = DateUtils.localDateTimeParse(request.getExpendTime());
-        expendInfo.topClass = topClass;
-        expendInfo.secondClass = request.getSecondClass();
-        expendInfo.detail = request.getDetail();
-        expendInfo.amount = new BigDecimal(request.getAmount());
-        expendInfo.remark = request.getRemark();
+    public static IncomeInfo build(AddRequestModel request, String topClass) {
+        IncomeInfo incomeInfo = new IncomeInfo();
+        incomeInfo.uuid = UUID.randomUUID().toString();
+        incomeInfo.username = request.getUsername();
+        incomeInfo.incomeDate = DateUtils.localDateParse(request.getIncomeDate());
+        incomeInfo.topClass = topClass;
+        incomeInfo.secondClass = request.getSecondClass();
+        incomeInfo.detail = request.getDetail();
+        incomeInfo.amount = new BigDecimal(request.getAmount());
+        incomeInfo.remark = request.getRemark();
 
-        return expendInfo;
+        return incomeInfo;
     }
 
     public String getUuid() {
@@ -77,12 +74,12 @@ public class ExpendInfo extends Model<ExpendInfo> {
         this.username = username;
     }
 
-    public LocalDateTime getExpendTime() {
-        return expendTime;
+    public LocalDate getIncomeDate() {
+        return incomeDate;
     }
 
-    public void setExpendTime(LocalDateTime expendTime) {
-        this.expendTime = expendTime;
+    public void setIncomeDate(LocalDate incomeDate) {
+        this.incomeDate = incomeDate;
     }
 
     public String getTopClass() {

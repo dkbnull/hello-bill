@@ -28,6 +28,11 @@ public class ClassInfo extends Model<ClassInfo> {
     @TableField("secondClass")
     private String secondClass;
 
+    private String type;
+
+    public static String TYPE_EXPEND = "0";
+    public static String TYPE_INCOME = "1";
+
     public String getUuid() {
         return uuid;
     }
@@ -50,6 +55,14 @@ public class ClassInfo extends Model<ClassInfo> {
 
     public void setSecondClass(String secondClass) {
         this.secondClass = secondClass;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

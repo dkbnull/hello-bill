@@ -36,7 +36,8 @@ public class UserController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "login")
-    public ResponseModel<LoginResponseModel> login(@RequestBody @Validated LoginRequestModel request, BindingResult result) throws Exception {
+    public ResponseModel<LoginResponseModel> login(@RequestBody @Validated LoginRequestModel request,
+                                                   BindingResult result) throws Exception {
         super.validate(result);
 
         return userService.login(request);

@@ -1,7 +1,7 @@
 /**
- * expend-info.html js
+ * income-info.html js
  *
- * @author dukunbiao(null)  2020-12-31
+ * @author dukunbiao(null)  2021-01-01
  * https://github.com/dkbnull/HelloBill
  */
 layui.use(['layer', 'table', 'laydate'], function () {
@@ -20,16 +20,16 @@ function initDatetime() {
     const laydate = layui.laydate;
 
     laydate.render({
-        elem: '#begin-time-input',
+        elem: '#begin-date-input',
         theme: 'grid',
-        value: dateCalc(-7),
+        value: dateCalc(-31),
         max: 0,
         done: function (value, date) {
             doPostQuery();
         }
     });
     laydate.render({
-        elem: '#end-time-input',
+        elem: '#end-date-input',
         value: dateCalc(0),
         max: 0,
         done: function (value, date) {
@@ -55,7 +55,7 @@ function initMethod() {
             layer.open({
                 type: 2
                 , title: '记账'
-                , content: 'expend-info-add.html'
+                , content: 'income-info-add.html'
                 , area: ['350px', '500px']
                 , maxmin: true
                 , shade: 0
@@ -76,14 +76,13 @@ function doPostQuery() {
     const $ = layui.jquery;
     const request = {
         username: localStorage.getItem("username"),
-        beginTime: $('#begin-time-input').val(),
-        endTime: $('#end-time-input').val(),
-        topClass: $('#top-class-input').val(),
+        beginDate: $('#begin-date-input').val(),
+        endDate: $('#end-date-input').val(),
         secondClass: $('#second-class-input').val(),
         detail: $('#detail-input').val(),
     };
 
-    doPost("expend/query", request, callback)
+    doPost("income/query", request, callback)
 }
 
 function callback(result) {
@@ -98,9 +97,8 @@ function callback(result) {
         data: result.data,
         cellMinWidth: 100,
         cols: [[
-            {field: 'expendTime', title: '时间', sort: true},
-            {field: 'topClass', title: '顶级分类', sort: true},
-            {field: 'secondClass', title: '二级分类', sort: true},
+            {field: 'incomeDate', title: '日期', sort: true},
+            {field: 'secondClass', title: '分类', sort: true},
             {field: 'detail', title: '明细'},
             {field: 'amount', title: '金额'},
             {field: 'remark', title: '备注'}

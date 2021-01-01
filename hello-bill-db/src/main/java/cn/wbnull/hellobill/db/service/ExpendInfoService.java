@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
-import cn.wbnull.hellobill.common.model.expend.InfoRequestModel;
+import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 账单信息表 服务类
+ * 支出信息表 服务类
  *
  * @author dukunbiao(null)  2020-12-31
  * https://github.com/dkbnull/HelloBill
@@ -28,7 +28,7 @@ public class ExpendInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<ExpendInfo> getExpendInfos(InfoRequestModel request) {
+    public List<ExpendInfo> getExpendInfos(QueryRequestModel request) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", request.getUsername());
         queryWrapper.like("topClass", request.getTopClass() == null ? "" : request.getTopClass());
@@ -42,14 +42,6 @@ public class ExpendInfoService {
         }
 
         return expendInfoMapper.selectList(queryWrapper);
-    }
-
-    public List<ClassInfo> getClassInfos() {
-        QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("distinct secondClass");
-        queryWrapper.orderByAsc("uuid");
-
-        return classInfoMapper.selectList(queryWrapper);
     }
 
     public void addExpendInfo(AddRequestModel request) {

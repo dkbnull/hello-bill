@@ -2,12 +2,12 @@ package cn.wbnull.hellobill.service;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
-import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
+import cn.wbnull.hellobill.common.model.income.AddRequestModel;
+import cn.wbnull.hellobill.common.model.income.QueryRequestModel;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
-import cn.wbnull.hellobill.db.entity.ExpendInfo;
+import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
-import cn.wbnull.hellobill.db.service.ExpendInfoService;
+import cn.wbnull.hellobill.db.service.IncomeInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,28 +15,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 支出信息接口服务类
+ * 收入信息接口服务类
  *
- * @author dukunbiao(null)  2020-12-31
+ * @author dukunbiao(null)  2021-01-01
  * https://github.com/dkbnull/HelloBill
  */
 @Service
-public class ExpendService {
+public class IncomeService {
 
     @Autowired
-    private ExpendInfoService expendInfoService;
+    private IncomeInfoService incomeInfoService;
 
     @Autowired
     private ClassInfoService classInfoService;
 
-    public ResponseModel<List<ExpendInfo>> query(QueryRequestModel request) throws Exception {
-        List<ExpendInfo> expendInfos = expendInfoService.getExpendInfos(request);
+    public ResponseModel<List<IncomeInfo>> query(QueryRequestModel request) throws Exception {
+        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfos(request);
 
-        return ResponseModel.success(expendInfos);
+        return ResponseModel.success(incomeInfos);
     }
 
     public ResponseModel<List<String>> classQuery(RequestModel request) throws Exception {
-        List<ClassInfo> classInfos = classInfoService.getClassInfos(ClassInfo.TYPE_EXPEND);
+        List<ClassInfo> classInfos = classInfoService.getClassInfos(ClassInfo.TYPE_INCOME);
         List<String> secondClasses = new ArrayList<>();
         for (ClassInfo classInfo : classInfos) {
             secondClasses.add(classInfo.getSecondClass());
@@ -46,7 +46,7 @@ public class ExpendService {
     }
 
     public ResponseModel<Object> add(AddRequestModel request) throws Exception {
-        expendInfoService.addExpendInfo(request);
+        incomeInfoService.addIncomeInfo(request);
 
         return ResponseModel.success("记账成功");
     }

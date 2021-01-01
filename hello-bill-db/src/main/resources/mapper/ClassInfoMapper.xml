@@ -7,11 +7,12 @@
         <id column="uuid" property="uuid"/>
         <result column="topClass" property="topClass"/>
         <result column="secondClass" property="secondClass"/>
+        <result column="type" property="type"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        uuid, topClass, secondClass
+        uuid, topClass, secondClass, type
     </sql>
 
 </mapper>

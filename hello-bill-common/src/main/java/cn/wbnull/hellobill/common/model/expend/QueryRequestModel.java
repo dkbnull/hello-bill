@@ -5,13 +5,13 @@ import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
 /**
- * 账单信息接口请求参数
+ * 支出信息查询接口请求参数
  *
  * @author dukunbiao(null)  2020-12-31
  * https://github.com/dkbnull/HelloBill
  */
 @Data
-public class InfoRequestModel extends RequestModel {
+public class QueryRequestModel extends RequestModel {
 
     private String beginTime;
     private String endTime;

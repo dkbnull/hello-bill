@@ -1,7 +1,7 @@
 /**
- * expend-info-add.html js
+ * income-info-add.html js
  *
- * @author dukunbiao(null)  2020-12-31
+ * @author dukunbiao(null)  2021-01-01
  * https://github.com/dkbnull/HelloBill
  */
 layui.use(['layer', 'form', 'laydate'], function () {
@@ -16,32 +16,27 @@ layui.use(['layer', 'form', 'laydate'], function () {
         username: localStorage.getItem("username")
     };
 
-    doPost("expend/classQuery", request, callback)
+    doPost("income/classQuery", request, callback)
 })
 
 function initDatetime() {
     const laydate = layui.laydate;
 
     laydate.render({
-        elem: '#expend-Time-input',
-        type: 'datetime',
+        elem: '#income-date-input',
         theme: 'grid',
-        value: datetimeCalc(0)
+        value: dateCalc(0)
     });
 }
 
 function addInfo() {
     const $ = layui.jquery, form = layui.form;
-    const data = form.val('expendInfo');
+    const data = form.val('incomeInfo');
     const error = $(".error");
-    if (data.expendTime.length === 0) {
+    if (data.incomeDate.length === 0) {
         error.text("时间不能为空");
         return;
     }
-    // if (data.topClass.length === 0) {
-    //     error.text("顶级分类不能为空");
-    //     return;
-    // }
     if (data.secondClass.length === 0) {
         error.text("分类不能为空");
         return;
@@ -57,7 +52,7 @@ function addInfo() {
 
     error.text("");
     data.username = localStorage.getItem("username");
-    doPost("expend/add", data, callbackAdd);
+    doPost("income/add", data, callbackAdd);
 }
 
 function callback(result) {
