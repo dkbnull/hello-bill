@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.common.model.bill;
+package cn.wbnull.hellobill.common.model.expend;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import com.alibaba.fastjson.JSON;

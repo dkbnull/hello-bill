@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.common.model.bill;
+package cn.wbnull.hellobill.common.model.expend;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import com.alibaba.fastjson.JSON;
@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class AddRequestModel extends RequestModel {
 
-    private String billTime;
+    private String expendTime;
     private String secondClass;
     private String detail;
     private String amount;

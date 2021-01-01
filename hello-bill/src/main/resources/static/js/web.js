@@ -11,7 +11,6 @@ doPost = function (url, request, callback) {
         shade: false,
     });
 
-    console.log(request);
     $.ajax({
         type: "POST",
         contentType: "application/json;charset=UTF-8",

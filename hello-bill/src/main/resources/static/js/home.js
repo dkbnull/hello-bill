@@ -4,7 +4,7 @@
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
-layui.use(['layer'], function () {
+layui.use(['layer', 'element'], function () {
     const $ = layui.jquery;
 
     if (isEmpty(localStorage.getItem("username"))) {

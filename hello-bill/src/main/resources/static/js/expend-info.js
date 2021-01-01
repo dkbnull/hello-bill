@@ -1,5 +1,5 @@
 /**
- * bill-info.html js
+ * expend-info.html js
  *
  * @author dukunbiao(null)  2020-12-31
  * https://github.com/dkbnull/HelloBill
@@ -55,7 +55,7 @@ function initMethod() {
             layer.open({
                 type: 2
                 , title: '记账'
-                , content: 'bill-info-add.html'
+                , content: 'expend-info-add.html'
                 , area: ['350px', '500px']
                 , maxmin: true
                 , shade: 0
@@ -83,7 +83,7 @@ function doPostInfo() {
         detail: $('#detail-input').val(),
     };
 
-    doPost("bill/info", request, callback)
+    doPost("expend/info", request, callback)
 }
 
 function callback(result) {
@@ -98,7 +98,7 @@ function callback(result) {
         data: result.data,
         cellMinWidth: 100,
         cols: [[
-            {field: 'billTime', title: '时间', sort: true},
+            {field: 'expendTime', title: '时间', sort: true},
             {field: 'topClass', title: '顶级分类', sort: true},
             {field: 'secondClass', title: '二级分类', sort: true},
             {field: 'detail', title: '明细'},

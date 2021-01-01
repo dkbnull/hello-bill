@@ -2,11 +2,11 @@ package cn.wbnull.hellobill.service;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.bill.AddRequestModel;
-import cn.wbnull.hellobill.common.model.bill.InfoRequestModel;
-import cn.wbnull.hellobill.db.entity.BillInfo;
+import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
+import cn.wbnull.hellobill.common.model.expend.InfoRequestModel;
+import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
-import cn.wbnull.hellobill.db.service.BillInfoService;
+import cn.wbnull.hellobill.db.service.ExpendInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +20,19 @@ import java.util.List;
  * https://github.com/dkbnull/HelloBill
  */
 @Service
-public class BillService {
+public class ExpendService {
 
     @Autowired
-    private BillInfoService billInfoService;
+    private ExpendInfoService expendInfoService;
 
-    public ResponseModel<List<BillInfo>> info(InfoRequestModel request) throws Exception {
-        List<BillInfo> billInfos = billInfoService.getBillInfos(request);
+    public ResponseModel<List<ExpendInfo>> info(InfoRequestModel request) throws Exception {
+        List<ExpendInfo> expendInfos = expendInfoService.getExpendInfos(request);
 
-        return ResponseModel.success(billInfos);
+        return ResponseModel.success(expendInfos);
     }
 
     public ResponseModel<List<String>> classInfo(RequestModel request) throws Exception {
-        List<ClassInfo> classInfos = billInfoService.getClassInfos();
+        List<ClassInfo> classInfos = expendInfoService.getClassInfos();
         List<String> secondClasses = new ArrayList<>();
         for (ClassInfo classInfo : classInfos) {
             secondClasses.add(classInfo.getSecondClass());
@@ -42,7 +42,7 @@ public class BillService {
     }
 
     public ResponseModel<Object> add(AddRequestModel request) throws Exception {
-        billInfoService.addBillInfo(request);
+        expendInfoService.addExpendInfo(request);
 
         return ResponseModel.success("记账成功");
     }

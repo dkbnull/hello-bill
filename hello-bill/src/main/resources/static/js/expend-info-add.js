@@ -1,5 +1,5 @@
 /**
- * bill-info-add.html js
+ * expend-info-add.html js
  *
  * @author dukunbiao(null)  2020-12-31
  * https://github.com/dkbnull/HelloBill
@@ -16,14 +16,14 @@ layui.use(['layer', 'form', 'laydate'], function () {
         username: localStorage.getItem("username")
     };
 
-    doPost("bill/classInfo", request, callback)
+    doPost("expend/classInfo", request, callback)
 })
 
 function initDatetime() {
     const laydate = layui.laydate;
 
     laydate.render({
-        elem: '#bill-Time-input',
+        elem: '#expend-Time-input',
         type: 'datetime',
         theme: 'grid',
         value: datetimeCalc(0)
@@ -32,9 +32,9 @@ function initDatetime() {
 
 function addInfo() {
     const $ = layui.jquery, form = layui.form;
-    const data = form.val('billInfo');
+    const data = form.val('expendInfo');
     const error = $(".error");
-    if (data.billTime.length === 0) {
+    if (data.expendTime.length === 0) {
         error.text("时间不能为空");
         return;
     }
@@ -57,7 +57,7 @@ function addInfo() {
 
     error.text("");
     data.username = localStorage.getItem("username");
-    doPost("bill/add", data, callbackAdd);
+    doPost("expend/add", data, callbackAdd);
 }
 
 function callback(result) {

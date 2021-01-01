@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.db.entity;
 
 import cn.wbnull.hellobill.common.constant.UtilConstants;
-import cn.wbnull.hellobill.common.model.bill.AddRequestModel;
+import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -21,7 +21,7 @@ import java.util.UUID;
  * @author dukunbiao(null)
  * @since 2020-12-31
  */
-public class BillInfo extends Model<BillInfo> {
+public class ExpendInfo extends Model<ExpendInfo> {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,8 +30,8 @@ public class BillInfo extends Model<BillInfo> {
     private String username;
 
     @JsonFormat(pattern = UtilConstants.DATE_FORMAT)
-    @TableField("billTime")
-    private LocalDateTime billTime;
+    @TableField("expendTime")
+    private LocalDateTime expendTime;
 
     @TableField("topClass")
     private String topClass;
@@ -45,18 +45,18 @@ public class BillInfo extends Model<BillInfo> {
 
     private String remark;
 
-    public static BillInfo build(AddRequestModel request, String topClass) {
-        BillInfo billInfo = new BillInfo();
-        billInfo.uuid = UUID.randomUUID().toString();
-        billInfo.username = request.getUsername();
-        billInfo.billTime = DateUtils.localDateTimeParse(request.getBillTime());
-        billInfo.topClass = topClass;
-        billInfo.secondClass = request.getSecondClass();
-        billInfo.detail = request.getDetail();
-        billInfo.amount = new BigDecimal(request.getAmount());
-        billInfo.remark = request.getRemark();
+    public static ExpendInfo build(AddRequestModel request, String topClass) {
+        ExpendInfo expendInfo = new ExpendInfo();
+        expendInfo.uuid = UUID.randomUUID().toString();
+        expendInfo.username = request.getUsername();
+        expendInfo.expendTime = DateUtils.localDateTimeParse(request.getExpendTime());
+        expendInfo.topClass = topClass;
+        expendInfo.secondClass = request.getSecondClass();
+        expendInfo.detail = request.getDetail();
+        expendInfo.amount = new BigDecimal(request.getAmount());
+        expendInfo.remark = request.getRemark();
 
-        return billInfo;
+        return expendInfo;
     }
 
     public String getUuid() {
@@ -75,12 +75,12 @@ public class BillInfo extends Model<BillInfo> {
         this.username = username;
     }
 
-    public LocalDateTime getBillTime() {
-        return billTime;
+    public LocalDateTime getExpendTime() {
+        return expendTime;
     }
 
-    public void setBillTime(LocalDateTime billTime) {
-        this.billTime = billTime;
+    public void setExpendTime(LocalDateTime expendTime) {
+        this.expendTime = expendTime;
     }
 
     public String getTopClass() {

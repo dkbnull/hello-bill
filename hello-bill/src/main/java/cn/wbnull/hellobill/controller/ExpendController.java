@@ -1,11 +1,11 @@
 package cn.wbnull.hellobill.controller;
 
-import cn.wbnull.hellobill.db.entity.BillInfo;
+import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.bill.AddRequestModel;
-import cn.wbnull.hellobill.common.model.bill.InfoRequestModel;
-import cn.wbnull.hellobill.service.BillService;
+import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
+import cn.wbnull.hellobill.common.model.expend.InfoRequestModel;
+import cn.wbnull.hellobill.service.ExpendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
@@ -25,11 +25,11 @@ import java.util.List;
  */
 @RestController
 @Scope("prototype")
-@RequestMapping("bill")
-public class BillController extends BaseController {
+@RequestMapping("expend")
+public class ExpendController extends BaseController {
 
     @Autowired
-    private BillService billService;
+    private ExpendService billService;
 
     /**
      * 账单信息接口
@@ -40,7 +40,7 @@ public class BillController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "info")
-    public ResponseModel<List<BillInfo>> info(@RequestBody @Validated InfoRequestModel request, BindingResult result) throws Exception {
+    public ResponseModel<List<ExpendInfo>> info(@RequestBody @Validated InfoRequestModel request, BindingResult result) throws Exception {
         super.validate(result);
 
         return billService.info(request);

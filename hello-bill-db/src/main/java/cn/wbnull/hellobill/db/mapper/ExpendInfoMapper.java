@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.db.mapper;
 
-import cn.wbnull.hellobill.db.entity.BillInfo;
+import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @since 2020-12-31
  */
 @Repository
-public interface BillInfoMapper extends BaseMapper<BillInfo> {
+public interface ExpendInfoMapper extends BaseMapper<ExpendInfo> {
 
 }

@@ -1,12 +1,12 @@
 package cn.wbnull.hellobill.db.service;
 
-import cn.wbnull.hellobill.common.model.bill.AddRequestModel;
-import cn.wbnull.hellobill.common.model.bill.InfoRequestModel;
+import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
+import cn.wbnull.hellobill.common.model.expend.InfoRequestModel;
 import cn.wbnull.hellobill.common.util.StringUtils;
-import cn.wbnull.hellobill.db.entity.BillInfo;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
-import cn.wbnull.hellobill.db.mapper.BillInfoMapper;
+import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.mapper.ClassInfoMapper;
+import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,43 +20,44 @@ import java.util.List;
  * https://github.com/dkbnull/HelloBill
  */
 @Service
-public class BillInfoService {
+public class ExpendInfoService {
 
     @Autowired
-    private BillInfoMapper billInfoMapper;
+    private ExpendInfoMapper expendInfoMapper;
 
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<BillInfo> getBillInfos(InfoRequestModel request) {
-        QueryWrapper<BillInfo> queryWrapper = new QueryWrapper<>();
+    public List<ExpendInfo> getExpendInfos(InfoRequestModel request) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", request.getUsername());
         queryWrapper.like("topClass", request.getTopClass() == null ? "" : request.getTopClass());
         queryWrapper.like("secondClass", request.getSecondClass() == null ? "" : request.getSecondClass());
         queryWrapper.like("detail", request.getDetail() == null ? "" : request.getDetail());
         if (!StringUtils.isEmpty(request.getBeginTime())) {
-            queryWrapper.ge("billTime", request.getBeginTime() + " 00:00:00");
+            queryWrapper.ge("expendTime", request.getBeginTime() + " 00:00:00");
         }
         if (!StringUtils.isEmpty(request.getEndTime())) {
-            queryWrapper.le("billTime", request.getEndTime() + " 23:59:59");
+            queryWrapper.le("expendTime", request.getEndTime() + " 23:59:59");
         }
 
-        return billInfoMapper.selectList(queryWrapper);
+        return expendInfoMapper.selectList(queryWrapper);
     }
 
     public List<ClassInfo> getClassInfos() {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("distinct secondClass");
+        queryWrapper.orderByAsc("uuid");
 
         return classInfoMapper.selectList(queryWrapper);
     }
 
-    public void addBillInfo(AddRequestModel request) {
+    public void addExpendInfo(AddRequestModel request) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("secondClass", request.getSecondClass());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
-        BillInfo billInfo = BillInfo.build(request, classInfo.getTopClass());
-        billInfoMapper.insert(billInfo);
+        ExpendInfo expendInfo = ExpendInfo.build(request, classInfo.getTopClass());
+        expendInfoMapper.insert(expendInfo);
     }
 }
