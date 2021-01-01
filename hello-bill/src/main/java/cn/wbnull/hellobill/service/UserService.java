@@ -1,10 +1,10 @@
 package cn.wbnull.hellobill.service;
 
+import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.user.LoginRequestModel;
+import cn.wbnull.hellobill.common.model.user.LoginResponseModel;
 import cn.wbnull.hellobill.db.entity.UserInfo;
 import cn.wbnull.hellobill.db.service.UserInfoService;
-import cn.wbnull.hellobill.model.ResponseModel;
-import cn.wbnull.hellobill.model.user.LoginRequestModel;
-import cn.wbnull.hellobill.model.user.LoginResponseModel;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +31,6 @@ public class UserService {
             return ResponseModel.fail("用户名或密码错误");
         }
 
-        return ResponseModel.success(LoginResponseModel.build(userInfo));
+        return ResponseModel.success(LoginResponseModel.build(userInfo.getUsername()));
     }
 }

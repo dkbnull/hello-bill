@@ -1,8 +1,8 @@
 package cn.wbnull.hellobill.controller;
 
-import cn.wbnull.hellobill.model.ResponseModel;
-import cn.wbnull.hellobill.model.user.LoginRequestModel;
-import cn.wbnull.hellobill.model.user.LoginResponseModel;
+import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.user.LoginRequestModel;
+import cn.wbnull.hellobill.common.model.user.LoginResponseModel;
 import cn.wbnull.hellobill.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

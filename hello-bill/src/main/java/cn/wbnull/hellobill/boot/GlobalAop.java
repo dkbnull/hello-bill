@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.boot;
 
-import cn.wbnull.hellobill.model.RequestModel;
-import cn.wbnull.hellobill.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.RequestModel;
+import cn.wbnull.hellobill.common.model.ResponseModel;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;

@@ -2,7 +2,7 @@ package cn.wbnull.hellobill.boot;
 
 import cn.wbnull.hellobill.common.boot.GlobalException;
 import cn.wbnull.hellobill.common.util.LoggerUtils;
-import cn.wbnull.hellobill.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.ResponseModel;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

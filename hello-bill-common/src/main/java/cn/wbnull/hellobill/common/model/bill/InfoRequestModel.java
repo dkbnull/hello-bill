@@ -1,6 +1,6 @@
-package cn.wbnull.hellobill.model.bill;
+package cn.wbnull.hellobill.common.model.bill;
 
-import cn.wbnull.hellobill.model.RequestModel;
+import cn.wbnull.hellobill.common.model.RequestModel;
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
 

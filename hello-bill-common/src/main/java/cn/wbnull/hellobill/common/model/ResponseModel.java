@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.model;
+package cn.wbnull.hellobill.common.model;
 
 import cn.wbnull.hellobill.common.util.LoggerUtils;
 import com.alibaba.fastjson.JSON;

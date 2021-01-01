@@ -1,6 +1,8 @@
 package cn.wbnull.hellobill.db.entity;
 
 import cn.wbnull.hellobill.common.constant.UtilConstants;
+import cn.wbnull.hellobill.common.model.bill.AddRequestModel;
+import cn.wbnull.hellobill.common.util.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -9,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * <p>
@@ -41,6 +44,20 @@ public class BillInfo extends Model<BillInfo> {
     private BigDecimal amount;
 
     private String remark;
+
+    public static BillInfo build(AddRequestModel request, String topClass) {
+        BillInfo billInfo = new BillInfo();
+        billInfo.uuid = UUID.randomUUID().toString();
+        billInfo.username = request.getUsername();
+        billInfo.billTime = DateUtils.localDateTimeParse(request.getBillTime());
+        billInfo.topClass = topClass;
+        billInfo.secondClass = request.getSecondClass();
+        billInfo.detail = request.getDetail();
+        billInfo.amount = new BigDecimal(request.getAmount());
+        billInfo.remark = request.getRemark();
+
+        return billInfo;
+    }
 
     public String getUuid() {
         return uuid;

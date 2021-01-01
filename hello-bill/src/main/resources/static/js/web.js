@@ -11,6 +11,7 @@ doPost = function (url, request, callback) {
         shade: false,
     });
 
+    console.log(request);
     $.ajax({
         type: "POST",
         contentType: "application/json;charset=UTF-8",
@@ -38,6 +39,11 @@ isSuccess = function (code) {
 
 function dateFormat() {
     return new Date().format("yyyy-MM-dd");
+}
+
+function datetimeCalc(day) {
+    const time = day * 24 * 60 * 60 * 1000;
+    return new Date(new Date().getTime() + time).format("yyyy-MM-dd hh:mm:ss");
 }
 
 function dateCalc(day) {

@@ -1,6 +1,5 @@
-package cn.wbnull.hellobill.model.user;
+package cn.wbnull.hellobill.common.model.user;
 
-import cn.wbnull.hellobill.db.entity.UserInfo;
 import lombok.Data;
 
 /**
@@ -14,9 +13,9 @@ public class LoginResponseModel {
 
     private String username;
 
-    public static LoginResponseModel build(UserInfo userInfo) {
+    public static LoginResponseModel build(String username) {
         LoginResponseModel responseModel = new LoginResponseModel();
-        responseModel.username = userInfo.getUsername();
+        responseModel.username = username;
 
         return responseModel;
     }

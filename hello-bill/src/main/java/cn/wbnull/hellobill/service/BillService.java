@@ -1,12 +1,16 @@
 package cn.wbnull.hellobill.service;
 
-import cn.wbnull.hellobill.model.ResponseModel;
-import cn.wbnull.hellobill.model.bill.InfoRequestModel;
+import cn.wbnull.hellobill.common.model.RequestModel;
+import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.bill.AddRequestModel;
+import cn.wbnull.hellobill.common.model.bill.InfoRequestModel;
 import cn.wbnull.hellobill.db.entity.BillInfo;
+import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.service.BillInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,9 +26,24 @@ public class BillService {
     private BillInfoService billInfoService;
 
     public ResponseModel<List<BillInfo>> info(InfoRequestModel request) throws Exception {
-        List<BillInfo> billInfos = billInfoService.getBillInfos(request.getUsername(), request.getTopClass(),
-                request.getSecondClass(), request.getDetail(), request.getBeginTime(), request.getEndTime());
+        List<BillInfo> billInfos = billInfoService.getBillInfos(request);
 
         return ResponseModel.success(billInfos);
+    }
+
+    public ResponseModel<List<String>> classInfo(RequestModel request) throws Exception {
+        List<ClassInfo> classInfos = billInfoService.getClassInfos();
+        List<String> secondClasses = new ArrayList<>();
+        for (ClassInfo classInfo : classInfos) {
+            secondClasses.add(classInfo.getSecondClass());
+        }
+
+        return ResponseModel.success(secondClasses);
+    }
+
+    public ResponseModel<Object> add(AddRequestModel request) throws Exception {
+        billInfoService.addBillInfo(request);
+
+        return ResponseModel.success("记账成功");
     }
 }
