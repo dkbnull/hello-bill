@@ -1,6 +1,7 @@
 package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
+import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
@@ -52,5 +53,13 @@ public class ExpendInfoService {
 
         ExpendInfo expendInfo = ExpendInfo.build(request, classInfo.getTopClass());
         expendInfoMapper.insert(expendInfo);
+    }
+
+    public void deleteExpendInfo(DeleteRequestModel request) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uuid", request.getUuid());
+        queryWrapper.eq("username", request.getUsername());
+
+        expendInfoMapper.delete(queryWrapper);
     }
 }

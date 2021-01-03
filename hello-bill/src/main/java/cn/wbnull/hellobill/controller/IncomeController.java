@@ -2,6 +2,7 @@ package cn.wbnull.hellobill.controller;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.QueryRequestModel;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
@@ -64,7 +65,7 @@ public class IncomeController extends BaseController {
     }
 
     /**
-     * 新增收入明细接口
+     * 新增收入信息接口
      *
      * @param request
      * @param result
@@ -77,5 +78,21 @@ public class IncomeController extends BaseController {
         super.validate(result);
 
         return incomeService.add(request);
+    }
+
+    /**
+     * 删除收入信息接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "delete")
+    public ResponseModel<Object> delete(@RequestBody @Validated DeleteRequestModel request,
+                                        BindingResult result) throws Exception {
+        super.validate(result);
+
+        return incomeService.delete(request);
     }
 }

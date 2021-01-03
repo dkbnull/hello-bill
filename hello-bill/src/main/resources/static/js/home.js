@@ -9,8 +9,13 @@ layui.use(['layer', 'element'], function () {
 
     if (isEmpty(localStorage.getItem("username"))) {
         window.location.href = "index.html";
-        return
+        return;
     }
 
     $(".username").html(localStorage.getItem("username"));
 });
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "index.html";
+}

@@ -97,17 +97,42 @@ function callback(result) {
         elem: '#info-table',
         data: result.data,
         cellMinWidth: 100,
+        totalRow: true,
         cols: [[
             {field: 'expendTime', title: '时间', sort: true},
             {field: 'topClass', title: '顶级分类', sort: true},
             {field: 'secondClass', title: '二级分类', sort: true},
             {field: 'detail', title: '明细'},
-            {field: 'amount', title: '金额'},
-            {field: 'remark', title: '备注'}
+            {field: 'amount', title: '金额', totalRow: true},
+            {field: 'remark', title: '备注'},
+            {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 80}
         ]],
         page: true,
         limit: 20
     });
+
+    table.on('tool(infoTable)', function (obj) {
+        if (obj.event === 'del') {
+            layer.confirm('是否删除当前支出明细？', function (index) {
+                const request = {
+                    username: localStorage.getItem("username"),
+                    uuid: obj.data.uuid
+                };
+
+                doPost("expend/delete", request, callbackDelete)
+                layer.close(index);
+            });
+        }
+    });
+}
+
+function callbackDelete(result) {
+    if (!isSuccess(result.code)) {
+        layer.alert(result.message);
+        return;
+    }
+
+    doPostQuery();
 }
 
 function closeAll() {

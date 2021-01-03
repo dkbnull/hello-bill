@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -43,7 +42,7 @@ public class ExpendInfo extends Model<ExpendInfo> {
 
     private String detail;
 
-    private BigDecimal amount;
+    private String amount;
 
     private String remark;
 
@@ -55,7 +54,7 @@ public class ExpendInfo extends Model<ExpendInfo> {
         expendInfo.topClass = topClass;
         expendInfo.secondClass = request.getSecondClass();
         expendInfo.detail = request.getDetail();
-        expendInfo.amount = new BigDecimal(request.getAmount());
+        expendInfo.amount = request.getAmount();
         expendInfo.remark = request.getRemark();
 
         return expendInfo;
@@ -109,11 +108,11 @@ public class ExpendInfo extends Model<ExpendInfo> {
         this.detail = detail;
     }
 
-    public BigDecimal getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

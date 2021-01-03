@@ -2,6 +2,7 @@ package cn.wbnull.hellobill.service;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.QueryRequestModel;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
@@ -49,5 +50,11 @@ public class IncomeService {
         incomeInfoService.addIncomeInfo(request);
 
         return ResponseModel.success("记账成功");
+    }
+
+    public ResponseModel<Object> delete(DeleteRequestModel request) throws Exception {
+        incomeInfoService.deleteIncomeInfo(request);
+
+        return ResponseModel.success("删除成功");
     }
 }

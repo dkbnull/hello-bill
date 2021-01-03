@@ -96,16 +96,41 @@ function callback(result) {
         elem: '#info-table',
         data: result.data,
         cellMinWidth: 100,
+        totalRow: true,
         cols: [[
             {field: 'incomeDate', title: '日期', sort: true},
             {field: 'secondClass', title: '分类', sort: true},
             {field: 'detail', title: '明细'},
-            {field: 'amount', title: '金额'},
-            {field: 'remark', title: '备注'}
+            {field: 'amount', title: '金额', totalRow: true},
+            {field: 'remark', title: '备注'},
+            {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 80}
         ]],
         page: true,
         limit: 20
     });
+
+    table.on('tool(infoTable)', function (obj) {
+        if (obj.event === 'del') {
+            layer.confirm('是否删除当前收入明细？', function (index) {
+                const request = {
+                    username: localStorage.getItem("username"),
+                    uuid: obj.data.uuid
+                };
+
+                doPost("income/delete", request, callbackDelete)
+                layer.close(index);
+            });
+        }
+    });
+}
+
+function callbackDelete(result) {
+    if (!isSuccess(result.code)) {
+        layer.alert(result.message);
+        return;
+    }
+
+    doPostQuery();
 }
 
 function closeAll() {

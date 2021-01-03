@@ -3,6 +3,7 @@ package cn.wbnull.hellobill.controller;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
+import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.service.ExpendService;
@@ -77,5 +78,21 @@ public class ExpendController extends BaseController {
         super.validate(result);
 
         return expendService.add(request);
+    }
+
+    /**
+     * 删除支出信息接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "delete")
+    public ResponseModel<Object> delete(@RequestBody @Validated DeleteRequestModel request,
+                                        BindingResult result) throws Exception {
+        super.validate(result);
+
+        return expendService.delete(request);
     }
 }

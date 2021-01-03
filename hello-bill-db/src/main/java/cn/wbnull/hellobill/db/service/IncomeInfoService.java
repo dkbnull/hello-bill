@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.db.service;
 
+import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.QueryRequestModel;
 import cn.wbnull.hellobill.common.util.StringUtils;
@@ -51,5 +52,13 @@ public class IncomeInfoService {
 
         IncomeInfo incomeInfo = IncomeInfo.build(request, classInfo.getTopClass());
         incomeInfoMapper.insert(incomeInfo);
+    }
+
+    public void deleteIncomeInfo(DeleteRequestModel request) {
+        QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uuid", request.getUuid());
+        queryWrapper.eq("username", request.getUsername());
+
+        incomeInfoMapper.delete(queryWrapper);
     }
 }

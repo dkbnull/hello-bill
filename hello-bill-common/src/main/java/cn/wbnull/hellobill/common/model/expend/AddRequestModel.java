@@ -4,6 +4,8 @@ import cn.wbnull.hellobill.common.model.RequestModel;
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * 新增支出信息接口请求参数
  *
@@ -13,10 +15,18 @@ import lombok.Data;
 @Data
 public class AddRequestModel extends RequestModel {
 
+    @NotEmpty(message = "expendTime 不能为空")
     private String expendTime;
+
+    @NotEmpty(message = "secondClass 不能为空")
     private String secondClass;
+
+    @NotEmpty(message = "detail 不能为空")
     private String detail;
+
+    @NotEmpty(message = "amount 不能为空")
     private String amount;
+
     private String remark;
 
     @Override

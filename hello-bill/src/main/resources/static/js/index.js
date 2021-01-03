@@ -5,6 +5,11 @@
  * https://github.com/dkbnull/HelloBill
  */
 layui.use(['layer', 'form'], function () {
+    if (!isEmpty(localStorage.getItem("username"))) {
+        window.location.href = "home.html";
+        return;
+    }
+
     const form = layui.form;
 
     form.verify({

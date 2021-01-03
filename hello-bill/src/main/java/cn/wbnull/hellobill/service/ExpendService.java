@@ -3,6 +3,7 @@ package cn.wbnull.hellobill.service;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
+import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
@@ -49,5 +50,11 @@ public class ExpendService {
         expendInfoService.addExpendInfo(request);
 
         return ResponseModel.success("记账成功");
+    }
+
+    public ResponseModel<Object> delete(DeleteRequestModel request) throws Exception {
+        expendInfoService.deleteExpendInfo(request);
+
+        return ResponseModel.success("删除成功");
     }
 }

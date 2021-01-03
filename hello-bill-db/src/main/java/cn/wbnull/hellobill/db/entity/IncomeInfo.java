@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -40,7 +39,7 @@ public class IncomeInfo extends Model<IncomeInfo> {
 
     private String detail;
 
-    private BigDecimal amount;
+    private String amount;
 
     private String remark;
 
@@ -52,7 +51,7 @@ public class IncomeInfo extends Model<IncomeInfo> {
         incomeInfo.topClass = topClass;
         incomeInfo.secondClass = request.getSecondClass();
         incomeInfo.detail = request.getDetail();
-        incomeInfo.amount = new BigDecimal(request.getAmount());
+        incomeInfo.amount = request.getAmount();
         incomeInfo.remark = request.getRemark();
 
         return incomeInfo;
@@ -106,11 +105,11 @@ public class IncomeInfo extends Model<IncomeInfo> {
         this.detail = detail;
     }
 
-    public BigDecimal getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
