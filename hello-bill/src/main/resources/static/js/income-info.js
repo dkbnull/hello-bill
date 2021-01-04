@@ -106,7 +106,7 @@ function callback(result) {
             {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 80}
         ]],
         page: true,
-        limit: 20
+        limit: 10
     });
 
     table.on('tool(infoTable)', function (obj) {
