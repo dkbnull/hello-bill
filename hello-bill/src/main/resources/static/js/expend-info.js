@@ -99,11 +99,11 @@ function callback(result) {
         cellMinWidth: 100,
         totalRow: true,
         cols: [[
-            {field: 'expendTime', title: '时间', sort: true},
-            {field: 'topClass', title: '顶级分类', sort: true},
-            {field: 'secondClass', title: '二级分类', sort: true},
+            {field: 'expendTime', title: '时间', width: 180, sort: true},
+            {field: 'topClass', title: '顶级分类', width: 110, sort: true},
+            {field: 'secondClass', title: '二级分类', width: 110, sort: true},
             {field: 'detail', title: '明细'},
-            {field: 'amount', title: '金额', totalRow: true},
+            {field: 'amount', title: '金额', width: 120, totalRow: true},
             {field: 'remark', title: '备注'},
             {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 80}
         ]],
