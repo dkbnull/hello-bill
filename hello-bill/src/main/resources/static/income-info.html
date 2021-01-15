@@ -21,21 +21,33 @@
                    placeholder="yyyy-MM-dd">
         </div>
     </div>
-    <br/> <br/>
     <div class="layui-inline">
         <label class="layui-form-label">分类</label>
         <div class="layui-input-inline">
             <input class="layui-input" id="second-class-input" autocomplete="off">
         </div>
     </div>
+    <br/> <br/>
     <div class="layui-inline">
         <label class="layui-form-label">明细</label>
         <div class="layui-input-inline">
             <input class="layui-input" id="detail-input" autocomplete="off">
         </div>
     </div>
-    <button class="layui-btn" data-method="reloadInfo">查询</button>
-    <button class="layui-btn" data-method="addInfo">记账</button>
+    <div class="layui-inline">
+        <form class="layui-form">
+            <div class="layui-form-item" pane="">
+                <div class="layui-input-block">
+                    <input type="radio" name="order" value="1" title="正序" checked="">
+                    <input type="radio" name="order" value="2" title="倒序">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="layui-inline">
+        <button class="layui-btn" data-method="reloadInfo">查询</button>
+        <button class="layui-btn" data-method="addInfo">记账</button>
+    </div>
 </div>
 <table class="layui-hide" id="info-table" lay-filter="infoTable"></table>
 

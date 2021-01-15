@@ -40,7 +40,11 @@ public class IncomeInfoService {
         if (!StringUtils.isEmpty(request.getBeginDate())) {
             queryWrapper.le("incomeDate", request.getEndDate());
         }
-        queryWrapper.orderByAsc("incomeDate");
+        if (request.orderByDesc()) {
+            queryWrapper.orderByDesc("incomeDate");
+        } else {
+            queryWrapper.orderByAsc("incomeDate");
+        }
 
         return incomeInfoMapper.selectList(queryWrapper);
     }

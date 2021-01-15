@@ -41,7 +41,11 @@ public class ExpendInfoService {
         if (!StringUtils.isEmpty(request.getEndTime())) {
             queryWrapper.le("expendTime", request.getEndTime() + " 23:59:59");
         }
-        queryWrapper.orderByAsc("expendTime");
+        if (request.orderByDesc()) {
+            queryWrapper.orderByDesc("expendTime");
+        } else {
+            queryWrapper.orderByAsc("expendTime");
+        }
 
         return expendInfoMapper.selectList(queryWrapper);
     }

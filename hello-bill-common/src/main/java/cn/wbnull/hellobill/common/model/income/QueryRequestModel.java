@@ -17,6 +17,11 @@ public class QueryRequestModel extends RequestModel {
     private String endDate;
     private String secondClass;
     private String detail;
+    private String order;
+
+    public boolean orderByDesc() {
+        return "2".equals(this.order);
+    }
 
     @Override
     public String toString() {

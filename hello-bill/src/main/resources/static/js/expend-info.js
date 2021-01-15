@@ -4,7 +4,10 @@
  * @author dukunbiao(null)  2020-12-31
  * https://github.com/dkbnull/HelloBill
  */
+let $;
+
 layui.use(['layer', 'table', 'laydate'], function () {
+    $ = layui.jquery
     const url = parent.window.location.href;
     if (url.lastIndexOf("home.html") < 0) {
         window.location.href = "home.html";
@@ -13,7 +16,7 @@ layui.use(['layer', 'table', 'laydate'], function () {
 
     initDatetime();
     initMethod();
-    doPostQuery();
+    doPostQuery(dateBeginTheMonth(), dateCalc(0));
 });
 
 function initDatetime() {
@@ -22,10 +25,10 @@ function initDatetime() {
     laydate.render({
         elem: '#begin-time-input',
         theme: 'grid',
-        value: dateCalc(-7),
+        value: dateBeginTheMonth(),
         max: 0,
         done: function (value, date) {
-            doPostQuery();
+            doPostQuery(value, $('#end-time-input').val());
         }
     });
     laydate.render({
@@ -33,13 +36,13 @@ function initDatetime() {
         value: dateCalc(0),
         max: 0,
         done: function (value, date) {
-            doPostQuery();
+            doPostQuery($('#begin-time-input').val(), value);
         }
     });
 }
 
 function initMethod() {
-    const $ = layui.jquery, layer = layui.layer;
+    const layer = layui.layer;
 
     $('.reload-info .layui-btn').on('click', function () {
         const method = $(this).data('method');
@@ -48,7 +51,7 @@ function initMethod() {
 
     const active = {
         reloadInfo: function () {
-            doPostQuery();
+            doPostQuery($('#begin-time-input').val(), $('#end-time-input').val());
         },
 
         addInfo: function () {
@@ -72,15 +75,17 @@ function initMethod() {
     };
 }
 
-function doPostQuery() {
+function doPostQuery(beginTime, endTime) {
     const $ = layui.jquery;
+
     const request = {
         username: localStorage.getItem("username"),
-        beginTime: $('#begin-time-input').val(),
-        endTime: $('#end-time-input').val(),
+        beginTime: beginTime,
+        endTime: endTime,
         topClass: $('#top-class-input').val(),
         secondClass: $('#second-class-input').val(),
         detail: $('#detail-input').val(),
+        order: $('input[name="order"]:checked').val()
     };
 
     doPost("expend/query", request, callback)
@@ -132,11 +137,11 @@ function callbackDelete(result) {
         return;
     }
 
-    doPostQuery();
+    doPostQuery($('#begin-time-input').val(), $('#end-time-input').val());
 }
 
 function closeAll() {
     layer.closeAll();
 
-    doPostQuery();
+    doPostQuery($('#begin-time-input').val(), $('#end-time-input').val());
 }

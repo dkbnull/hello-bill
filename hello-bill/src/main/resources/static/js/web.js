@@ -50,6 +50,14 @@ function dateCalc(day) {
     return new Date(new Date().getTime() + time).format("yyyy-MM-dd");
 }
 
+function dateBeginTheMonth() {
+    return new Date().format("yyyy-MM-01");
+}
+
+function dateBeginTheYear() {
+    return new Date().format("yyyy-01-01");
+}
+
 Date.prototype.format = function (format) {
     const args = {
         "M+": this.getMonth() + 1,
