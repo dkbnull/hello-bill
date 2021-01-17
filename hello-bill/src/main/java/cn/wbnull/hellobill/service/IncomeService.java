@@ -3,8 +3,10 @@ package cn.wbnull.hellobill.service;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
+import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
-import cn.wbnull.hellobill.common.model.income.QueryRequestModel;
+import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
+import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
@@ -30,7 +32,7 @@ public class IncomeService {
     @Autowired
     private ClassInfoService classInfoService;
 
-    public ResponseModel<List<IncomeInfo>> query(QueryRequestModel request) throws Exception {
+    public ResponseModel<List<IncomeInfo>> queryList(QueryListRequestModel request) throws Exception {
         List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfos(request);
 
         return ResponseModel.success(incomeInfos);
@@ -50,6 +52,16 @@ public class IncomeService {
         incomeInfoService.addIncomeInfo(request);
 
         return ResponseModel.success("记账成功");
+    }
+
+    public ResponseModel<IncomeInfo> query(QueryRequestModel request) throws Exception {
+        return ResponseModel.success(incomeInfoService.getIncomeInfo(request));
+    }
+
+    public ResponseModel<Object> update(UpdateRequestModel request) throws Exception {
+        incomeInfoService.updateIncomeInfo(request);
+
+        return ResponseModel.success("修改成功");
     }
 
     public ResponseModel<Object> delete(DeleteRequestModel request) throws Exception {

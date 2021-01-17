@@ -8,6 +8,7 @@ let $;
 
 layui.use(['layer', 'table', 'laydate'], function () {
     $ = layui.jquery;
+
     const url = parent.window.location.href;
     if (url.lastIndexOf("home.html") < 0) {
         window.location.href = "home.html";
@@ -85,7 +86,7 @@ function doPostQuery(beginDate, endDate) {
         order: $('input[name="order"]:checked').val()
     };
 
-    doPost("income/query", request, callback)
+    doPost("income/queryList", request, callback)
 }
 
 function callback(result) {
@@ -106,7 +107,7 @@ function callback(result) {
             {field: 'detail', title: '明细'},
             {field: 'amount', title: '金额', totalRow: true},
             {field: 'remark', title: '备注'},
-            {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 80}
+            {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 120}
         ]],
         page: true,
         limit: 10
@@ -123,6 +124,27 @@ function callback(result) {
                 doPost("income/delete", request, callbackDelete)
                 layer.close(index);
             });
+        } else if (obj.event === 'edit') {
+            layer.confirm('是否修改当前收入明细？', function (index) {
+                layer.open({
+                    type: 2
+                    , title: '修改'
+                    , content: 'income-info-add.html?uuid=' + obj.data.uuid
+                    , area: ['350px', '500px']
+                    , maxmin: true
+                    , shade: 0
+                    , btn: ['确认', '取消']
+                    , yes: function (index, layero) {
+                        const childWindow = layero.find('iframe')[0].contentWindow;
+                        childWindow.updateInfo();
+                    }
+                    , btn2: function () {
+                        layer.closeAll();
+                    }
+                });
+
+                layer.close(index);
+            });
         }
     });
 }
@@ -136,8 +158,9 @@ function callbackDelete(result) {
     doPostQuery($('#begin-date-input').val(), $('#end-date-input').val());
 }
 
-function closeAll() {
+function closeAll(message) {
     layer.closeAll();
+    layer.msg(message, {time: 1000});
 
     doPostQuery($('#begin-date-input').val(), $('#end-date-input').val());
 }

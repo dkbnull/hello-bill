@@ -7,13 +7,16 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * 新增收入信息接口请求参数
+ * 修改收入信息接口请求参数
  *
- * @author dukunbiao(null)  2021-01-01
+ * @author dukunbiao(null)  2021-01-17
  * https://github.com/dkbnull/HelloBill
  */
 @Data
-public class AddRequestModel extends RequestModel {
+public class UpdateRequestModel extends RequestModel {
+
+    @NotEmpty(message = "uuid 不能为空")
+    private String uuid;
 
     @NotEmpty(message = "incomeDate 不能为空")
     private String incomeDate;

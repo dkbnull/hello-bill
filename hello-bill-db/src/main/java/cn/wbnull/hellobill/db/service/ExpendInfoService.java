@@ -1,8 +1,6 @@
 package cn.wbnull.hellobill.db.service;
 
-import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
-import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
-import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
+import cn.wbnull.hellobill.common.model.expend.*;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
@@ -29,7 +27,7 @@ public class ExpendInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<ExpendInfo> getExpendInfos(QueryRequestModel request) {
+    public List<ExpendInfo> getExpendInfos(QueryListRequestModel request) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", request.getUsername());
         queryWrapper.like("topClass", request.getTopClass() == null ? "" : request.getTopClass());
@@ -57,6 +55,26 @@ public class ExpendInfoService {
 
         ExpendInfo expendInfo = ExpendInfo.build(request, classInfo.getTopClass());
         expendInfoMapper.insert(expendInfo);
+    }
+
+    public ExpendInfo getExpendInfo(QueryRequestModel request) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uuid", request.getUuid());
+
+        return expendInfoMapper.selectOne(queryWrapper);
+    }
+
+    public void updateExpendInfo(UpdateRequestModel request) {
+        QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("secondClass", request.getSecondClass());
+        ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
+
+        QueryWrapper<ExpendInfo> expendInfoWrapper = new QueryWrapper<>();
+        expendInfoWrapper.eq("uuid", request.getUuid());
+
+        ExpendInfo expendInfo = expendInfoMapper.selectOne(expendInfoWrapper);
+        expendInfo.update(request, classInfo.getTopClass());
+        expendInfoMapper.update(expendInfo, expendInfoWrapper);
     }
 
     public void deleteExpendInfo(DeleteRequestModel request) {

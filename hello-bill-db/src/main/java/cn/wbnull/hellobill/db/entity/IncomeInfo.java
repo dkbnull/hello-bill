@@ -1,6 +1,7 @@
 package cn.wbnull.hellobill.db.entity;
 
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
+import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -55,6 +56,15 @@ public class IncomeInfo extends Model<IncomeInfo> {
         incomeInfo.remark = request.getRemark();
 
         return incomeInfo;
+    }
+
+    public void update(UpdateRequestModel request, String topClass) {
+        this.incomeDate = DateUtils.localDateParse(request.getIncomeDate());
+        this.topClass = topClass;
+        this.secondClass = request.getSecondClass();
+        this.detail = request.getDetail();
+        this.amount = request.getAmount();
+        this.remark = request.getRemark();
     }
 
     public String getUuid() {

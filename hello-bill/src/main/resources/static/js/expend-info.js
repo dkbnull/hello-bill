@@ -7,7 +7,8 @@
 let $;
 
 layui.use(['layer', 'table', 'laydate'], function () {
-    $ = layui.jquery
+    $ = layui.jquery;
+
     const url = parent.window.location.href;
     if (url.lastIndexOf("home.html") < 0) {
         window.location.href = "home.html";
@@ -76,8 +77,6 @@ function initMethod() {
 }
 
 function doPostQuery(beginTime, endTime) {
-    const $ = layui.jquery;
-
     const request = {
         username: localStorage.getItem("username"),
         beginTime: beginTime,
@@ -88,7 +87,7 @@ function doPostQuery(beginTime, endTime) {
         order: $('input[name="order"]:checked').val()
     };
 
-    doPost("expend/query", request, callback)
+    doPost("expend/queryList", request, callback)
 }
 
 function callback(result) {
@@ -110,7 +109,7 @@ function callback(result) {
             {field: 'detail', title: '明细'},
             {field: 'amount', title: '金额', width: 120, totalRow: true},
             {field: 'remark', title: '备注'},
-            {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 80}
+            {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 120}
         ]],
         page: true,
         limit: 10
@@ -127,6 +126,27 @@ function callback(result) {
                 doPost("expend/delete", request, callbackDelete)
                 layer.close(index);
             });
+        } else if (obj.event === 'edit') {
+            layer.confirm('是否修改当前支出明细？', function (index) {
+                layer.open({
+                    type: 2
+                    , title: '修改'
+                    , content: 'expend-info-add.html?uuid=' + obj.data.uuid
+                    , area: ['350px', '500px']
+                    , maxmin: true
+                    , shade: 0
+                    , btn: ['确认', '取消']
+                    , yes: function (index, layero) {
+                        const childWindow = layero.find('iframe')[0].contentWindow;
+                        childWindow.updateInfo();
+                    }
+                    , btn2: function () {
+                        layer.closeAll();
+                    }
+                });
+
+                layer.close(index);
+            });
         }
     });
 }
@@ -140,8 +160,9 @@ function callbackDelete(result) {
     doPostQuery($('#begin-time-input').val(), $('#end-time-input').val());
 }
 
-function closeAll() {
+function closeAll(message) {
     layer.closeAll();
+    layer.msg(message, {time: 1000});
 
     doPostQuery($('#begin-time-input').val(), $('#end-time-input').val());
 }

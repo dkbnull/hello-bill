@@ -4,19 +4,20 @@
  * @author dukunbiao(null)  2020-12-31
  * https://github.com/dkbnull/HelloBill
  */
+let $, form;
+
 layui.use(['layer', 'form', 'laydate'], function () {
+    $ = layui.jquery;
+    form = layui.form;
+
     if (isEmpty(localStorage.getItem("username"))) {
         window.location.href = "index.html";
         return
     }
 
     initDatetime();
-
-    const request = {
-        username: localStorage.getItem("username")
-    };
-
-    doPost("expend/classQuery", request, callback)
+    initClass();
+    initData();
 })
 
 function initDatetime() {
@@ -30,34 +31,69 @@ function initDatetime() {
     });
 }
 
+function initClass() {
+    const request = {
+        username: localStorage.getItem("username")
+    };
+
+    doPost("expend/classQuery", request, callback)
+}
+
+function initData() {
+    const search = window.location.search;
+    if (search.startsWith("?uuid")) {
+        const request = {
+            username: localStorage.getItem("username"),
+            uuid: search.substring(6, search.length)
+        };
+
+        doPost("expend/query", request, callbackQuery)
+    }
+}
+
 function addInfo() {
-    const $ = layui.jquery, form = layui.form;
     const data = form.val('expendInfo');
+    if (!checkData(data)) {
+        return
+    }
+
+    data.username = localStorage.getItem("username");
+    doPost("expend/add", data, callbackAdd);
+}
+
+function updateInfo() {
+    const data = form.val('expendInfo');
+    if (!checkData(data)) {
+        return
+    }
+
+    const search = window.location.search;
+    data.username = localStorage.getItem("username");
+    data.uuid = search.substring(6, search.length);
+    doPost("expend/update", data, callbackAdd);
+}
+
+function checkData(data) {
     const error = $(".error");
     if (data.expendTime.length === 0) {
         error.text("时间不能为空");
-        return;
+        return false;
     }
-    // if (data.topClass.length === 0) {
-    //     error.text("顶级分类不能为空");
-    //     return;
-    // }
     if (data.secondClass.length === 0) {
         error.text("分类不能为空");
-        return;
+        return false;
     }
     if (data.detail.length === 0) {
         error.text("明细不能为空");
-        return;
+        return false;
     }
     if (data.amount.length === 0) {
         error.text("金额不能为空");
-        return;
+        return false;
     }
 
     error.text("");
-    data.username = localStorage.getItem("username");
-    doPost("expend/add", data, callbackAdd);
+    return true;
 }
 
 function callback(result) {
@@ -66,7 +102,6 @@ function callback(result) {
         return;
     }
 
-    const $ = layui.jquery, form = layui.form;
     for (let i = 0; i < result.data.length; i++) {
         $("#second-class-select").append('<option>' + result.data[i] + '</option>');
     }
@@ -74,13 +109,29 @@ function callback(result) {
     form.render();
 }
 
+function callbackQuery(result) {
+    if (!isSuccess(result.code)) {
+        layer.alert(result.message);
+        return;
+    }
+
+    const data = result.data;
+    $("#expend-Time-input").val(data.expendTime);
+    $("#second-class-select").val(data.secondClass);
+    $("#detail-input").val(data.detail);
+    $("#amount-input").val(data.amount);
+    $("#remark-input").val(data.remark);
+
+    form.render();
+}
+
 function callbackAdd(result) {
-    const $ = layui.jquery, error = $(".error");
+    const error = $(".error");
 
     if (!isSuccess(result.code)) {
         error.text(result.message);
         return;
     }
 
-    parent.closeAll();
+    parent.closeAll(result.message);
 }

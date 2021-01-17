@@ -1,8 +1,10 @@
 package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
+import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
-import cn.wbnull.hellobill.common.model.income.QueryRequestModel;
+import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
+import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
@@ -29,7 +31,7 @@ public class IncomeInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<IncomeInfo> getIncomeInfos(QueryRequestModel request) {
+    public List<IncomeInfo> getIncomeInfos(QueryListRequestModel request) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", request.getUsername());
         queryWrapper.like("secondClass", request.getSecondClass() == null ? "" : request.getSecondClass());
@@ -56,6 +58,26 @@ public class IncomeInfoService {
 
         IncomeInfo incomeInfo = IncomeInfo.build(request, classInfo.getTopClass());
         incomeInfoMapper.insert(incomeInfo);
+    }
+
+    public IncomeInfo getIncomeInfo(QueryRequestModel request) {
+        QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uuid", request.getUuid());
+
+        return incomeInfoMapper.selectOne(queryWrapper);
+    }
+
+    public void updateIncomeInfo(UpdateRequestModel request) {
+        QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("secondClass", request.getSecondClass());
+        ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
+
+        QueryWrapper<IncomeInfo> incomeInfoWrapper = new QueryWrapper<>();
+        incomeInfoWrapper.eq("uuid", request.getUuid());
+
+        IncomeInfo incomeInfo = incomeInfoMapper.selectOne(incomeInfoWrapper);
+        incomeInfo.update(request, classInfo.getTopClass());
+        incomeInfoMapper.update(incomeInfo, incomeInfoWrapper);
     }
 
     public void deleteIncomeInfo(DeleteRequestModel request) {

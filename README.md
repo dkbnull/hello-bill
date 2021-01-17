@@ -14,6 +14,10 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+`2021-01-17`
+
+* 收入支出明细支持修改
+
 `2021-01-15`
 
 * 支出明细开始日期默认为当前月1号

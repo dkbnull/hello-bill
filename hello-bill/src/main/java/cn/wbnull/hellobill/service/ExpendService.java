@@ -2,9 +2,7 @@ package cn.wbnull.hellobill.service;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
-import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
-import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
+import cn.wbnull.hellobill.common.model.expend.*;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
@@ -30,7 +28,7 @@ public class ExpendService {
     @Autowired
     private ClassInfoService classInfoService;
 
-    public ResponseModel<List<ExpendInfo>> query(QueryRequestModel request) throws Exception {
+    public ResponseModel<List<ExpendInfo>> queryList(QueryListRequestModel request) throws Exception {
         List<ExpendInfo> expendInfos = expendInfoService.getExpendInfos(request);
 
         return ResponseModel.success(expendInfos);
@@ -50,6 +48,16 @@ public class ExpendService {
         expendInfoService.addExpendInfo(request);
 
         return ResponseModel.success("记账成功");
+    }
+
+    public ResponseModel<ExpendInfo> query(QueryRequestModel request) throws Exception {
+        return ResponseModel.success(expendInfoService.getExpendInfo(request));
+    }
+
+    public ResponseModel<Object> update(UpdateRequestModel request) throws Exception {
+        expendInfoService.updateExpendInfo(request);
+
+        return ResponseModel.success("修改成功");
     }
 
     public ResponseModel<Object> delete(DeleteRequestModel request) throws Exception {

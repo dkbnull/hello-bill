@@ -2,6 +2,7 @@ package cn.wbnull.hellobill.db.entity;
 
 import cn.wbnull.hellobill.common.constant.UtilConstants;
 import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
+import cn.wbnull.hellobill.common.model.expend.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -58,6 +59,15 @@ public class ExpendInfo extends Model<ExpendInfo> {
         expendInfo.remark = request.getRemark();
 
         return expendInfo;
+    }
+
+    public void update(UpdateRequestModel request, String topClass) {
+        this.expendTime = DateUtils.localDateTimeParse(request.getExpendTime());
+        this.topClass = topClass;
+        this.secondClass = request.getSecondClass();
+        this.detail = request.getDetail();
+        this.amount = request.getAmount();
+        this.remark = request.getRemark();
     }
 
     public String getUuid() {

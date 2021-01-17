@@ -5,24 +5,15 @@ import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
 /**
- * 支出信息查询接口请求参数
+ * 支出/收入信息查询接口请求参数
  *
- * @author dukunbiao(null)  2020-12-31
+ * @author dukunbiao(null)  2021-01-17
  * https://github.com/dkbnull/HelloBill
  */
 @Data
 public class QueryRequestModel extends RequestModel {
 
-    private String beginTime;
-    private String endTime;
-    private String topClass;
-    private String secondClass;
-    private String detail;
-    private String order;
-
-    public boolean orderByDesc() {
-        return "2".equals(this.order);
-    }
+    private String uuid;
 
     @Override
     public String toString() {

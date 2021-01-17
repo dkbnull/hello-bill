@@ -2,9 +2,7 @@ package cn.wbnull.hellobill.controller;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
-import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
-import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
+import cn.wbnull.hellobill.common.model.expend.*;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.service.ExpendService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,23 +31,23 @@ public class ExpendController extends BaseController {
     private ExpendService expendService;
 
     /**
-     * 支出信息查询接口
+     * 支出信息明细查询接口
      *
      * @param request
      * @param result
      * @return
      * @throws Exception
      */
-    @PostMapping(value = "query")
-    public ResponseModel<List<ExpendInfo>> query(@RequestBody @Validated QueryRequestModel request,
-                                                 BindingResult result) throws Exception {
+    @PostMapping(value = "queryList")
+    public ResponseModel<List<ExpendInfo>> queryList(@RequestBody @Validated QueryListRequestModel request,
+                                                     BindingResult result) throws Exception {
         super.validate(result);
 
-        return expendService.query(request);
+        return expendService.queryList(request);
     }
 
     /**
-     * 支出信息分类查询分类信息接口
+     * 支出信息查询分类信息接口
      *
      * @param request
      * @param result
@@ -78,6 +76,38 @@ public class ExpendController extends BaseController {
         super.validate(result);
 
         return expendService.add(request);
+    }
+
+    /**
+     * 支出信息查询接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "query")
+    public ResponseModel<ExpendInfo> query(@RequestBody @Validated QueryRequestModel request,
+                                           BindingResult result) throws Exception {
+        super.validate(result);
+
+        return expendService.query(request);
+    }
+
+    /**
+     * 修改支出信息接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "update")
+    public ResponseModel<Object> update(@RequestBody @Validated UpdateRequestModel request,
+                                        BindingResult result) throws Exception {
+        super.validate(result);
+
+        return expendService.update(request);
     }
 
     /**

@@ -3,8 +3,10 @@ package cn.wbnull.hellobill.controller;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
+import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
-import cn.wbnull.hellobill.common.model.income.QueryRequestModel;
+import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
+import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,23 +35,23 @@ public class IncomeController extends BaseController {
     private IncomeService incomeService;
 
     /**
-     * 收入信息查询接口
+     * 收入信息明细查询接口
      *
      * @param request
      * @param result
      * @return
      * @throws Exception
      */
-    @PostMapping(value = "query")
-    public ResponseModel<List<IncomeInfo>> query(@RequestBody @Validated QueryRequestModel request,
-                                                 BindingResult result) throws Exception {
+    @PostMapping(value = "queryList")
+    public ResponseModel<List<IncomeInfo>> queryList(@RequestBody @Validated QueryListRequestModel request,
+                                                     BindingResult result) throws Exception {
         super.validate(result);
 
-        return incomeService.query(request);
+        return incomeService.queryList(request);
     }
 
     /**
-     * 收入信息分类查询分类信息接口
+     * 收入信息查询分类信息接口
      *
      * @param request
      * @param result
@@ -78,6 +80,38 @@ public class IncomeController extends BaseController {
         super.validate(result);
 
         return incomeService.add(request);
+    }
+
+    /**
+     * 收入信息查询接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "query")
+    public ResponseModel<IncomeInfo> query(@RequestBody @Validated QueryRequestModel request,
+                                           BindingResult result) throws Exception {
+        super.validate(result);
+
+        return incomeService.query(request);
+    }
+
+    /**
+     * 修改收入信息接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "update")
+    public ResponseModel<Object> update(@RequestBody @Validated UpdateRequestModel request,
+                                        BindingResult result) throws Exception {
+        super.validate(result);
+
+        return incomeService.update(request);
     }
 
     /**
