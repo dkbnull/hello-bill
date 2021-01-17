@@ -15,19 +15,19 @@ layui.use(['layer', 'form', 'laydate'], function () {
         return
     }
 
-    initDatetime();
+    initDatetime(datetimeCalc(0));
     initClass();
     initData();
 })
 
-function initDatetime() {
+function initDatetime(dateTime) {
     const laydate = layui.laydate;
 
     laydate.render({
         elem: '#expend-Time-input',
         type: 'datetime',
         theme: 'grid',
-        value: datetimeCalc(0)
+        value: dateTime
     });
 }
 
@@ -116,7 +116,7 @@ function callbackQuery(result) {
     }
 
     const data = result.data;
-    $("#expend-Time-input").val(data.expendTime);
+    initDatetime(data.expendTime);
     $("#second-class-select").val(data.secondClass);
     $("#detail-input").val(data.detail);
     $("#amount-input").val(data.amount);

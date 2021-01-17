@@ -15,18 +15,18 @@ layui.use(['layer', 'form', 'laydate'], function () {
         return
     }
 
-    initDatetime();
+    initDatetime(dateCalc(0));
     initClass();
     initData();
 })
 
-function initDatetime() {
+function initDatetime(date) {
     const laydate = layui.laydate;
 
     laydate.render({
         elem: '#income-date-input',
         theme: 'grid',
-        value: dateCalc(0)
+        value: date
     });
 }
 
@@ -115,7 +115,7 @@ function callbackQuery(result) {
     }
 
     const data = result.data;
-    $("#income-date-input").val(data.incomeDate);
+    initDatetime(data.incomeDate);
     $("#second-class-select").val(data.secondClass);
     $("#detail-input").val(data.detail);
     $("#amount-input").val(data.amount);
