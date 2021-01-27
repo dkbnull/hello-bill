@@ -27,10 +27,6 @@ function pieChart(data) {
 
     const pieChart = echarts.init(document.getElementById('report-pie-chart'));
     const option = {
-        title: {
-            text: '支出分类报表',
-            left: 'center'
-        },
         tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -45,6 +41,7 @@ function pieChart(data) {
         },
         series: [
             {
+                name: '支出分类报表',
                 type: 'pie',
                 radius: '55%',
                 center: ['40%', '50%'],
@@ -91,9 +88,6 @@ function lineChart(data, date) {
 
     const lineChart = echarts.init(document.getElementById("report-line-chart"));
     const option = {
-        title: {
-            text: "支出明细报表"
-        },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
