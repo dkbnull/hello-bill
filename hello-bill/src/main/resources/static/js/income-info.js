@@ -7,13 +7,11 @@
 let $;
 
 layui.use(['layer', 'table', 'laydate'], function () {
-    $ = layui.jquery;
-
-    const url = parent.window.location.href;
-    if (url.lastIndexOf("home.html") < 0) {
-        window.location.href = "home.html";
+    if (!validate()) {
         return;
     }
+
+    $ = layui.jquery;
 
     initDatetime();
     initMethod();

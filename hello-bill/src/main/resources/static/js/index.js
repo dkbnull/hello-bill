@@ -11,7 +11,6 @@ layui.use(['layer', 'form'], function () {
     }
 
     const form = layui.form;
-
     form.verify({
         username: function (value) {
             if (value.length === 0) {

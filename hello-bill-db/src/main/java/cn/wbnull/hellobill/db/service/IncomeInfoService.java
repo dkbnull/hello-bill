@@ -2,6 +2,7 @@ package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
+import cn.wbnull.hellobill.common.model.expend.ReportRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
 import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
@@ -86,5 +87,24 @@ public class IncomeInfoService {
         queryWrapper.eq("username", request.getUsername());
 
         incomeInfoMapper.delete(queryWrapper);
+    }
+
+    public List<IncomeInfo> getIncomeReportByClass(ReportRequestModel request) {
+        QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("secondClass, sum(amount) as amount");
+        queryWrapper.eq("username", request.getUsername());
+        queryWrapper.like("DATE_FORMAT(incomeDate, '%Y-%m-%d %H:%i:%s')", request.getReportDate());
+        queryWrapper.groupBy("secondClass");
+
+        return incomeInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<IncomeInfo> getIncomeReportByDate(ReportRequestModel request) {
+        QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("secondClass, DATE_FORMAT(incomeDate, '%Y-%m') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", request.getUsername());
+        queryWrapper.groupBy("secondClass", "DATE_FORMAT(incomeDate, '%Y-%m')");
+
+        return incomeInfoMapper.selectList(queryWrapper);
     }
 }

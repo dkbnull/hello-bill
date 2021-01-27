@@ -4,6 +4,7 @@ import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
+import cn.wbnull.hellobill.common.model.expend.ReportRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
 import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
@@ -128,5 +129,21 @@ public class IncomeController extends BaseController {
         super.validate(result);
 
         return incomeService.delete(request);
+    }
+
+    /**
+     * 收入信息报表
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "report")
+    public ResponseModel<Object> report(@RequestBody @Validated ReportRequestModel request,
+                                        BindingResult result) throws Exception {
+        super.validate(result);
+
+        return incomeService.report(request);
     }
 }

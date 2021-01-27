@@ -7,14 +7,12 @@
 let $, form;
 
 layui.use(['layer', 'form', 'laydate'], function () {
-    $ = layui.jquery;
-    form = layui.form;
-
-    if (isEmpty(localStorage.getItem("username"))) {
-        window.location.href = "index.html";
-        return
+    if (!validate()) {
+        return;
     }
 
+    $ = layui.jquery;
+    form = layui.form;
     initDatetime(datetimeCalc(0));
     initClass();
     initData();

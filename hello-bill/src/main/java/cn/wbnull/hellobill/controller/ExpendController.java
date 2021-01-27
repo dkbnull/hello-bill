@@ -125,4 +125,20 @@ public class ExpendController extends BaseController {
 
         return expendService.delete(request);
     }
+
+    /**
+     * 支出信息报表
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "report")
+    public ResponseModel<Object> report(@RequestBody @Validated ReportRequestModel request,
+                                        BindingResult result) throws Exception {
+        super.validate(result);
+
+        return expendService.report(request);
+    }
 }

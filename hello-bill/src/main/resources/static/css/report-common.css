@@ -1,0 +1,17 @@
+/**
+ * *-report.html css
+ *
+ * @author dukunbiao(null)  2021-01-26
+ * https://github.com/dkbnull/HelloBill
+ */
+.report-date {
+    width: 100%;
+    text-align: center;
+}
+
+#report-pie-chart,
+#report-line-chart {
+    width: 800px;
+    height: 600px;
+    margin: 0 auto;
+}

@@ -84,4 +84,23 @@ public class ExpendInfoService {
 
         expendInfoMapper.delete(queryWrapper);
     }
+
+    public List<ExpendInfo> getExpendReportByClass(ReportRequestModel request) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("secondClass, sum(amount) as amount");
+        queryWrapper.eq("username", request.getUsername());
+        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", request.getReportDate());
+        queryWrapper.groupBy("secondClass");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<ExpendInfo> getExpendReportByDate(ReportRequestModel request) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("secondClass, DATE_FORMAT(expendTime, '%Y-%m-%d') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", request.getUsername());
+        queryWrapper.groupBy("secondClass", "DATE_FORMAT(expendTime, '%Y-%m-%d')");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
 }

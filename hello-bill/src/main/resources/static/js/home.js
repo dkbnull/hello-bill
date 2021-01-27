@@ -5,13 +5,11 @@
  * https://github.com/dkbnull/HelloBill
  */
 layui.use(['layer', 'element'], function () {
-    const $ = layui.jquery;
-
-    if (isEmpty(localStorage.getItem("username"))) {
-        window.location.href = "index.html";
+    if (!validate()) {
         return;
     }
 
+    const $ = layui.jquery;
     $(".username").html(localStorage.getItem("username"));
 });
 
