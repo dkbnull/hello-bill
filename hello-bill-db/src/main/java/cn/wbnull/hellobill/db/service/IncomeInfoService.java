@@ -55,6 +55,7 @@ public class IncomeInfoService {
     public void addIncomeInfo(AddRequestModel request) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("secondClass", request.getSecondClass());
+        queryWrapper.eq("type", ClassInfo.TYPE_INCOME);
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         IncomeInfo incomeInfo = IncomeInfo.build(request, classInfo.getTopClass());
@@ -71,6 +72,7 @@ public class IncomeInfoService {
     public void updateIncomeInfo(UpdateRequestModel request) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("secondClass", request.getSecondClass());
+        queryWrapper.eq("type", ClassInfo.TYPE_INCOME);
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         QueryWrapper<IncomeInfo> incomeInfoWrapper = new QueryWrapper<>();

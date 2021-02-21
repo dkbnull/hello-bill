@@ -14,6 +14,10 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+`2021-02-21`
+
+* 优化二级分类查询
+
 `2021-01-27`
 
 * 增加收入、支出报表

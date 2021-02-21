@@ -51,6 +51,7 @@ public class ExpendInfoService {
     public void addExpendInfo(AddRequestModel request) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("secondClass", request.getSecondClass());
+        queryWrapper.eq("type", ClassInfo.TYPE_EXPEND);
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         ExpendInfo expendInfo = ExpendInfo.build(request, classInfo.getTopClass());
@@ -67,6 +68,7 @@ public class ExpendInfoService {
     public void updateExpendInfo(UpdateRequestModel request) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("secondClass", request.getSecondClass());
+        queryWrapper.eq("type", ClassInfo.TYPE_EXPEND);
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         QueryWrapper<ExpendInfo> expendInfoWrapper = new QueryWrapper<>();
