@@ -22,7 +22,7 @@ function initDatetime(dateTime) {
         type: 'datetime',
         theme: 'grid',
         value: dateTime,
-        max: 0
+        max: 1
     });
 }
 
