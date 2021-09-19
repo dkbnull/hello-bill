@@ -75,17 +75,18 @@ public class ExpendService {
         List<ExpendInfo> expendReportByClass = expendInfoService.getExpendReportByClass(request);
         List<ExpendInfo> expendReportByDate = expendInfoService.getExpendReportByDate(request);
 
-        LocalDate localReportDate = DateUtils.localDateParse(request.getReportDate() + "-01");
+        LocalDate localReportDate = DateUtils.localDateParse(request.getReportDate() + "-01-01");
         LocalDate localDate = LocalDate.now();
         assert localReportDate != null;
         LocalDate beginDate = LocalDate.of(localReportDate.getYear(), localReportDate.getMonth(), 1);
         LocalDate endDate;
-        if (beginDate.getYear() == localDate.getYear() && beginDate.getMonth() == localDate.getMonth()) {
+        if (beginDate.getYear() == localDate.getYear()) {
             endDate = localDate;
         } else {
             endDate = beginDate.plusMonths(1).minusDays(1);
         }
 
+        beginDate = LocalDate.of(localReportDate.getYear(), 1, 1);
         JSONArray expendReport = analysisExpendReport(expendReportByDate, beginDate, endDate);
 
         ReportResponseModel<ExpendInfo> response = new ReportResponseModel<>();
@@ -94,8 +95,8 @@ public class ExpendService {
 
         JSONArray date = new JSONArray();
         while (!beginDate.isAfter(endDate)) {
-            date.add(beginDate.toString());
-            beginDate = beginDate.plusDays(1);
+            date.add(beginDate.toString().substring(0, 7));
+            beginDate = beginDate.plusMonths(1);
         }
         response.setDate(date);
 
@@ -123,13 +124,14 @@ public class ExpendService {
 
             LocalDate beginDateTemp = LocalDate.ofEpochDay(beginDate.toEpochDay());
             while (!beginDateTemp.isAfter(endDate)) {
-                if (expendReportTempItem.containsKey(beginDateTemp.toString())) {
-                    expendReportItem.add(expendReportTempItem.getString(beginDateTemp.toString()));
+                String date = beginDateTemp.toString().substring(0, 7);
+                if (expendReportTempItem.containsKey(date)) {
+                    expendReportItem.add(expendReportTempItem.getString(date));
                 } else {
                     expendReportItem.add("0.00");
                 }
 
-                beginDateTemp = beginDateTemp.plusDays(1);
+                beginDateTemp = beginDateTemp.plusMonths(1);
             }
 
             JSONObject report = new JSONObject();

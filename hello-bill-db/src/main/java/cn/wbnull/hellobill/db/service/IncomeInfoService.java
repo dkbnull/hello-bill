@@ -105,6 +105,7 @@ public class IncomeInfoService {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("secondClass, DATE_FORMAT(incomeDate, '%Y-%m') as remark, sum(amount) as amount");
         queryWrapper.eq("username", request.getUsername());
+        queryWrapper.like("DATE_FORMAT(incomeDate, '%Y-%m-%d %H:%i:%s')", request.getReportDate());
         queryWrapper.groupBy("secondClass", "DATE_FORMAT(incomeDate, '%Y-%m')");
 
         return incomeInfoMapper.selectList(queryWrapper);

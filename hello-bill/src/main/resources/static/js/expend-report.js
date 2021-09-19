@@ -12,16 +12,16 @@ layui.use(['element', 'layer', 'laydate'], function () {
     const laydate = layui.laydate;
     laydate.render({
         elem: '#report-date',
-        type: 'month',
+        type: 'year',
         theme: 'grid',
-        value: dateFormatMonth(),
+        value: dateFormatYear(),
         max: 0,
         done: function (value, date) {
             doPostReport(value);
         }
     });
 
-    doPostReport(dateFormatMonth());
+    doPostReport(dateFormatYear());
 });
 
 function doPostReport(reportDate) {

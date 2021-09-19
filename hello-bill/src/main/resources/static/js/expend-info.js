@@ -32,6 +32,7 @@ function initDatetime() {
     });
     laydate.render({
         elem: '#end-time-input',
+        theme: 'grid',
         value: dateCalc(0),
         max: 0,
         done: function (value, date) {

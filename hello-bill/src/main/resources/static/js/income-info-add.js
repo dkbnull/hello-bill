@@ -21,7 +21,8 @@ function initDatetime(date) {
     laydate.render({
         elem: '#income-date-input',
         theme: 'grid',
-        value: date
+        value: date,
+        max: 0
     });
 }
 

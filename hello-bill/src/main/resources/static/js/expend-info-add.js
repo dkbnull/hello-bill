@@ -21,7 +21,8 @@ function initDatetime(dateTime) {
         elem: '#expend-Time-input',
         type: 'datetime',
         theme: 'grid',
-        value: dateTime
+        value: dateTime,
+        max: 0
     });
 }
 

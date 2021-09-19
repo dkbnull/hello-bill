@@ -8,40 +8,76 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 版本信息
 
-`2021-01-01`
+### 1.0.0
 
-* v1.0.0，支持收入支出记账、查询
+`2021-01-01`
 
 ## 更新日志
 
+### 1.0.1.8
+
+`2021-09-19`
+
+* <mark style='background:Yellow'> 优化 </mark> 新增收入支出明细时不可选择当前日期后时间
+* <mark style='background:Yellow'> 优化 </mark> 收入支出明细默认倒序排列
+* <mark style='background:Yellow'> 优化 </mark> 支出报表调整为年报表
+
+### 1.0.1.7
+
 `2021-02-21`
 
-* 优化二级分类查询
+* <mark style='background:Yellow'> 优化 </mark> 二级分类查询
+
+### 1.0.1.6
 
 `2021-01-27`
 
-* 增加收入、支出报表
+* <mark style='background:LightGreen'> 新增 </mark> 收入支出报表
+
+### 1.0.1.5
 
 `2021-01-17`
 
-* 收入支出明细支持修改
+* <mark style='background:LightGreen'> 新增 </mark> 收入支出明细支持修改
+
+### 1.0.1.4
 
 `2021-01-15`
 
-* 支出明细开始日期默认为当前月1号
-* 收入明细开始日期默认为当前年1月1号
-* 收入支出明细支持选择正序倒序排列
+* <mark style='background:Yellow'> 优化 </mark> 支出明细开始日期默认为当月第一天
+* <mark style='background:Yellow'> 优化 </mark> 收入明细开始日期默认为当年第一天
+* <mark style='background:Yellow'> 优化 </mark> 收入支出明细支持选择正序倒序排列
+
+### 1.0.1.3
+
+`2021-01-04`
+
+* <mark style='background:Yellow'> 优化 </mark> 支出明细表格单元格宽度调整
+
+### 1.0.1.2
 
 `2021-01-03`
 
-* 收入支出信息支持删除
-* 收入支出信息每页增加合计金额
-* 收入支出信息金额显示两位小数
+* <mark style='background:LightGreen'> 新增 </mark> 收入支出信息支持删除
+* <mark style='background:LightGreen'> 新增 </mark> 收入支出信息每页增加合计金额
+* <mark style='background:Yellow'> 优化 </mark> 收入支出信息金额显示两位小数
+
+### 1.0.1.1
 
 `2021-01-02`
 
-* 收入支出信息按时间排序
+* <mark style='background:Yellow'> 优化 </mark> 收入支出信息按时间排序
+
+### 1.0.0.0
 
 `2021-01-01`
 
-- v1.0.0，支持收入支出记账、查询
+- <mark style='background:LightGreen'> 新增 </mark> 支持收入支出记账、查询
+
+---
+
+<mark style='background:LightGreen'> 新增 </mark> 
+
+<mark style='background:Yellow'> 优化 </mark> 
+
+<mark style='background:OrangeRed'> 修复 </mark> 
