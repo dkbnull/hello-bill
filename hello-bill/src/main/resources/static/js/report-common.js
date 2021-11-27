@@ -41,7 +41,7 @@ function pieChart(data) {
         },
         series: [
             {
-                name: '支出分类报表',
+                name: '分类报表',
                 type: 'pie',
                 radius: '55%',
                 center: ['40%', '50%'],

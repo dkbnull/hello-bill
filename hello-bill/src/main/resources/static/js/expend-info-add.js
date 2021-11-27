@@ -9,20 +9,25 @@ let $, form;
 layui.use(['layer', 'form', 'laydate'], function () {
     $ = layui.jquery;
     form = layui.form;
+
     initDatetime(datetimeCalc(0));
     initClass();
     initData();
+    initMethod();
 })
 
 function initDatetime(dateTime) {
     const laydate = layui.laydate;
 
     laydate.render({
-        elem: '#expend-Time-input',
+        elem: '#expend-time-input',
         type: 'datetime',
         theme: 'grid',
         value: dateTime,
-        max: 1
+        max: 1,
+        done: function (value, date) {
+            $("#expend-time-value-input").val(value);
+        }
     });
 }
 
@@ -44,6 +49,12 @@ function initData() {
 
         doPost("expend/query", request, callbackQuery)
     }
+}
+
+function initMethod() {
+    $("#expend-time-value-input").on("input", function (e) {
+        initDatetime(e.delegateTarget.value.replaceAll("：", ":"));
+    });
 }
 
 function addInfo() {
@@ -112,6 +123,7 @@ function callbackQuery(result) {
 
     const data = result.data;
     initDatetime(data.expendTime);
+    $("#expend-time-value-input").val(data.expendTime);
     $("#second-class-select").val(data.secondClass);
     $("#detail-input").val(data.detail);
     $("#amount-input").val(data.amount);

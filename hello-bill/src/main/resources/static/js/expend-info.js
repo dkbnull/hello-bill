@@ -59,7 +59,7 @@ function initMethod() {
                 type: 2
                 , title: '记账'
                 , content: 'expend-info-add.html'
-                , area: ['350px', '500px']
+                , area: ['350px', '550px']
                 , maxmin: true
                 , shade: 0
                 , btn: ['确认', '取消']

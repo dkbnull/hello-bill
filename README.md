@@ -14,6 +14,12 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.1.9
+
+`2021-11-27`
+
+* <mark style='background:Yellow'> 优化 </mark> 支出明细记账支持直接录入时间
+
 ### 1.0.1.8
 
 `2021-09-19`
@@ -58,15 +64,15 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 `2021-01-03`
 
-* <mark style='background:LightGreen'> 新增 </mark> 收入支出信息支持删除
-* <mark style='background:LightGreen'> 新增 </mark> 收入支出信息每页增加合计金额
-* <mark style='background:Yellow'> 优化 </mark> 收入支出信息金额显示两位小数
+* <mark style='background:LightGreen'> 新增 </mark> 收入支出明细支持删除
+* <mark style='background:LightGreen'> 新增 </mark> 收入支出明细每页增加合计金额
+* <mark style='background:Yellow'> 优化 </mark> 收入支出明细金额显示两位小数
 
 ### 1.0.1.1
 
 `2021-01-02`
 
-* <mark style='background:Yellow'> 优化 </mark> 收入支出信息按时间排序
+* <mark style='background:Yellow'> 优化 </mark> 收入支出明细按时间排序
 
 ### 1.0.0.0
 
