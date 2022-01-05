@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.service;
 
+import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.*;
@@ -40,7 +41,7 @@ public class ExpendService {
     }
 
     public ResponseModel<List<String>> classQuery(RequestModel request) throws Exception {
-        List<ClassInfo> classInfos = classInfoService.getClassInfos(ClassInfo.TYPE_EXPEND);
+        List<ClassInfo> classInfos = classInfoService.getClassInfos(TypeEnum.EXPEND.getTypeCode());
         List<String> secondClasses = new ArrayList<>();
         for (ClassInfo classInfo : classInfos) {
             secondClasses.add(classInfo.getSecondClass());

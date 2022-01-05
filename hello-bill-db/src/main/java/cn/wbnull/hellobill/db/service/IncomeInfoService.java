@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.db.service;
 
+import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.expend.ReportRequestModel;
@@ -55,7 +56,7 @@ public class IncomeInfoService {
     public void addIncomeInfo(AddRequestModel request) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("secondClass", request.getSecondClass());
-        queryWrapper.eq("type", ClassInfo.TYPE_INCOME);
+        queryWrapper.eq("type", TypeEnum.INCOME.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         IncomeInfo incomeInfo = IncomeInfo.build(request, classInfo.getTopClass());
@@ -72,7 +73,7 @@ public class IncomeInfoService {
     public void updateIncomeInfo(UpdateRequestModel request) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("secondClass", request.getSecondClass());
-        queryWrapper.eq("type", ClassInfo.TYPE_INCOME);
+        queryWrapper.eq("type", TypeEnum.INCOME.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         QueryWrapper<IncomeInfo> incomeInfoWrapper = new QueryWrapper<>();

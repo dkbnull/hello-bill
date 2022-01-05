@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.db.entity;
 
+import cn.wbnull.hellobill.common.constant.TypeEnum;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -30,8 +31,14 @@ public class ClassInfo extends Model<ClassInfo> {
 
     private String type;
 
-    public static String TYPE_EXPEND = "0";
-    public static String TYPE_INCOME = "1";
+    @TableField("serialNo")
+    private Integer serialNo;
+
+    private String status;
+
+    public void analyseInfo() {
+        this.type = TypeEnum.getTypeEnum(this.type).getTypeName();
+    }
 
     public String getUuid() {
         return uuid;
@@ -63,6 +70,22 @@ public class ClassInfo extends Model<ClassInfo> {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getSerialNo() {
+        return serialNo;
+    }
+
+    public void setSerialNo(Integer serialNo) {
+        this.serialNo = serialNo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

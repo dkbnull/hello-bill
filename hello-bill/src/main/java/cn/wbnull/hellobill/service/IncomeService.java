@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.service;
 
+import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
@@ -46,7 +47,7 @@ public class IncomeService {
     }
 
     public ResponseModel<List<String>> classQuery(RequestModel request) throws Exception {
-        List<ClassInfo> classInfos = classInfoService.getClassInfos(ClassInfo.TYPE_INCOME);
+        List<ClassInfo> classInfos = classInfoService.getClassInfos(TypeEnum.INCOME.getTypeCode());
         List<String> secondClasses = new ArrayList<>();
         for (ClassInfo classInfo : classInfos) {
             secondClasses.add(classInfo.getSecondClass());

@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.common.model.expend;
+package cn.wbnull.hellobill.common.model.cls;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import com.alibaba.fastjson.JSON;
@@ -6,11 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
- * 修改支出信息接口请求参数
+ * 分类信息更新接口请求参数
  *
- * @author dukunbiao(null)  2021-01-17
+ * @author dukunbiao(null)  2022-01-04
  * https://github.com/dkbnull/HelloBill
  */
 @EqualsAndHashCode(callSuper = true)
@@ -20,19 +21,11 @@ public class UpdateRequestModel extends RequestModel {
     @NotEmpty(message = "uuid 不能为空")
     private String uuid;
 
-    @NotEmpty(message = "expendTime 不能为空")
-    private String expendTime;
+    @NotEmpty(message = "key 不能为空")
+    private String key;
 
-    @NotEmpty(message = "secondClass 不能为空")
-    private String secondClass;
-
-    @NotEmpty(message = "detail 不能为空")
-    private String detail;
-
-    @NotEmpty(message = "amount 不能为空")
-    private String amount;
-
-    private String remark;
+    @NotNull(message = "value 不能为空")
+    private String value;
 
     @Override
     public String toString() {

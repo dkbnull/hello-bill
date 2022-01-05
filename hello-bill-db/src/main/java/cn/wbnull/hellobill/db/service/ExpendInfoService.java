@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.db.service;
 
+import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.expend.*;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
@@ -51,7 +52,7 @@ public class ExpendInfoService {
     public void addExpendInfo(AddRequestModel request) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("secondClass", request.getSecondClass());
-        queryWrapper.eq("type", ClassInfo.TYPE_EXPEND);
+        queryWrapper.eq("type", TypeEnum.EXPEND.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         ExpendInfo expendInfo = ExpendInfo.build(request, classInfo.getTopClass());
@@ -68,7 +69,7 @@ public class ExpendInfoService {
     public void updateExpendInfo(UpdateRequestModel request) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("secondClass", request.getSecondClass());
-        queryWrapper.eq("type", ClassInfo.TYPE_EXPEND);
+        queryWrapper.eq("type", TypeEnum.EXPEND.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         QueryWrapper<ExpendInfo> expendInfoWrapper = new QueryWrapper<>();

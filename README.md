@@ -14,6 +14,13 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.3.10
+
+`2022-01-05`
+
+* <mark style='background:LightGreen'> 新增 </mark> 分类管理
+* <mark style='background:LightGreen'> 新增 </mark> 支持禁用分类
+
 ### 1.0.2.9
 
 `2021-11-27`

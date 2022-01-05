@@ -8,6 +8,10 @@ isEmpty = function (data) {
     return (data === null || data === undefined || data === '');
 }
 
+isNumber = function (value) {
+    return parseFloat(value).toString() !== "NaN";
+}
+
 function validate() {
     if (isEmpty(localStorage.getItem("username"))) {
         window.location.href = "index.html";
