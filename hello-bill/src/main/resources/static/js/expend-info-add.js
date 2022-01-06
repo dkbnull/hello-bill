@@ -33,7 +33,7 @@ function initDatetime(dateTime) {
 
 function initClass() {
     const request = {
-        username: localStorage.getItem("username")
+        username: getItem("username")
     };
 
     doPost("expend/classQuery", request, callback)
@@ -43,7 +43,7 @@ function initData() {
     const search = window.location.search;
     if (search.startsWith("?uuid")) {
         const request = {
-            username: localStorage.getItem("username"),
+            username: getItem("username"),
             uuid: search.substring(6, search.length)
         };
 
@@ -63,7 +63,7 @@ function addInfo() {
         return
     }
 
-    data.username = localStorage.getItem("username");
+    data.username = getItem("username");
     doPost("expend/add", data, callbackAdd);
 }
 
@@ -74,7 +74,7 @@ function updateInfo() {
     }
 
     const search = window.location.search;
-    data.username = localStorage.getItem("username");
+    data.username = getItem("username");
     data.uuid = search.substring(6, search.length);
     doPost("expend/update", data, callbackAdd);
 }

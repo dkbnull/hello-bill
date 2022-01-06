@@ -26,7 +26,7 @@ layui.use(['element', 'layer', 'laydate'], function () {
 
 function doPostReport(reportDate) {
     const request = {
-        username: localStorage.getItem("username"),
+        username: getItem("username"),
         reportDate: reportDate
     };
 

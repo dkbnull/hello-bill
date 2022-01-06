@@ -47,7 +47,7 @@ public class IncomeService {
     }
 
     public ResponseModel<List<String>> classQuery(RequestModel request) throws Exception {
-        List<ClassInfo> classInfos = classInfoService.getClassInfos(TypeEnum.INCOME.getTypeCode());
+        List<ClassInfo> classInfos = classInfoService.getSecondClassInfos(TypeEnum.INCOME.getTypeCode());
         List<String> secondClasses = new ArrayList<>();
         for (ClassInfo classInfo : classInfos) {
             secondClasses.add(classInfo.getSecondClass());

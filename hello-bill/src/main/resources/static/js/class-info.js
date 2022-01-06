@@ -4,7 +4,7 @@
  * @author dukunbiao(null)  2022-01-04
  * https://github.com/dkbnull/HelloBill
  */
-let $;
+let $, form;
 
 layui.use(['layer', 'table', 'form'], function () {
     if (!validate()) {
@@ -12,13 +12,22 @@ layui.use(['layer', 'table', 'form'], function () {
     }
 
     $ = layui.jquery;
+    form = layui.form;
 
+    initMethod();
     doPostQuery();
 });
 
+function initMethod() {
+    form.on('radio(type)', function (obj) {
+        doPostQuery();
+    });
+}
+
 function doPostQuery() {
     const request = {
-        username: localStorage.getItem("username")
+        username: getItem("username"),
+        type: $('input[name="type"]:checked').val()
     };
 
     doPost("class/query", request, callbackQuery)
@@ -31,7 +40,6 @@ function callbackQuery(result) {
     }
 
     const table = layui.table;
-    const form = layui.form;
     table.render({
         elem: '#info-table',
         data: result.data,
@@ -79,7 +87,7 @@ function callbackQuery(result) {
 
 function doPostUpdate(uuid, key, value) {
     const request = {
-        username: localStorage.getItem("username"),
+        username: getItem("username"),
         uuid: uuid,
         key: key,
         value: value

@@ -13,14 +13,14 @@ isNumber = function (value) {
 }
 
 function validate() {
-    if (isEmpty(localStorage.getItem("username"))) {
-        window.location.href = "index.html";
+    if (isEmpty(getItem("username"))) {
+        parent.window.location.href = "index.html";
         return false;
     }
 
     const url = parent.window.location.href
     if (url.lastIndexOf("home.html") < 0) {
-        window.location.href = "home.html";
+        parent.window.location.href = "home.html";
         return false;
     }
 
@@ -75,3 +75,28 @@ Date.prototype.format = function (format) {
 
     return format;
 };
+
+function setItem(key, value) {
+    const obj = {
+        data: value,
+        time: Date.now(),
+        storageTime: 1000 * 60 * 60 * 24
+    }
+
+    localStorage.setItem(key, JSON.stringify(obj));
+}
+
+function getItem(key) {
+    let obj = localStorage.getItem(key);
+    if (isEmpty(obj)) {
+        return null;
+    }
+
+    obj = JSON.parse(obj);
+    if (Date.now() - obj.time > obj.storageTime) {
+        localStorage.removeItem(key);
+        return null;
+    }
+
+    return obj.data;
+}

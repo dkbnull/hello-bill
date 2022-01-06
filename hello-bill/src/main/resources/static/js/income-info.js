@@ -77,7 +77,7 @@ function initMethod() {
 
 function doPostQuery(beginDate, endDate) {
     const request = {
-        username: localStorage.getItem("username"),
+        username: getItem("username"),
         beginDate: beginDate,
         endDate: endDate,
         secondClass: $('#second-class-input').val(),
@@ -116,7 +116,7 @@ function callback(result) {
         if (obj.event === 'del') {
             layer.confirm('是否删除当前收入明细？', function (index) {
                 const request = {
-                    username: localStorage.getItem("username"),
+                    username: getItem("username"),
                     uuid: obj.data.uuid
                 };
 

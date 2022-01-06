@@ -30,6 +30,14 @@ public class ClassInfoService {
 
     public List<ClassInfo> getClassInfos(String type) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("type", type);
+        queryWrapper.orderByAsc("serialNo", "uuid");
+
+        return classInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<ClassInfo> getSecondClassInfos(String type) {
+        QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("distinct secondClass");
         queryWrapper.eq("type", type);
         queryWrapper.eq("status", StatusEnum.USABLE.getStatus());

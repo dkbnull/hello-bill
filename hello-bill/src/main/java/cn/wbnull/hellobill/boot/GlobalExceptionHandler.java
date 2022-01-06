@@ -25,10 +25,9 @@ public class GlobalExceptionHandler {
     @SuppressWarnings({"rawtypes"})
     public ResponseModel exceptionHandler(HttpServletRequest servletRequest, Exception e) {
         ResponseModel response = ResponseModel.fail(e.getMessage());
+        LoggerUtils.error("响应", servletRequest.getRequestURI(), response.toString());
 
-        if (notPrintStackTrace(e)) {
-            LoggerUtils.error("响应", servletRequest.getRequestURI(), e.toString());
-        } else {
+        if (!notPrintStackTrace(e)) {
             LoggerUtils.error("响应异常", servletRequest.getRequestURI(), "", e);
         }
 

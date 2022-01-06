@@ -10,7 +10,7 @@ layui.use(['layer', 'element'], function () {
     }
 
     const $ = layui.jquery;
-    $(".username").html(localStorage.getItem("username"));
+    $(".username").html(getItem("username"));
 });
 
 function logout() {

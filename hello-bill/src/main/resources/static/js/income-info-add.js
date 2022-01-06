@@ -28,7 +28,7 @@ function initDatetime(date) {
 
 function initClass() {
     const request = {
-        username: localStorage.getItem("username")
+        username: getItem("username")
     };
 
     doPost("income/classQuery", request, callback)
@@ -38,7 +38,7 @@ function initData() {
     const search = window.location.search;
     if (search.startsWith("?uuid")) {
         const request = {
-            username: localStorage.getItem("username"),
+            username: getItem("username"),
             uuid: search.substring(6, search.length)
         };
 
@@ -52,7 +52,7 @@ function addInfo() {
         return
     }
 
-    data.username = localStorage.getItem("username");
+    data.username = getItem("username");
     doPost("income/add", data, callbackAdd);
 }
 
@@ -63,7 +63,7 @@ function updateInfo() {
     }
 
     const search = window.location.search;
-    data.username = localStorage.getItem("username");
+    data.username = getItem("username");
     data.uuid = search.substring(6, search.length);
     doPost("income/update", data, callbackAdd);
 }

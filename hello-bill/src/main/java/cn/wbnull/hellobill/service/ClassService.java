@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.service;
 
-import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.cls.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.cls.UpdateRequestModel;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
@@ -22,8 +22,8 @@ public class ClassService {
     @Autowired
     private ClassInfoService classInfoService;
 
-    public ResponseModel<List<ClassInfo>> query(RequestModel request) throws Exception {
-        List<ClassInfo> classInfos = classInfoService.getClassInfos();
+    public ResponseModel<List<ClassInfo>> query(QueryRequestModel request) throws Exception {
+        List<ClassInfo> classInfos = classInfoService.getClassInfos(request.getType());
         for (ClassInfo classInfo : classInfos) {
             classInfo.analyseInfo();
         }

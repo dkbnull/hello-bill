@@ -5,7 +5,7 @@
  * https://github.com/dkbnull/HelloBill
  */
 layui.use(['layer', 'form'], function () {
-    if (!isEmpty(localStorage.getItem("username"))) {
+    if (!isEmpty(getItem("username"))) {
         window.location.href = "home.html";
         return;
     }
@@ -41,7 +41,7 @@ function callback(result) {
         return;
     }
 
-    localStorage.setItem("username", result.data.username);
+    setItem("username", result.data.username);
 
     window.location.href = "home.html";
 }
