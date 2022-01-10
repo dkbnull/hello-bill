@@ -161,7 +161,7 @@ function callbackDelete(result) {
 
 function closeAll(message) {
     layer.closeAll();
-    layer.msg(message, {time: 1000});
+    layer.msg(message);
 
     doPostQuery($('#begin-time-input').val(), $('#end-time-input').val());
 }
