@@ -53,7 +53,12 @@ function initData() {
 
 function initMethod() {
     $("#expend-time-value-input").on("input", function (e) {
-        initDatetime(e.delegateTarget.value.replaceAll("：", ":"));
+        let value = e.delegateTarget.value.replaceAll("：", ":");
+        if (value.indexOf("-") === -1) {
+            value = formatDateYyyy(value);
+        }
+
+        initDatetime(value);
     });
 }
 

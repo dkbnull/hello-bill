@@ -57,6 +57,11 @@ function dateBeginTheYear() {
     return new Date().format("yyyy-01-01");
 }
 
+function formatDateYyyy(value) {
+    const pattern = /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/;
+    return value.replace(pattern, '$1-$2-$3 $4:$5:$6');
+}
+
 Date.prototype.format = function (format) {
     const args = {
         "M+": this.getMonth() + 1,

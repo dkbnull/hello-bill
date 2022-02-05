@@ -14,9 +14,15 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.3.12
+
+`2022-02-05`
+
+* <mark style='background:Yellow'> 优化 </mark> 支出明细记账录入时间支持yyyyMMddHHmmss格式
+
 ### 1.0.3.11
 
-`2021-01-06`
+`2022-01-06`
 
 * <mark style='background:Yellow'> 优化 </mark> 分类信息支持按分类类型查询
 * <mark style='background:Yellow'> 优化 </mark> 缓存时间调整为1天
