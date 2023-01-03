@@ -34,11 +34,6 @@ function doPostQuery() {
 }
 
 function callbackQuery(result) {
-    if (!isSuccess(result.code)) {
-        layer.alert(result.message);
-        return;
-    }
-
     const table = layui.table;
     table.render({
         elem: '#info-table',

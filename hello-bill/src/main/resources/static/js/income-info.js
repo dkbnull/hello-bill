@@ -89,11 +89,6 @@ function doPostQuery(beginDate, endDate) {
 }
 
 function callback(result) {
-    if (!isSuccess(result.code)) {
-        layer.alert(result.message);
-        return;
-    }
-
     const table = layui.table;
     table.render({
         elem: '#info-table',
@@ -149,11 +144,6 @@ function callback(result) {
 }
 
 function callbackDelete(result) {
-    if (!isSuccess(result.code)) {
-        layer.alert(result.message);
-        return;
-    }
-
     doPostQuery($('#begin-date-input').val(), $('#end-date-input').val());
 }
 

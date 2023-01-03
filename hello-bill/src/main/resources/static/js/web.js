@@ -18,6 +18,18 @@ doPost = function (url, request, callback) {
         data: JSON.stringify(request),
         dataType: 'json',
         success: function (result) {
+            if (isEmpty(result)) {
+                layer.alert("返回参数为空");
+                layer.close(loading);
+                return;
+            }
+
+            if (!isSuccess(result.code)) {
+                layer.msg(result.message);
+                layer.close(loading);
+                return;
+            }
+
             callback(result);
             layer.close(loading);
         },

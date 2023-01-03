@@ -5,11 +5,6 @@
  * https://github.com/dkbnull/HelloBill
  */
 function callback(result) {
-    if (!isSuccess(result.code)) {
-        layer.alert(result.message);
-        return;
-    }
-
     pieChart(result.data.reportClass);
     lineChart(result.data.reportDate, result.data.date);
 }

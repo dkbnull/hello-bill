@@ -92,11 +92,6 @@ function checkData(data) {
 }
 
 function callback(result) {
-    if (!isSuccess(result.code)) {
-        layer.alert(result.message);
-        return;
-    }
-
     for (let i = 0; i < result.data.length; i++) {
         $("#second-class-select").append('<option>' + result.data[i] + '</option>');
     }
@@ -105,11 +100,6 @@ function callback(result) {
 }
 
 function callbackQuery(result) {
-    if (!isSuccess(result.code)) {
-        layer.alert(result.message);
-        return;
-    }
-
     const data = result.data;
     initDatetime(data.incomeDate);
     $("#second-class-select").val(data.secondClass);

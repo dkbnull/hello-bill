@@ -37,16 +37,6 @@ layui.use(['layer', 'form'], function () {
 });
 
 function callback(result) {
-    if (isEmpty(result)) {
-        layer.alert("返回参数为空");
-        return;
-    }
-
-    if (!isSuccess(result.code)) {
-        layer.msg(result.message);
-        return;
-    }
-
     setItem("username", result.data.username);
 
     window.location.href = "home.html";
