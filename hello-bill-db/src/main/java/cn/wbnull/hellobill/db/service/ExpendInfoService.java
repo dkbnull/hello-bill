@@ -88,23 +88,33 @@ public class ExpendInfoService {
         expendInfoMapper.delete(queryWrapper);
     }
 
-    public List<ExpendInfo> getExpendReportByClass(ReportRequestModel request) {
+    public List<ExpendInfo> getExpendReportByClass(String username, String reportDate) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("secondClass, sum(amount) as amount");
-        queryWrapper.eq("username", request.getUsername());
-        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", request.getReportDate());
-        queryWrapper.groupBy("secondClass");
+        queryWrapper.select("topClass, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
+        queryWrapper.groupBy("topClass");
 
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ExpendInfo> getExpendReportByDate(ReportRequestModel request) {
+    public List<ExpendInfo> getExpendReportBySecondClass(String username, String reportDate) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("secondClass, DATE_FORMAT(expendTime, '%Y-%m') as remark, sum(amount) as amount");
-        queryWrapper.eq("username", request.getUsername());
+        queryWrapper.select("topClass, secondClass, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
+        queryWrapper.groupBy("topClass, secondClass");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<ExpendInfo> getExpendReportByDate(String username, String reportDate) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("topClass, DATE_FORMAT(expendTime, '%Y-%m') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", username);
         queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')",
-                request.getReportDate().substring(0, 4));
-        queryWrapper.groupBy("secondClass", "DATE_FORMAT(expendTime, '%Y-%m')");
+                reportDate.substring(0, 4));
+        queryWrapper.groupBy("topClass", "DATE_FORMAT(expendTime, '%Y-%m')");
 
         return expendInfoMapper.selectList(queryWrapper);
     }

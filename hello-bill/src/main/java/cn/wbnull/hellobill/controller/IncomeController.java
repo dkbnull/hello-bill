@@ -4,7 +4,7 @@ import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
-import cn.wbnull.hellobill.common.model.expend.ReportRequestModel;
+import cn.wbnull.hellobill.model.expend.ReportRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
 import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;

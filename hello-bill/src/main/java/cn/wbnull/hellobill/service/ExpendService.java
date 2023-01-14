@@ -4,11 +4,12 @@ import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.*;
-import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
 import cn.wbnull.hellobill.db.service.ExpendInfoService;
+import cn.wbnull.hellobill.model.expend.ReportRequestModel;
+import cn.wbnull.hellobill.model.expend.ReportResponseModel;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,41 +74,48 @@ public class ExpendService {
     }
 
     public ResponseModel<Object> report(ReportRequestModel request) throws Exception {
-        List<ExpendInfo> expendReportByClass = expendInfoService.getExpendReportByClass(request);
-        List<ExpendInfo> expendReportByDate = expendInfoService.getExpendReportByDate(request);
+        List<ExpendInfo> expendReports = expendInfoService.getExpendReportByClass(request.getUsername(),
+                request.getReportDate());
+        List<ExpendInfo> expendReportsSecond = expendInfoService.getExpendReportBySecondClass(request.getUsername(),
+                request.getReportDate());
 
-        LocalDate localReportDate = DateUtils.localDateParse(request.getReportDate() + "-01-01");
-        LocalDate localDate = LocalDate.now();
-        assert localReportDate != null;
-        LocalDate beginDate = LocalDate.of(localReportDate.getYear(), localReportDate.getMonth(), 1);
-        LocalDate endDate;
-        if (beginDate.getYear() == localDate.getYear()) {
-            endDate = localDate;
-        } else {
-            endDate = beginDate.plusMonths(1).minusDays(1);
-        }
+        ReportResponseModel<ExpendInfo> response = ReportResponseModel.buildExpend(expendReports,
+                expendReportsSecond);
 
-        beginDate = LocalDate.of(localReportDate.getYear(), 1, 1);
-        JSONArray expendReport = analysisExpendReport(expendReportByDate, beginDate, endDate);
-
-        ReportResponseModel<ExpendInfo> response = new ReportResponseModel<>();
-        response.setReportClass(expendReportByClass);
-        response.setReportDate(expendReport);
-
-        JSONArray date = new JSONArray();
-        while (!beginDate.isAfter(endDate)) {
-            date.add(beginDate.toString().substring(0, 7));
-            beginDate = beginDate.plusMonths(1);
-        }
-        response.setDate(date);
+//        List<ExpendInfo> expendReportByDate = expendInfoService.getExpendReportByDate(request.getUsername(),
+//                request.getReportDate());
+//
+//        LocalDate localReportDate = DateUtils.localDateParse(request.getReportDate() + "-01-01");
+//        LocalDate localDate = LocalDate.now();
+//        assert localReportDate != null;
+//        LocalDate beginDate = LocalDate.of(localReportDate.getYear(), localReportDate.getMonth(), 1);
+//        LocalDate endDate;
+//        if (beginDate.getYear() == localDate.getYear()) {
+//            endDate = localDate;
+//        } else {
+//            endDate = beginDate.plusMonths(1).minusDays(1);
+//        }
+//
+//        beginDate = LocalDate.of(localReportDate.getYear(), 1, 1);
+//        JSONArray expendReport = analysisExpendReport(expendReportByDate, beginDate, endDate);
+//
+//        response.setReportDate(expendReport);
+//
+//        JSONArray date = new JSONArray();
+//        while (!beginDate.isAfter(endDate)) {
+//            date.add(beginDate.toString().substring(0, 7));
+//            beginDate = beginDate.plusMonths(1);
+//        }
+//        response.setDate(date);
 
         return ResponseModel.success(response);
     }
 
-    private JSONArray analysisExpendReport(List<ExpendInfo> expendReportByDate, LocalDate beginDate, LocalDate endDate) throws Exception {
+    private JSONArray analysisExpendReport(List<ExpendInfo> expendReportByDate, LocalDate beginDate,
+                                           LocalDate endDate) {
         JSONObject expendReportTemp = new JSONObject();
         for (ExpendInfo expendInfo : expendReportByDate) {
-            if (expendReportTemp.containsKey(expendInfo.getSecondClass())) {
+            if (expendReportTemp.containsKey(expendInfo.getTopClass())) {
                 JSONObject reportDateItem = expendReportTemp.getJSONObject(expendInfo.getSecondClass());
                 reportDateItem.put(expendInfo.getRemark(), expendInfo.getAmount());
             } else {
@@ -118,10 +126,10 @@ public class ExpendService {
         }
 
         JSONArray expendReport = new JSONArray();
-        Set<String> secondClasses = expendReportTemp.keySet();
-        for (String secondClass : secondClasses) {
+        Set<String> topClasses = expendReportTemp.keySet();
+        for (String topClass : topClasses) {
             JSONArray expendReportItem = new JSONArray();
-            JSONObject expendReportTempItem = expendReportTemp.getJSONObject(secondClass);
+            JSONObject expendReportTempItem = expendReportTemp.getJSONObject(topClass);
 
             LocalDate beginDateTemp = LocalDate.ofEpochDay(beginDate.toEpochDay());
             while (!beginDateTemp.isAfter(endDate)) {
@@ -136,7 +144,7 @@ public class ExpendService {
             }
 
             JSONObject report = new JSONObject();
-            report.put("secondClass", secondClass);
+            report.put("topClass", topClass);
             report.put("report", expendReportItem);
             expendReport.add(report);
         }

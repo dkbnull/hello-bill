@@ -5,16 +5,15 @@ import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
 import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
-import cn.wbnull.hellobill.common.model.expend.ReportRequestModel;
-import cn.wbnull.hellobill.common.model.expend.ReportResponseModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
 import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
-import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
 import cn.wbnull.hellobill.db.service.IncomeInfoService;
+import cn.wbnull.hellobill.model.expend.ReportRequestModel;
+import cn.wbnull.hellobill.model.expend.ReportResponseModel;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,32 +78,38 @@ public class IncomeService {
     }
 
     public ResponseModel<Object> report(ReportRequestModel request) throws Exception {
-        List<IncomeInfo> incomeReportByClass = incomeInfoService.getIncomeReportByClass(request);
-        List<IncomeInfo> incomeReportByDate = incomeInfoService.getIncomeReportByDate(request);
+        List<IncomeInfo> incomeReports = incomeInfoService.getIncomeReportByClass(request.getUsername(),
+                request.getReportDate());
+        List<IncomeInfo> incomeReportsSecond = incomeInfoService.getIncomeReportBySecondClass(request.getUsername(),
+                request.getReportDate());
 
-        LocalDate localReportDate = DateUtils.localDateParse(request.getReportDate() + "-01-01");
-        LocalDate localDate = LocalDate.now();
-        assert localReportDate != null;
-        LocalDate beginDate = LocalDate.of(localReportDate.getYear(), 1, 1);
-        LocalDate endDate;
-        if (beginDate.getYear() == localDate.getYear()) {
-            endDate = localDate;
-        } else {
-            endDate = beginDate.plusYears(1).minusDays(1);
-        }
+        ReportResponseModel<IncomeInfo> response = ReportResponseModel.buildIncome(incomeReports,
+                incomeReportsSecond);
 
-        JSONArray incomeReport = analysisIncomeReport(incomeReportByDate, beginDate, endDate);
-
-        ReportResponseModel<IncomeInfo> response = new ReportResponseModel<>();
-        response.setReportClass(incomeReportByClass);
-        response.setReportDate(incomeReport);
-
-        JSONArray date = new JSONArray();
-        while (!beginDate.isAfter(endDate)) {
-            date.add(beginDate.toString().substring(0, 7));
-            beginDate = beginDate.plusMonths(1);
-        }
-        response.setDate(date);
+//        List<IncomeInfo> incomeReportByDate = incomeInfoService.getIncomeReportByDate(request.getUsername(),
+//                request.getReportDate());
+//
+//        LocalDate localReportDate = DateUtils.localDateParse(request.getReportDate() + "-01-01");
+//        LocalDate localDate = LocalDate.now();
+//        assert localReportDate != null;
+//        LocalDate beginDate = LocalDate.of(localReportDate.getYear(), 1, 1);
+//        LocalDate endDate;
+//        if (beginDate.getYear() == localDate.getYear()) {
+//            endDate = localDate;
+//        } else {
+//            endDate = beginDate.plusYears(1).minusDays(1);
+//        }
+//
+//        JSONArray incomeReport = analysisIncomeReport(incomeReportByDate, beginDate, endDate);
+//
+//        response.setReportDate(incomeReport);
+//
+//        JSONArray date = new JSONArray();
+//        while (!beginDate.isAfter(endDate)) {
+//            date.add(beginDate.toString().substring(0, 7));
+//            beginDate = beginDate.plusMonths(1);
+//        }
+//        response.setDate(date);
 
         return ResponseModel.success(response);
     }

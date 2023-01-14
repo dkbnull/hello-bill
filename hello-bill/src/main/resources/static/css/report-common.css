@@ -9,9 +9,15 @@
     text-align: center;
 }
 
-#report-pie-chart,
+#report-class-pie-chart,
 #report-line-chart {
     width: 800px;
     height: 600px;
+    margin: 0 auto;
+}
+
+.report-second-class-pie-chart-item {
+    width: 50%;
+    height: 300px;
     margin: 0 auto;
 }

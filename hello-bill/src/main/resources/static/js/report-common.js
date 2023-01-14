@@ -5,23 +5,60 @@
  * https://github.com/dkbnull/HelloBill
  */
 function callback(result) {
-    pieChart(result.data.reportClass);
-    lineChart(result.data.reportDate, result.data.date);
+    classPieChart(result.data.reportClass);
+    secondClassPieChart(result.data.reportSecondClass);
+    // lineChart(result.data.reportDate, result.data.date);
 }
 
-function pieChart(data) {
+function classPieChart(data) {
     let legendData = [];
     let seriesData = [];
     for (let i = 0; i < data.length; i++) {
         let dataItem = data[i];
 
-        legendData.push(dataItem.secondClass);
-        const seriesDataItem = {value: dataItem.amount, name: dataItem.secondClass};
+        legendData.push(dataItem.topClass);
+        const seriesDataItem = {value: dataItem.amount, name: dataItem.topClass};
         seriesData.push(seriesDataItem);
     }
 
-    const pieChart = echarts.init(document.getElementById('report-pie-chart'));
+    pieChart(legendData, seriesData, 'report-class-pie-chart', "");
+}
+
+function secondClassPieChart(data) {
+    if (data === null) {
+        return;
+    }
+
+    const secondClassPie = $("#report-second-class-pie-chart");
+    for (let i = 0; i < data.length; i++) {
+        let dataItem = data[i];
+
+        const value = '<div class="layui-col-xs3 report-second-class-pie-chart-item" id="report-second-class-pie-chart-' + i + '">' +
+            '</div>';
+        secondClassPie.append(value);
+        form.render();
+
+        let legendData = [];
+        let seriesData = [];
+        for (let i = 0; i < dataItem.reportClass.length; i++) {
+            let dataClassItem = dataItem.reportClass[i];
+
+            legendData.push(dataClassItem.secondClass);
+            const seriesDataItem = {value: dataClassItem.amount, name: dataClassItem.secondClass};
+            seriesData.push(seriesDataItem);
+        }
+
+        pieChart(legendData, seriesData, 'report-second-class-pie-chart-' + i, dataItem.topClass);
+    }
+}
+
+function pieChart(legendData, seriesData, id, title) {
+    const pieChart = echarts.init(document.getElementById(id));
     const option = {
+        title: {
+            text: title,
+            left: 'center'
+        },
         tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -36,7 +73,7 @@ function pieChart(data) {
         },
         series: [
             {
-                name: '分类报表',
+                name: '金额',
                 type: 'pie',
                 radius: '55%',
                 center: ['40%', '50%'],

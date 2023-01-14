@@ -4,11 +4,21 @@
  * @author dukunbiao(null)  2021-01-27
  * https://github.com/dkbnull/HelloBill
  */
-layui.use(['element', 'layer', 'laydate'], function () {
+let $, form;
+
+layui.use(['element', 'layer', 'laydate', 'form'], function () {
     if (!validate()) {
         return;
     }
 
+    $ = layui.jquery;
+    form = layui.form;
+
+    initDatetime();
+    doPostReport(dateFormatYear());
+});
+
+function initDatetime() {
     const laydate = layui.laydate;
     laydate.render({
         elem: '#report-date',
@@ -16,13 +26,12 @@ layui.use(['element', 'layer', 'laydate'], function () {
         theme: 'grid',
         value: dateFormatYear(),
         max: 0,
-        done: function (value, date) {
+        change: function (value, date) {
             doPostReport(value);
+            $('.layui-laydate').remove();
         }
     });
-
-    doPostReport(dateFormatYear());
-});
+}
 
 function doPostReport(reportDate) {
     const request = {
