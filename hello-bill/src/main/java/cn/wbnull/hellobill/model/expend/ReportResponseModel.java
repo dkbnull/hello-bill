@@ -22,14 +22,15 @@ public class ReportResponseModel<T> {
     private List<ReportSecondClassBean<T>> reportSecondClass;
     private JSONArray reportDate;
     private JSONArray date;
+    private JSONArray total;
 
-    public static ReportResponseModel<ExpendInfo> buildExpend(List<ExpendInfo> expendReports,
-                                                              List<ExpendInfo> expendReportsSecond) {
+    public static ReportResponseModel<ExpendInfo> buildExpend(List<ExpendInfo> expendInfos,
+                                                              List<ExpendInfo> expendInfosSecond) {
         ReportResponseModel<ExpendInfo> responseModel = new ReportResponseModel<>();
-        responseModel.reportClass = expendReports;
+        responseModel.reportClass = expendInfos;
         responseModel.reportSecondClass = new ArrayList<>();
 
-        for (ExpendInfo expendInfo : expendReportsSecond) {
+        for (ExpendInfo expendInfo : expendInfosSecond) {
             ReportSecondClassBean<ExpendInfo> reportSecondClassTemp = null;
             for (ReportSecondClassBean<ExpendInfo> reportSecondClass : responseModel.reportSecondClass) {
                 if (reportSecondClass.topClass.equals(expendInfo.getTopClass())) {
@@ -48,25 +49,25 @@ public class ReportResponseModel<T> {
         return responseModel;
     }
 
-    public static ReportResponseModel<IncomeInfo> buildIncome(List<IncomeInfo> incomeReports,
-                                                              List<IncomeInfo> incomeReportsSecond) {
+    public static ReportResponseModel<IncomeInfo> buildIncome(List<IncomeInfo> incomeInfos,
+                                                              List<IncomeInfo> incomeInfosSecond) {
         ReportResponseModel<IncomeInfo> responseModel = new ReportResponseModel<>();
-        responseModel.reportClass = incomeReports;
+        responseModel.reportClass = incomeInfos;
         responseModel.reportSecondClass = new ArrayList<>();
 
-        for (IncomeInfo expendInfo : incomeReportsSecond) {
+        for (IncomeInfo incomeInfo : incomeInfosSecond) {
             ReportSecondClassBean<IncomeInfo> reportSecondClassTemp = null;
             for (ReportSecondClassBean<IncomeInfo> reportSecondClass : responseModel.reportSecondClass) {
-                if (reportSecondClass.topClass.equals(expendInfo.getTopClass())) {
+                if (reportSecondClass.topClass.equals(incomeInfo.getTopClass())) {
                     reportSecondClassTemp = reportSecondClass;
                     break;
                 }
             }
 
             if (reportSecondClassTemp == null) {
-                responseModel.reportSecondClass.add(ReportSecondClassBean.build(expendInfo));
+                responseModel.reportSecondClass.add(ReportSecondClassBean.build(incomeInfo));
             } else {
-                reportSecondClassTemp.getReportClass().add(expendInfo);
+                reportSecondClassTemp.getReportClass().add(incomeInfo);
             }
         }
 

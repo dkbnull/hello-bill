@@ -14,6 +14,12 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.4.13
+
+`2023-01-15`
+
+* <mark style='background:LightGreen'> 新增 </mark> 收入支出顶级分类、二级分类报表，总金额报表
+
 ### 1.0.3.12
 
 `2022-02-05`

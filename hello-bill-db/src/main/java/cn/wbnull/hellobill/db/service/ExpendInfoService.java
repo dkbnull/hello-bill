@@ -118,4 +118,16 @@ public class ExpendInfoService {
 
         return expendInfoMapper.selectList(queryWrapper);
     }
+
+    public List<ExpendInfo> getExpendReportByDateSum(String username, String reportDate) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("DATE_FORMAT(expendTime, '%Y-%m') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')",
+                reportDate.substring(0, 4));
+        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y-%m')");
+        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y-%m')");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
 }

@@ -5,9 +5,9 @@
  * https://github.com/dkbnull/HelloBill
  */
 function callback(result) {
+    barChart(result.data.reportDate, result.data.date, result.data.total);
     classPieChart(result.data.reportClass);
     secondClassPieChart(result.data.reportSecondClass);
-    // lineChart(result.data.reportDate, result.data.date);
 }
 
 function classPieChart(data) {
@@ -25,17 +25,19 @@ function classPieChart(data) {
 }
 
 function secondClassPieChart(data) {
+    const secondClassPieChart = $("#report-second-class-pie-chart");
+    secondClassPieChart.empty();
+
     if (data === null) {
         return;
     }
 
-    const secondClassPie = $("#report-second-class-pie-chart");
     for (let i = 0; i < data.length; i++) {
         let dataItem = data[i];
 
         const value = '<div class="layui-col-xs3 report-second-class-pie-chart-item" id="report-second-class-pie-chart-' + i + '">' +
             '</div>';
-        secondClassPie.append(value);
+        secondClassPieChart.append(value);
         form.render();
 
         let legendData = [];
@@ -91,72 +93,58 @@ function pieChart(legendData, seriesData, id, title) {
     pieChart.setOption(option);
 }
 
-function lineChart(data, date) {
-    let legendData = [];
+function barChart(data, date, total) {
     let seriesData = [];
     for (let i = 0; i < data.length; i++) {
         const dataItem = data[i];
-
-        legendData.push(dataItem.secondClass);
-
-        let seriesDataTemp = [];
-        for (let j = 0; j < dataItem.report.length; j++) {
-            const expendReportItem = dataItem.report[j];
-            seriesDataTemp.push(expendReportItem)
-        }
-
         const seriesDataItem = {
-            name: dataItem.secondClass,
-            type: 'line',
-            stack: '总量',
-            areaStyle: {},
+            name: dataItem.topClass,
+            type: 'bar',
+            stack: '金额',
+            label: {
+                show: true
+            },
             emphasis: {
                 focus: 'series'
             },
-            data: seriesDataTemp
+            data: dataItem.report
         };
+
         seriesData.push(seriesDataItem)
     }
 
-    const lineChart = echarts.init(document.getElementById("report-line-chart"));
+    seriesData.push({
+        name: '总金额',
+        type: 'line',
+        data: total
+    })
+
+    const barChart = echarts.init(document.getElementById("report-class-bar-chart"));
     const option = {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                type: 'cross',
-                label: {
-                    backgroundColor: '#6a7985'
-                }
+                type: 'shadow'
             }
         },
-        legend: {
-            data: legendData
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
+        legend: {},
         grid: {
             left: '3%',
             right: '4%',
             bottom: '3%',
             containLabel: true
         },
-        xAxis: [
-            {
-                type: 'category',
-                boundaryGap: false,
-                data: date
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value'
-            }
-        ],
+        yAxis: [{
+            type: 'value'
+        }, {
+            type: 'value'
+        }],
+        xAxis: {
+            type: 'category',
+            data: date
+        },
         series: seriesData
     };
 
-    lineChart.setOption(option);
+    barChart.setOption(option);
 }

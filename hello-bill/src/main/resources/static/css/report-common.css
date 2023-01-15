@@ -10,7 +10,7 @@
 }
 
 #report-class-pie-chart,
-#report-line-chart {
+#report-class-bar-chart {
     width: 800px;
     height: 600px;
     margin: 0 auto;

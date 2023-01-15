@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 支出信息接口服务类
@@ -74,68 +73,71 @@ public class ExpendService {
     }
 
     public ResponseModel<Object> report(ReportRequestModel request) throws Exception {
-        List<ExpendInfo> expendReports = expendInfoService.getExpendReportByClass(request.getUsername(),
+        List<ExpendInfo> expendInfos = expendInfoService.getExpendReportByClass(request.getUsername(),
                 request.getReportDate());
-        List<ExpendInfo> expendReportsSecond = expendInfoService.getExpendReportBySecondClass(request.getUsername(),
+        List<ExpendInfo> expendInfosSecond = expendInfoService.getExpendReportBySecondClass(request.getUsername(),
                 request.getReportDate());
 
-        ReportResponseModel<ExpendInfo> response = ReportResponseModel.buildExpend(expendReports,
-                expendReportsSecond);
+        ReportResponseModel<ExpendInfo> response = ReportResponseModel.buildExpend(expendInfos,
+                expendInfosSecond);
 
-//        List<ExpendInfo> expendReportByDate = expendInfoService.getExpendReportByDate(request.getUsername(),
-//                request.getReportDate());
-//
-//        LocalDate localReportDate = DateUtils.localDateParse(request.getReportDate() + "-01-01");
-//        LocalDate localDate = LocalDate.now();
-//        assert localReportDate != null;
-//        LocalDate beginDate = LocalDate.of(localReportDate.getYear(), localReportDate.getMonth(), 1);
-//        LocalDate endDate;
-//        if (beginDate.getYear() == localDate.getYear()) {
-//            endDate = localDate;
-//        } else {
-//            endDate = beginDate.plusMonths(1).minusDays(1);
-//        }
-//
-//        beginDate = LocalDate.of(localReportDate.getYear(), 1, 1);
-//        JSONArray expendReport = analysisExpendReport(expendReportByDate, beginDate, endDate);
-//
-//        response.setReportDate(expendReport);
-//
-//        JSONArray date = new JSONArray();
-//        while (!beginDate.isAfter(endDate)) {
-//            date.add(beginDate.toString().substring(0, 7));
-//            beginDate = beginDate.plusMonths(1);
-//        }
-//        response.setDate(date);
+        LocalDate beginDate = LocalDate.of(Integer.parseInt(request.getReportDate()), 1, 1);
+        LocalDate localDate = LocalDate.now();
+        LocalDate endDate;
+        if (beginDate.getYear() == localDate.getYear()) {
+            endDate = localDate;
+        } else {
+            endDate = LocalDate.of(Integer.parseInt(request.getReportDate()), 12, 31);
+        }
+
+        List<ExpendInfo> expendInfosDate = expendInfoService.getExpendReportByDate(request.getUsername(),
+                request.getReportDate());
+        JSONArray expendReport = analysisExpendReport(expendInfosDate, beginDate, endDate);
+
+        response.setReportDate(expendReport);
+
+        JSONArray date = new JSONArray();
+        while (!beginDate.isAfter(endDate)) {
+            date.add(beginDate.toString().substring(0, 7));
+            beginDate = beginDate.plusMonths(1);
+        }
+        response.setDate(date);
+
+        List<ExpendInfo> expendInfosDateSum = expendInfoService.getExpendReportByDateSum(request.getUsername(),
+                request.getReportDate());
+        JSONArray total = new JSONArray();
+        for (ExpendInfo expendInfo : expendInfosDateSum) {
+            total.add(expendInfo.getAmount());
+        }
+        response.setTotal(total);
 
         return ResponseModel.success(response);
     }
 
-    private JSONArray analysisExpendReport(List<ExpendInfo> expendReportByDate, LocalDate beginDate,
+    private JSONArray analysisExpendReport(List<ExpendInfo> expendInfos, LocalDate beginDate,
                                            LocalDate endDate) {
-        JSONObject expendReportTemp = new JSONObject();
-        for (ExpendInfo expendInfo : expendReportByDate) {
-            if (expendReportTemp.containsKey(expendInfo.getTopClass())) {
-                JSONObject reportDateItem = expendReportTemp.getJSONObject(expendInfo.getSecondClass());
-                reportDateItem.put(expendInfo.getRemark(), expendInfo.getAmount());
+        JSONObject reportData = new JSONObject();
+        for (ExpendInfo expendInfo : expendInfos) {
+            if (reportData.containsKey(expendInfo.getTopClass())) {
+                JSONObject reportDataItem = reportData.getJSONObject(expendInfo.getTopClass());
+                reportDataItem.put(expendInfo.getRemark(), expendInfo.getAmount());
             } else {
-                JSONObject reportDateItem = new JSONObject();
-                reportDateItem.put(expendInfo.getRemark(), expendInfo.getAmount());
-                expendReportTemp.put(expendInfo.getSecondClass(), reportDateItem);
+                JSONObject reportDataItem = new JSONObject();
+                reportDataItem.put(expendInfo.getRemark(), expendInfo.getAmount());
+                reportData.put(expendInfo.getTopClass(), reportDataItem);
             }
         }
 
         JSONArray expendReport = new JSONArray();
-        Set<String> topClasses = expendReportTemp.keySet();
-        for (String topClass : topClasses) {
+        for (String topClass : reportData.keySet()) {
             JSONArray expendReportItem = new JSONArray();
-            JSONObject expendReportTempItem = expendReportTemp.getJSONObject(topClass);
+            JSONObject reportDataItem = reportData.getJSONObject(topClass);
 
             LocalDate beginDateTemp = LocalDate.ofEpochDay(beginDate.toEpochDay());
             while (!beginDateTemp.isAfter(endDate)) {
                 String date = beginDateTemp.toString().substring(0, 7);
-                if (expendReportTempItem.containsKey(date)) {
-                    expendReportItem.add(expendReportTempItem.getString(date));
+                if (reportDataItem.containsKey(date)) {
+                    expendReportItem.add(reportDataItem.getString(date));
                 } else {
                     expendReportItem.add("0.00");
                 }

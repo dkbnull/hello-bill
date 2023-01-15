@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 收入信息接口服务类
@@ -78,75 +77,74 @@ public class IncomeService {
     }
 
     public ResponseModel<Object> report(ReportRequestModel request) throws Exception {
-        List<IncomeInfo> incomeReports = incomeInfoService.getIncomeReportByClass(request.getUsername(),
+        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReportByClass(request.getUsername(),
                 request.getReportDate());
-        List<IncomeInfo> incomeReportsSecond = incomeInfoService.getIncomeReportBySecondClass(request.getUsername(),
+        List<IncomeInfo> incomeInfosSecond = incomeInfoService.getIncomeReportBySecondClass(request.getUsername(),
                 request.getReportDate());
 
-        ReportResponseModel<IncomeInfo> response = ReportResponseModel.buildIncome(incomeReports,
-                incomeReportsSecond);
+        ReportResponseModel<IncomeInfo> response = ReportResponseModel.buildIncome(incomeInfos,
+                incomeInfosSecond);
 
-//        List<IncomeInfo> incomeReportByDate = incomeInfoService.getIncomeReportByDate(request.getUsername(),
-//                request.getReportDate());
-//
-//        LocalDate localReportDate = DateUtils.localDateParse(request.getReportDate() + "-01-01");
-//        LocalDate localDate = LocalDate.now();
-//        assert localReportDate != null;
-//        LocalDate beginDate = LocalDate.of(localReportDate.getYear(), 1, 1);
-//        LocalDate endDate;
-//        if (beginDate.getYear() == localDate.getYear()) {
-//            endDate = localDate;
-//        } else {
-//            endDate = beginDate.plusYears(1).minusDays(1);
-//        }
-//
-//        JSONArray incomeReport = analysisIncomeReport(incomeReportByDate, beginDate, endDate);
-//
-//        response.setReportDate(incomeReport);
-//
-//        JSONArray date = new JSONArray();
-//        while (!beginDate.isAfter(endDate)) {
-//            date.add(beginDate.toString().substring(0, 7));
-//            beginDate = beginDate.plusMonths(1);
-//        }
-//        response.setDate(date);
+        LocalDate beginDate = LocalDate.of(2021, 1, 1);
+        LocalDate endDate = LocalDate.now();
+
+        List<IncomeInfo> incomeReportByDate = incomeInfoService.getIncomeReportByDate(request.getUsername(),
+                request.getReportDate());
+
+        JSONArray incomeReport = analysisIncomeReport(incomeReportByDate, beginDate, endDate);
+        response.setReportDate(incomeReport);
+
+        JSONArray date = new JSONArray();
+        while (!beginDate.isAfter(endDate)) {
+            date.add(beginDate.toString().substring(0, 4));
+            beginDate = beginDate.plusYears(1);
+        }
+        response.setDate(date);
+
+        List<IncomeInfo> incomeReportByDateSum = incomeInfoService.getIncomeReportByDateSum(request.getUsername(),
+                request.getReportDate());
+        JSONArray total = new JSONArray();
+        for (IncomeInfo incomeInfo : incomeReportByDateSum) {
+            total.add(incomeInfo.getAmount());
+        }
+        response.setTotal(total);
 
         return ResponseModel.success(response);
     }
 
-    private JSONArray analysisIncomeReport(List<IncomeInfo> incomeReportByDate, LocalDate beginDate, LocalDate endDate) throws Exception {
-        JSONObject incomeReportTemp = new JSONObject();
-        for (IncomeInfo incomeInfo : incomeReportByDate) {
-            if (incomeReportTemp.containsKey(incomeInfo.getSecondClass())) {
-                JSONObject reportDateItem = incomeReportTemp.getJSONObject(incomeInfo.getSecondClass());
-                reportDateItem.put(incomeInfo.getRemark(), incomeInfo.getAmount());
+    private JSONArray analysisIncomeReport(List<IncomeInfo> incomeInfos, LocalDate beginDate,
+                                           LocalDate endDate) {
+        JSONObject reportData = new JSONObject();
+        for (IncomeInfo incomeInfo : incomeInfos) {
+            if (reportData.containsKey(incomeInfo.getTopClass())) {
+                JSONObject reportDataItem = reportData.getJSONObject(incomeInfo.getTopClass());
+                reportDataItem.put(incomeInfo.getRemark(), incomeInfo.getAmount());
             } else {
-                JSONObject reportDateItem = new JSONObject();
-                reportDateItem.put(incomeInfo.getRemark(), incomeInfo.getAmount());
-                incomeReportTemp.put(incomeInfo.getSecondClass(), reportDateItem);
+                JSONObject reportDataItem = new JSONObject();
+                reportDataItem.put(incomeInfo.getRemark(), incomeInfo.getAmount());
+                reportData.put(incomeInfo.getTopClass(), reportDataItem);
             }
         }
 
         JSONArray incomeReport = new JSONArray();
-        Set<String> secondClasses = incomeReportTemp.keySet();
-        for (String secondClass : secondClasses) {
+        for (String topClass : reportData.keySet()) {
             JSONArray incomeReportItem = new JSONArray();
-            JSONObject incomeReportTempItem = incomeReportTemp.getJSONObject(secondClass);
+            JSONObject reportDataItem = reportData.getJSONObject(topClass);
 
             LocalDate beginDateTemp = LocalDate.ofEpochDay(beginDate.toEpochDay());
             while (!beginDateTemp.isAfter(endDate)) {
-                String date = beginDateTemp.toString().substring(0, 7);
-                if (incomeReportTempItem.containsKey(date)) {
-                    incomeReportItem.add(incomeReportTempItem.getString(date));
+                String date = beginDateTemp.toString().substring(0, 4);
+                if (reportDataItem.containsKey(date)) {
+                    incomeReportItem.add(reportDataItem.getString(date));
                 } else {
                     incomeReportItem.add("0.00");
                 }
 
-                beginDateTemp = beginDateTemp.plusMonths(1);
+                beginDateTemp = beginDateTemp.plusYears(1);
             }
 
             JSONObject report = new JSONObject();
-            report.put("secondClass", secondClass);
+            report.put("topClass", topClass);
             report.put("report", incomeReportItem);
             incomeReport.add(report);
         }

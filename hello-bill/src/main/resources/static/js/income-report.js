@@ -27,8 +27,10 @@ function initDatetime() {
         value: dateFormatYear(),
         max: 0,
         change: function (value, date) {
+            $('.laydate-btns-confirm').click();
+        },
+        done: function (value, date) {
             doPostReport(value);
-            $('.layui-laydate').remove();
         }
     });
 }
