@@ -14,6 +14,12 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.4.14
+
+`2023-01-28`
+
+* <mark style='background:LightGreen'> 新增 </mark> 收支总报表
+
 ### 1.0.4.13
 
 `2023-01-15`

@@ -130,4 +130,14 @@ public class ExpendInfoService {
 
         return expendInfoMapper.selectList(queryWrapper);
     }
+
+    public List<ExpendInfo> getExpendReportSum(String username) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("DATE_FORMAT(expendTime, '%Y') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y')");
+        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y')");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
 }

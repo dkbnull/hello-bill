@@ -2,7 +2,6 @@ package cn.wbnull.hellobill.model.expend;
 
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import lombok.Data;
 
@@ -97,10 +96,5 @@ public class ReportResponseModel<T> {
 
             return reportSecondClass;
         }
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
     }
 }

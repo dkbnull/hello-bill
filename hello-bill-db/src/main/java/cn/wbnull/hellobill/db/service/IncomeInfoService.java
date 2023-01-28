@@ -128,4 +128,13 @@ public class IncomeInfoService {
 
         return incomeInfoMapper.selectList(queryWrapper);
     }
+
+    public List<IncomeInfo> getIncomeReportSum(String username) {
+        QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        queryWrapper.groupBy("DATE_FORMAT(incomeDate, '%Y')");
+
+        return incomeInfoMapper.selectList(queryWrapper);
+    }
 }
