@@ -4,29 +4,35 @@
     <meta charset="UTF-8">
     <title>Hello Bill</title>
     <link rel="stylesheet" href="lib/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/index.css" media="all">
 </head>
-<body style="text-align: center; margin-top: 10rem;">
-<div class="layui-inline">
-    <form class="layui-form layui-form-pane">
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户名</label>
-            <div class="layui-input-inline">
-                <input type="text" name="username" lay-verify="username" autocomplete="off"
-                       placeholder="用户名" class="layui-input" id="username" autofocus>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
-            <div class="layui-input-inline">
-                <input type="password" name="password" lay-verify="password" placeholder="密码"
-                       autocomplete="off" class="layui-input" id="password">
-            </div>
-        </div>
+<body>
+<div class="login-container">
+    <div class="login-img">
 
-        <div class="layui-form-item">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="login">登录</button>
+    </div>
+    <div class="login-main">
+        <div class="layui-inline login-form">
+            <span>Hello Bill</span>
+            <form class="layui-form layui-form-pane">
+                <div class="layui-form-item username-form-item">
+                    <label class="username-label" for="username"></label>
+                    <input type="text" name="username" lay-verify="username" autocomplete="off"
+                           placeholder="用户名" class="layui-input" id="username" autofocus>
+                </div>
+                <div class="layui-form-item password-form-item">
+                    <label class="password-label" for="password"></label>
+                    <input type="password" name="password" lay-verify="password" placeholder="密码"
+                           autocomplete="off" class="layui-input" id="password">
+                </div>
+
+                <div class="layui-form-item">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="login"><span>登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
 <script src="lib/layui/layui.js" charset="utf-8"></script>

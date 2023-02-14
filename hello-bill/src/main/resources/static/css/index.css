@@ -1,0 +1,111 @@
+/**
+ * index.html css
+ *
+ * @author dukunbiao(null)  2023-02-14
+ */
+body {
+    width: 100%;
+    height: 100%;
+    margin-left: calc(100vw - 100%);
+    background-color: #D8C599;
+    position: absolute;
+}
+
+.login-container {
+    width: 1000px;
+    height: 600px;
+    background: #D0B589;
+    border-radius: 4px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.login-img {
+    float: left;
+    width: 500px;
+    height: 100%;
+}
+
+.login-main {
+    float: right;
+    width: 500px;
+    height: 100%;
+    text-align: center;
+    background: #FFFFFF;
+    border-radius: 0 4px 4px 0;
+}
+
+.login-main .login-form {
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-60%);
+}
+
+.login-main .login-form span {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.login-main .layui-form-item {
+    width: 350px;
+    height: 50px;
+    margin: 0 auto;
+    position: relative
+}
+
+.login-main .layui-form-item label {
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    top: 16px;
+    left: 18px;
+}
+
+.login-main .layui-form-item .username-label {
+    background: url("../img/username.png");
+}
+
+.login-main .layui-form-item .password-label {
+    background: url("../img/password.png");
+}
+
+.login-main .layui-form-item .layui-input {
+    padding-left: 48px;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    background: #F2F3FA;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #777777;
+}
+
+.login-main .layui-form-item input:focus {
+    border: 1px solid #F08036 !important;
+}
+
+.login-main .username-form-item {
+    margin-top: 40px;
+}
+
+.login-main .password-form-item {
+    margin-top: 20px;
+}
+
+.login-main .layui-form-item button {
+    width: 350px;
+    height: 45px;
+    margin-top: 30px;
+    background: #D0B589;
+    border-radius: 4px;
+}
+
+.login-main .layui-form-item button span {
+    font-size: 16px;
+    color: #FFFFFF;
+}
