@@ -4,14 +4,34 @@
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
+.layui-layout-admin .layui-body {
+    top: 50px;
+    bottom: 0;
+}
+
 .layui-nav-item a {
     cursor: pointer;
 }
 
+.layui-body .layui-tab {
+    padding: 0;
+    border: 0;
+    height: 88%;
+    width: 99%;
+}
+
+.layui-body .layui-tab-content,
+.layui-body .layui-tab-item,
 .layui-body .frame {
-    padding: 10px;
+    padding: 0;
+    border: 0;
     width: 100%;
     height: 100%;
+}
+
+
+.layui-body .frame {
+    padding: 10px;
 }
 
 input::-webkit-outer-spin-button,
