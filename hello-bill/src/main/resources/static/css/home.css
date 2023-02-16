@@ -39,3 +39,28 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
     margin: 0;
 }
+
+.tab-popup-menu {
+    width: 100px;
+    z-index: 9999;
+    background-color: #FFFFFF;
+    padding: 4px;
+    color: #333333;
+    border: 1px solid #EEEEEE;
+    border-radius: 2px;
+    cursor: pointer;
+    display: none;
+    position: absolute
+}
+
+.tab-popup-menu li {
+    text-align: center;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+}
+
+.tab-popup-menu li:hover {
+    background-color: #666666;
+    color: #FFFFFF;
+}
