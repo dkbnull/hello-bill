@@ -4,9 +4,44 @@
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
+.layui-layout-admin .layui-header {
+    /*background-color: #B58F61;*/
+}
+
 .layui-layout-admin .layui-body {
     top: 50px;
     bottom: 0;
+}
+
+.layui-layout-admin .layui-header .layui-logo,
+.layui-layout-admin .layui-header .layui-nav-item {
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.layui-bg-black,
+.layui-side-scroll,
+.layui-nav-tree,
+.layui-nav-child {
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+    /*background-color: #B58F61 !important;*/
+}
+
+.layui-nav-itemed > .layui-nav-child {
+    /*background-color: rgba(0, 0, 0, .1) !important;*/
+}
+
+.layui-nav-tree .layui-nav-item a:hover,
+.layui-nav-tree .layui-nav-child a:hover {
+    /*background-color: #EEAE78;*/
+}
+
+.layui-nav-tree .layui-nav-child dd.layui-this,
+.layui-nav-tree .layui-nav-child dd.layui-this a {
+    /*background-color: #C9B58C;*/
 }
 
 .layui-nav-item a {
@@ -29,15 +64,8 @@
     height: 100%;
 }
 
-
 .layui-body .frame {
     padding: 10px;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0;
 }
 
 .tab-popup-menu {
@@ -63,4 +91,10 @@ input::-webkit-inner-spin-button {
 .tab-popup-menu li:hover {
     background-color: #666666;
     color: #FFFFFF;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
 }
