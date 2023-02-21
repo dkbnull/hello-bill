@@ -14,6 +14,13 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.5.15
+
+`2023-02-17`
+
+* <mark style='background:LightGreen'> 新增 </mark> 导航页增加选项卡
+* <mark style='background:Yellow'> 优化 </mark> 界面配色、字体调整
+
 ### 1.0.4.14
 
 `2023-01-28`
