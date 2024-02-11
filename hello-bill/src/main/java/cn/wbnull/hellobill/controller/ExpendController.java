@@ -4,7 +4,6 @@ import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.*;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
-import cn.wbnull.hellobill.model.expend.ReportRequestModel;
 import cn.wbnull.hellobill.service.ExpendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -125,21 +124,5 @@ public class ExpendController extends BaseController {
         super.validate(result);
 
         return expendService.delete(request);
-    }
-
-    /**
-     * 支出信息报表
-     *
-     * @param request
-     * @param result
-     * @return
-     * @throws Exception
-     */
-    @PostMapping(value = "report")
-    public ResponseModel<Object> report(@RequestBody @Validated ReportRequestModel request,
-                                        BindingResult result) throws Exception {
-        super.validate(result);
-
-        return expendService.report(request);
     }
 }

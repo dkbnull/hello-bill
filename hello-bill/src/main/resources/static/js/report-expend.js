@@ -1,5 +1,5 @@
 /**
- * expend-report.html js
+ * report-expend.html js
  *
  * @author dukunbiao(null)  2021-01-26
  * https://github.com/dkbnull/HelloBill
@@ -41,5 +41,5 @@ function doPostReport(reportDate) {
         reportDate: reportDate
     };
 
-    doPost("expend/report", request, callback)
+    doPost("report/expend", request, callback)
 }

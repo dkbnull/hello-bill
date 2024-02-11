@@ -10,9 +10,10 @@
 }
 
 #report-class-pie-chart,
-#report-class-bar-chart {
-    width: 800px;
-    height: 600px;
+#report-class-bar-chart,
+#report-detail-bar-chart {
+    width: 700px;
+    height: 800px;
     margin: 0 auto;
 }
 

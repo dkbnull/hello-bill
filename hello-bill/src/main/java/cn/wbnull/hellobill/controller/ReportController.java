@@ -2,6 +2,7 @@ package cn.wbnull.hellobill.controller;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.model.report.ReportRequestModel;
 import cn.wbnull.hellobill.model.report.QueryResponseModel;
 import cn.wbnull.hellobill.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,38 @@ public class ReportController extends BaseController {
 
     @Autowired
     private ReportService reportService;
+
+    /**
+     * 支出信息报表
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "expend")
+    public ResponseModel<Object> expend(@RequestBody @Validated ReportRequestModel request,
+                                        BindingResult result) throws Exception {
+        super.validate(result);
+
+        return reportService.expend(request);
+    }
+
+    /**
+     * 收入信息报表
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "income")
+    public ResponseModel<Object> income(@RequestBody @Validated ReportRequestModel request,
+                                        BindingResult result) throws Exception {
+        super.validate(result);
+
+        return reportService.income(request);
+    }
 
     /**
      * 报表查询接口

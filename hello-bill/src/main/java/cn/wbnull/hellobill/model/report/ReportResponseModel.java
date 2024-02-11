@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.model.expend;
+package cn.wbnull.hellobill.model.report;
 
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
