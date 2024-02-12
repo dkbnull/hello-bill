@@ -36,7 +36,7 @@ public class ExpendService {
     }
 
     public ResponseModel<List<String>> classQuery(RequestModel request) throws Exception {
-        List<ClassInfo> classInfos = classInfoService.getSecondClassInfos(TypeEnum.EXPEND.getTypeCode());
+        List<ClassInfo> classInfos = classInfoService.getSecondClassInfosByType(TypeEnum.EXPEND.getTypeCode());
         List<String> secondClasses = new ArrayList<>();
         for (ClassInfo classInfo : classInfos) {
             secondClasses.add(classInfo.getSecondClass());

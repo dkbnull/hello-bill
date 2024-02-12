@@ -4,6 +4,7 @@ import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.cls.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.cls.UpdateRequestModel;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
+import cn.wbnull.hellobill.model.clazz.ClassRequestModel;
 import cn.wbnull.hellobill.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -60,5 +61,13 @@ public class ClassController extends BaseController {
         super.validate(result);
 
         return classService.update(request);
+    }
+
+    @PostMapping(value = "queryClass")
+    public ResponseModel<List<String>> queryClass(@RequestBody @Validated ClassRequestModel request,
+                                                  BindingResult result) throws Exception {
+        super.validate(result);
+
+        return classService.queryClass(request);
     }
 }

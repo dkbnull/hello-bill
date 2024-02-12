@@ -140,4 +140,30 @@ public class ExpendInfoService {
 
         return expendInfoMapper.selectList(queryWrapper);
     }
+
+    public List<ExpendInfo> getExpendInfoByClass(String username, String reportDate, String topClass) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("secondClass, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        queryWrapper.eq("topClass", topClass);
+        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
+        queryWrapper.groupBy("secondClass");
+        queryWrapper.orderByDesc("expendTime");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<ExpendInfo> getExpendInfoByDetail(String username, String reportDate, String topClass,
+                                                  String secondClass) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("detail, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        queryWrapper.eq("topClass", topClass);
+        queryWrapper.eq("secondClass", secondClass);
+        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
+        queryWrapper.groupBy("detail");
+        queryWrapper.orderByDesc("amount");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
 }

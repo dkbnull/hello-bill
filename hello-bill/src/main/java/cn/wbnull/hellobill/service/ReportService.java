@@ -1,14 +1,13 @@
 package cn.wbnull.hellobill.service;
 
+import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.service.ExpendInfoService;
 import cn.wbnull.hellobill.db.service.IncomeInfoService;
-import cn.wbnull.hellobill.model.report.ReportRequestModel;
-import cn.wbnull.hellobill.model.report.ReportResponseModel;
-import cn.wbnull.hellobill.model.report.QueryResponseModel;
+import cn.wbnull.hellobill.model.report.*;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,5 +194,33 @@ public class ReportService {
         List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReportSum(request.getUsername());
 
         return ResponseModel.success(QueryResponseModel.build(expendInfos, incomeInfos));
+    }
+
+    public ResponseModel<TopClassResponseModel> topClass(TopClassRequestModel request) throws Exception {
+        if (TypeEnum.INCOME.getTypeCode().equals(request.getType())) {
+            List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfoByClass(request.getUsername(),
+                    request.getReportDate(), request.getTopClass());
+
+            return ResponseModel.success(TopClassResponseModel.buildIncome(incomeInfos));
+        } else {
+            List<ExpendInfo> expendInfos = expendInfoService.getExpendInfoByClass(request.getUsername(),
+                    request.getReportDate(), request.getTopClass());
+
+            return ResponseModel.success(TopClassResponseModel.build(expendInfos));
+        }
+    }
+
+    public ResponseModel<DetailResponseModel> detail(DetailRequestModel request) throws Exception {
+        if (TypeEnum.INCOME.getTypeCode().equals(request.getType())) {
+            List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfoByDetail(request.getUsername(),
+                    request.getReportDate(), request.getTopClass(), request.getSecondClass());
+
+            return ResponseModel.success(DetailResponseModel.buildIncome(incomeInfos));
+        } else {
+            List<ExpendInfo> expendInfos = expendInfoService.getExpendInfoByDetail(request.getUsername(),
+                    request.getReportDate(), request.getTopClass(), request.getSecondClass());
+
+            return ResponseModel.success(DetailResponseModel.build(expendInfos));
+        }
     }
 }

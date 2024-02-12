@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Bill</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/report-common.css" media="all">
+</head>
+<body>
+<div class="report-date">
+    <div class="layui-form-item layui-inline">
+        <form class="layui-form">
+            <div class="layui-input-block layui-input-block-radio">
+                <input type="radio" lay-filter="type" name="type" value="0" title="支出" checked="">
+                <input type="radio" lay-filter="type" name="type" value="1" title="收入">
+            </div>
+        </form>
+    </div>
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">报表时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" readonly="" id="report-date" placeholder="yyyy">
+            </div>
+
+            <label class="layui-form-label">一级分类</label>
+            <div class="layui-input-inline">
+                <select name="topClass" id="top-class-select" lay-filter="topClass"></select>
+            </div>
+
+            <label class="layui-form-label">二级分类</label>
+            <div class="layui-input-inline">
+                <select name="secondClass" id="second-class-select" lay-filter="secondClass"></select>
+            </div>
+        </div>
+    </div>
+    <div id="report-class-bar-chart" class="report-display-none">
+
+    </div>
+    <div id="report-class-pie-chart" class="report-display-none">
+
+    </div>
+
+    <div id="report-detail-bar-chart" class="report-display-none">
+
+    </div>
+</div>
+
+<script src="lib/layui/layui.js" charset="utf-8"></script>
+<script src="lib/echarts/echarts.min.js" charset="utf-8"></script>
+<script src="js/common.js" charset="utf-8"></script>
+<script src="js/web.js" charset="utf-8"></script>
+<script src="js/report-common.js" charset="utf-8"></script>
+<script src="js/report-class.js" charset="utf-8"></script>
+</body>
+</html>

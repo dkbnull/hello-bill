@@ -13,7 +13,6 @@ layui.use(['layer', 'form'], function () {
     const $ = layui.jquery;
     const form = layui.form;
     form.on('submit(login)', function (obj) {
-        console.log(obj)
         if (document.activeElement.id === 'username') {
             $('#password').focus();
             return false;

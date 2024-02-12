@@ -36,9 +36,30 @@ public class ClassInfoService {
         return classInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ClassInfo> getSecondClassInfos(String type) {
+    public List<ClassInfo> getSecondClassInfosByType(String type) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("distinct secondClass");
+        queryWrapper.eq("type", type);
+        queryWrapper.eq("status", StatusEnum.USABLE.getStatus());
+        queryWrapper.orderByAsc("serialNo", "uuid");
+
+        return classInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<ClassInfo> getTopClassInfos(String type) {
+        QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("distinct topClass");
+        queryWrapper.eq("type", type);
+        queryWrapper.eq("status", StatusEnum.USABLE.getStatus());
+        queryWrapper.orderByAsc("serialNo", "uuid");
+
+        return classInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<ClassInfo> getSecondClassInfos(String type, String topClass) {
+        QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("distinct secondClass");
+        queryWrapper.eq("topClass", topClass);
         queryWrapper.eq("type", type);
         queryWrapper.eq("status", StatusEnum.USABLE.getStatus());
         queryWrapper.orderByAsc("serialNo", "uuid");
