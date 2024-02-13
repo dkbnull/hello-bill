@@ -138,25 +138,21 @@ public class IncomeInfoService {
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    public List<IncomeInfo> getIncomeInfoByClass(String username, String reportDate, String topClass) {
+    public List<IncomeInfo> getIncomeInfoByClass(String username, String reportDate) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("secondClass, sum(amount) as amount");
+        queryWrapper.select("topClass, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        queryWrapper.eq("topClass", topClass);
         queryWrapper.like("DATE_FORMAT(incomeDate, '%Y-%m-%d %H:%i:%s')", reportDate);
-        queryWrapper.groupBy("secondClass");
+        queryWrapper.groupBy("topClass");
         queryWrapper.orderByDesc("incomeDate");
 
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    public List<IncomeInfo> getIncomeInfoByDetail(String username, String reportDate, String topClass,
-                                                  String secondClass) {
+    public List<IncomeInfo> getIncomeInfoByDetail(String username, String reportDate) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("detail, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        queryWrapper.eq("topClass", topClass);
-        queryWrapper.eq("secondClass", secondClass);
         queryWrapper.like("DATE_FORMAT(incomeDate, '%Y-%m-%d %H:%i:%s')", reportDate);
         queryWrapper.groupBy("detail");
         queryWrapper.orderByDesc("amount");

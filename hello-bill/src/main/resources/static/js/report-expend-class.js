@@ -1,5 +1,5 @@
 /**
- * report-class.html js
+ * report-expend-class.html js
  *
  * @author dukunbiao(null)  2024-02-11
  * https://github.com/dkbnull/HelloBill
@@ -20,10 +20,6 @@ layui.use(['element', 'layer', 'laydate', 'form'], function () {
 });
 
 function initMethod() {
-    form.on('radio(type)', function (obj) {
-        initClass();
-    });
-
     form.on('select(topClass)', function (data) {
         doPostSecond();
         doPostReportClass($('#report-date').val());
@@ -61,7 +57,7 @@ function initDatetime() {
 function initClass() {
     const request = {
         username: getItem("username"),
-        type: $('input[name="type"]:checked').val()
+        type: '0'
     };
 
     doPost("class/queryClass", request, callbackTop);
@@ -82,7 +78,7 @@ function callbackTop(result) {
 function doPostSecond() {
     const request = {
         username: getItem("username"),
-        type: $('input[name="type"]:checked').val(),
+        type: '0',
         topClass: $('#top-class-select').val()
     };
 
@@ -103,12 +99,11 @@ function callbackSecond(result) {
 function doPostReportClass(reportDate) {
     const request = {
         username: getItem("username"),
-        type: $('input[name="type"]:checked').val(),
         reportDate: reportDate,
         topClass: $('#top-class-select').val()
     };
 
-    doPost("report/topClass", request, callbackReportClass)
+    doPost("report/expendClass", request, callbackReportClass)
 }
 
 function callbackReportClass(result) {
@@ -123,13 +118,12 @@ function callbackReportClass(result) {
 function doPostReportDetail(reportDate) {
     const request = {
         username: getItem("username"),
-        type: $('input[name="type"]:checked').val(),
         reportDate: reportDate,
         topClass: $('#top-class-select').val(),
         secondClass: $('#second-class-select').val()
     };
 
-    doPost("report/detail", request, callbackReportDetail)
+    doPost("report/expendDetail", request, callbackReportDetail)
 }
 
 function callbackReportDetail(result) {
@@ -181,7 +175,6 @@ function pieChart(data, seriesData) {
 
         series: [
             {
-                name: '子女支出',
                 type: 'pie',
                 radius: '50%',
                 data: seriesDataNew,

@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 详情报表查询接口响应参数
+ * 支出详情报表查询接口响应参数
  *
  * @author dukunbiao(null)  2024-02-12
  * https://github.com/dkbnull/HelloBill
  */
 @Data
-public class DetailResponseModel {
+public class ExpendDetailResponseModel {
 
     private List<String> secondDetail;
     private List<String> secondAmount;
 
-    public static DetailResponseModel build(List<ExpendInfo> expendInfos) {
-        DetailResponseModel responseModel = new DetailResponseModel();
+    public static ExpendDetailResponseModel build(List<ExpendInfo> expendInfos) {
+        ExpendDetailResponseModel responseModel = new ExpendDetailResponseModel();
         responseModel.secondDetail = new ArrayList<>();
         responseModel.secondAmount = new ArrayList<>();
         int i = 1;
@@ -37,8 +37,8 @@ public class DetailResponseModel {
         return responseModel;
     }
 
-    public static DetailResponseModel buildIncome(List<IncomeInfo> incomeInfos) {
-        DetailResponseModel responseModel = new DetailResponseModel();
+    public static ExpendDetailResponseModel buildIncome(List<IncomeInfo> incomeInfos) {
+        ExpendDetailResponseModel responseModel = new ExpendDetailResponseModel();
         responseModel.secondDetail = new ArrayList<>();
         responseModel.secondAmount = new ArrayList<>();
         int i = 1;

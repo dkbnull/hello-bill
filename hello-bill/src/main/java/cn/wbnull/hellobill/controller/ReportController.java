@@ -76,34 +76,66 @@ public class ReportController extends BaseController {
     }
 
     /**
-     * 分类报表查询接口
+     * 支出分类报表查询接口
      *
      * @param request
      * @param result
      * @return
      * @throws Exception
      */
-    @PostMapping(value = "topClass")
-    public ResponseModel<TopClassResponseModel> topClass(@RequestBody @Validated TopClassRequestModel request,
-                                                         BindingResult result) throws Exception {
+    @PostMapping(value = "expendClass")
+    public ResponseModel<ExpendClassResponseModel> expendClass(@RequestBody @Validated ExpendClassRequestModel request,
+                                                               BindingResult result) throws Exception {
         super.validate(result);
 
-        return reportService.topClass(request);
+        return reportService.expendClass(request);
     }
 
     /**
-     * 详情报表查询接口
+     * 支出详情报表查询接口
      *
      * @param request
      * @param result
      * @return
      * @throws Exception
      */
-    @PostMapping(value = "detail")
-    public ResponseModel<DetailResponseModel> detail(@RequestBody @Validated DetailRequestModel request,
-                                                     BindingResult result) throws Exception {
+    @PostMapping(value = "expendDetail")
+    public ResponseModel<ExpendDetailResponseModel> expendDetail(@RequestBody @Validated ExpendDetailRequestModel request,
+                                                                 BindingResult result) throws Exception {
         super.validate(result);
 
-        return reportService.detail(request);
+        return reportService.expendDetail(request);
+    }
+
+    /**
+     * 收入报表查询接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "incomeClass")
+    public ResponseModel<ExpendClassResponseModel> incomeClass(@RequestBody @Validated ReportRequestModel request,
+                                                               BindingResult result) throws Exception {
+        super.validate(result);
+
+        return reportService.incomeClass(request);
+    }
+
+    /**
+     * 支出详情报表查询接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "incomeDetail")
+    public ResponseModel<ExpendDetailResponseModel> incomeDetail(@RequestBody @Validated ReportRequestModel request,
+                                                                 BindingResult result) throws Exception {
+        super.validate(result);
+
+        return reportService.incomeDetail(request);
     }
 }

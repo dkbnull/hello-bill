@@ -8,17 +8,14 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * 分类报表查询接口请求参数
+ * 支出分类报表查询接口请求参数
  *
  * @author dukunbiao(null)  2024-02-11
  * https://github.com/dkbnull/HelloBill
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class TopClassRequestModel extends RequestModel {
-
-    @NotEmpty(message = "type 不能为空")
-    private String type;
+public class ExpendClassRequestModel extends RequestModel {
 
     @NotEmpty(message = "reportDate 不能为空")
     private String reportDate;
