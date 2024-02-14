@@ -145,7 +145,6 @@ public class IncomeInfoService {
         queryWrapper.eq("username", username);
         queryWrapper.like("DATE_FORMAT(incomeDate, '%Y-%m-%d %H:%i:%s')", reportDate);
         queryWrapper.groupBy("topClass");
-        queryWrapper.orderByDesc("incomeDate");
 
         return incomeInfoMapper.selectList(queryWrapper);
     }

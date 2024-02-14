@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.model.report;
 
+import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import lombok.Data;
@@ -19,25 +20,39 @@ public class ExpendClassResponseModel {
     private List<String> secondClass;
     private List<String> secondAmount;
 
-    public static ExpendClassResponseModel build(List<ExpendInfo> expendInfos) {
+    public static ExpendClassResponseModel build(List<ClassInfo> classInfos, List<ExpendInfo> expendInfos) {
         ExpendClassResponseModel responseModel = new ExpendClassResponseModel();
         responseModel.secondClass = new ArrayList<>();
         responseModel.secondAmount = new ArrayList<>();
-        for (ExpendInfo expendInfo : expendInfos) {
-            responseModel.secondClass.add(expendInfo.getSecondClass());
-            responseModel.secondAmount.add(expendInfo.getAmount());
+        for (ClassInfo classInfo : classInfos) {
+            for (ExpendInfo expendInfo : expendInfos) {
+                if (!classInfo.getSecondClass().equals(expendInfo.getSecondClass())) {
+                    continue;
+                }
+
+                responseModel.secondClass.add(expendInfo.getSecondClass());
+                responseModel.secondAmount.add(expendInfo.getAmount());
+                break;
+            }
         }
 
         return responseModel;
     }
 
-    public static ExpendClassResponseModel buildIncome(List<IncomeInfo> incomeInfos) {
+    public static ExpendClassResponseModel buildIncome(List<ClassInfo> classInfos, List<IncomeInfo> incomeInfos) {
         ExpendClassResponseModel responseModel = new ExpendClassResponseModel();
         responseModel.secondClass = new ArrayList<>();
         responseModel.secondAmount = new ArrayList<>();
-        for (IncomeInfo incomeInfo : incomeInfos) {
-            responseModel.secondClass.add(incomeInfo.getTopClass());
-            responseModel.secondAmount.add(incomeInfo.getAmount());
+        for (ClassInfo classInfo : classInfos) {
+            for (IncomeInfo incomeInfo : incomeInfos) {
+                if (!classInfo.getTopClass().equals(incomeInfo.getTopClass())) {
+                    continue;
+                }
+
+                responseModel.secondClass.add(incomeInfo.getTopClass());
+                responseModel.secondAmount.add(incomeInfo.getAmount());
+                break;
+            }
         }
 
         return responseModel;

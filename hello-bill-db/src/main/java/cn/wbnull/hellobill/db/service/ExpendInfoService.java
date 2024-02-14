@@ -149,7 +149,6 @@ public class ExpendInfoService {
         queryWrapper.eq("topClass", topClass);
         queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
         queryWrapper.groupBy("secondClass");
-        queryWrapper.orderByDesc("expendTime");
 
         return expendInfoMapper.selectList(queryWrapper);
     }

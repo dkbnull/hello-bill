@@ -1,9 +1,12 @@
 package cn.wbnull.hellobill.service;
 
+import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
+import cn.wbnull.hellobill.db.service.ClassInfoService;
 import cn.wbnull.hellobill.db.service.ExpendInfoService;
 import cn.wbnull.hellobill.db.service.IncomeInfoService;
 import cn.wbnull.hellobill.model.report.*;
@@ -23,6 +26,9 @@ import java.util.List;
  */
 @Service
 public class ReportService {
+
+    @Autowired
+    private ClassInfoService classInfoService;
 
     @Autowired
     private ExpendInfoService expendInfoService;
@@ -199,7 +205,10 @@ public class ReportService {
         List<ExpendInfo> expendInfos = expendInfoService.getExpendInfoByClass(request.getUsername(),
                 request.getReportDate(), request.getTopClass());
 
-        return ResponseModel.success(ExpendClassResponseModel.build(expendInfos));
+        List<ClassInfo> classInfos = classInfoService.getSecondClassInfos(TypeEnum.EXPEND.getTypeCode(),
+                request.getTopClass());
+
+        return ResponseModel.success(ExpendClassResponseModel.build(classInfos, expendInfos));
     }
 
     public ResponseModel<ExpendDetailResponseModel> expendDetail(ExpendDetailRequestModel request) throws Exception {
@@ -213,7 +222,9 @@ public class ReportService {
         List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfoByClass(request.getUsername(),
                 request.getReportDate());
 
-        return ResponseModel.success(ExpendClassResponseModel.buildIncome(incomeInfos));
+        List<ClassInfo> classInfos = classInfoService.getTopClassInfos(TypeEnum.INCOME.getTypeCode());
+
+        return ResponseModel.success(ExpendClassResponseModel.buildIncome(classInfos, incomeInfos));
     }
 
     public ResponseModel<ExpendDetailResponseModel> incomeDetail(ReportRequestModel request) throws Exception {
