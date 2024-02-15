@@ -159,7 +159,9 @@ public class ExpendInfoService {
         queryWrapper.select("detail, sum(amount) as amount");
         queryWrapper.eq("username", username);
         queryWrapper.eq("topClass", topClass);
-        queryWrapper.eq("secondClass", secondClass);
+        if (!StringUtils.isEmpty(secondClass)) {
+            queryWrapper.eq("secondClass", secondClass);
+        }
         queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
         queryWrapper.groupBy("detail");
         queryWrapper.orderByDesc("amount");
