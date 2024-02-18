@@ -14,10 +14,23 @@
 }
 
 .layui-layout-admin .layui-header .layui-logo,
-.layui-layout-admin .layui-header .layui-nav-item {
+.layui-layout-admin .layui-header .layui-nav-item,
+.layui-layout-admin .layui-header .layui-nav-item .layui-icon-username,
+.layui-layout-admin .layui-header .layui-nav-item .username {
     font-size: 16px;
     font-weight: bold;
     color: #FFFFFF;
+}
+
+.layui-header .layui-nav .layui-nav-child a:hover,
+.layui-header .layui-nav .layui-nav-child dd.layui-this a:hover {
+    background-color: #666666;
+    color: #FFFFFF;
+}
+
+.layui-nav-tree .layui-nav-item a:hover,
+.layui-nav-tree .layui-nav-child a:hover {
+    background-color: #666666;
 }
 
 .layui-bg-black,

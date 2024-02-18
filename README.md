@@ -14,6 +14,12 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.6.17
+
+`2024-02-18`
+
+* <mark style='background:Yellow'> 优化 </mark> 用户信息导航
+
 ### 1.0.6.16
 
 `2024-02-12`

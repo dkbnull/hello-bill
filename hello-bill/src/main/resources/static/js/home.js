@@ -19,12 +19,22 @@ layui.use(['layer', 'element'], function () {
 });
 
 function initMethod() {
+    $('.layui-header .layui-nav-child dd').on('click', function () {
+        const method = $(this).data('method');
+        active[method] ? active[method].call(this) : '';
+    });
+
     $('.layui-nav-child a').on('click', function () {
         const method = $(this).data('method');
         active[method] ? active[method].call(this) : '';
     });
 
     const active = {
+        logout: function () {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        },
+
         openTab: function () {
             const id = $(this).data('id');
             const title = $(this).data('title');
@@ -124,9 +134,4 @@ function customRightClick(id) {
         popupMenu.css({left: l, top: t}).show();
         return false;
     });
-}
-
-function logout() {
-    localStorage.clear();
-    window.location.href = 'index.html';
 }

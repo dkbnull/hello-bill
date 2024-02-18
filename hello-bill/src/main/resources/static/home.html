@@ -10,10 +10,19 @@
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">Hello Bill</div>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item username">姓名</li>
-            <li class="layui-nav-item" onclick="logout()"><a>退出</a></li>
-        </ul>
+        <div class="layui-layout-right">
+            <ul class="layui-nav">
+                <li class="layui-nav-item">
+                    <a class="cursor-pointer" href="javascript:;">
+                        <label class="layui-icon layui-icon-username"></label>
+                        <span class="username">姓名</span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd class="" data-method="logout"><a>退出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="layui-side layui-bg-black">
