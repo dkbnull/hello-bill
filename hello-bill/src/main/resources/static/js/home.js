@@ -34,6 +34,7 @@ function initMethod() {
             layer.open({
                 type: 2,
                 skin: 'layui-layer-custom',
+                title: '修改密码',
                 content: 'user-change-password.html',
                 shade: 0,
                 area: ['400px', '400px']

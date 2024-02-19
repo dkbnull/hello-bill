@@ -117,7 +117,13 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.layui-layer-custom .layui-layer-title,
+.layui-layer-custom .layui-layer-title {
+    background-color: #393D49;
+    font-size: 15px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
 .layui-layer-custom .layui-layer-setwin {
     display: none;
 }
