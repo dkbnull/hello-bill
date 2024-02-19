@@ -16,8 +16,9 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ### 1.0.6.17
 
-`2024-02-18`
+`2024-02-19`
 
+* <mark style='background:LightGreen'> 新增 </mark> 支持修改密码
 * <mark style='background:Yellow'> 优化 </mark> 用户信息导航
 
 ### 1.0.6.16

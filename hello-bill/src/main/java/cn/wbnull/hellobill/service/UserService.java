@@ -1,6 +1,7 @@
 package cn.wbnull.hellobill.service;
 
 import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.user.ChangePasswordRequestModel;
 import cn.wbnull.hellobill.common.model.user.LoginRequestModel;
 import cn.wbnull.hellobill.common.model.user.LoginResponseModel;
 import cn.wbnull.hellobill.db.entity.UserInfo;
@@ -32,5 +33,20 @@ public class UserService {
         }
 
         return ResponseModel.success(LoginResponseModel.build(userInfo.getUsername()));
+    }
+
+    public ResponseModel<Object> changePassword(ChangePasswordRequestModel request) throws Exception {
+        UserInfo userInfo = userInfoService.getUserInfo(request.getUsername());
+        if (userInfo == null) {
+            return ResponseModel.fail("用户不存在");
+        }
+
+        if (!userInfo.getPassword().equals(DigestUtils.md5Hex(request.getOldPassword()).toUpperCase())) {
+            return ResponseModel.fail("原密码错误");
+        }
+
+        userInfoService.updateUserInfo(request.getUsername(), request.getNewPassword());
+
+        return ResponseModel.success("密码修改成功");
     }
 }

@@ -30,6 +30,16 @@ function initMethod() {
     });
 
     const active = {
+        changePassword: function () {
+            layer.open({
+                type: 2,
+                skin: 'layui-layer-custom',
+                content: 'user-change-password.html',
+                shade: 0,
+                area: ['400px', '400px']
+            });
+        },
+
         logout: function () {
             localStorage.clear();
             window.location.href = 'index.html';

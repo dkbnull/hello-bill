@@ -1,6 +1,7 @@
 package cn.wbnull.hellobill.controller;
 
 import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.user.ChangePasswordRequestModel;
 import cn.wbnull.hellobill.common.model.user.LoginRequestModel;
 import cn.wbnull.hellobill.common.model.user.LoginResponseModel;
 import cn.wbnull.hellobill.service.UserService;
@@ -41,5 +42,21 @@ public class UserController extends BaseController {
         super.validate(result);
 
         return userService.login(request);
+    }
+
+    /**
+     * 用户修改密码接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "changePassword")
+    public ResponseModel<Object> changePassword(@RequestBody @Validated ChangePasswordRequestModel request,
+                                                BindingResult result) throws Exception {
+        super.validate(result);
+
+        return userService.changePassword(request);
     }
 }

@@ -116,3 +116,8 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
     margin: 0;
 }
+
+.layui-layer-custom .layui-layer-title,
+.layui-layer-custom .layui-layer-setwin {
+    display: none;
+}
