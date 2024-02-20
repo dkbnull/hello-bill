@@ -25,12 +25,11 @@ function initMethod() {
 }
 
 function doPostQuery() {
-    const request = {
-        username: getItem("username"),
+    const data = {
         type: $('input[name="type"]:checked').val()
     };
 
-    doPost("class/query", request, callbackQuery)
+    doPost("class/query", data, callbackQuery)
 }
 
 function callbackQuery(result) {
@@ -81,14 +80,13 @@ function callbackQuery(result) {
 }
 
 function doPostUpdate(uuid, key, value) {
-    const request = {
-        username: getItem("username"),
+    const data = {
         uuid: uuid,
         key: key,
         value: value
     };
 
-    doPost("class/update", request, function (result) {
+    doPost("class/update", data, function (result) {
         layer.msg(result.message);
     })
 }

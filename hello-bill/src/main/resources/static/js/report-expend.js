@@ -36,10 +36,9 @@ function initDatetime() {
 }
 
 function doPostReport(reportDate) {
-    const request = {
-        username: getItem("username"),
+    const data = {
         reportDate: reportDate
     };
 
-    doPost("report/expend", request, callback)
+    doPost("report/expend", data, callback)
 }

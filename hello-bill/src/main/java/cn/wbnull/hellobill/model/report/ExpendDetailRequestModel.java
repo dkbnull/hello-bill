@@ -13,9 +13,8 @@ import javax.validation.constraints.NotEmpty;
  * @author dukunbiao(null)  2024-02-12
  * https://github.com/dkbnull/HelloBill
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class ExpendDetailRequestModel extends RequestModel {
+public class ExpendDetailRequestModel {
 
     @NotEmpty(message = "reportDate 不能为空")
     private String reportDate;
@@ -23,9 +22,4 @@ public class ExpendDetailRequestModel extends RequestModel {
     private String topClass;
 
     private String secondClass;
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
 }

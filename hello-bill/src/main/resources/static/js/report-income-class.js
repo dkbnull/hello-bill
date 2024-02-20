@@ -36,14 +36,13 @@ function initDatetime() {
 }
 
 function doPostReportClass(reportDate) {
-    const request = {
-        username: getItem("username"),
+    const data = {
         type: '1',
         reportDate: reportDate,
         topClass: $('#top-class-select').val()
     };
 
-    doPost("report/incomeClass", request, callbackReportClass)
+    doPost("report/incomeClass", data, callbackReportClass)
 }
 
 function callbackReportClass(result) {
@@ -52,15 +51,14 @@ function callbackReportClass(result) {
 }
 
 function doPostReportDetail(reportDate) {
-    const request = {
-        username: getItem("username"),
+    const data = {
         type: $('input[name="type"]:checked').val(),
         reportDate: reportDate,
         topClass: $('#top-class-select').val(),
         secondClass: $('#second-class-select').val()
     };
 
-    doPost("report/incomeDetail", request, callbackReportDetail)
+    doPost("report/incomeDetail", data, callbackReportDetail)
 }
 
 function callbackReportDetail(result) {

@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.service;
 
+import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.user.ChangePasswordRequestModel;
 import cn.wbnull.hellobill.common.model.user.LoginRequestModel;
@@ -22,30 +23,34 @@ public class UserService {
     @Autowired
     private UserInfoService userInfoService;
 
-    public ResponseModel<LoginResponseModel> login(LoginRequestModel request) throws Exception {
-        UserInfo userInfo = userInfoService.getUserInfo(request.getUsername());
+    public ResponseModel<LoginResponseModel> login(RequestModel<LoginRequestModel> request) throws Exception {
+        LoginRequestModel data = request.getData();
+
+        UserInfo userInfo = userInfoService.getUserInfo(data.getUsername());
         if (userInfo == null) {
             return ResponseModel.fail("用户不存在");
         }
 
-        if (!userInfo.getPassword().equals(DigestUtils.md5Hex(request.getPassword()).toUpperCase())) {
+        if (!userInfo.getPassword().equals(DigestUtils.md5Hex(data.getPassword()).toUpperCase())) {
             return ResponseModel.fail("用户名或密码错误");
         }
 
         return ResponseModel.success(LoginResponseModel.build(userInfo.getUsername()));
     }
 
-    public ResponseModel<Object> changePassword(ChangePasswordRequestModel request) throws Exception {
+    public ResponseModel<Object> changePassword(RequestModel<ChangePasswordRequestModel> request) throws Exception {
+        ChangePasswordRequestModel data = request.getData();
+
         UserInfo userInfo = userInfoService.getUserInfo(request.getUsername());
         if (userInfo == null) {
             return ResponseModel.fail("用户不存在");
         }
 
-        if (!userInfo.getPassword().equals(DigestUtils.md5Hex(request.getOldPassword()).toUpperCase())) {
+        if (!userInfo.getPassword().equals(DigestUtils.md5Hex(data.getOldPassword()).toUpperCase())) {
             return ResponseModel.fail("原密码错误");
         }
 
-        userInfoService.updateUserInfo(request.getUsername(), request.getNewPassword());
+        userInfoService.updateUserInfo(request.getUsername(), data.getNewPassword());
 
         return ResponseModel.success("密码修改成功");
     }

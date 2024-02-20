@@ -33,9 +33,9 @@ public class IncomeInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<IncomeInfo> getIncomeInfos(QueryListRequestModel request) {
+    public List<IncomeInfo> getIncomeInfos(String username, QueryListRequestModel request) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(IncomeInfo::getUsername, request.getUsername());
+        queryWrapper.eq(IncomeInfo::getUsername, username);
         queryWrapper.like(IncomeInfo::getSecondClass, request.getSecondClass() == null ? "" : request.getSecondClass());
         queryWrapper.like(IncomeInfo::getDetail, request.getDetail() == null ? "" : request.getDetail());
         if (!StringUtils.isEmpty(request.getBeginDate())) {
@@ -53,13 +53,13 @@ public class IncomeInfoService {
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    public void addIncomeInfo(AddRequestModel request) {
+    public void addIncomeInfo(String username, AddRequestModel request) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, request.getSecondClass());
         queryWrapper.eq(ClassInfo::getType, TypeEnum.INCOME.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
-        IncomeInfo incomeInfo = IncomeInfo.build(request, classInfo.getTopClass());
+        IncomeInfo incomeInfo = IncomeInfo.build(username, request, classInfo.getTopClass());
         incomeInfoMapper.insert(incomeInfo);
     }
 
@@ -84,10 +84,10 @@ public class IncomeInfoService {
         incomeInfoMapper.update(incomeInfo, incomeInfoWrapper);
     }
 
-    public void deleteIncomeInfo(DeleteRequestModel request) {
+    public void deleteIncomeInfo(String username, DeleteRequestModel request) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(IncomeInfo::getUuid, request.getUuid());
-        queryWrapper.eq(IncomeInfo::getUsername, request.getUsername());
+        queryWrapper.eq(IncomeInfo::getUsername, username);
 
         incomeInfoMapper.delete(queryWrapper);
     }

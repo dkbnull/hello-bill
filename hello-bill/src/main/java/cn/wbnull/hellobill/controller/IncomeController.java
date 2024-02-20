@@ -43,7 +43,7 @@ public class IncomeController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "queryList")
-    public ResponseModel<List<IncomeInfo>> queryList(@RequestBody @Validated QueryListRequestModel request,
+    public ResponseModel<List<IncomeInfo>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request,
                                                      BindingResult result) throws Exception {
         super.validate(result);
 
@@ -59,7 +59,7 @@ public class IncomeController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "classQuery")
-    public ResponseModel<List<String>> classQuery(@RequestBody @Validated RequestModel request,
+    public ResponseModel<List<String>> classQuery(@RequestBody @Validated RequestModel<Object> request,
                                                   BindingResult result) throws Exception {
         super.validate(result);
 
@@ -75,7 +75,7 @@ public class IncomeController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "add")
-    public ResponseModel<Object> add(@RequestBody @Validated AddRequestModel request,
+    public ResponseModel<Object> add(@RequestBody @Validated RequestModel<AddRequestModel> request,
                                      BindingResult result) throws Exception {
         super.validate(result);
 
@@ -91,7 +91,7 @@ public class IncomeController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<IncomeInfo> query(@RequestBody @Validated QueryRequestModel request,
+    public ResponseModel<IncomeInfo> query(@RequestBody @Validated RequestModel<QueryRequestModel> request,
                                            BindingResult result) throws Exception {
         super.validate(result);
 
@@ -107,7 +107,7 @@ public class IncomeController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "update")
-    public ResponseModel<Object> update(@RequestBody @Validated UpdateRequestModel request,
+    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request,
                                         BindingResult result) throws Exception {
         super.validate(result);
 
@@ -123,7 +123,7 @@ public class IncomeController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "delete")
-    public ResponseModel<Object> delete(@RequestBody @Validated DeleteRequestModel request,
+    public ResponseModel<Object> delete(@RequestBody @Validated RequestModel<DeleteRequestModel> request,
                                         BindingResult result) throws Exception {
         super.validate(result);
 

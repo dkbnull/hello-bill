@@ -71,12 +71,11 @@ function initDatetime() {
 }
 
 function initClass() {
-    const request = {
-        username: getItem("username"),
+    const data = {
         type: '0'
     };
 
-    doPost("class/queryClass", request, callbackTop);
+    doPost("class/queryClass", data, callbackTop);
 }
 
 function callbackTop(result) {
@@ -96,13 +95,12 @@ function callbackTop(result) {
 }
 
 function doPostSecond() {
-    const request = {
-        username: getItem("username"),
+    const data = {
         type: '0',
         topClass: $('#top-class-select').val()
     };
 
-    doPost("class/queryClass", request, callbackSecond);
+    doPost("class/queryClass", data, callbackSecond);
 }
 
 function callbackSecond(result) {
@@ -117,13 +115,12 @@ function callbackSecond(result) {
 }
 
 function doPostReportClass(reportDate) {
-    const request = {
-        username: getItem("username"),
+    const data = {
         reportDate: reportDate,
         topClass: $('#top-class-select').val()
     };
 
-    doPost("report/expendClass", request, callbackReportClass)
+    doPost("report/expendClass", data, callbackReportClass)
 }
 
 function callbackReportClass(result) {
@@ -132,14 +129,13 @@ function callbackReportClass(result) {
 }
 
 function doPostReportDetail(reportDate) {
-    const request = {
-        username: getItem("username"),
+    const data = {
         reportDate: reportDate,
         topClass: $('#top-class-select').val(),
         secondClass: $('#second-class-select').val()
     };
 
-    doPost("report/expendDetail", request, callbackReportDetail)
+    doPost("report/expendDetail", data, callbackReportDetail)
 }
 
 function callbackReportDetail(result) {

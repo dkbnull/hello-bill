@@ -1,9 +1,6 @@
 package cn.wbnull.hellobill.model.clazz;
 
-import cn.wbnull.hellobill.common.model.RequestModel;
-import com.alibaba.fastjson.JSON;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -13,17 +10,11 @@ import javax.validation.constraints.NotEmpty;
  * @author dukunbiao(null)  2024-02-11
  * https://github.com/dkbnull/HelloBill
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class ClassRequestModel extends RequestModel {
+public class ClassRequestModel {
 
     @NotEmpty(message = "type 不能为空")
     private String type;
 
     private String topClass;
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
 }

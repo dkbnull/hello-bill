@@ -76,8 +76,7 @@ function initMethod() {
 }
 
 function doPostQuery(beginTime, endTime) {
-    const request = {
-        username: getItem("username"),
+    const data = {
         beginTime: beginTime,
         endTime: endTime,
         topClass: $('#top-class-input').val(),
@@ -86,7 +85,7 @@ function doPostQuery(beginTime, endTime) {
         order: $('input[name="order"]:checked').val()
     };
 
-    doPost("expend/queryList", request, callback)
+    doPost("expend/queryList", data, callback)
 }
 
 function callback(result) {
@@ -112,12 +111,11 @@ function callback(result) {
     table.on('tool(infoTable)', function (obj) {
         if (obj.event === 'del') {
             layer.confirm('是否删除当前支出明细？', function (index) {
-                const request = {
-                    username: getItem("username"),
+                const data = {
                     uuid: obj.data.uuid
                 };
 
-                doPost("expend/delete", request, callbackDelete)
+                doPost("expend/delete", data, callbackDelete)
                 layer.close(index);
             });
         } else if (obj.event === 'edit') {

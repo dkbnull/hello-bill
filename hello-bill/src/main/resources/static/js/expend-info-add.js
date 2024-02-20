@@ -32,22 +32,17 @@ function initDatetime(dateTime) {
 }
 
 function initClass() {
-    const request = {
-        username: getItem("username")
-    };
-
-    doPost("expend/classQuery", request, callback)
+    doPost("expend/classQuery", null, callback)
 }
 
 function initData() {
     const search = window.location.search;
     if (search.startsWith("?uuid")) {
-        const request = {
-            username: getItem("username"),
+        const data = {
             uuid: search.substring(6, search.length)
         };
 
-        doPost("expend/query", request, callbackQuery)
+        doPost("expend/query", data, callbackQuery)
     }
 }
 
@@ -100,7 +95,6 @@ function addInfo() {
         return
     }
 
-    data.username = getItem("username");
     doPost("expend/add", data, callbackAdd);
 }
 
@@ -111,7 +105,6 @@ function updateInfo() {
     }
 
     const search = window.location.search;
-    data.username = getItem("username");
     data.uuid = search.substring(6, search.length);
     doPost("expend/update", data, callbackAdd);
 }

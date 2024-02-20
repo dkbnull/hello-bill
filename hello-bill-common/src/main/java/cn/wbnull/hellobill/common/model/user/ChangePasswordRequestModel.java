@@ -13,18 +13,12 @@ import javax.validation.constraints.NotEmpty;
  * @author dukunbiao(null)  2024-02-19
  * https://github.com/dkbnull/HelloBill
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class ChangePasswordRequestModel extends RequestModel {
+public class ChangePasswordRequestModel {
 
     @NotEmpty(message = "oldPassword 不能为空")
     private String oldPassword;
 
     @NotEmpty(message = "newPassword 不能为空")
     private String newPassword;
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
 }

@@ -29,13 +29,13 @@ public class ExpendService {
     @Autowired
     private ClassInfoService classInfoService;
 
-    public ResponseModel<List<ExpendInfo>> queryList(QueryListRequestModel request) throws Exception {
-        List<ExpendInfo> expendInfos = expendInfoService.getExpendInfos(request);
+    public ResponseModel<List<ExpendInfo>> queryList(RequestModel<QueryListRequestModel> request) throws Exception {
+        List<ExpendInfo> expendInfos = expendInfoService.getExpendInfos(request.getUsername(), request.getData());
 
         return ResponseModel.success(expendInfos);
     }
 
-    public ResponseModel<List<String>> classQuery(RequestModel request) throws Exception {
+    public ResponseModel<List<String>> classQuery(RequestModel<Object> request) throws Exception {
         List<ClassInfo> classInfos = classInfoService.getSecondClassInfosByType(TypeEnum.EXPEND.getTypeCode());
         List<String> secondClasses = new ArrayList<>();
         for (ClassInfo classInfo : classInfos) {
@@ -45,24 +45,24 @@ public class ExpendService {
         return ResponseModel.success(secondClasses);
     }
 
-    public ResponseModel<Object> add(AddRequestModel request) throws Exception {
-        expendInfoService.addExpendInfo(request);
+    public ResponseModel<Object> add(RequestModel<AddRequestModel> request) throws Exception {
+        expendInfoService.addExpendInfo(request.getUsername(), request.getData());
 
         return ResponseModel.success("记账成功");
     }
 
-    public ResponseModel<ExpendInfo> query(QueryRequestModel request) throws Exception {
-        return ResponseModel.success(expendInfoService.getExpendInfo(request));
+    public ResponseModel<ExpendInfo> query(RequestModel<QueryRequestModel> request) throws Exception {
+        return ResponseModel.success(expendInfoService.getExpendInfo(request.getData()));
     }
 
-    public ResponseModel<Object> update(UpdateRequestModel request) throws Exception {
-        expendInfoService.updateExpendInfo(request);
+    public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) throws Exception {
+        expendInfoService.updateExpendInfo(request.getData());
 
         return ResponseModel.success("修改成功");
     }
 
-    public ResponseModel<Object> delete(DeleteRequestModel request) throws Exception {
-        expendInfoService.deleteExpendInfo(request);
+    public ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request) throws Exception {
+        expendInfoService.deleteExpendInfo(request.getUsername(), request.getData());
 
         return ResponseModel.success("删除成功");
     }

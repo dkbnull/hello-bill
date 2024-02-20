@@ -29,9 +29,9 @@ public class ExpendInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<ExpendInfo> getExpendInfos(QueryListRequestModel request) {
+    public List<ExpendInfo> getExpendInfos(String username, QueryListRequestModel request) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ExpendInfo::getUsername, request.getUsername());
+        queryWrapper.eq(ExpendInfo::getUsername, username);
         queryWrapper.like(ExpendInfo::getTopClass, request.getTopClass() == null ? "" : request.getTopClass());
         queryWrapper.like(ExpendInfo::getSecondClass, request.getSecondClass() == null ? "" : request.getSecondClass());
         queryWrapper.like(ExpendInfo::getDetail, request.getDetail() == null ? "" : request.getDetail());
@@ -50,13 +50,13 @@ public class ExpendInfoService {
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public void addExpendInfo(AddRequestModel request) {
+    public void addExpendInfo(String username, AddRequestModel request) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, request.getSecondClass());
         queryWrapper.eq(ClassInfo::getType, TypeEnum.EXPEND.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
-        ExpendInfo expendInfo = ExpendInfo.build(request, classInfo.getTopClass());
+        ExpendInfo expendInfo = ExpendInfo.build(username, request, classInfo.getTopClass());
         expendInfoMapper.insert(expendInfo);
     }
 
@@ -81,10 +81,10 @@ public class ExpendInfoService {
         expendInfoMapper.update(expendInfo, expendInfoWrapper);
     }
 
-    public void deleteExpendInfo(DeleteRequestModel request) {
+    public void deleteExpendInfo(String username, DeleteRequestModel request) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ExpendInfo::getUuid, request.getUuid());
-        queryWrapper.eq(ExpendInfo::getUsername, request.getUsername());
+        queryWrapper.eq(ExpendInfo::getUsername, username);
 
         expendInfoMapper.delete(queryWrapper);
     }

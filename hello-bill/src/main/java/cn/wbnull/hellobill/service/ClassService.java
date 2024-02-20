@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.service;
 
+import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.cls.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.cls.UpdateRequestModel;
@@ -25,8 +26,8 @@ public class ClassService {
     @Autowired
     private ClassInfoService classInfoService;
 
-    public ResponseModel<List<ClassInfo>> query(QueryRequestModel request) throws Exception {
-        List<ClassInfo> classInfos = classInfoService.getClassInfos(request.getType());
+    public ResponseModel<List<ClassInfo>> query(RequestModel<QueryRequestModel> request) throws Exception {
+        List<ClassInfo> classInfos = classInfoService.getClassInfos(request.getData().getType());
         for (ClassInfo classInfo : classInfos) {
             classInfo.analyseInfo();
         }
@@ -34,21 +35,25 @@ public class ClassService {
         return ResponseModel.success(classInfos);
     }
 
-    public ResponseModel<Object> update(UpdateRequestModel request) throws Exception {
-        classInfoService.updateClassInfo(request.getUuid(), request.getKey(), request.getValue());
+    public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) throws Exception {
+        UpdateRequestModel data = request.getData();
+
+        classInfoService.updateClassInfo(data.getUuid(), data.getKey(), data.getValue());
         return ResponseModel.success("分类信息更新成功");
     }
 
-    public ResponseModel<List<String>> queryClass(ClassRequestModel request) throws Exception {
+    public ResponseModel<List<String>> queryClass(RequestModel<ClassRequestModel> request) throws Exception {
+        ClassRequestModel data = request.getData();
+
         List<String> classes = new ArrayList<>();
-        if (StringUtils.isEmpty(request.getTopClass())) {
-            List<ClassInfo> classInfos = classInfoService.getTopClassInfos(request.getType());
+        if (StringUtils.isEmpty(data.getTopClass())) {
+            List<ClassInfo> classInfos = classInfoService.getTopClassInfos(data.getType());
             for (ClassInfo classInfo : classInfos) {
                 classes.add(classInfo.getTopClass());
             }
         } else {
-            List<ClassInfo> classInfos = classInfoService.getSecondClassInfos(request.getType(),
-                    request.getTopClass());
+            List<ClassInfo> classInfos = classInfoService.getSecondClassInfos(data.getType(),
+                    data.getTopClass());
             for (ClassInfo classInfo : classInfos) {
                 classes.add(classInfo.getSecondClass());
             }

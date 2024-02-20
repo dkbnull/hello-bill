@@ -36,7 +36,7 @@ public class ReportController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "expend")
-    public ResponseModel<Object> expend(@RequestBody @Validated ReportRequestModel request,
+    public ResponseModel<Object> expend(@RequestBody @Validated RequestModel<ReportRequestModel> request,
                                         BindingResult result) throws Exception {
         super.validate(result);
 
@@ -52,7 +52,7 @@ public class ReportController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "income")
-    public ResponseModel<Object> income(@RequestBody @Validated ReportRequestModel request,
+    public ResponseModel<Object> income(@RequestBody @Validated RequestModel<ReportRequestModel> request,
                                         BindingResult result) throws Exception {
         super.validate(result);
 
@@ -68,7 +68,7 @@ public class ReportController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<QueryResponseModel> query(@RequestBody @Validated RequestModel request,
+    public ResponseModel<QueryResponseModel> query(@RequestBody @Validated RequestModel<Object> request,
                                                    BindingResult result) throws Exception {
         super.validate(result);
 
@@ -84,7 +84,7 @@ public class ReportController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "expendClass")
-    public ResponseModel<ExpendClassResponseModel> expendClass(@RequestBody @Validated ExpendClassRequestModel request,
+    public ResponseModel<ExpendClassResponseModel> expendClass(@RequestBody @Validated RequestModel<ExpendClassRequestModel> request,
                                                                BindingResult result) throws Exception {
         super.validate(result);
 
@@ -100,7 +100,7 @@ public class ReportController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "expendDetail")
-    public ResponseModel<ExpendDetailResponseModel> expendDetail(@RequestBody @Validated ExpendDetailRequestModel request,
+    public ResponseModel<ExpendDetailResponseModel> expendDetail(@RequestBody @Validated RequestModel<ExpendDetailRequestModel> request,
                                                                  BindingResult result) throws Exception {
         super.validate(result);
 
@@ -116,7 +116,7 @@ public class ReportController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "incomeClass")
-    public ResponseModel<ExpendClassResponseModel> incomeClass(@RequestBody @Validated ReportRequestModel request,
+    public ResponseModel<ExpendClassResponseModel> incomeClass(@RequestBody @Validated RequestModel<ReportRequestModel> request,
                                                                BindingResult result) throws Exception {
         super.validate(result);
 
@@ -132,7 +132,7 @@ public class ReportController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "incomeDetail")
-    public ResponseModel<ExpendDetailResponseModel> incomeDetail(@RequestBody @Validated ReportRequestModel request,
+    public ResponseModel<ExpendDetailResponseModel> incomeDetail(@RequestBody @Validated RequestModel<ReportRequestModel> request,
                                                                  BindingResult result) throws Exception {
         super.validate(result);
 

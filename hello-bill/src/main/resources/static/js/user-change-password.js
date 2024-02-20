@@ -101,7 +101,6 @@ function changePassword() {
     }
 
     const data = {
-        username: getItem("username"),
         oldPassword: oldPassword,
         newPassword: newPassword
     };

@@ -4,12 +4,27 @@
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
-doPost = function (url, request, callback) {
+doPost = function (url, data, callback) {
     const $ = layui.jquery;
 
     let loading = layer.load(1, {
         shade: false,
     });
+
+    if (data == null) {
+        data = {};
+    }
+
+    const timestamp = Math.round(new Date().getTime());
+    const nonce = Math.round(Math.random() * 10000000000);
+
+    const request = {
+        username: isEmpty(getItem("username")) ? data.username : getItem("username"),
+        timestamp: timestamp,
+        nonce: nonce,
+        sign: "sign",
+        data: data
+    };
 
     $.ajax({
         type: "POST",

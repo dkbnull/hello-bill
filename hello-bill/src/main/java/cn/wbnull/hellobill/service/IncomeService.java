@@ -33,13 +33,13 @@ public class IncomeService {
     @Autowired
     private ClassInfoService classInfoService;
 
-    public ResponseModel<List<IncomeInfo>> queryList(QueryListRequestModel request) throws Exception {
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfos(request);
+    public ResponseModel<List<IncomeInfo>> queryList(RequestModel<QueryListRequestModel> request) throws Exception {
+        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfos(request.getUsername(), request.getData());
 
         return ResponseModel.success(incomeInfos);
     }
 
-    public ResponseModel<List<String>> classQuery(RequestModel request) throws Exception {
+    public ResponseModel<List<String>> classQuery(RequestModel<Object> request) throws Exception {
         List<ClassInfo> classInfos = classInfoService.getSecondClassInfosByType(TypeEnum.INCOME.getTypeCode());
         List<String> secondClasses = new ArrayList<>();
         for (ClassInfo classInfo : classInfos) {
@@ -49,24 +49,24 @@ public class IncomeService {
         return ResponseModel.success(secondClasses);
     }
 
-    public ResponseModel<Object> add(AddRequestModel request) throws Exception {
-        incomeInfoService.addIncomeInfo(request);
+    public ResponseModel<Object> add(RequestModel<AddRequestModel> request) throws Exception {
+        incomeInfoService.addIncomeInfo(request.getUsername(), request.getData());
 
         return ResponseModel.success("记账成功");
     }
 
-    public ResponseModel<IncomeInfo> query(QueryRequestModel request) throws Exception {
-        return ResponseModel.success(incomeInfoService.getIncomeInfo(request));
+    public ResponseModel<IncomeInfo> query(RequestModel<QueryRequestModel> request) throws Exception {
+        return ResponseModel.success(incomeInfoService.getIncomeInfo(request.getData()));
     }
 
-    public ResponseModel<Object> update(UpdateRequestModel request) throws Exception {
-        incomeInfoService.updateIncomeInfo(request);
+    public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) throws Exception {
+        incomeInfoService.updateIncomeInfo(request.getData());
 
         return ResponseModel.success("修改成功");
     }
 
-    public ResponseModel<Object> delete(DeleteRequestModel request) throws Exception {
-        incomeInfoService.deleteIncomeInfo(request);
+    public ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request) throws Exception {
+        incomeInfoService.deleteIncomeInfo(request.getUsername(), request.getData());
 
         return ResponseModel.success("删除成功");
     }

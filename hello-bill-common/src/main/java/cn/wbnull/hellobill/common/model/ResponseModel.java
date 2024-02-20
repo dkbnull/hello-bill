@@ -48,7 +48,7 @@ public class ResponseModel<T> {
     }
 
     public void log(RequestModel request) {
-        HttpServletRequest servletRequest = request.servletInfo();
+        HttpServletRequest servletRequest = request.initServletInfo();
 
         LoggerUtils.info("响应", servletRequest.getRequestURI(), this.toString());
     }

@@ -36,26 +36,28 @@ public class ReportService {
     @Autowired
     private IncomeInfoService incomeInfoService;
 
-    public ResponseModel<Object> expend(ReportRequestModel request) throws Exception {
+    public ResponseModel<Object> expend(RequestModel<ReportRequestModel> request) throws Exception {
+        ReportRequestModel data = request.getData();
+
         List<ExpendInfo> expendInfos = expendInfoService.getExpendReportByClass(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
         List<ExpendInfo> expendInfosSecond = expendInfoService.getExpendReportBySecondClass(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
 
         ReportResponseModel<ExpendInfo> response = ReportResponseModel.buildExpend(expendInfos,
                 expendInfosSecond);
 
-        LocalDate beginDate = LocalDate.of(Integer.parseInt(request.getReportDate()), 1, 1);
+        LocalDate beginDate = LocalDate.of(Integer.parseInt(data.getReportDate()), 1, 1);
         LocalDate localDate = LocalDate.now();
         LocalDate endDate;
         if (beginDate.getYear() == localDate.getYear()) {
             endDate = localDate;
         } else {
-            endDate = LocalDate.of(Integer.parseInt(request.getReportDate()), 12, 31);
+            endDate = LocalDate.of(Integer.parseInt(data.getReportDate()), 12, 31);
         }
 
         List<ExpendInfo> expendInfosDate = expendInfoService.getExpendReportByDate(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
         JSONArray expendReport = analysisExpendReport(expendInfosDate, beginDate, endDate);
 
         response.setReportDate(expendReport);
@@ -68,7 +70,7 @@ public class ReportService {
         response.setDate(date);
 
         List<ExpendInfo> expendInfosDateSum = expendInfoService.getExpendReportByDateSum(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
         JSONArray total = new JSONArray();
         for (ExpendInfo expendInfo : expendInfosDateSum) {
             total.add(expendInfo.getAmount());
@@ -118,11 +120,13 @@ public class ReportService {
         return expendReport;
     }
 
-    public ResponseModel<Object> income(ReportRequestModel request) throws Exception {
+    public ResponseModel<Object> income(RequestModel<ReportRequestModel> request) throws Exception {
+        ReportRequestModel data = request.getData();
+
         List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReportByClass(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
         List<IncomeInfo> incomeInfosSecond = incomeInfoService.getIncomeReportBySecondClass(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
 
         ReportResponseModel<IncomeInfo> response = ReportResponseModel.buildIncome(incomeInfos,
                 incomeInfosSecond);
@@ -131,7 +135,7 @@ public class ReportService {
         LocalDate endDate = LocalDate.now();
 
         List<IncomeInfo> incomeReportByDate = incomeInfoService.getIncomeReportByDate(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
 
         JSONArray incomeReport = analysisIncomeReport(incomeReportByDate, beginDate, endDate);
         response.setReportDate(incomeReport);
@@ -144,7 +148,7 @@ public class ReportService {
         response.setDate(date);
 
         List<IncomeInfo> incomeReportByDateSum = incomeInfoService.getIncomeReportByDateSum(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
         JSONArray total = new JSONArray();
         for (IncomeInfo incomeInfo : incomeReportByDateSum) {
             total.add(incomeInfo.getAmount());
@@ -194,42 +198,50 @@ public class ReportService {
         return incomeReport;
     }
 
-    public ResponseModel<QueryResponseModel> query(RequestModel request) throws Exception {
+    public ResponseModel<QueryResponseModel> query(RequestModel<Object> request) throws Exception {
         List<ExpendInfo> expendInfos = expendInfoService.getExpendReportSum(request.getUsername());
         List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReportSum(request.getUsername());
 
         return ResponseModel.success(QueryResponseModel.build(expendInfos, incomeInfos));
     }
 
-    public ResponseModel<ExpendClassResponseModel> expendClass(ExpendClassRequestModel request) throws Exception {
+    public ResponseModel<ExpendClassResponseModel> expendClass(RequestModel<ExpendClassRequestModel> request) throws Exception {
+        ExpendClassRequestModel data = request.getData();
+
         List<ExpendInfo> expendInfos = expendInfoService.getExpendInfoByClass(request.getUsername(),
-                request.getReportDate(), request.getTopClass());
+                data.getReportDate(), data.getTopClass());
 
         List<ClassInfo> classInfos = classInfoService.getSecondClassInfos(TypeEnum.EXPEND.getTypeCode(),
-                request.getTopClass());
+                data.getTopClass());
 
         return ResponseModel.success(ExpendClassResponseModel.build(classInfos, expendInfos));
     }
 
-    public ResponseModel<ExpendDetailResponseModel> expendDetail(ExpendDetailRequestModel request) throws Exception {
+    public ResponseModel<ExpendDetailResponseModel> expendDetail(RequestModel<ExpendDetailRequestModel> request) throws Exception {
+        ExpendDetailRequestModel data = request.getData();
+
         List<ExpendInfo> expendInfos = expendInfoService.getExpendInfoByDetail(request.getUsername(),
-                request.getReportDate(), request.getTopClass(), request.getSecondClass());
+                data.getReportDate(), data.getTopClass(), data.getSecondClass());
 
         return ResponseModel.success(ExpendDetailResponseModel.build(expendInfos));
     }
 
-    public ResponseModel<ExpendClassResponseModel> incomeClass(ReportRequestModel request) throws Exception {
+    public ResponseModel<ExpendClassResponseModel> incomeClass(RequestModel<ReportRequestModel> request) throws Exception {
+        ReportRequestModel data = request.getData();
+
         List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfoByClass(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
 
         List<ClassInfo> classInfos = classInfoService.getTopClassInfos(TypeEnum.INCOME.getTypeCode());
 
         return ResponseModel.success(ExpendClassResponseModel.buildIncome(classInfos, incomeInfos));
     }
 
-    public ResponseModel<ExpendDetailResponseModel> incomeDetail(ReportRequestModel request) throws Exception {
+    public ResponseModel<ExpendDetailResponseModel> incomeDetail(RequestModel<ReportRequestModel> request) throws Exception {
+        ReportRequestModel data = request.getData();
+
         List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfoByDetail(request.getUsername(),
-                request.getReportDate());
+                data.getReportDate());
 
         return ResponseModel.success(ExpendDetailResponseModel.buildIncome(incomeInfos));
     }

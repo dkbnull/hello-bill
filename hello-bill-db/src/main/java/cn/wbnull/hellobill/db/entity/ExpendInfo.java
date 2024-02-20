@@ -47,10 +47,10 @@ public class ExpendInfo extends Model<ExpendInfo> {
 
     private String remark;
 
-    public static ExpendInfo build(AddRequestModel request, String topClass) {
+    public static ExpendInfo build(String username, AddRequestModel request, String topClass) {
         ExpendInfo expendInfo = new ExpendInfo();
         expendInfo.uuid = UUID.randomUUID().toString();
-        expendInfo.username = request.getUsername();
+        expendInfo.username = username;
         expendInfo.expendTime = DateUtils.localDateTimeParse(request.getExpendTime());
         expendInfo.topClass = topClass;
         expendInfo.secondClass = request.getSecondClass();

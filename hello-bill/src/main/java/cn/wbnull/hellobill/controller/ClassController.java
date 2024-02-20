@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.controller;
 
+import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.cls.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.cls.UpdateRequestModel;
@@ -40,7 +41,7 @@ public class ClassController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<List<ClassInfo>> query(@RequestBody @Validated QueryRequestModel request,
+    public ResponseModel<List<ClassInfo>> query(@RequestBody @Validated RequestModel<QueryRequestModel> request,
                                                 BindingResult result) throws Exception {
         super.validate(result);
 
@@ -56,7 +57,7 @@ public class ClassController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "update")
-    public ResponseModel<Object> update(@RequestBody @Validated UpdateRequestModel request,
+    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request,
                                         BindingResult result) throws Exception {
         super.validate(result);
 
@@ -64,7 +65,7 @@ public class ClassController extends BaseController {
     }
 
     @PostMapping(value = "queryClass")
-    public ResponseModel<List<String>> queryClass(@RequestBody @Validated ClassRequestModel request,
+    public ResponseModel<List<String>> queryClass(@RequestBody @Validated RequestModel<ClassRequestModel> request,
                                                   BindingResult result) throws Exception {
         super.validate(result);
 

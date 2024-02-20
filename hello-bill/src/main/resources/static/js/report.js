@@ -17,11 +17,7 @@ layui.use(['element', 'layer', 'laydate', 'form'], function () {
 });
 
 function doPostReport() {
-    const request = {
-        username: getItem("username"),
-    };
-
-    doPost("report/query", request, callback)
+    doPost("report/query", null, callback)
 }
 
 function callback(result) {

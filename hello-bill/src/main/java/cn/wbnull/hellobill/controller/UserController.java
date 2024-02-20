@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.controller;
 
+import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.user.ChangePasswordRequestModel;
 import cn.wbnull.hellobill.common.model.user.LoginRequestModel;
@@ -37,7 +38,7 @@ public class UserController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "login")
-    public ResponseModel<LoginResponseModel> login(@RequestBody @Validated LoginRequestModel request,
+    public ResponseModel<LoginResponseModel> login(@RequestBody @Validated RequestModel<LoginRequestModel> request,
                                                    BindingResult result) throws Exception {
         super.validate(result);
 
@@ -53,7 +54,7 @@ public class UserController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "changePassword")
-    public ResponseModel<Object> changePassword(@RequestBody @Validated ChangePasswordRequestModel request,
+    public ResponseModel<Object> changePassword(@RequestBody @Validated RequestModel<ChangePasswordRequestModel> request,
                                                 BindingResult result) throws Exception {
         super.validate(result);
 

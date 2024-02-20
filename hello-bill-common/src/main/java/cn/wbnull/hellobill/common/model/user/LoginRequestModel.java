@@ -1,9 +1,6 @@
 package cn.wbnull.hellobill.common.model.user;
 
-import cn.wbnull.hellobill.common.model.RequestModel;
-import com.alibaba.fastjson.JSON;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -13,15 +10,12 @@ import javax.validation.constraints.NotEmpty;
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class LoginRequestModel extends RequestModel {
+public class LoginRequestModel {
+
+    @NotEmpty(message = "username 不能为空")
+    private String username;
 
     @NotEmpty(message = "password 不能为空")
     private String password;
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
 }

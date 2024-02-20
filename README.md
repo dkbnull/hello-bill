@@ -14,6 +14,12 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.7.18
+
+`2024-02-20`
+
+* <mark style='background:Yellow'> 优化 </mark> 接口请求参数结构调整
+
 ### 1.0.6.17
 
 `2024-02-19`

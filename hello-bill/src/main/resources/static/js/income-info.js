@@ -76,8 +76,7 @@ function initMethod() {
 }
 
 function doPostQuery(beginDate, endDate) {
-    const request = {
-        username: getItem("username"),
+    const data = {
         beginDate: beginDate,
         endDate: endDate,
         secondClass: $('#second-class-input').val(),
@@ -85,7 +84,7 @@ function doPostQuery(beginDate, endDate) {
         order: $('input[name="order"]:checked').val()
     };
 
-    doPost("income/queryList", request, callback)
+    doPost("income/queryList", data, callback)
 }
 
 function callback(result) {
@@ -110,12 +109,11 @@ function callback(result) {
     table.on('tool(infoTable)', function (obj) {
         if (obj.event === 'del') {
             layer.confirm('是否删除当前收入明细？', function (index) {
-                const request = {
-                    username: getItem("username"),
+                const data = {
                     uuid: obj.data.uuid
                 };
 
-                doPost("income/delete", request, callbackDelete)
+                doPost("income/delete", data, callbackDelete)
                 layer.close(index);
             });
         } else if (obj.event === 'edit') {

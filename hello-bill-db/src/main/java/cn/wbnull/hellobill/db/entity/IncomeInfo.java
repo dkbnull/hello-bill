@@ -44,10 +44,10 @@ public class IncomeInfo extends Model<IncomeInfo> {
 
     private String remark;
 
-    public static IncomeInfo build(AddRequestModel request, String topClass) {
+    public static IncomeInfo build(String username, AddRequestModel request, String topClass) {
         IncomeInfo incomeInfo = new IncomeInfo();
         incomeInfo.uuid = UUID.randomUUID().toString();
-        incomeInfo.username = request.getUsername();
+        incomeInfo.username = username;
         incomeInfo.incomeDate = DateUtils.localDateParse(request.getIncomeDate());
         incomeInfo.topClass = topClass;
         incomeInfo.secondClass = request.getSecondClass();
