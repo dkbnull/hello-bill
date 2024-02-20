@@ -64,6 +64,14 @@ public class ClassController extends BaseController {
         return classService.update(request);
     }
 
+    /**
+     * 报表分类查询接口
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
     @PostMapping(value = "queryClass")
     public ResponseModel<List<String>> queryClass(@RequestBody @Validated RequestModel<ClassRequestModel> request,
                                                   BindingResult result) throws Exception {
