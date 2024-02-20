@@ -33,3 +33,13 @@
 .layui-layer-custom .layui-layer-btn .layui-layer-btn1 {
     color: #333333;
 }
+
+.reload-info .layui-input-block {
+    margin-left: 20px;
+    padding: 10px 15px 0 15px;
+}
+
+.reload-info .layui-btn {
+    width: 90px;
+    background-color: #333333;
+}
