@@ -60,6 +60,38 @@ function initMethod() {
 
         initDatetime(value);
     });
+
+    $('#expend-time-value-input').focus();
+    $('#expend-time-value-input').on('keydown', function (event) {
+        if (event.keyCode === 13) {
+            $('#second-class-select').focus();
+            return false
+        }
+    });
+    $('#second-class-select').on('keydown', function (event) {
+        if (event.keyCode === 13) {
+            $('#detail-input').focus();
+            return false
+        }
+    });
+    $('#detail-input').on('keydown', function (event) {
+        if (event.keyCode === 13) {
+            $('#amount-input').focus();
+            return false
+        }
+    });
+    $('#amount-input').on('keydown', function (event) {
+        if (event.keyCode === 13) {
+            $('#remark-input').focus();
+            return false
+        }
+    });
+    $('#remark-input').on('keydown', function (event) {
+        if (event.keyCode === 13) {
+            addInfo();
+            return false
+        }
+    });
 }
 
 function addInfo() {

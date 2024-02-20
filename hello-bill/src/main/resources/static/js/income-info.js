@@ -56,18 +56,18 @@ function initMethod() {
 
         addInfo: function () {
             layer.open({
-                type: 2
-                , title: '记账'
-                , content: 'income-info-add.html'
-                , area: ['350px', '500px']
-                , maxmin: true
-                , shade: 0
-                , btn: ['确认', '取消']
-                , yes: function (index, layero) {
+                type: 2,
+                skin: 'layui-layer-custom',
+                title: '记账',
+                content: 'income-info-add.html',
+                area: ['350px', '500px'],
+                shade: 0,
+                btn: ['确认', '取消'],
+                yes: function (index, layero) {
                     const childWindow = layero.find('iframe')[0].contentWindow;
                     childWindow.addInfo();
-                }
-                , btn2: function () {
+                },
+                btn2: function () {
                     layer.closeAll();
                 }
             });

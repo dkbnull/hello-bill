@@ -13,6 +13,7 @@ layui.use(['layer', 'form', 'laydate'], function () {
     initDatetime(dateCalc(0));
     initClass();
     initData();
+    initMethod();
 })
 
 function initDatetime(date) {
@@ -44,6 +45,27 @@ function initData() {
 
         doPost("income/query", request, callbackQuery)
     }
+}
+
+function initMethod() {
+    $('#detail-input').on('keydown', function (event) {
+        if (event.keyCode === 13) {
+            $('#amount-input').focus();
+            return false
+        }
+    });
+    $('#amount-input').on('keydown', function (event) {
+        if (event.keyCode === 13) {
+            $('#remark-input').focus();
+            return false
+        }
+    });
+    $('#remark-input').on('keydown', function (event) {
+        if (event.keyCode === 13) {
+            addInfo();
+            return false
+        }
+    });
 }
 
 function addInfo() {

@@ -1,0 +1,35 @@
+/**
+ * css
+ *
+ * @author dukunbiao(null)  2024-02-20
+ */
+.layui-layer-custom .layui-layer-title {
+    background-color: #393D49;
+    font-size: 15px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.layui-layer-custom .layui-layer-setwin {
+    display: none;
+}
+
+.layui-layer-custom .layui-layer-btn .layui-layer-btn0,
+.layui-layer-custom .layui-layer-btn .layui-layer-btn1 {
+    width: 90px;
+    height: 38px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 38px;
+}
+
+.layui-layer-custom .layui-layer-btn .layui-layer-btn0 {
+    background-color: #333333;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.layui-layer-custom .layui-layer-btn .layui-layer-btn1 {
+    color: #333333;
+}
