@@ -135,6 +135,7 @@ public class IncomeInfoService {
         queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
         queryWrapper.groupBy("DATE_FORMAT(incomeDate, '%Y')");
+        queryWrapper.orderByAsc("DATE_FORMAT(incomeDate, '%Y')");
 
         return incomeInfoMapper.selectList(queryWrapper);
     }
