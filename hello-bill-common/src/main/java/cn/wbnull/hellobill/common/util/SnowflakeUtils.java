@@ -80,7 +80,8 @@ public class SnowflakeUtils {
 
     public synchronized long nextId(long timestamp) {
         if (timestamp < lastTimestamp) {
-            throw new RuntimeException(String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
+            // 若指定了时间戳，则允许时钟回拨
+            lastTimestamp = -1L;
         }
 
         if (timestamp == lastTimestamp) {
