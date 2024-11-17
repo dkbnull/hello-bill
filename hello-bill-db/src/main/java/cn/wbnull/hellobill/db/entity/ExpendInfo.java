@@ -55,9 +55,13 @@ public class ExpendInfo extends Model<ExpendInfo> {
 
     public static ExpendInfo build(String username, AddRequestModel request, String topClass) {
         ExpendInfo expendInfo = new ExpendInfo();
-        expendInfo.id = SnowflakeUtils.getInstance().nextId();
-        expendInfo.username = username;
+
         expendInfo.expendTime = DateUtils.localDateTimeParse(request.getExpendTime());
+
+        assert expendInfo.expendTime != null;
+        long epochMilli = DateUtils.toEpochMilli(expendInfo.expendTime);
+        expendInfo.id = SnowflakeUtils.getInstance().nextId(epochMilli);
+        expendInfo.username = username;
         expendInfo.topClass = topClass;
         expendInfo.secondClass = request.getSecondClass();
         expendInfo.detail = request.getDetail();

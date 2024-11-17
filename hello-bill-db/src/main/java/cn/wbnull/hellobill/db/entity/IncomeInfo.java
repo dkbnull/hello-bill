@@ -13,6 +13,8 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * <p>
@@ -50,9 +52,15 @@ public class IncomeInfo extends Model<IncomeInfo> {
 
     public static IncomeInfo build(String username, AddRequestModel request, String topClass) {
         IncomeInfo incomeInfo = new IncomeInfo();
-        incomeInfo.id = SnowflakeUtils.getInstance().nextId();
-        incomeInfo.username = username;
+
         incomeInfo.incomeDate = DateUtils.localDateParse(request.getIncomeDate());
+        LocalTime time = LocalTime.of(0, 0, 0);
+        assert incomeInfo.incomeDate != null;
+        LocalDateTime dateTime = incomeInfo.incomeDate.atTime(time);
+        long epochMilli = DateUtils.toEpochMilli(dateTime);
+
+        incomeInfo.id = SnowflakeUtils.getInstance().nextId(epochMilli);
+        incomeInfo.username = username;
         incomeInfo.topClass = topClass;
         incomeInfo.secondClass = request.getSecondClass();
         incomeInfo.detail = request.getDetail();
