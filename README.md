@@ -14,6 +14,12 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.8.19
+
+`2024-11-17`
+
+* <mark style='background:LightGreen'> 新增 </mark> 收入、支出明细使用雪花算法生成ID
+
 ### 1.0.7.18
 
 `2024-02-20`

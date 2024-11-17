@@ -3,7 +3,7 @@ package cn.wbnull.hellobill.controller;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.*;
-import cn.wbnull.hellobill.db.entity.ExpendInfo;
+import cn.wbnull.hellobill.model.expend.ExpendInfoModel;
 import cn.wbnull.hellobill.service.ExpendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -39,8 +39,8 @@ public class ExpendController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "queryList")
-    public ResponseModel<List<ExpendInfo>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request,
-                                                     BindingResult result) throws Exception {
+    public ResponseModel<List<ExpendInfoModel>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request,
+                                                          BindingResult result) throws Exception {
         super.validate(result);
 
         return expendService.queryList(request);
@@ -87,8 +87,8 @@ public class ExpendController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<ExpendInfo> query(@RequestBody @Validated RequestModel<QueryRequestModel> request,
-                                           BindingResult result) throws Exception {
+    public ResponseModel<ExpendInfoModel> query(@RequestBody @Validated RequestModel<QueryRequestModel> request,
+                                                BindingResult result) throws Exception {
         super.validate(result);
 
         return expendService.query(request);

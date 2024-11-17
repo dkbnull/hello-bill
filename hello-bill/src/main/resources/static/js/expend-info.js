@@ -112,7 +112,7 @@ function callback(result) {
         if (obj.event === 'del') {
             layer.confirm('是否删除当前支出明细？', function (index) {
                 const data = {
-                    uuid: obj.data.uuid
+                    id: obj.data.id
                 };
 
                 doPost("expend/delete", data, callbackDelete)
@@ -123,7 +123,7 @@ function callback(result) {
                 layer.open({
                     type: 2
                     , title: '修改'
-                    , content: 'expend-info-add.html?uuid=' + obj.data.uuid
+                    , content: 'expend-info-add.html?id=' + obj.data.id
                     , area: ['350px', '500px']
                     , maxmin: true
                     , shade: 0

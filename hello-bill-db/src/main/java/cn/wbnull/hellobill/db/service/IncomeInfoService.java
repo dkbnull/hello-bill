@@ -65,7 +65,7 @@ public class IncomeInfoService {
 
     public IncomeInfo getIncomeInfo(QueryRequestModel request) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(IncomeInfo::getUuid, request.getUuid());
+        queryWrapper.eq(IncomeInfo::getId, request.getId());
 
         return incomeInfoMapper.selectOne(queryWrapper);
     }
@@ -77,7 +77,7 @@ public class IncomeInfoService {
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         LambdaQueryWrapper<IncomeInfo> incomeInfoWrapper = new LambdaQueryWrapper<>();
-        incomeInfoWrapper.eq(IncomeInfo::getUuid, request.getUuid());
+        incomeInfoWrapper.eq(IncomeInfo::getId, request.getId());
 
         IncomeInfo incomeInfo = incomeInfoMapper.selectOne(incomeInfoWrapper);
         incomeInfo.update(request, classInfo.getTopClass());
@@ -86,7 +86,7 @@ public class IncomeInfoService {
 
     public void deleteIncomeInfo(String username, DeleteRequestModel request) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(IncomeInfo::getUuid, request.getUuid());
+        queryWrapper.eq(IncomeInfo::getId, request.getId());
         queryWrapper.eq(IncomeInfo::getUsername, username);
 
         incomeInfoMapper.delete(queryWrapper);

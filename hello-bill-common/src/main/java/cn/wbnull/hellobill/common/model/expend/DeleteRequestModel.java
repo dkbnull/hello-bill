@@ -13,6 +13,6 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class DeleteRequestModel {
 
-    @NotEmpty(message = "uuid 不能为空")
-    private String uuid;
+    @NotEmpty(message = "id 不能为空")
+    private String id;
 }

@@ -37,9 +37,9 @@ function initClass() {
 
 function initData() {
     const search = window.location.search;
-    if (search.startsWith("?uuid")) {
+    if (search.startsWith("?id")) {
         const data = {
-            uuid: search.substring(6, search.length)
+            id: search.substring(4, search.length)
         };
 
         doPost("expend/query", data, callbackQuery)
@@ -105,7 +105,7 @@ function updateInfo() {
     }
 
     const search = window.location.search;
-    data.uuid = search.substring(6, search.length);
+    data.id = search.substring(4, search.length);
     doPost("expend/update", data, callbackAdd);
 }
 

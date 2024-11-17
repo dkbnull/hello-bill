@@ -11,5 +11,5 @@ import lombok.Data;
 @Data
 public class QueryRequestModel {
 
-    private String uuid;
+    private String id;
 }

@@ -4,19 +4,20 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="cn.wbnull.hellobill.db.entity.ExpendInfo">
-        <id column="uuid" property="uuid" />
-        <result column="username" property="username" />
-        <result column="expendTime" property="expendTime" />
-        <result column="topClass" property="topclass" />
-        <result column="secondClass" property="secondclass" />
-        <result column="detail" property="detail" />
-        <result column="amount" property="amount" />
-        <result column="remark" property="remark" />
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="expendTime" property="expendTime"/>
+        <result column="topClass" property="topClass"/>
+        <result column="secondClass" property="secondClass"/>
+        <result column="detail" property="detail"/>
+        <result column="amount" property="amount"/>
+        <result column="remark" property="remark"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        uuid, username, expendTime, topClass, secondClass, detail, amount, remark
+        id
+        , username, expendTime, topClass, secondClass, detail, amount, remark
     </sql>
 
 </mapper>

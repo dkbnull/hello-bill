@@ -7,7 +7,7 @@ import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
 import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
-import cn.wbnull.hellobill.db.entity.IncomeInfo;
+import cn.wbnull.hellobill.model.income.IncomeInfoModel;
 import cn.wbnull.hellobill.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -43,8 +43,8 @@ public class IncomeController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "queryList")
-    public ResponseModel<List<IncomeInfo>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request,
-                                                     BindingResult result) throws Exception {
+    public ResponseModel<List<IncomeInfoModel>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request,
+                                                          BindingResult result) throws Exception {
         super.validate(result);
 
         return incomeService.queryList(request);
@@ -91,7 +91,7 @@ public class IncomeController extends BaseController {
      * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<IncomeInfo> query(@RequestBody @Validated RequestModel<QueryRequestModel> request,
+    public ResponseModel<IncomeInfoModel> query(@RequestBody @Validated RequestModel<QueryRequestModel> request,
                                            BindingResult result) throws Exception {
         super.validate(result);
 

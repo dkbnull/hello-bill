@@ -4,10 +4,12 @@ import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.expend.*;
+import cn.wbnull.hellobill.common.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
 import cn.wbnull.hellobill.db.service.ExpendInfoService;
+import cn.wbnull.hellobill.model.expend.ExpendInfoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +31,11 @@ public class ExpendService {
     @Autowired
     private ClassInfoService classInfoService;
 
-    public ResponseModel<List<ExpendInfo>> queryList(RequestModel<QueryListRequestModel> request) throws Exception {
+    public ResponseModel<List<ExpendInfoModel>> queryList(RequestModel<QueryListRequestModel> request) throws Exception {
         List<ExpendInfo> expendInfos = expendInfoService.getExpendInfos(request.getUsername(), request.getData());
+        List<ExpendInfoModel> expendInfoModelList = BeanUtils.copyPropertyList(expendInfos, ExpendInfoModel.class);
 
-        return ResponseModel.success(expendInfos);
+        return ResponseModel.success(expendInfoModelList);
     }
 
     public ResponseModel<List<String>> classQuery(RequestModel<Object> request) throws Exception {
@@ -51,8 +54,11 @@ public class ExpendService {
         return ResponseModel.success("记账成功");
     }
 
-    public ResponseModel<ExpendInfo> query(RequestModel<QueryRequestModel> request) throws Exception {
-        return ResponseModel.success(expendInfoService.getExpendInfo(request.getData()));
+    public ResponseModel<ExpendInfoModel> query(RequestModel<QueryRequestModel> request) throws Exception {
+        ExpendInfo expendInfo = expendInfoService.getExpendInfo(request.getData());
+        ExpendInfoModel expendInfoModel = BeanUtils.copyProperties(expendInfo, ExpendInfoModel.class);
+
+        return ResponseModel.success(expendInfoModel);
     }
 
     public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) throws Exception {

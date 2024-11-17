@@ -4,15 +4,18 @@ import cn.wbnull.hellobill.common.constant.UtilConstants;
 import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
 import cn.wbnull.hellobill.common.model.expend.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
+import cn.wbnull.hellobill.common.util.SnowflakeUtils;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * <p>
@@ -22,15 +25,18 @@ import java.util.UUID;
  * @author dukunbiao(null)
  * @since 2020-12-31
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class ExpendInfo extends Model<ExpendInfo> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId
-    private String uuid;
+    private Long id;
 
     private String username;
 
+    @JSONField(format = UtilConstants.DATE_FORMAT)
     @JsonFormat(pattern = UtilConstants.DATE_FORMAT)
     @TableField("expendTime")
     private LocalDateTime expendTime;
@@ -49,7 +55,7 @@ public class ExpendInfo extends Model<ExpendInfo> {
 
     public static ExpendInfo build(String username, AddRequestModel request, String topClass) {
         ExpendInfo expendInfo = new ExpendInfo();
-        expendInfo.uuid = UUID.randomUUID().toString();
+        expendInfo.id = SnowflakeUtils.getInstance().nextId();
         expendInfo.username = username;
         expendInfo.expendTime = DateUtils.localDateTimeParse(request.getExpendTime());
         expendInfo.topClass = topClass;
@@ -70,73 +76,9 @@ public class ExpendInfo extends Model<ExpendInfo> {
         this.remark = request.getRemark();
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public LocalDateTime getExpendTime() {
-        return expendTime;
-    }
-
-    public void setExpendTime(LocalDateTime expendTime) {
-        this.expendTime = expendTime;
-    }
-
-    public String getTopClass() {
-        return topClass;
-    }
-
-    public void setTopClass(String topClass) {
-        this.topClass = topClass;
-    }
-
-    public String getSecondClass() {
-        return secondClass;
-    }
-
-    public void setSecondClass(String secondClass) {
-        this.secondClass = secondClass;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
     @Override
     protected Serializable pkVal() {
-        return this.uuid;
+        return this.id;
     }
 
     @Override

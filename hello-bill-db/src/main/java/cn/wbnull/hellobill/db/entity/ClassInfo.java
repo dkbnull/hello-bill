@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -16,6 +18,8 @@ import java.io.Serializable;
  * @author dukunbiao(null)
  * @since 2020-12-31
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class ClassInfo extends Model<ClassInfo> {
 
     private static final long serialVersionUID = 1L;
@@ -38,54 +42,6 @@ public class ClassInfo extends Model<ClassInfo> {
 
     public void analyseInfo() {
         this.type = TypeEnum.getTypeEnum(this.type).getTypeName();
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getTopClass() {
-        return topClass;
-    }
-
-    public void setTopClass(String topClass) {
-        this.topClass = topClass;
-    }
-
-    public String getSecondClass() {
-        return secondClass;
-    }
-
-    public void setSecondClass(String secondClass) {
-        this.secondClass = secondClass;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Integer getSerialNo() {
-        return serialNo;
-    }
-
-    public void setSerialNo(Integer serialNo) {
-        this.serialNo = serialNo;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     @Override

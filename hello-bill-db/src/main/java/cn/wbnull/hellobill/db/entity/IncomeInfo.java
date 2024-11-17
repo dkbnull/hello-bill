@@ -3,14 +3,16 @@ package cn.wbnull.hellobill.db.entity;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
+import cn.wbnull.hellobill.common.util.SnowflakeUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.UUID;
 
 /**
  * <p>
@@ -20,12 +22,14 @@ import java.util.UUID;
  * @author dukunbiao(null)
  * @since 2021-01-01
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class IncomeInfo extends Model<IncomeInfo> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId
-    private String uuid;
+    private Long id;
 
     private String username;
 
@@ -46,7 +50,7 @@ public class IncomeInfo extends Model<IncomeInfo> {
 
     public static IncomeInfo build(String username, AddRequestModel request, String topClass) {
         IncomeInfo incomeInfo = new IncomeInfo();
-        incomeInfo.uuid = UUID.randomUUID().toString();
+        incomeInfo.id = SnowflakeUtils.getInstance().nextId();
         incomeInfo.username = username;
         incomeInfo.incomeDate = DateUtils.localDateParse(request.getIncomeDate());
         incomeInfo.topClass = topClass;
@@ -67,73 +71,9 @@ public class IncomeInfo extends Model<IncomeInfo> {
         this.remark = request.getRemark();
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public LocalDate getIncomeDate() {
-        return incomeDate;
-    }
-
-    public void setIncomeDate(LocalDate incomeDate) {
-        this.incomeDate = incomeDate;
-    }
-
-    public String getTopClass() {
-        return topClass;
-    }
-
-    public void setTopClass(String topClass) {
-        this.topClass = topClass;
-    }
-
-    public String getSecondClass() {
-        return secondClass;
-    }
-
-    public void setSecondClass(String secondClass) {
-        this.secondClass = secondClass;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
     @Override
     protected Serializable pkVal() {
-        return this.uuid;
+        return this.id;
     }
 
     @Override

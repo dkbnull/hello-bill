@@ -62,7 +62,7 @@ public class ExpendInfoService {
 
     public ExpendInfo getExpendInfo(QueryRequestModel request) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ExpendInfo::getUuid, request.getUuid());
+        queryWrapper.eq(ExpendInfo::getId, request.getId());
 
         return expendInfoMapper.selectOne(queryWrapper);
     }
@@ -74,7 +74,7 @@ public class ExpendInfoService {
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         LambdaQueryWrapper<ExpendInfo> expendInfoWrapper = new LambdaQueryWrapper<>();
-        expendInfoWrapper.eq(ExpendInfo::getUuid, request.getUuid());
+        expendInfoWrapper.eq(ExpendInfo::getId, request.getId());
 
         ExpendInfo expendInfo = expendInfoMapper.selectOne(expendInfoWrapper);
         expendInfo.update(request, classInfo.getTopClass());
@@ -83,7 +83,7 @@ public class ExpendInfoService {
 
     public void deleteExpendInfo(String username, DeleteRequestModel request) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ExpendInfo::getUuid, request.getUuid());
+        queryWrapper.eq(ExpendInfo::getId, request.getId());
         queryWrapper.eq(ExpendInfo::getUsername, username);
 
         expendInfoMapper.delete(queryWrapper);

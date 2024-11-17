@@ -8,10 +8,12 @@ import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
 import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
 import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
+import cn.wbnull.hellobill.common.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
 import cn.wbnull.hellobill.db.service.IncomeInfoService;
+import cn.wbnull.hellobill.model.income.IncomeInfoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +35,11 @@ public class IncomeService {
     @Autowired
     private ClassInfoService classInfoService;
 
-    public ResponseModel<List<IncomeInfo>> queryList(RequestModel<QueryListRequestModel> request) throws Exception {
+    public ResponseModel<List<IncomeInfoModel>> queryList(RequestModel<QueryListRequestModel> request) throws Exception {
         List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfos(request.getUsername(), request.getData());
+        List<IncomeInfoModel> incomeInfoModelList = BeanUtils.copyPropertyList(incomeInfos, IncomeInfoModel.class);
 
-        return ResponseModel.success(incomeInfos);
+        return ResponseModel.success(incomeInfoModelList);
     }
 
     public ResponseModel<List<String>> classQuery(RequestModel<Object> request) throws Exception {
@@ -55,8 +58,10 @@ public class IncomeService {
         return ResponseModel.success("记账成功");
     }
 
-    public ResponseModel<IncomeInfo> query(RequestModel<QueryRequestModel> request) throws Exception {
-        return ResponseModel.success(incomeInfoService.getIncomeInfo(request.getData()));
+    public ResponseModel<IncomeInfoModel> query(RequestModel<QueryRequestModel> request) throws Exception {
+        IncomeInfo incomeInfo = incomeInfoService.getIncomeInfo(request.getData());
+        IncomeInfoModel incomeInfoModel = BeanUtils.copyProperties(incomeInfo, IncomeInfoModel.class);
+        return ResponseModel.success(incomeInfoModel);
     }
 
     public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) throws Exception {
