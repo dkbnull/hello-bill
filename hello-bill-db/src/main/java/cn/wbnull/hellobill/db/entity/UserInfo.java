@@ -1,12 +1,12 @@
 package cn.wbnull.hellobill.db.entity;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
@@ -14,23 +14,21 @@ import java.io.Serializable;
  * </p>
  *
  * @author dukunbiao(null)
- * @since 2020-12-29
+ * @since 2024-11-22
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
-public class UserInfo extends Model<UserInfo> {
+@Getter
+@Setter
+@TableName("user_info")
+public class UserInfo {
 
-    private static final long serialVersionUID = 1L;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
-    @TableId
+    @TableField("username")
     private String username;
 
+    @TableField("password")
     private String password;
-
-    @Override
-    protected Serializable pkVal() {
-        return this.username;
-    }
 
     @Override
     public String toString() {

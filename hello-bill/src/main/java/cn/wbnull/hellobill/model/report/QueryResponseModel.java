@@ -27,12 +27,12 @@ public class QueryResponseModel {
         responseModel.date = new ArrayList<>();
 
         for (ExpendInfo expendInfo : expendInfos) {
-            responseModel.expendData.add(expendInfo.getAmount());
+            responseModel.expendData.add(expendInfo.getAmount().toString());
             responseModel.date.add(expendInfo.getRemark());
         }
 
         for (IncomeInfo incomeInfo : incomeInfos) {
-            responseModel.incomeData.add(incomeInfo.getAmount());
+            responseModel.incomeData.add(incomeInfo.getAmount().toString());
         }
 
         return responseModel;

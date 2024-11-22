@@ -7,14 +7,15 @@ import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.common.util.SnowflakeUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -23,17 +24,17 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author dukunbiao(null)
- * @since 2020-12-31
+ * @since 2024-11-22
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
-public class ExpendInfo extends Model<ExpendInfo> {
+@Getter
+@Setter
+@TableName("expend_info")
+public class ExpendInfo {
 
-    private static final long serialVersionUID = 1L;
-
-    @TableId
+    @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
+    @TableField("username")
     private String username;
 
     @JSONField(format = UtilConstants.DATE_FORMAT)
@@ -47,10 +48,13 @@ public class ExpendInfo extends Model<ExpendInfo> {
     @TableField("secondClass")
     private String secondClass;
 
+    @TableField("detail")
     private String detail;
 
-    private String amount;
+    @TableField("amount")
+    private BigDecimal amount;
 
+    @TableField("remark")
     private String remark;
 
     public static ExpendInfo build(String username, AddRequestModel request, String topClass) {
@@ -65,7 +69,7 @@ public class ExpendInfo extends Model<ExpendInfo> {
         expendInfo.topClass = topClass;
         expendInfo.secondClass = request.getSecondClass();
         expendInfo.detail = request.getDetail();
-        expendInfo.amount = request.getAmount();
+        expendInfo.amount = new BigDecimal(request.getAmount());
         expendInfo.remark = request.getRemark();
 
         return expendInfo;
@@ -76,13 +80,8 @@ public class ExpendInfo extends Model<ExpendInfo> {
         this.topClass = topClass;
         this.secondClass = request.getSecondClass();
         this.detail = request.getDetail();
-        this.amount = request.getAmount();
+        this.amount = new BigDecimal(request.getAmount());
         this.remark = request.getRemark();
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
     }
 
     @Override

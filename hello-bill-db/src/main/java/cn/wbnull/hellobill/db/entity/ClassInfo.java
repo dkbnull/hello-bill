@@ -1,14 +1,12 @@
 package cn.wbnull.hellobill.db.entity;
 
 import cn.wbnull.hellobill.common.constant.TypeEnum;
-import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
@@ -16,15 +14,14 @@ import java.io.Serializable;
  * </p>
  *
  * @author dukunbiao(null)
- * @since 2020-12-31
+ * @since 2024-11-22
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
-public class ClassInfo extends Model<ClassInfo> {
+@Getter
+@Setter
+@TableName("class_info")
+public class ClassInfo {
 
-    private static final long serialVersionUID = 1L;
-
-    @TableId
+    @TableId(value = "uuid", type = IdType.INPUT)
     private String uuid;
 
     @TableField("topClass")
@@ -33,24 +30,16 @@ public class ClassInfo extends Model<ClassInfo> {
     @TableField("secondClass")
     private String secondClass;
 
+    @TableField("type")
     private String type;
 
     @TableField("serialNo")
     private Integer serialNo;
 
+    @TableField("status")
     private String status;
 
     public void analyseInfo() {
         this.type = TypeEnum.getTypeEnum(this.type).getTypeName();
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.uuid;
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
     }
 }

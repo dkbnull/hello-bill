@@ -30,7 +30,7 @@ public class ExpendDetailResponseModel {
             }
 
             responseModel.secondDetail.add(expendInfo.getDetail());
-            responseModel.secondAmount.add(expendInfo.getAmount());
+            responseModel.secondAmount.add(expendInfo.getAmount().toString());
             i++;
         }
 
@@ -48,7 +48,7 @@ public class ExpendDetailResponseModel {
             }
 
             responseModel.secondDetail.add(incomeInfo.getDetail());
-            responseModel.secondAmount.add(incomeInfo.getAmount());
+            responseModel.secondAmount.add(incomeInfo.getAmount().toString());
             i++;
         }
 

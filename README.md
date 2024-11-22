@@ -14,6 +14,13 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.9.20
+
+`2024-11-22`
+
+* <mark style='background:LightGreen'> 新增 </mark> Spring Boot 版本升级至2.7.18
+* <mark style='background:LightGreen'> 新增 </mark> Mybatis Plus 版本升级至3.5.9
+
 ### 1.0.8.19
 
 `2024-11-17`

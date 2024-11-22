@@ -2,7 +2,7 @@ package cn.wbnull.hellobill.db.mapper;
 
 import cn.wbnull.hellobill.db.entity.UserInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author dukunbiao(null)
- * @since 2020-12-29
+ * @since 2024-11-22
  */
-@Repository
+@Mapper
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
 }

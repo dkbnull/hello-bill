@@ -5,13 +5,14 @@ import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.common.util.SnowflakeUtils;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,17 +23,17 @@ import java.time.LocalTime;
  * </p>
  *
  * @author dukunbiao(null)
- * @since 2021-01-01
+ * @since 2024-11-22
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
-public class IncomeInfo extends Model<IncomeInfo> {
+@Getter
+@Setter
+@TableName("income_info")
+public class IncomeInfo {
 
-    private static final long serialVersionUID = 1L;
-
-    @TableId
+    @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
+    @TableField("username")
     private String username;
 
     @TableField("incomeDate")
@@ -44,10 +45,13 @@ public class IncomeInfo extends Model<IncomeInfo> {
     @TableField("secondClass")
     private String secondClass;
 
+    @TableField("detail")
     private String detail;
 
-    private String amount;
+    @TableField("amount")
+    private BigDecimal amount;
 
+    @TableField("remark")
     private String remark;
 
     public static IncomeInfo build(String username, AddRequestModel request, String topClass) {
@@ -64,7 +68,7 @@ public class IncomeInfo extends Model<IncomeInfo> {
         incomeInfo.topClass = topClass;
         incomeInfo.secondClass = request.getSecondClass();
         incomeInfo.detail = request.getDetail();
-        incomeInfo.amount = request.getAmount();
+        incomeInfo.amount = new BigDecimal(request.getAmount());
         incomeInfo.remark = request.getRemark();
 
         return incomeInfo;
@@ -75,13 +79,8 @@ public class IncomeInfo extends Model<IncomeInfo> {
         this.topClass = topClass;
         this.secondClass = request.getSecondClass();
         this.detail = request.getDetail();
-        this.amount = request.getAmount();
+        this.amount = new BigDecimal(request.getAmount());
         this.remark = request.getRemark();
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
     }
 
     @Override

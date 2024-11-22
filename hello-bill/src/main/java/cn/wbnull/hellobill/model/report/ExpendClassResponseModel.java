@@ -31,7 +31,7 @@ public class ExpendClassResponseModel {
                 }
 
                 responseModel.secondClass.add(expendInfo.getSecondClass());
-                responseModel.secondAmount.add(expendInfo.getAmount());
+                responseModel.secondAmount.add(expendInfo.getAmount().toString());
                 break;
             }
         }
@@ -50,7 +50,7 @@ public class ExpendClassResponseModel {
                 }
 
                 responseModel.secondClass.add(incomeInfo.getTopClass());
-                responseModel.secondAmount.add(incomeInfo.getAmount());
+                responseModel.secondAmount.add(incomeInfo.getAmount().toString());
                 break;
             }
         }
