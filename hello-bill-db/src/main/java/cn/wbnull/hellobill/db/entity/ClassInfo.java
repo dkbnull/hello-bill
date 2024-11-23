@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  *
@@ -38,6 +40,12 @@ public class ClassInfo {
 
     @TableField("status")
     private String status;
+
+    @TableField("createTime")
+    private LocalDateTime createTime;
+
+    @TableField("updateTime")
+    private LocalDateTime updateTime;
 
     public void analyseInfo() {
         this.type = TypeEnum.getTypeEnum(this.type).getTypeName();

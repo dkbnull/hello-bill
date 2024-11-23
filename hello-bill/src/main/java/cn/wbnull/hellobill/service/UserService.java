@@ -28,10 +28,11 @@ public class UserService {
 
         UserInfo userInfo = userInfoService.getUserInfo(data.getUsername());
         if (userInfo == null) {
-            return ResponseModel.fail("用户不存在");
+            return ResponseModel.fail("用户名或密码错误");
         }
 
-        if (!userInfo.getPassword().equals(DigestUtils.md5Hex(data.getPassword()).toUpperCase())) {
+        String password = DigestUtils.md5Hex(data.getPassword() + userInfo.getSalt()).toUpperCase();
+        if (!userInfo.getPassword().equals(password)) {
             return ResponseModel.fail("用户名或密码错误");
         }
 

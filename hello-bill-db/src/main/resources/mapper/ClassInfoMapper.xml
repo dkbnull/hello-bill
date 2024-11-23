@@ -10,12 +10,14 @@
         <result column="type" property="type"/>
         <result column="serialNo" property="serialNo"/>
         <result column="status" property="status"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         uuid
-        , topClass, secondClass, type, serialNo, status
+        , topClass, secondClass, type, serialNo, status, createTime, updateTime
     </sql>
 
 </mapper>

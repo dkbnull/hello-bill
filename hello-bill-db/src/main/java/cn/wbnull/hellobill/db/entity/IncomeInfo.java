@@ -4,7 +4,6 @@ import cn.wbnull.hellobill.common.model.income.AddRequestModel;
 import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.common.util.SnowflakeUtils;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -54,6 +53,12 @@ public class IncomeInfo {
     @TableField("remark")
     private String remark;
 
+    @TableField("createTime")
+    private LocalDateTime createTime;
+
+    @TableField("updateTime")
+    private LocalDateTime updateTime;
+
     public static IncomeInfo build(String username, AddRequestModel request, String topClass) {
         IncomeInfo incomeInfo = new IncomeInfo();
 
@@ -81,10 +86,5 @@ public class IncomeInfo {
         this.detail = request.getDetail();
         this.amount = new BigDecimal(request.getAmount());
         this.remark = request.getRemark();
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
     }
 }

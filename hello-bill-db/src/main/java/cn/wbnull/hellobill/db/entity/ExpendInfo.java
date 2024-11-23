@@ -5,7 +5,6 @@ import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
 import cn.wbnull.hellobill.common.model.expend.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.common.util.SnowflakeUtils;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -57,6 +56,12 @@ public class ExpendInfo {
     @TableField("remark")
     private String remark;
 
+    @TableField("createTime")
+    private LocalDateTime createTime;
+
+    @TableField("updateTime")
+    private LocalDateTime updateTime;
+
     public static ExpendInfo build(String username, AddRequestModel request, String topClass) {
         ExpendInfo expendInfo = new ExpendInfo();
 
@@ -82,10 +87,5 @@ public class ExpendInfo {
         this.detail = request.getDetail();
         this.amount = new BigDecimal(request.getAmount());
         this.remark = request.getRemark();
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
     }
 }

@@ -1,12 +1,13 @@
 package cn.wbnull.hellobill.db.entity;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -27,11 +28,18 @@ public class UserInfo {
     @TableField("username")
     private String username;
 
+    @TableField("salt")
+    private String salt;
+
     @TableField("password")
     private String password;
 
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
+    @TableField("mobile")
+    private String mobile;
+
+    @TableField("createTime")
+    private LocalDateTime createTime;
+
+    @TableField("updateTime")
+    private LocalDateTime updateTime;
 }
