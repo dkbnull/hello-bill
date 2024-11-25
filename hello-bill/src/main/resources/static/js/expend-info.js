@@ -22,21 +22,21 @@ function initDatetime() {
     const laydate = layui.laydate;
 
     laydate.render({
-        elem: '#begin-time-input',
+        elem: '#begin-date-input',
         theme: 'grid',
         value: dateBeginTheMonth(),
         max: 0,
         done: function (value, date) {
-            doPostQuery(value, $('#end-time-input').val());
+            doPostQuery(value, $('#end-date-input').val());
         }
     });
     laydate.render({
-        elem: '#end-time-input',
+        elem: '#end-date-input',
         theme: 'grid',
         value: dateCalc(0),
         max: 0,
         done: function (value, date) {
-            doPostQuery($('#begin-time-input').val(), value);
+            doPostQuery($('#begin-date-input').val(), value);
         }
     });
 }
@@ -51,7 +51,7 @@ function initMethod() {
 
     const active = {
         reloadInfo: function () {
-            doPostQuery($('#begin-time-input').val(), $('#end-time-input').val());
+            doPostQuery($('#begin-date-input').val(), $('#end-date-input').val());
         },
 
         addInfo: function () {
@@ -75,10 +75,10 @@ function initMethod() {
     };
 }
 
-function doPostQuery(beginTime, endTime) {
+function doPostQuery(beginDate, endDate) {
     const data = {
-        beginTime: beginTime,
-        endTime: endTime,
+        beginDate: beginDate,
+        endDate: endDate,
         topClass: $('#top-class-input').val(),
         secondClass: $('#second-class-input').val(),
         detail: $('#detail-input').val(),
@@ -144,12 +144,12 @@ function callback(result) {
 }
 
 function callbackDelete(result) {
-    doPostQuery($('#begin-time-input').val(), $('#end-time-input').val());
+    doPostQuery($('#begin-date-input').val(), $('#end-date-input').val());
 }
 
 function closeAll(message) {
     layer.closeAll();
     layer.msg(message);
 
-    doPostQuery($('#begin-time-input').val(), $('#end-time-input').val());
+    doPostQuery($('#begin-date-input').val(), $('#end-date-input').val());
 }

@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.common.model.expend;
+package cn.wbnull.hellobill.common.model.common;
 
 import lombok.Data;
 
@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 public class QueryListRequestModel {
 
-    private String beginTime;
-    private String endTime;
+    private String beginDate;
+    private String endDate;
     private String topClass;
     private String secondClass;
     private String detail;

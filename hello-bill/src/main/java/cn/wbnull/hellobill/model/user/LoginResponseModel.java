@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.common.model.user;
+package cn.wbnull.hellobill.model.user;
 
 import lombok.Data;
 

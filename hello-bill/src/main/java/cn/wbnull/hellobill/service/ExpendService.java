@@ -3,13 +3,13 @@ package cn.wbnull.hellobill.service;
 import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.expend.*;
+import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
 import cn.wbnull.hellobill.common.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
 import cn.wbnull.hellobill.db.service.ExpendInfoService;
-import cn.wbnull.hellobill.model.expend.ExpendInfoModel;
+import cn.wbnull.hellobill.model.expend.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,26 +49,28 @@ public class ExpendService {
     }
 
     public ResponseModel<Object> add(RequestModel<AddRequestModel> request) throws Exception {
-        expendInfoService.addExpendInfo(request.getUsername(), request.getData());
+        ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
+        expendInfoService.addExpendInfo(request.getUsername(), expendInfo);
 
         return ResponseModel.success("记账成功");
     }
 
     public ResponseModel<ExpendInfoModel> query(RequestModel<QueryRequestModel> request) throws Exception {
-        ExpendInfo expendInfo = expendInfoService.getExpendInfo(request.getData());
+        ExpendInfo expendInfo = expendInfoService.getExpendInfo(request.getData().getId());
         ExpendInfoModel expendInfoModel = BeanUtils.copyProperties(expendInfo, ExpendInfoModel.class);
 
         return ResponseModel.success(expendInfoModel);
     }
 
     public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) throws Exception {
-        expendInfoService.updateExpendInfo(request.getData());
+        ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
+        expendInfoService.updateExpendInfo(expendInfo);
 
         return ResponseModel.success("修改成功");
     }
 
     public ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request) throws Exception {
-        expendInfoService.deleteExpendInfo(request.getUsername(), request.getData());
+        expendInfoService.deleteExpendInfo(request.getUsername(), request.getData().getId());
 
         return ResponseModel.success("删除成功");
     }

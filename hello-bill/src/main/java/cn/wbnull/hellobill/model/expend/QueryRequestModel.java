@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.common.model.expend;
+package cn.wbnull.hellobill.model.expend;
 
 import lombok.Data;
 

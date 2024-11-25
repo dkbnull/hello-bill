@@ -3,17 +3,17 @@ package cn.wbnull.hellobill.service;
 import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
-import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
-import cn.wbnull.hellobill.common.model.income.AddRequestModel;
-import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
-import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
+import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
 import cn.wbnull.hellobill.common.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
 import cn.wbnull.hellobill.db.service.IncomeInfoService;
+import cn.wbnull.hellobill.model.expend.DeleteRequestModel;
+import cn.wbnull.hellobill.model.expend.QueryRequestModel;
+import cn.wbnull.hellobill.model.income.AddRequestModel;
 import cn.wbnull.hellobill.model.income.IncomeInfoModel;
+import cn.wbnull.hellobill.model.income.UpdateRequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,25 +53,27 @@ public class IncomeService {
     }
 
     public ResponseModel<Object> add(RequestModel<AddRequestModel> request) throws Exception {
-        incomeInfoService.addIncomeInfo(request.getUsername(), request.getData());
+        IncomeInfo incomeInfo = BeanUtils.copyProperties(request.getData(), IncomeInfo.class);
+        incomeInfoService.addIncomeInfo(request.getUsername(), incomeInfo);
 
         return ResponseModel.success("记账成功");
     }
 
     public ResponseModel<IncomeInfoModel> query(RequestModel<QueryRequestModel> request) throws Exception {
-        IncomeInfo incomeInfo = incomeInfoService.getIncomeInfo(request.getData());
+        IncomeInfo incomeInfo = incomeInfoService.getIncomeInfo(request.getData().getId());
         IncomeInfoModel incomeInfoModel = BeanUtils.copyProperties(incomeInfo, IncomeInfoModel.class);
         return ResponseModel.success(incomeInfoModel);
     }
 
     public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) throws Exception {
-        incomeInfoService.updateIncomeInfo(request.getData());
+        IncomeInfo incomeInfo = BeanUtils.copyProperties(request.getData(), IncomeInfo.class);
+        incomeInfoService.updateIncomeInfo(incomeInfo);
 
         return ResponseModel.success("修改成功");
     }
 
     public ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request) throws Exception {
-        incomeInfoService.deleteIncomeInfo(request.getUsername(), request.getData());
+        incomeInfoService.deleteIncomeInfo(request.getUsername(), request.getData().getId());
 
         return ResponseModel.success("删除成功");
     }

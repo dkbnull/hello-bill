@@ -2,12 +2,12 @@ package cn.wbnull.hellobill.controller;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
-import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
-import cn.wbnull.hellobill.common.model.income.AddRequestModel;
-import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
-import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
+import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
+import cn.wbnull.hellobill.model.expend.DeleteRequestModel;
+import cn.wbnull.hellobill.model.expend.QueryRequestModel;
+import cn.wbnull.hellobill.model.income.AddRequestModel;
 import cn.wbnull.hellobill.model.income.IncomeInfoModel;
+import cn.wbnull.hellobill.model.income.UpdateRequestModel;
 import cn.wbnull.hellobill.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

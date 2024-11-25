@@ -1,8 +1,6 @@
 package cn.wbnull.hellobill.db.entity;
 
 import cn.wbnull.hellobill.common.constant.UtilConstants;
-import cn.wbnull.hellobill.common.model.expend.AddRequestModel;
-import cn.wbnull.hellobill.common.model.expend.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.common.util.SnowflakeUtils;
 import com.alibaba.fastjson.annotation.JSONField;
@@ -62,30 +60,10 @@ public class ExpendInfo {
     @TableField("updateTime")
     private LocalDateTime updateTime;
 
-    public static ExpendInfo build(String username, AddRequestModel request, String topClass) {
-        ExpendInfo expendInfo = new ExpendInfo();
-
-        expendInfo.expendTime = DateUtils.localDateTimeParse(request.getExpendTime());
-
-        assert expendInfo.expendTime != null;
-        long epochMilli = DateUtils.toEpochMilli(expendInfo.expendTime);
-        expendInfo.id = SnowflakeUtils.getInstance().nextId(epochMilli);
-        expendInfo.username = username;
-        expendInfo.topClass = topClass;
-        expendInfo.secondClass = request.getSecondClass();
-        expendInfo.detail = request.getDetail();
-        expendInfo.amount = new BigDecimal(request.getAmount());
-        expendInfo.remark = request.getRemark();
-
-        return expendInfo;
-    }
-
-    public void update(UpdateRequestModel request, String topClass) {
-        this.expendTime = DateUtils.localDateTimeParse(request.getExpendTime());
+    public void build(String username, String topClass) {
+        long epochMilli = DateUtils.toEpochMilli(this.expendTime);
+        this.id = SnowflakeUtils.getInstance().nextId(epochMilli);
+        this.username = username;
         this.topClass = topClass;
-        this.secondClass = request.getSecondClass();
-        this.detail = request.getDetail();
-        this.amount = new BigDecimal(request.getAmount());
-        this.remark = request.getRemark();
     }
 }

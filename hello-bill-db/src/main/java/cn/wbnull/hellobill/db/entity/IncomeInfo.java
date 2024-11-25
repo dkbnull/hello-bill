@@ -1,7 +1,5 @@
 package cn.wbnull.hellobill.db.entity;
 
-import cn.wbnull.hellobill.common.model.income.AddRequestModel;
-import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.common.util.SnowflakeUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -59,32 +57,14 @@ public class IncomeInfo {
     @TableField("updateTime")
     private LocalDateTime updateTime;
 
-    public static IncomeInfo build(String username, AddRequestModel request, String topClass) {
-        IncomeInfo incomeInfo = new IncomeInfo();
-
-        incomeInfo.incomeDate = DateUtils.localDateParse(request.getIncomeDate());
+    public void build(String username, String topClass) {
         LocalTime time = LocalTime.of(0, 0, 0);
-        assert incomeInfo.incomeDate != null;
-        LocalDateTime dateTime = incomeInfo.incomeDate.atTime(time);
+        assert this.incomeDate != null;
+        LocalDateTime dateTime = this.incomeDate.atTime(time);
         long epochMilli = DateUtils.toEpochMilli(dateTime);
 
-        incomeInfo.id = SnowflakeUtils.getInstance().nextId(epochMilli);
-        incomeInfo.username = username;
-        incomeInfo.topClass = topClass;
-        incomeInfo.secondClass = request.getSecondClass();
-        incomeInfo.detail = request.getDetail();
-        incomeInfo.amount = new BigDecimal(request.getAmount());
-        incomeInfo.remark = request.getRemark();
-
-        return incomeInfo;
-    }
-
-    public void update(UpdateRequestModel request, String topClass) {
-        this.incomeDate = DateUtils.localDateParse(request.getIncomeDate());
+        this.id = SnowflakeUtils.getInstance().nextId(epochMilli);
+        this.username = username;
         this.topClass = topClass;
-        this.secondClass = request.getSecondClass();
-        this.detail = request.getDetail();
-        this.amount = new BigDecimal(request.getAmount());
-        this.remark = request.getRemark();
     }
 }

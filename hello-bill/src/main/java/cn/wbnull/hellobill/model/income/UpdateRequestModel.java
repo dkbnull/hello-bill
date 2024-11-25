@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.common.model.income;
+package cn.wbnull.hellobill.model.income;
 
 import lombok.Data;
 

@@ -2,9 +2,9 @@ package cn.wbnull.hellobill.service;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.user.ChangePasswordRequestModel;
-import cn.wbnull.hellobill.common.model.user.LoginRequestModel;
-import cn.wbnull.hellobill.common.model.user.LoginResponseModel;
+import cn.wbnull.hellobill.model.user.ChangePasswordRequestModel;
+import cn.wbnull.hellobill.model.user.LoginRequestModel;
+import cn.wbnull.hellobill.model.user.LoginResponseModel;
 import cn.wbnull.hellobill.db.entity.UserInfo;
 import cn.wbnull.hellobill.db.service.UserInfoService;
 import org.apache.commons.codec.digest.DigestUtils;

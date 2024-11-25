@@ -1,11 +1,7 @@
 package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.constant.TypeEnum;
-import cn.wbnull.hellobill.common.model.expend.DeleteRequestModel;
-import cn.wbnull.hellobill.common.model.expend.QueryRequestModel;
-import cn.wbnull.hellobill.common.model.income.AddRequestModel;
-import cn.wbnull.hellobill.common.model.income.QueryListRequestModel;
-import cn.wbnull.hellobill.common.model.income.UpdateRequestModel;
+import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
@@ -36,57 +32,46 @@ public class IncomeInfoService {
     public List<IncomeInfo> getIncomeInfos(String username, QueryListRequestModel request) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(IncomeInfo::getUsername, username);
-        queryWrapper.like(IncomeInfo::getSecondClass, request.getSecondClass() == null ? "" : request.getSecondClass());
-        queryWrapper.like(IncomeInfo::getDetail, request.getDetail() == null ? "" : request.getDetail());
-        if (!StringUtils.isEmpty(request.getBeginDate())) {
-            queryWrapper.ge(IncomeInfo::getIncomeDate, request.getBeginDate());
-        }
-        if (!StringUtils.isEmpty(request.getBeginDate())) {
-            queryWrapper.le(IncomeInfo::getIncomeDate, request.getEndDate());
-        }
-        if (request.orderByDesc()) {
-            queryWrapper.orderByDesc(IncomeInfo::getIncomeDate);
-        } else {
-            queryWrapper.orderByAsc(IncomeInfo::getIncomeDate);
-        }
+        queryWrapper.like(!StringUtils.isEmpty(request.getSecondClass()), IncomeInfo::getSecondClass, request.getSecondClass());
+        queryWrapper.like(!StringUtils.isEmpty(request.getDetail()), IncomeInfo::getDetail, request.getDetail());
+        queryWrapper.ge(!StringUtils.isEmpty(request.getBeginDate()), IncomeInfo::getIncomeDate, request.getBeginDate());
+        queryWrapper.le(!StringUtils.isEmpty(request.getBeginDate()), IncomeInfo::getIncomeDate, request.getEndDate());
+        queryWrapper.orderBy(true, !request.orderByDesc(), IncomeInfo::getIncomeDate);
 
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    public void addIncomeInfo(String username, AddRequestModel request) {
+    public void addIncomeInfo(String username, IncomeInfo incomeInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ClassInfo::getSecondClass, request.getSecondClass());
+        queryWrapper.eq(ClassInfo::getSecondClass, incomeInfo.getSecondClass());
         queryWrapper.eq(ClassInfo::getType, TypeEnum.INCOME.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
-        IncomeInfo incomeInfo = IncomeInfo.build(username, request, classInfo.getTopClass());
+        incomeInfo.build(username, classInfo.getTopClass());
         incomeInfoMapper.insert(incomeInfo);
     }
 
-    public IncomeInfo getIncomeInfo(QueryRequestModel request) {
+    public IncomeInfo getIncomeInfo(String id) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(IncomeInfo::getId, request.getId());
+        queryWrapper.eq(IncomeInfo::getId, id);
 
         return incomeInfoMapper.selectOne(queryWrapper);
     }
 
-    public void updateIncomeInfo(UpdateRequestModel request) {
+    public void updateIncomeInfo(IncomeInfo incomeInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ClassInfo::getSecondClass, request.getSecondClass());
+        queryWrapper.eq(ClassInfo::getSecondClass, incomeInfo.getSecondClass());
         queryWrapper.eq(ClassInfo::getType, TypeEnum.INCOME.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
-        LambdaQueryWrapper<IncomeInfo> incomeInfoWrapper = new LambdaQueryWrapper<>();
-        incomeInfoWrapper.eq(IncomeInfo::getId, request.getId());
+        incomeInfo.setTopClass(classInfo.getTopClass());
 
-        IncomeInfo incomeInfo = incomeInfoMapper.selectOne(incomeInfoWrapper);
-        incomeInfo.update(request, classInfo.getTopClass());
-        incomeInfoMapper.update(incomeInfo, incomeInfoWrapper);
+        incomeInfoMapper.updateById(incomeInfo);
     }
 
-    public void deleteIncomeInfo(String username, DeleteRequestModel request) {
+    public void deleteIncomeInfo(String username, String id) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(IncomeInfo::getId, request.getId());
+        queryWrapper.eq(IncomeInfo::getId, id);
         queryWrapper.eq(IncomeInfo::getUsername, username);
 
         incomeInfoMapper.delete(queryWrapper);

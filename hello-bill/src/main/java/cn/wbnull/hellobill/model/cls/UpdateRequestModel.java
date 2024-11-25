@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.common.model.cls;
+package cn.wbnull.hellobill.model.cls;
 
 import lombok.Data;
 

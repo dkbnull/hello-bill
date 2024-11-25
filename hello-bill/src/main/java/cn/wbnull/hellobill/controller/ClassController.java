@@ -2,10 +2,10 @@ package cn.wbnull.hellobill.controller;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.common.model.cls.QueryRequestModel;
-import cn.wbnull.hellobill.common.model.cls.UpdateRequestModel;
+import cn.wbnull.hellobill.model.cls.QueryRequestModel;
+import cn.wbnull.hellobill.model.cls.UpdateRequestModel;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
-import cn.wbnull.hellobill.model.clazz.ClassRequestModel;
+import cn.wbnull.hellobill.model.cls.ClassRequestModel;
 import cn.wbnull.hellobill.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.constant.TypeEnum;
-import cn.wbnull.hellobill.common.model.expend.*;
+import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
@@ -32,58 +32,44 @@ public class ExpendInfoService {
     public List<ExpendInfo> getExpendInfos(String username, QueryListRequestModel request) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ExpendInfo::getUsername, username);
-        queryWrapper.like(ExpendInfo::getTopClass, request.getTopClass() == null ? "" : request.getTopClass());
-        queryWrapper.like(ExpendInfo::getSecondClass, request.getSecondClass() == null ? "" : request.getSecondClass());
-        queryWrapper.like(ExpendInfo::getDetail, request.getDetail() == null ? "" : request.getDetail());
-        if (!StringUtils.isEmpty(request.getBeginTime())) {
-            queryWrapper.ge(ExpendInfo::getExpendTime, request.getBeginTime() + " 00:00:00");
-        }
-        if (!StringUtils.isEmpty(request.getEndTime())) {
-            queryWrapper.le(ExpendInfo::getExpendTime, request.getEndTime() + " 23:59:59");
-        }
-        if (request.orderByDesc()) {
-            queryWrapper.orderByDesc(ExpendInfo::getExpendTime);
-        } else {
-            queryWrapper.orderByAsc(ExpendInfo::getExpendTime);
-        }
+        queryWrapper.like(!StringUtils.isEmpty(request.getTopClass()), ExpendInfo::getTopClass, request.getTopClass());
+        queryWrapper.like(!StringUtils.isEmpty(request.getSecondClass()), ExpendInfo::getSecondClass, request.getSecondClass());
+        queryWrapper.like(!StringUtils.isEmpty(request.getDetail()), ExpendInfo::getDetail, request.getDetail());
+        queryWrapper.ge(!StringUtils.isEmpty(request.getBeginDate()), ExpendInfo::getExpendTime, request.getBeginDate() + " 00:00:00");
+        queryWrapper.le(!StringUtils.isEmpty(request.getEndDate()), ExpendInfo::getExpendTime, request.getEndDate() + " 23:59:59");
+        queryWrapper.orderBy(true, !request.orderByDesc(), ExpendInfo::getExpendTime);
 
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public void addExpendInfo(String username, AddRequestModel request) {
+    public void addExpendInfo(String username, ExpendInfo expendInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ClassInfo::getSecondClass, request.getSecondClass());
+        queryWrapper.eq(ClassInfo::getSecondClass, expendInfo.getSecondClass());
         queryWrapper.eq(ClassInfo::getType, TypeEnum.EXPEND.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
-        ExpendInfo expendInfo = ExpendInfo.build(username, request, classInfo.getTopClass());
+        expendInfo.build(username, classInfo.getTopClass());
         expendInfoMapper.insert(expendInfo);
     }
 
-    public ExpendInfo getExpendInfo(QueryRequestModel request) {
-        LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ExpendInfo::getId, request.getId());
-
-        return expendInfoMapper.selectOne(queryWrapper);
+    public ExpendInfo getExpendInfo(String id) {
+        return expendInfoMapper.selectById(id);
     }
 
-    public void updateExpendInfo(UpdateRequestModel request) {
+    public void updateExpendInfo(ExpendInfo expendInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ClassInfo::getSecondClass, request.getSecondClass());
+        queryWrapper.eq(ClassInfo::getSecondClass, expendInfo.getSecondClass());
         queryWrapper.eq(ClassInfo::getType, TypeEnum.EXPEND.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
-        LambdaQueryWrapper<ExpendInfo> expendInfoWrapper = new LambdaQueryWrapper<>();
-        expendInfoWrapper.eq(ExpendInfo::getId, request.getId());
+        expendInfo.setTopClass(classInfo.getTopClass());
 
-        ExpendInfo expendInfo = expendInfoMapper.selectOne(expendInfoWrapper);
-        expendInfo.update(request, classInfo.getTopClass());
-        expendInfoMapper.update(expendInfo, expendInfoWrapper);
+        expendInfoMapper.updateById(expendInfo);
     }
 
-    public void deleteExpendInfo(String username, DeleteRequestModel request) {
+    public void deleteExpendInfo(String username, String id) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ExpendInfo::getId, request.getId());
+        queryWrapper.eq(ExpendInfo::getId, id);
         queryWrapper.eq(ExpendInfo::getUsername, username);
 
         expendInfoMapper.delete(queryWrapper);

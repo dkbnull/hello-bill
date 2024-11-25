@@ -1,20 +1,17 @@
-package cn.wbnull.hellobill.common.model.expend;
+package cn.wbnull.hellobill.model.expend;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
 /**
- * 修改支出信息接口请求参数
+ * 新增支出信息接口请求参数
  *
- * @author dukunbiao(null)  2021-01-17
+ * @author dukunbiao(null)  2021-01-01
  * https://github.com/dkbnull/HelloBill
  */
 @Data
-public class UpdateRequestModel {
-
-    @NotEmpty(message = "id 不能为空")
-    private String id;
+public class AddRequestModel {
 
     @NotEmpty(message = "expendTime 不能为空")
     private String expendTime;

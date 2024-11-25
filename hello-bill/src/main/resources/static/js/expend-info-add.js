@@ -20,7 +20,7 @@ function initDatetime(dateTime) {
     const laydate = layui.laydate;
 
     laydate.render({
-        elem: '#expend-time-input',
+        elem: '#expend-date-input',
         type: 'datetime',
         theme: 'grid',
         value: dateTime,

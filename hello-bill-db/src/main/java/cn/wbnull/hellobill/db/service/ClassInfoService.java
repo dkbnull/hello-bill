@@ -1,6 +1,7 @@
 package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.constant.StatusEnum;
+import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.mapper.ClassInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -22,16 +23,9 @@ public class ClassInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<ClassInfo> getClassInfos() {
-        LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
-
-        return classInfoMapper.selectList(queryWrapper);
-    }
-
     public List<ClassInfo> getClassInfos(String type) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ClassInfo::getType, type);
+        queryWrapper.eq(!StringUtils.isEmpty(type), ClassInfo::getType, type);
         queryWrapper.orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);

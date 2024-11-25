@@ -1,20 +1,18 @@
-package cn.wbnull.hellobill.model.clazz;
+package cn.wbnull.hellobill.model.cls;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
 /**
- * 报表分类查询接口请求参数
+ * 分类信息查询接口请求参数
  *
- * @author dukunbiao(null)  2024-02-11
+ * @author dukunbiao(null)  2022-01-05
  * https://github.com/dkbnull/HelloBill
  */
 @Data
-public class ClassRequestModel {
+public class QueryRequestModel {
 
     @NotEmpty(message = "type 不能为空")
     private String type;
-
-    private String topClass;
 }

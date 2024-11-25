@@ -1,9 +1,6 @@
-package cn.wbnull.hellobill.common.model.user;
+package cn.wbnull.hellobill.model.user;
 
-import cn.wbnull.hellobill.common.model.RequestModel;
-import com.alibaba.fastjson.JSON;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotEmpty;
 

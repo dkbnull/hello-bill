@@ -1,10 +1,13 @@
 package cn.wbnull.hellobill.common.constant;
 
+import lombok.Getter;
+
 /**
  * Type枚举
  *
  * @author dukunbiao(null)  2022-01-04
  */
+@Getter
 public enum TypeEnum {
 
     EXPEND("0", "支出"),
@@ -17,14 +20,6 @@ public enum TypeEnum {
     TypeEnum(String typeCode, String typeName) {
         this.typeCode = typeCode;
         this.typeName = typeName;
-    }
-
-    public String getTypeCode() {
-        return typeCode;
-    }
-
-    public String getTypeName() {
-        return typeName;
     }
 
     public static TypeEnum getTypeEnum(String typeCode) {
