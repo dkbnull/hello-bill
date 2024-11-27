@@ -6,7 +6,6 @@ import cn.wbnull.hellobill.model.report.*;
 import cn.wbnull.hellobill.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Scope("prototype")
 @RequestMapping("report")
-public class ReportController extends BaseController {
+public class ReportController {
 
     @Autowired
     private ReportService reportService;
@@ -31,15 +30,11 @@ public class ReportController extends BaseController {
      * 支出信息报表
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "expend")
-    public ResponseModel<Object> expend(@RequestBody @Validated RequestModel<ReportRequestModel> request,
-                                        BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<Object> expend(@RequestBody @Validated RequestModel<ReportRequestModel> request) throws Exception {
         return reportService.expend(request);
     }
 
@@ -47,15 +42,11 @@ public class ReportController extends BaseController {
      * 收入信息报表
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "income")
-    public ResponseModel<Object> income(@RequestBody @Validated RequestModel<ReportRequestModel> request,
-                                        BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<Object> income(@RequestBody @Validated RequestModel<ReportRequestModel> request) throws Exception {
         return reportService.income(request);
     }
 
@@ -63,15 +54,11 @@ public class ReportController extends BaseController {
      * 报表查询接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<QueryResponseModel> query(@RequestBody @Validated RequestModel<Object> request,
-                                                   BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<QueryResponseModel> query(@RequestBody @Validated RequestModel<Object> request) throws Exception {
         return reportService.query(request);
     }
 
@@ -79,15 +66,11 @@ public class ReportController extends BaseController {
      * 支出分类报表查询接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "expendClass")
-    public ResponseModel<ExpendClassResponseModel> expendClass(@RequestBody @Validated RequestModel<ExpendClassRequestModel> request,
-                                                               BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<ExpendClassResponseModel> expendClass(@RequestBody @Validated RequestModel<ExpendClassRequestModel> request) throws Exception {
         return reportService.expendClass(request);
     }
 
@@ -95,15 +78,11 @@ public class ReportController extends BaseController {
      * 支出详情报表查询接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "expendDetail")
-    public ResponseModel<ExpendDetailResponseModel> expendDetail(@RequestBody @Validated RequestModel<ExpendDetailRequestModel> request,
-                                                                 BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<ExpendDetailResponseModel> expendDetail(@RequestBody @Validated RequestModel<ExpendDetailRequestModel> request) throws Exception {
         return reportService.expendDetail(request);
     }
 
@@ -111,15 +90,11 @@ public class ReportController extends BaseController {
      * 收入报表查询接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "incomeClass")
-    public ResponseModel<ExpendClassResponseModel> incomeClass(@RequestBody @Validated RequestModel<ReportRequestModel> request,
-                                                               BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<ExpendClassResponseModel> incomeClass(@RequestBody @Validated RequestModel<ReportRequestModel> request) throws Exception {
         return reportService.incomeClass(request);
     }
 
@@ -127,15 +102,11 @@ public class ReportController extends BaseController {
      * 支出详情报表查询接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "incomeDetail")
-    public ResponseModel<ExpendDetailResponseModel> incomeDetail(@RequestBody @Validated RequestModel<ReportRequestModel> request,
-                                                                 BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<ExpendDetailResponseModel> incomeDetail(@RequestBody @Validated RequestModel<ReportRequestModel> request) throws Exception {
         return reportService.incomeDetail(request);
     }
 }

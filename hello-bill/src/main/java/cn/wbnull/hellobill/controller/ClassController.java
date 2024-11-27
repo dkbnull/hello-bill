@@ -2,14 +2,13 @@ package cn.wbnull.hellobill.controller;
 
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
-import cn.wbnull.hellobill.model.cls.QueryRequestModel;
-import cn.wbnull.hellobill.model.cls.UpdateRequestModel;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.model.cls.ClassRequestModel;
+import cn.wbnull.hellobill.model.cls.QueryRequestModel;
+import cn.wbnull.hellobill.model.cls.UpdateRequestModel;
 import cn.wbnull.hellobill.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +26,7 @@ import java.util.List;
 @RestController
 @Scope("prototype")
 @RequestMapping("class")
-public class ClassController extends BaseController {
+public class ClassController {
 
     @Autowired
     private ClassService classService;
@@ -36,15 +35,11 @@ public class ClassController extends BaseController {
      * 分类信息查询接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<List<ClassInfo>> query(@RequestBody @Validated RequestModel<QueryRequestModel> request,
-                                                BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<List<ClassInfo>> query(@RequestBody @Validated RequestModel<QueryRequestModel> request) throws Exception {
         return classService.query(request);
     }
 
@@ -52,15 +47,11 @@ public class ClassController extends BaseController {
      * 分类信息更新接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "update")
-    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request,
-                                        BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request) throws Exception {
         return classService.update(request);
     }
 
@@ -68,15 +59,11 @@ public class ClassController extends BaseController {
      * 报表分类查询接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "queryClass")
-    public ResponseModel<List<String>> queryClass(@RequestBody @Validated RequestModel<ClassRequestModel> request,
-                                                  BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<List<String>> queryClass(@RequestBody @Validated RequestModel<ClassRequestModel> request) throws Exception {
         return classService.queryClass(request);
     }
 }

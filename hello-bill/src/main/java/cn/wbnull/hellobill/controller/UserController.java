@@ -8,7 +8,6 @@ import cn.wbnull.hellobill.model.user.LoginResponseModel;
 import cn.wbnull.hellobill.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Scope("prototype")
 @RequestMapping("user")
-public class UserController extends BaseController {
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -33,15 +32,11 @@ public class UserController extends BaseController {
      * 用户登录接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "login")
-    public ResponseModel<LoginResponseModel> login(@RequestBody @Validated RequestModel<LoginRequestModel> request,
-                                                   BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<LoginResponseModel> login(@RequestBody @Validated RequestModel<LoginRequestModel> request) throws Exception {
         return userService.login(request);
     }
 
@@ -49,15 +44,11 @@ public class UserController extends BaseController {
      * 用户修改密码接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "changePassword")
-    public ResponseModel<Object> changePassword(@RequestBody @Validated RequestModel<ChangePasswordRequestModel> request,
-                                                BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<Object> changePassword(@RequestBody @Validated RequestModel<ChangePasswordRequestModel> request) throws Exception {
         return userService.changePassword(request);
     }
 }

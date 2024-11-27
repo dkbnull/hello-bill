@@ -7,7 +7,6 @@ import cn.wbnull.hellobill.model.expend.*;
 import cn.wbnull.hellobill.service.ExpendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +24,7 @@ import java.util.List;
 @RestController
 @Scope("prototype")
 @RequestMapping("expend")
-public class ExpendController extends BaseController {
+public class ExpendController {
 
     @Autowired
     private ExpendService expendService;
@@ -34,15 +33,11 @@ public class ExpendController extends BaseController {
      * 支出信息明细查询接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "queryList")
-    public ResponseModel<List<ExpendInfoModel>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request,
-                                                          BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<List<ExpendInfoModel>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request) throws Exception {
         return expendService.queryList(request);
     }
 
@@ -50,15 +45,11 @@ public class ExpendController extends BaseController {
      * 支出信息查询分类信息接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "classQuery")
-    public ResponseModel<List<String>> classQuery(@RequestBody @Validated RequestModel<Object> request,
-                                                  BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<List<String>> classQuery(@RequestBody @Validated RequestModel<Object> request) throws Exception {
         return expendService.classQuery(request);
     }
 
@@ -66,15 +57,11 @@ public class ExpendController extends BaseController {
      * 新增支出信息接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "add")
-    public ResponseModel<Object> add(@RequestBody @Validated RequestModel<AddRequestModel> request,
-                                     BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<Object> add(@RequestBody @Validated RequestModel<AddRequestModel> request) throws Exception {
         return expendService.add(request);
     }
 
@@ -82,15 +69,11 @@ public class ExpendController extends BaseController {
      * 支出信息查询接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<ExpendInfoModel> query(@RequestBody @Validated RequestModel<QueryRequestModel> request,
-                                                BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<ExpendInfoModel> query(@RequestBody @Validated RequestModel<QueryRequestModel> request) throws Exception {
         return expendService.query(request);
     }
 
@@ -98,15 +81,11 @@ public class ExpendController extends BaseController {
      * 修改支出信息接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "update")
-    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request,
-                                        BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request) throws Exception {
         return expendService.update(request);
     }
 
@@ -114,15 +93,11 @@ public class ExpendController extends BaseController {
      * 删除支出信息接口
      *
      * @param request
-     * @param result
      * @return
      * @throws Exception
      */
     @PostMapping(value = "delete")
-    public ResponseModel<Object> delete(@RequestBody @Validated RequestModel<DeleteRequestModel> request,
-                                        BindingResult result) throws Exception {
-        super.validate(result);
-
+    public ResponseModel<Object> delete(@RequestBody @Validated RequestModel<DeleteRequestModel> request) throws Exception {
         return expendService.delete(request);
     }
 }

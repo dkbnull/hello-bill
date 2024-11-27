@@ -22,17 +22,23 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 ## 更新日志
 
+### 1.0.10.22
+
+`2024-11-25`
+
+- <mark style='background:Yellow'> 优化 </mark> 接口model类位置调整
+- <mark style='background:Yellow'> 优化 </mark> 接口逻辑优化
+
+`2024-11-27`
+
+- <mark style='background:Yellow'> 优化 </mark> 全局捕捉参数不合法异常
+
 ### 1.0.10.21
 
 `2024-11-23`
 
 * <mark style='background:LightGreen'> 新增 </mark> 分类信息表，收入、支出明细表，增加创建时间、更新时间字段
 * <mark style='background:LightGreen'> 新增 </mark> 用户信息表增加盐值、手机号、创建时间、更新时间字段
-
-`2024-11-25`
-
-* <mark style='background:Yellow'> 优化 </mark> 接口model类位置调整
-* <mark style='background:Yellow'> 优化 </mark> 接口逻辑优化
 
 ### 1.0.9.20
 
