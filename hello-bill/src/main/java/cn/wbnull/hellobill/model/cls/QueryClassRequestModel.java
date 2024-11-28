@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
  * https://github.com/dkbnull/HelloBill
  */
 @Data
-public class ClassRequestModel {
+public class QueryClassRequestModel {
 
     @NotEmpty(message = "type 不能为空")
     private String type;

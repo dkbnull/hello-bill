@@ -31,10 +31,9 @@ public class ReportController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "expend")
-    public ResponseModel<Object> expend(@RequestBody @Validated RequestModel<ReportRequestModel> request) throws Exception {
+    public ResponseModel<Object> expend(@RequestBody @Validated RequestModel<ReportRequestModel> request) {
         return reportService.expend(request);
     }
 
@@ -43,10 +42,9 @@ public class ReportController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "income")
-    public ResponseModel<Object> income(@RequestBody @Validated RequestModel<ReportRequestModel> request) throws Exception {
+    public ResponseModel<Object> income(@RequestBody @Validated RequestModel<ReportRequestModel> request) {
         return reportService.income(request);
     }
 
@@ -55,10 +53,9 @@ public class ReportController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<QueryResponseModel> query(@RequestBody @Validated RequestModel<Object> request) throws Exception {
+    public ResponseModel<QueryResponseModel> query(@RequestBody @Validated RequestModel<Object> request) {
         return reportService.query(request);
     }
 
@@ -67,10 +64,9 @@ public class ReportController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "expendClass")
-    public ResponseModel<ExpendClassResponseModel> expendClass(@RequestBody @Validated RequestModel<ExpendClassRequestModel> request) throws Exception {
+    public ResponseModel<ExpendClassResponseModel> expendClass(@RequestBody @Validated RequestModel<ExpendClassRequestModel> request) {
         return reportService.expendClass(request);
     }
 
@@ -79,10 +75,9 @@ public class ReportController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "expendDetail")
-    public ResponseModel<ExpendDetailResponseModel> expendDetail(@RequestBody @Validated RequestModel<ExpendDetailRequestModel> request) throws Exception {
+    public ResponseModel<ExpendDetailResponseModel> expendDetail(@RequestBody @Validated RequestModel<ExpendDetailRequestModel> request) {
         return reportService.expendDetail(request);
     }
 
@@ -91,10 +86,9 @@ public class ReportController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "incomeClass")
-    public ResponseModel<ExpendClassResponseModel> incomeClass(@RequestBody @Validated RequestModel<ReportRequestModel> request) throws Exception {
+    public ResponseModel<ExpendClassResponseModel> incomeClass(@RequestBody @Validated RequestModel<ReportRequestModel> request) {
         return reportService.incomeClass(request);
     }
 
@@ -103,10 +97,9 @@ public class ReportController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "incomeDetail")
-    public ResponseModel<ExpendDetailResponseModel> incomeDetail(@RequestBody @Validated RequestModel<ReportRequestModel> request) throws Exception {
+    public ResponseModel<ExpendDetailResponseModel> incomeDetail(@RequestBody @Validated RequestModel<ReportRequestModel> request) {
         return reportService.incomeDetail(request);
     }
 }

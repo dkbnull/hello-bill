@@ -3,7 +3,7 @@ package cn.wbnull.hellobill.controller;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
-import cn.wbnull.hellobill.model.cls.ClassRequestModel;
+import cn.wbnull.hellobill.model.cls.QueryClassRequestModel;
 import cn.wbnull.hellobill.model.cls.QueryRequestModel;
 import cn.wbnull.hellobill.model.cls.UpdateRequestModel;
 import cn.wbnull.hellobill.service.ClassService;
@@ -36,10 +36,9 @@ public class ClassController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<List<ClassInfo>> query(@RequestBody @Validated RequestModel<QueryRequestModel> request) throws Exception {
+    public ResponseModel<List<ClassInfo>> query(@RequestBody @Validated RequestModel<QueryRequestModel> request) {
         return classService.query(request);
     }
 
@@ -48,11 +47,21 @@ public class ClassController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "update")
-    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request) throws Exception {
+    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request) {
         return classService.update(request);
+    }
+
+    /**
+     * 二级分类信息查询接口
+     *
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "secondClassQuery")
+    public ResponseModel<List<String>> secondClassQuery(@RequestBody @Validated RequestModel<QueryRequestModel> request) {
+        return classService.secondClassQuery(request);
     }
 
     /**
@@ -60,10 +69,9 @@ public class ClassController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "queryClass")
-    public ResponseModel<List<String>> queryClass(@RequestBody @Validated RequestModel<ClassRequestModel> request) throws Exception {
+    public ResponseModel<List<String>> queryClass(@RequestBody @Validated RequestModel<QueryClassRequestModel> request) {
         return classService.queryClass(request);
     }
 }

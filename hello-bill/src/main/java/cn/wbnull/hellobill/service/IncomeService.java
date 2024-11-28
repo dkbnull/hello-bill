@@ -1,23 +1,14 @@
 package cn.wbnull.hellobill.service;
 
-import cn.wbnull.hellobill.common.constant.TypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
-import cn.wbnull.hellobill.common.util.BeanUtils;
-import cn.wbnull.hellobill.db.entity.ClassInfo;
-import cn.wbnull.hellobill.db.entity.IncomeInfo;
-import cn.wbnull.hellobill.db.service.ClassInfoService;
-import cn.wbnull.hellobill.db.service.IncomeInfoService;
-import cn.wbnull.hellobill.model.expend.DeleteRequestModel;
-import cn.wbnull.hellobill.model.expend.QueryRequestModel;
+import cn.wbnull.hellobill.model.common.DeleteRequestModel;
+import cn.wbnull.hellobill.model.common.QueryRequestModel;
 import cn.wbnull.hellobill.model.income.AddRequestModel;
 import cn.wbnull.hellobill.model.income.IncomeInfoModel;
 import cn.wbnull.hellobill.model.income.UpdateRequestModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,55 +17,15 @@ import java.util.List;
  * @author dukunbiao(null)  2021-01-01
  * https://github.com/dkbnull/HelloBill
  */
-@Service
-public class IncomeService {
+public interface IncomeService {
 
-    @Autowired
-    private IncomeInfoService incomeInfoService;
+    ResponseModel<List<IncomeInfoModel>> queryList(RequestModel<QueryListRequestModel> request);
 
-    @Autowired
-    private ClassInfoService classInfoService;
+    ResponseModel<Object> add(RequestModel<AddRequestModel> request);
 
-    public ResponseModel<List<IncomeInfoModel>> queryList(RequestModel<QueryListRequestModel> request) throws Exception {
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfos(request.getUsername(), request.getData());
-        List<IncomeInfoModel> incomeInfoModelList = BeanUtils.copyPropertyList(incomeInfos, IncomeInfoModel.class);
+    ResponseModel<IncomeInfoModel> query(RequestModel<QueryRequestModel> request);
 
-        return ResponseModel.success(incomeInfoModelList);
-    }
+    ResponseModel<Object> update(RequestModel<UpdateRequestModel> request);
 
-    public ResponseModel<List<String>> classQuery(RequestModel<Object> request) throws Exception {
-        List<ClassInfo> classInfos = classInfoService.getSecondClassInfosByType(TypeEnum.INCOME.getTypeCode());
-        List<String> secondClasses = new ArrayList<>();
-        for (ClassInfo classInfo : classInfos) {
-            secondClasses.add(classInfo.getSecondClass());
-        }
-
-        return ResponseModel.success(secondClasses);
-    }
-
-    public ResponseModel<Object> add(RequestModel<AddRequestModel> request) throws Exception {
-        IncomeInfo incomeInfo = BeanUtils.copyProperties(request.getData(), IncomeInfo.class);
-        incomeInfoService.addIncomeInfo(request.getUsername(), incomeInfo);
-
-        return ResponseModel.success("记账成功");
-    }
-
-    public ResponseModel<IncomeInfoModel> query(RequestModel<QueryRequestModel> request) throws Exception {
-        IncomeInfo incomeInfo = incomeInfoService.getIncomeInfo(request.getData().getId());
-        IncomeInfoModel incomeInfoModel = BeanUtils.copyProperties(incomeInfo, IncomeInfoModel.class);
-        return ResponseModel.success(incomeInfoModel);
-    }
-
-    public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) throws Exception {
-        IncomeInfo incomeInfo = BeanUtils.copyProperties(request.getData(), IncomeInfo.class);
-        incomeInfoService.updateIncomeInfo(incomeInfo);
-
-        return ResponseModel.success("修改成功");
-    }
-
-    public ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request) throws Exception {
-        incomeInfoService.deleteIncomeInfo(request.getUsername(), request.getData().getId());
-
-        return ResponseModel.success("删除成功");
-    }
+    ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request);
 }

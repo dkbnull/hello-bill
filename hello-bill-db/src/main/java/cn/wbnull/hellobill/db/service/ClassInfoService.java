@@ -31,12 +31,20 @@ public class ClassInfoService {
         return classInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ClassInfo> getSecondClassInfosByType(String type) {
-        QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("distinct secondClass").lambda()
-                .eq(ClassInfo::getType, type)
-                .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())
-                .orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
+    public void updateClassInfo(String uuid, String key, String value) {
+        UpdateWrapper<ClassInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.set(key, value).lambda()
+                .eq(ClassInfo::getUuid, uuid);
+
+        classInfoMapper.update(null, updateWrapper);
+    }
+
+    public List<ClassInfo> getSecondClassInfos(String type) {
+        LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(ClassInfo::getSecondClass);
+        queryWrapper.eq(ClassInfo::getType, type);
+        queryWrapper.eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus());
+        queryWrapper.orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);
     }
@@ -60,13 +68,5 @@ public class ClassInfoService {
                 .orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);
-    }
-
-    public void updateClassInfo(String uuid, String key, String value) {
-        UpdateWrapper<ClassInfo> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.set(key, value).lambda()
-                .eq(ClassInfo::getUuid, uuid);
-
-        classInfoMapper.update(null, updateWrapper);
     }
 }

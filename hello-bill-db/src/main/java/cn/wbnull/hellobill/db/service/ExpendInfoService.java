@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.db.service;
 
-import cn.wbnull.hellobill.common.constant.TypeEnum;
+import cn.wbnull.hellobill.common.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
@@ -37,7 +37,7 @@ public class ExpendInfoService {
         queryWrapper.like(!StringUtils.isEmpty(request.getDetail()), ExpendInfo::getDetail, request.getDetail());
         queryWrapper.ge(!StringUtils.isEmpty(request.getBeginDate()), ExpendInfo::getExpendTime, request.getBeginDate() + " 00:00:00");
         queryWrapper.le(!StringUtils.isEmpty(request.getEndDate()), ExpendInfo::getExpendTime, request.getEndDate() + " 23:59:59");
-        queryWrapper.orderBy(true, !request.orderByDesc(), ExpendInfo::getExpendTime);
+        queryWrapper.orderBy(true, request.orderByAsc(), ExpendInfo::getExpendTime);
 
         return expendInfoMapper.selectList(queryWrapper);
     }
@@ -45,7 +45,7 @@ public class ExpendInfoService {
     public void addExpendInfo(String username, ExpendInfo expendInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, expendInfo.getSecondClass());
-        queryWrapper.eq(ClassInfo::getType, TypeEnum.EXPEND.getTypeCode());
+        queryWrapper.eq(ClassInfo::getType, ClassTypeEnum.EXPEND.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         expendInfo.build(username, classInfo.getTopClass());
@@ -59,7 +59,7 @@ public class ExpendInfoService {
     public void updateExpendInfo(ExpendInfo expendInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, expendInfo.getSecondClass());
-        queryWrapper.eq(ClassInfo::getType, TypeEnum.EXPEND.getTypeCode());
+        queryWrapper.eq(ClassInfo::getType, ClassTypeEnum.EXPEND.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         expendInfo.setTopClass(classInfo.getTopClass());
@@ -67,12 +67,8 @@ public class ExpendInfoService {
         expendInfoMapper.updateById(expendInfo);
     }
 
-    public void deleteExpendInfo(String username, String id) {
-        LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ExpendInfo::getId, id);
-        queryWrapper.eq(ExpendInfo::getUsername, username);
-
-        expendInfoMapper.delete(queryWrapper);
+    public void deleteExpendInfo(String id) {
+        expendInfoMapper.deleteById(id);
     }
 
     public List<ExpendInfo> getExpendReportByClass(String username, String reportDate) {

@@ -1,6 +1,7 @@
 package cn.wbnull.hellobill.common.boot;
 
 import cn.wbnull.hellobill.common.util.StringUtils;
+import lombok.Getter;
 
 /**
  * 全局异常
@@ -12,6 +13,7 @@ public class GlobalException extends Exception {
 
     private static final long serialVersionUID = 3527079893854727117L;
 
+    @Getter
     private String code;
     private String message;
 
@@ -37,10 +39,6 @@ public class GlobalException extends Exception {
 
     public GlobalException(Throwable throwable) {
         super(throwable);
-    }
-
-    public String getCode() {
-        return code;
     }
 
     @Override

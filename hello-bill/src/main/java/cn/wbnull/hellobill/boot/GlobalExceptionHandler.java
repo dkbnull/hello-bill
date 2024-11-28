@@ -22,11 +22,10 @@ import java.util.Objects;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
     @ResponseBody
-    @SuppressWarnings({"rawtypes"})
-    public ResponseModel exceptionHandler(HttpServletRequest servletRequest, Exception e) {
-        ResponseModel response = ResponseModel.fail(e.getMessage());
+    @ExceptionHandler(Exception.class)
+    public ResponseModel<Object> exceptionHandler(HttpServletRequest servletRequest, Exception e) {
+        ResponseModel<Object> response = ResponseModel.fail(e.getMessage());
         LoggerUtils.error("响应", servletRequest.getRequestURI(), response.toString());
 
         if (!notPrintStackTrace(e)) {
@@ -36,9 +35,10 @@ public class GlobalExceptionHandler {
         return response;
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public ResponseModel<Object> methodArgumentNotValidExceptionHandler(HttpServletRequest servletRequest, MethodArgumentNotValidException e) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseModel<Object> methodArgumentNotValidExceptionHandler(HttpServletRequest servletRequest,
+                                                                        MethodArgumentNotValidException e) {
         String message = Objects.requireNonNull(e.getFieldError()).getDefaultMessage();
         return ResponseModel.fail(message);
     }

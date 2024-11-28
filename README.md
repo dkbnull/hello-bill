@@ -33,6 +33,12 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 - <mark style='background:Yellow'> 优化 </mark> 全局捕捉参数不合法异常
 
+`2024-11-28`
+
+* <mark style='background:Yellow'> 优化 </mark> 二级分类信息查询接口调整
+* <mark style='background:Yellow'> 优化 </mark> 接口逻辑优化
+* <mark style='background:Yellow'> 优化 </mark> 新增收入、新增支出页面调整
+
 ### 1.0.10.21
 
 `2024-11-23`

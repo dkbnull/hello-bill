@@ -3,6 +3,8 @@ package cn.wbnull.hellobill.controller;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
+import cn.wbnull.hellobill.model.common.DeleteRequestModel;
+import cn.wbnull.hellobill.model.common.QueryRequestModel;
 import cn.wbnull.hellobill.model.expend.*;
 import cn.wbnull.hellobill.service.ExpendService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,23 +36,10 @@ public class ExpendController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "queryList")
-    public ResponseModel<List<ExpendInfoModel>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request) throws Exception {
+    public ResponseModel<List<ExpendInfoModel>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request) {
         return expendService.queryList(request);
-    }
-
-    /**
-     * 支出信息查询分类信息接口
-     *
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    @PostMapping(value = "classQuery")
-    public ResponseModel<List<String>> classQuery(@RequestBody @Validated RequestModel<Object> request) throws Exception {
-        return expendService.classQuery(request);
     }
 
     /**
@@ -58,10 +47,9 @@ public class ExpendController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "add")
-    public ResponseModel<Object> add(@RequestBody @Validated RequestModel<AddRequestModel> request) throws Exception {
+    public ResponseModel<Object> add(@RequestBody @Validated RequestModel<AddRequestModel> request) {
         return expendService.add(request);
     }
 
@@ -70,10 +58,9 @@ public class ExpendController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "query")
-    public ResponseModel<ExpendInfoModel> query(@RequestBody @Validated RequestModel<QueryRequestModel> request) throws Exception {
+    public ResponseModel<ExpendInfoModel> query(@RequestBody @Validated RequestModel<QueryRequestModel> request) {
         return expendService.query(request);
     }
 
@@ -82,10 +69,9 @@ public class ExpendController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "update")
-    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request) throws Exception {
+    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request) {
         return expendService.update(request);
     }
 
@@ -94,10 +80,9 @@ public class ExpendController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "delete")
-    public ResponseModel<Object> delete(@RequestBody @Validated RequestModel<DeleteRequestModel> request) throws Exception {
+    public ResponseModel<Object> delete(@RequestBody @Validated RequestModel<DeleteRequestModel> request) {
         return expendService.delete(request);
     }
 }

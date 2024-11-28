@@ -32,7 +32,11 @@ function initDatetime(dateTime) {
 }
 
 function initClass() {
-    doPost("expend/classQuery", null, callback)
+    const data = {
+        type: '0'
+    };
+
+    doPost("class/secondClassQuery", data, callback)
 }
 
 function initData() {

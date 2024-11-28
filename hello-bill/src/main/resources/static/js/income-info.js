@@ -60,7 +60,7 @@ function initMethod() {
                 skin: 'layui-layer-custom',
                 title: '记账',
                 content: 'income-info-add.html',
-                area: ['350px', '500px'],
+                area: ['350px', '560px'],
                 shade: 0,
                 btn: ['确认', '取消'],
                 yes: function (index, layero) {

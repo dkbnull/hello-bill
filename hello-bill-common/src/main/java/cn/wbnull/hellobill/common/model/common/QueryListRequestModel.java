@@ -18,7 +18,7 @@ public class QueryListRequestModel {
     private String detail;
     private String order;
 
-    public boolean orderByDesc() {
-        return "2".equals(this.order);
+    public boolean orderByAsc() {
+        return !"2".equals(this.order);
     }
 }

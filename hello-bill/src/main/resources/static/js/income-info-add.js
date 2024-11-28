@@ -28,7 +28,11 @@ function initDatetime(date) {
 }
 
 function initClass() {
-    doPost("income/classQuery", null, callback)
+    const data = {
+        type: '1'
+    };
+
+    doPost("class/secondClassQuery", data, callback)
 }
 
 function initData() {

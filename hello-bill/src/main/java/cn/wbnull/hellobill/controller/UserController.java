@@ -33,10 +33,9 @@ public class UserController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "login")
-    public ResponseModel<LoginResponseModel> login(@RequestBody @Validated RequestModel<LoginRequestModel> request) throws Exception {
+    public ResponseModel<LoginResponseModel> login(@RequestBody @Validated RequestModel<LoginRequestModel> request) {
         return userService.login(request);
     }
 
@@ -45,10 +44,9 @@ public class UserController {
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @PostMapping(value = "changePassword")
-    public ResponseModel<Object> changePassword(@RequestBody @Validated RequestModel<ChangePasswordRequestModel> request) throws Exception {
+    public ResponseModel<Object> changePassword(@RequestBody @Validated RequestModel<ChangePasswordRequestModel> request) {
         return userService.changePassword(request);
     }
 }

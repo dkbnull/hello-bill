@@ -1,10 +1,13 @@
 package cn.wbnull.hellobill.common.constant;
 
+import lombok.Getter;
+
 /**
  * Status枚举
  *
  * @author dukunbiao(null)  2022-01-04
  */
+@Getter
 public enum StatusEnum {
 
     FORBIDDEN("0"),
@@ -15,9 +18,5 @@ public enum StatusEnum {
 
     StatusEnum(String status) {
         this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
     }
 }

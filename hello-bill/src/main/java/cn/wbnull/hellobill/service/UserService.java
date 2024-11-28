@@ -5,11 +5,6 @@ import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.model.user.ChangePasswordRequestModel;
 import cn.wbnull.hellobill.model.user.LoginRequestModel;
 import cn.wbnull.hellobill.model.user.LoginResponseModel;
-import cn.wbnull.hellobill.db.entity.UserInfo;
-import cn.wbnull.hellobill.db.service.UserInfoService;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * 用户接口服务类
@@ -17,42 +12,9 @@ import org.springframework.stereotype.Service;
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
-@Service
-public class UserService {
+public interface UserService {
 
-    @Autowired
-    private UserInfoService userInfoService;
+    ResponseModel<LoginResponseModel> login(RequestModel<LoginRequestModel> request);
 
-    public ResponseModel<LoginResponseModel> login(RequestModel<LoginRequestModel> request) throws Exception {
-        LoginRequestModel data = request.getData();
-
-        UserInfo userInfo = userInfoService.getUserInfo(data.getUsername());
-        if (userInfo == null) {
-            return ResponseModel.fail("用户名或密码错误");
-        }
-
-        String password = DigestUtils.md5Hex(data.getPassword() + userInfo.getSalt()).toUpperCase();
-        if (!userInfo.getPassword().equals(password)) {
-            return ResponseModel.fail("用户名或密码错误");
-        }
-
-        return ResponseModel.success(LoginResponseModel.build(userInfo.getUsername()));
-    }
-
-    public ResponseModel<Object> changePassword(RequestModel<ChangePasswordRequestModel> request) throws Exception {
-        ChangePasswordRequestModel data = request.getData();
-
-        UserInfo userInfo = userInfoService.getUserInfo(request.getUsername());
-        if (userInfo == null) {
-            return ResponseModel.fail("用户不存在");
-        }
-
-        if (!userInfo.getPassword().equals(DigestUtils.md5Hex(data.getOldPassword()).toUpperCase())) {
-            return ResponseModel.fail("原密码错误");
-        }
-
-        userInfoService.updateUserInfo(request.getUsername(), data.getNewPassword());
-
-        return ResponseModel.success("密码修改成功");
-    }
+    ResponseModel<Object> changePassword(RequestModel<ChangePasswordRequestModel> request);
 }

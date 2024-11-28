@@ -8,7 +8,7 @@ import lombok.Getter;
  * @author dukunbiao(null)  2022-01-04
  */
 @Getter
-public enum TypeEnum {
+public enum ClassTypeEnum {
 
     EXPEND("0", "支出"),
     INCOME("1", "收入"),
@@ -17,15 +17,15 @@ public enum TypeEnum {
     private final String typeCode;
     private final String typeName;
 
-    TypeEnum(String typeCode, String typeName) {
+    ClassTypeEnum(String typeCode, String typeName) {
         this.typeCode = typeCode;
         this.typeName = typeName;
     }
 
-    public static TypeEnum getTypeEnum(String typeCode) {
-        for (TypeEnum typeEnum : TypeEnum.values()) {
-            if (typeEnum.typeCode.equals(typeCode)) {
-                return typeEnum;
+    public static ClassTypeEnum getClassTypeEnum(String typeCode) {
+        for (ClassTypeEnum classTypeEnum : ClassTypeEnum.values()) {
+            if (classTypeEnum.typeCode.equals(typeCode)) {
+                return classTypeEnum;
             }
         }
 
