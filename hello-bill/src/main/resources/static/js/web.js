@@ -31,7 +31,8 @@ doPost = function (url, data, callback) {
         contentType: "application/json;charset=UTF-8",
         url: url,
         data: JSON.stringify(request),
-        dataType: 'json',
+        headers: {"token": getItem("token")},
+        dataType: "json",
         success: function (result) {
             if (isEmpty(result)) {
                 layer.alert("返回参数为空");

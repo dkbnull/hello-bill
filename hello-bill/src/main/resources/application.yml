@@ -14,3 +14,9 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: cn.wbnull.hellobill.db.entity
+#
+hello-bill:
+  jwt:
+    secret: qwertyuiop
+    # 过期时间，单位：秒
+    expire-time: 86400

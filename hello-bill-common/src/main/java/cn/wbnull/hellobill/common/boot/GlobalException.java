@@ -9,7 +9,7 @@ import lombok.Getter;
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
-public class GlobalException extends Exception {
+public class GlobalException extends RuntimeException {
 
     private static final long serialVersionUID = 3527079893854727117L;
 

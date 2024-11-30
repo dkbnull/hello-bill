@@ -1,6 +1,5 @@
-package cn.wbnull.hellobill.boot;
+package cn.wbnull.hellobill.common.boot;
 
-import cn.wbnull.hellobill.common.boot.GlobalException;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.util.LoggerUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

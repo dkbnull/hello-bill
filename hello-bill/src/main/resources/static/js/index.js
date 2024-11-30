@@ -37,6 +37,7 @@ layui.use(['layer', 'form'], function () {
 
 function callback(result) {
     setItem("username", result.data.username);
+    setItem("token", result.data.token);
 
     window.location.href = "home.html";
 }

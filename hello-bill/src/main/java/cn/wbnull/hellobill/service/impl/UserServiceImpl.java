@@ -1,7 +1,9 @@
 package cn.wbnull.hellobill.service.impl;
 
+import cn.wbnull.hellobill.common.jwt.JwtService;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
+import cn.wbnull.hellobill.common.model.TokenModel;
 import cn.wbnull.hellobill.db.entity.UserInfo;
 import cn.wbnull.hellobill.db.service.UserInfoService;
 import cn.wbnull.hellobill.model.user.ChangePasswordRequestModel;
@@ -22,6 +24,9 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     private UserInfoService userInfoService;
 
     @Override
@@ -38,7 +43,10 @@ public class UserServiceImpl implements UserService {
             return ResponseModel.fail("用户名或密码错误");
         }
 
-        return ResponseModel.success(LoginResponseModel.build(userInfo.getUsername()));
+        TokenModel tokenModel = TokenModel.build(userInfo.getUsername());
+        String token = jwtService.generateToken(tokenModel);
+
+        return ResponseModel.success(LoginResponseModel.build(token, userInfo.getUsername()));
     }
 
     @Override

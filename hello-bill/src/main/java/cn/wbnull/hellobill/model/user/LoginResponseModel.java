@@ -11,10 +11,12 @@ import lombok.Data;
 @Data
 public class LoginResponseModel {
 
+    private String token;
     private String username;
 
-    public static LoginResponseModel build(String username) {
+    public static LoginResponseModel build(String token, String username) {
         LoginResponseModel responseModel = new LoginResponseModel();
+        responseModel.token = token;
         responseModel.username = username;
 
         return responseModel;
