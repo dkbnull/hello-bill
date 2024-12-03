@@ -47,6 +47,15 @@ public class ResponseModel<T> {
         return response;
     }
 
+    public static <T> ResponseModel<T> response(String code, String message) {
+        ResponseModel<T> response = new ResponseModel<>();
+        response.code = code;
+        response.message = message;
+
+        return response;
+    }
+
+    @SuppressWarnings({"rawtypes"})
     public void log(RequestModel request) {
         HttpServletRequest servletRequest = request.initServletInfo();
 

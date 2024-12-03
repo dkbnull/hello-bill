@@ -40,6 +40,18 @@ doPost = function (url, data, callback) {
                 return;
             }
 
+            if (isTokenExpired(result.code)) {
+                layer.confirm(result.message + '，是否重新登录？', function (index) {
+                    localStorage.clear();
+                    parent.window.location.href = 'index.html';
+                    layer.close(index);
+                });
+
+                layer.close(loading);
+
+                return;
+            }
+
             if (!isSuccess(result.code)) {
                 layer.msg(result.message);
                 layer.close(loading);
@@ -58,4 +70,8 @@ doPost = function (url, data, callback) {
 
 isSuccess = function (code) {
     return code === "2000";
+}
+
+isTokenExpired = function (code) {
+    return code === "1100";
 }

@@ -1,6 +1,7 @@
 package cn.wbnull.hellobill.common.jwt;
 
 import cn.wbnull.hellobill.common.boot.GlobalException;
+import cn.wbnull.hellobill.common.constant.ResponseCodeEnum;
 import cn.wbnull.hellobill.common.model.TokenModel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -55,7 +56,7 @@ public class JwtService {
                     .getExpiresAt()
                     .after(new Date());
         } catch (TokenExpiredException e) {
-            throw new GlobalException(e.getMessage());
+            throw new GlobalException(ResponseCodeEnum.TOKEN_EXPIRED.getCode(), e.getMessage());
         }
     }
 }

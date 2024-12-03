@@ -35,6 +35,14 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
+    @ExceptionHandler(GlobalException.class)
+    public ResponseModel<Object> globalExceptionHandler(HttpServletRequest servletRequest, GlobalException e) {
+        ResponseModel<Object> response = ResponseModel.response(e.getCode(), e.getMessage());
+        LoggerUtils.error("响应", servletRequest.getRequestURI(), response.toString());
+        return response;
+    }
+
+    @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseModel<Object> methodArgumentNotValidExceptionHandler(HttpServletRequest servletRequest,
                                                                         MethodArgumentNotValidException e) {

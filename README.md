@@ -28,6 +28,11 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 * <mark style='background:LightGreen'> 新增 </mark> 支持JWT认证
 
+`2024-12-04`
+
+* <mark style='background:LightGreen'> 新增 </mark> 增加返回token过期错误码
+* <mark style='background:LightGreen'> 新增 </mark> token过期，前台支持重新登录
+
 ## 1.0.10.22
 
 `2024-11-25`
