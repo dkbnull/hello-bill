@@ -82,26 +82,9 @@ Date.prototype.format = function (format) {
 };
 
 function setItem(key, value) {
-    const obj = {
-        data: value,
-        time: Date.now(),
-        storageTime: 1000 * 60 * 60 * 24
-    }
-
-    localStorage.setItem(key, JSON.stringify(obj));
+    localStorage.setItem(key, value);
 }
 
 function getItem(key) {
-    let obj = localStorage.getItem(key);
-    if (isEmpty(obj)) {
-        return null;
-    }
-
-    obj = JSON.parse(obj);
-    if (Date.now() - obj.time > obj.storageTime) {
-        localStorage.removeItem(key);
-        return null;
-    }
-
-    return obj.data;
+    return localStorage.getItem(key);
 }
