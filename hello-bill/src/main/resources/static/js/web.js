@@ -69,9 +69,9 @@ doPost = function (url, data, callback) {
 }
 
 isSuccess = function (code) {
-    return code === "2000";
+    return code === "1000";
 }
 
 isTokenExpired = function (code) {
-    return code === "1100";
+    return code.length === 4 && code.startsWith("30");
 }

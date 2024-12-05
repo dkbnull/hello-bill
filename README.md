@@ -33,6 +33,10 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 * <mark style='background:LightGreen'> 新增 </mark> 增加返回token过期错误码
 * <mark style='background:LightGreen'> 新增 </mark> token过期，前台支持重新登录
 
+`2024-12-05`
+
+* <mark style='background:LightGreen'> 新增 </mark> 增加多样化返回状态码
+
 ## 1.0.10.22
 
 `2024-11-25`

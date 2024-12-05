@@ -56,7 +56,7 @@ public class JwtService {
                     .getExpiresAt()
                     .after(new Date());
         } catch (TokenExpiredException e) {
-            throw new GlobalException(ResponseCodeEnum.TOKEN_EXPIRED.getCode(), e.getMessage());
+            throw new GlobalException(ResponseCodeEnum.TOKEN_TIME_OUT.getCode(), e.getMessage());
         }
     }
 }

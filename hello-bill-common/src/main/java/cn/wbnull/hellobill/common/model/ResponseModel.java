@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.common.model;
 
+import cn.wbnull.hellobill.common.constant.ResponseCodeEnum;
 import cn.wbnull.hellobill.common.util.LoggerUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
@@ -15,16 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 @Data
 public class ResponseModel<T> {
 
-    private static final String FAIL = "1000";
-    private static final String SUCCESS = "2000";
-
     private String code;
     private String message;
     private T data;
 
     public static <T> ResponseModel<T> fail(String message) {
         ResponseModel<T> response = new ResponseModel<>();
-        response.code = FAIL;
+        response.code = ResponseCodeEnum.FAIL.getCode();
         response.message = message;
 
         return response;
@@ -32,7 +30,7 @@ public class ResponseModel<T> {
 
     public static <T> ResponseModel<T> success(String message) {
         ResponseModel<T> response = new ResponseModel<>();
-        response.code = SUCCESS;
+        response.code = ResponseCodeEnum.SUCCESS.getCode();
         response.message = message;
 
         return response;
@@ -40,8 +38,8 @@ public class ResponseModel<T> {
 
     public static <T> ResponseModel<T> success(T data) {
         ResponseModel<T> response = new ResponseModel<>();
-        response.code = SUCCESS;
-        response.message = "SUCCESS";
+        response.code = ResponseCodeEnum.SUCCESS.getCode();
+        response.message = ResponseCodeEnum.SUCCESS.getMessage();
         response.data = data;
 
         return response;
