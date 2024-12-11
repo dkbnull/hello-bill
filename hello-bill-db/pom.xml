@@ -42,11 +42,5 @@
             <artifactId>freemarker</artifactId>
             <version>2.3.30</version>
         </dependency>
-        <!--    druid    -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.2.4</version>
-        </dependency>
     </dependencies>
 </project>
