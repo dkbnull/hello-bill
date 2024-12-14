@@ -43,6 +43,11 @@ public class UserServiceImpl implements UserService {
             return ResponseModel.fail("用户名或密码错误");
         }
 
+        //再次检查大小写是否一致
+        if (!userInfo.getUsername().equals(data.getUsername())) {
+            return ResponseModel.fail("用户名或密码错误");
+        }
+
         TokenModel tokenModel = TokenModel.build(userInfo.getUsername());
         String token = jwtService.generateToken(tokenModel);
 

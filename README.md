@@ -22,6 +22,12 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 
 # 更新日志
 
+## 1.0.11.24
+
+`2024-12-15`
+
+* <mark style='background:Yellow'> 优化 </mark> 用户登录时用户名调整为大小写敏感
+
 ## 1.0.11.23
 
 `2024-11-30`
