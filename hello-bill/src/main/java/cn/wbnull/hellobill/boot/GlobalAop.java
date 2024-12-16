@@ -26,7 +26,7 @@ public class GlobalAop {
 
     @SuppressWarnings({"rawtypes"})
     @Before("globalAop()")
-    public void doBefore(JoinPoint joinPoint) throws Exception {
+    public void doBefore(JoinPoint joinPoint) {
         RequestModel request = (RequestModel) joinPoint.getArgs()[0];
 
         request.log();
@@ -34,7 +34,7 @@ public class GlobalAop {
 
     @SuppressWarnings({"rawtypes"})
     @AfterReturning(value = "globalAop()", returning = "response")
-    public ResponseModel doAfter(JoinPoint joinPoint, ResponseModel response) throws Exception {
+    public ResponseModel doAfter(JoinPoint joinPoint, ResponseModel response) {
         response.log((RequestModel) joinPoint.getArgs()[0]);
 
         return response;
