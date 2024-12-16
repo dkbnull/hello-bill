@@ -1,6 +1,5 @@
-package cn.wbnull.hellobill.common.boot;
+package cn.wbnull.hellobill.common.jwt;
 
-import cn.wbnull.hellobill.common.jwt.JwtInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -12,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author dukunbiao(null)  2024-11-30
  */
 @Configuration
-public class GlobalConfig implements WebMvcConfigurer {
+public class JwtConfigurer implements WebMvcConfigurer {
 
     @Autowired
     private JwtInterceptor jwtInterceptor;

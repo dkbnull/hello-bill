@@ -24,19 +24,19 @@ import java.util.Date;
 public class JwtService {
 
     @Autowired
-    private JwtConfig jwtConfig;
+    private JwtProperties jwtProperties;
 
     public String generateToken(TokenModel tokenModel) {
-        LocalDateTime localDateTime = LocalDateTime.now().plusSeconds(jwtConfig.getExpireTime());
+        LocalDateTime localDateTime = LocalDateTime.now().plusSeconds(jwtProperties.getExpireTime());
 
         return JWT.create()
                 .withSubject(JSON.toJSONString(tokenModel))
                 .withExpiresAt(localDateTime.toInstant(ZoneOffset.of("+8")))
-                .sign(Algorithm.HMAC512(jwtConfig.getSecret()));
+                .sign(Algorithm.HMAC512(jwtProperties.getSecret()));
     }
 
     public TokenModel validateToken(String token) {
-        String subject = JWT.require(Algorithm.HMAC512(jwtConfig.getSecret()))
+        String subject = JWT.require(Algorithm.HMAC512(jwtProperties.getSecret()))
                 .build()
                 .verify(token)
                 .getSubject();
@@ -50,7 +50,7 @@ public class JwtService {
         }
 
         try {
-            return JWT.require(Algorithm.HMAC512(jwtConfig.getSecret()))
+            return JWT.require(Algorithm.HMAC512(jwtProperties.getSecret()))
                     .build()
                     .verify(token)
                     .getExpiresAt()

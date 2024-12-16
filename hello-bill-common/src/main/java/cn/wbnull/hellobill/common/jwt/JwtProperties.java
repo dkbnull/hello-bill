@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "hello-bill.jwt")
-public class JwtConfig {
+public class JwtProperties {
 
     private String secret;
     private Long expireTime;
