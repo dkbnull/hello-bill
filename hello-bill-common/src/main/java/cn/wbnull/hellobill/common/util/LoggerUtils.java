@@ -1,7 +1,6 @@
 package cn.wbnull.hellobill.common.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Logger 工具类
@@ -9,43 +8,31 @@ import org.slf4j.LoggerFactory;
  * @author dukunbiao(null)  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
+@Slf4j
 public class LoggerUtils {
 
-    private static Logger logger;
-
-    private LoggerUtils() {
-    }
-
-    private static Logger getLogger() {
-        if (logger == null) {
-            logger = LoggerFactory.getLogger(LoggerUtils.class);
-        }
-
-        return logger;
-    }
-
     public static void info(String message) {
-        getLogger().info(message);
+        log.info(message);
     }
 
     public static void info(String position, String method, String content) {
-        getLogger().info(toMessage(position, method, content));
+        log.info(toMessage(position, method, content));
     }
 
     public static void error(String message) {
-        getLogger().error(message);
+        log.error(message);
     }
 
     public static void error(String position, String method, String content) {
-        getLogger().error(toMessage(position, method, content));
+        log.error(toMessage(position, method, content));
     }
 
     public static void error(String message, Throwable t) {
-        getLogger().error(message, t);
+        log.error(message, t);
     }
 
     public static void error(String position, String method, String content, Throwable t) {
-        getLogger().error(toMessage(position, method, content), t);
+        log.error(toMessage(position, method, content), t);
     }
 
     private static String toMessage(String position, String method, String content) {

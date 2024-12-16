@@ -53,8 +53,6 @@
 
     <!--    <logger name="cn.wbnull.hellobill.HelloBillApplication" level="WARN"/>-->
 
-    <logger name="com.alibaba.druid" level="WARN"/>
-
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="ASYNC_LOG_INFO"/>
