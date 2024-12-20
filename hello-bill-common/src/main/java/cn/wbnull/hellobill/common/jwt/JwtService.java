@@ -46,7 +46,7 @@ public class JwtService {
 
     public boolean isTokenExpired(String token) {
         if (token == null || token.isEmpty()) {
-            return false;
+            throw new GlobalException(ResponseCodeEnum.INVALID_TOKEN);
         }
 
         try {

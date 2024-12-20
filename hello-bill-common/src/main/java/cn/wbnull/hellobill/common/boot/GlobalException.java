@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.common.boot;
 
+import cn.wbnull.hellobill.common.constant.ResponseCodeEnum;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import lombok.Getter;
 
@@ -30,6 +31,11 @@ public class GlobalException extends RuntimeException {
         super(code + ": " + message);
         this.code = code;
         this.message = message;
+    }
+
+    public GlobalException(ResponseCodeEnum responseCodeEnum) {
+        this.code = responseCodeEnum.getCode();
+        this.message = responseCodeEnum.getMessage();
     }
 
     public GlobalException(String message, Throwable throwable) {
