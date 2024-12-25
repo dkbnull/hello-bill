@@ -16,6 +16,8 @@ layui.use(['layer', 'element'], function () {
     $('.username').html(getItem('username'));
 
     initMethod();
+
+    openTab(10, '收支报表', 'report.html')
 });
 
 function initMethod() {

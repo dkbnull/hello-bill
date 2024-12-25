@@ -1,6 +1,8 @@
 # HelloBill
 GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/HelloBill)
 
+Gitee：[https://gitee.com/dkbnull/HelloBill](https://gitee.com/dkbnull/HelloBill)
+
 <mark style='background:LightGreen'> 新增 </mark> 
 
 <mark style='background:Yellow'> 优化 </mark> 
@@ -23,6 +25,10 @@ GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/Hello
 # 更新日志
 
 ## 1.0.11.25
+
+`2024-12-25`
+
+* <mark style='background:Yellow'> 优化 </mark> 首页默认打开收支报表
 
 `2024-12-23`
 
