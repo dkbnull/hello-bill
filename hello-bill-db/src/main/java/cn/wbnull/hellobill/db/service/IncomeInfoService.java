@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,6 +71,30 @@ public class IncomeInfoService {
         incomeInfoMapper.deleteById(id);
     }
 
+    public List<IncomeInfo> getIncomeReport(String username) {
+        QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        queryWrapper.groupBy("DATE_FORMAT(incomeDate, '%Y')");
+        queryWrapper.orderByAsc("DATE_FORMAT(incomeDate, '%Y')");
+
+        return incomeInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<IncomeInfo> getIncomeReportNet(String username) {
+        QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        List<String> topClassList = new ArrayList<>();
+        topClassList.add("人情往来");
+        topClassList.add("父母补贴");
+        queryWrapper.notIn("topClass", topClassList);
+        queryWrapper.groupBy("DATE_FORMAT(incomeDate, '%Y')");
+        queryWrapper.orderByAsc("DATE_FORMAT(incomeDate, '%Y')");
+
+        return incomeInfoMapper.selectList(queryWrapper);
+    }
+
     public List<IncomeInfo> getIncomeReportByClass(String username, String reportDate) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("topClass, sum(amount) as amount");
@@ -104,16 +129,6 @@ public class IncomeInfoService {
         queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
         queryWrapper.groupBy("DATE_FORMAT(incomeDate, '%Y')");
-
-        return incomeInfoMapper.selectList(queryWrapper);
-    }
-
-    public List<IncomeInfo> getIncomeReportSum(String username) {
-        QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
-        queryWrapper.eq("username", username);
-        queryWrapper.groupBy("DATE_FORMAT(incomeDate, '%Y')");
-        queryWrapper.orderByAsc("DATE_FORMAT(incomeDate, '%Y')");
 
         return incomeInfoMapper.selectList(queryWrapper);
     }

@@ -12,11 +12,13 @@ import cn.wbnull.hellobill.model.report.*;
  */
 public interface ReportService {
 
+    ResponseModel<QueryResponseModel> query(RequestModel<Object> request);
+
+    ResponseModel<QueryResponseModel> queryNet(RequestModel<Object> request);
+
     ResponseModel<Object> expend(RequestModel<ReportRequestModel> request);
 
     ResponseModel<Object> income(RequestModel<ReportRequestModel> request);
-
-    ResponseModel<QueryResponseModel> query(RequestModel<Object> request);
 
     ResponseModel<ExpendClassResponseModel> expendClass(RequestModel<ExpendClassRequestModel> request);
 

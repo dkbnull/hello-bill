@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,6 +72,30 @@ public class ExpendInfoService {
         expendInfoMapper.deleteById(id);
     }
 
+    public List<ExpendInfo> getExpendReport(String username) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("DATE_FORMAT(expendTime, '%Y') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y')");
+        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y')");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<ExpendInfo> getExpendReportNet(String username) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("DATE_FORMAT(expendTime, '%Y') as remark, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        List<String> topClassList = new ArrayList<>();
+        topClassList.add("人情往来");
+        topClassList.add("五险一金");
+        queryWrapper.notIn("topClass", topClassList);
+        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y')");
+        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y')");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
+
     public List<ExpendInfo> getExpendReportByClass(String username, String reportDate) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("topClass, sum(amount) as amount");
@@ -110,16 +135,6 @@ public class ExpendInfoService {
                 reportDate.substring(0, 4));
         queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y-%m')");
         queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y-%m')");
-
-        return expendInfoMapper.selectList(queryWrapper);
-    }
-
-    public List<ExpendInfo> getExpendReportSum(String username) {
-        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DATE_FORMAT(expendTime, '%Y') as remark, sum(amount) as amount");
-        queryWrapper.eq("username", username);
-        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y')");
-        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y')");
 
         return expendInfoMapper.selectList(queryWrapper);
     }

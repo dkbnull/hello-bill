@@ -17,6 +17,13 @@
     margin: 0 auto;
 }
 
+#report-query-bar-chart,
+#report-query-net-bar-chart {
+    height: 800px;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+
 .report-second-class-pie-chart-item {
     width: 50%;
     height: 300px;

@@ -24,6 +24,12 @@ Gitee：[https://gitee.com/dkbnull/HelloBill](https://gitee.com/dkbnull/HelloBil
 
 # 更新日志
 
+## 1.0.12.26
+
+`2024-01-01`
+
+* <mark style='background:LightGreen'> 新增 </mark> 新增净收支报表
+
 ## 1.0.11.25
 
 `2024-12-25`

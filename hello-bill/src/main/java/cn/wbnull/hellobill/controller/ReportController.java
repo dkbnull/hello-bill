@@ -27,6 +27,28 @@ public class ReportController {
     private ReportService reportService;
 
     /**
+     * 总收支报表查询接口
+     *
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "query")
+    public ResponseModel<QueryResponseModel> query(@RequestBody @Validated RequestModel<Object> request) {
+        return reportService.query(request);
+    }
+
+    /**
+     * 净收支报表查询接口
+     *
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "queryNet")
+    public ResponseModel<QueryResponseModel> queryNet(@RequestBody @Validated RequestModel<Object> request) {
+        return reportService.queryNet(request);
+    }
+
+    /**
      * 支出信息报表
      *
      * @param request
@@ -46,17 +68,6 @@ public class ReportController {
     @PostMapping(value = "income")
     public ResponseModel<Object> income(@RequestBody @Validated RequestModel<ReportRequestModel> request) {
         return reportService.income(request);
-    }
-
-    /**
-     * 报表查询接口
-     *
-     * @param request
-     * @return
-     */
-    @PostMapping(value = "query")
-    public ResponseModel<QueryResponseModel> query(@RequestBody @Validated RequestModel<Object> request) {
-        return reportService.query(request);
     }
 
     /**

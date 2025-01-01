@@ -38,6 +38,22 @@ public class ReportServiceImpl implements ReportService {
     private IncomeInfoService incomeInfoService;
 
     @Override
+    public ResponseModel<QueryResponseModel> query(RequestModel<Object> request) {
+        List<ExpendInfo> expendInfos = expendInfoService.getExpendReport(request.getUsername());
+        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReport(request.getUsername());
+
+        return ResponseModel.success(QueryResponseModel.build(expendInfos, incomeInfos));
+    }
+
+    @Override
+    public ResponseModel<QueryResponseModel> queryNet(RequestModel<Object> request) {
+        List<ExpendInfo> expendInfos = expendInfoService.getExpendReportNet(request.getUsername());
+        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReportNet(request.getUsername());
+
+        return ResponseModel.success(QueryResponseModel.build(expendInfos, incomeInfos));
+    }
+
+    @Override
     public ResponseModel<Object> expend(RequestModel<ReportRequestModel> request) {
         ReportRequestModel data = request.getData();
 
@@ -199,14 +215,6 @@ public class ReportServiceImpl implements ReportService {
         }
 
         return incomeReport;
-    }
-
-    @Override
-    public ResponseModel<QueryResponseModel> query(RequestModel<Object> request) {
-        List<ExpendInfo> expendInfos = expendInfoService.getExpendReportSum(request.getUsername());
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReportSum(request.getUsername());
-
-        return ResponseModel.success(QueryResponseModel.build(expendInfos, incomeInfos));
     }
 
     @Override

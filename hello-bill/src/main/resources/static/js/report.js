@@ -13,18 +13,27 @@ layui.use(['element', 'layer', 'laydate', 'form'], function () {
 
     $ = layui.jquery;
 
-    doPostReport(dateFormatYear());
+    doPostQuery(dateFormatYear());
+    doPostQueryNet(dateFormatYear());
 });
 
-function doPostReport() {
-    doPost("report/query", null, callback)
+function doPostQuery() {
+    doPost("report/query", null, function (result) {
+        barChartReport(result, '总收支报表', "report-query-bar-chart");
+    })
 }
 
-function callback(result) {
-    const barChart = echarts.init(document.getElementById("report-class-bar-chart"));
+function doPostQueryNet() {
+    doPost("report/queryNet", null, function (result) {
+        barChartReport(result, '净收支报表', "report-query-net-bar-chart");
+    })
+}
+
+function barChartReport(result, title, id) {
+    const barChart = echarts.init(document.getElementById(id));
     const option = {
         title: {
-            text: '收支报表'
+            text: title
         },
         tooltip: {
             trigger: 'axis',
@@ -51,12 +60,20 @@ function callback(result) {
             {
                 name: '收入',
                 type: 'bar',
-                data: result.data.incomeData
+                data: result.data.incomeData,
+                label: {
+                    show: true,
+                    position: 'top'
+                },
             },
             {
                 name: '支出',
                 type: 'bar',
-                data: result.data.expendData
+                data: result.data.expendData,
+                label: {
+                    show: true,
+                    position: 'top'
+                },
             }
         ]
     };
