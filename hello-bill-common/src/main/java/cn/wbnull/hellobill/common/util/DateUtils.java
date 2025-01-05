@@ -3,10 +3,7 @@ package cn.wbnull.hellobill.common.util;
 import cn.wbnull.hellobill.common.constant.UtilConstants;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
@@ -175,5 +172,9 @@ public class DateUtils {
 
     public static LocalDateTime toLocalDateTime(long timestamp) {
         return LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.ofHours(8));
+    }
+
+    public static LocalDateTime atStartOfMonth() {
+        return YearMonth.now().minusMonths(11).atDay(1).atStartOfDay();
     }
 }

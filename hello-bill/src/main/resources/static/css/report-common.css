@@ -18,8 +18,10 @@
 }
 
 #report-query-bar-chart,
-#report-query-net-bar-chart {
-    height: 800px;
+#report-query-net-bar-chart,
+#report-expend-daily-bar-chart,
+#report-expend-living-bar-chart {
+    height: 500px;
     margin: 0 auto;
     background-color: #FFFFFF;
 }

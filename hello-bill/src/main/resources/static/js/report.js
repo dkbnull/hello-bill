@@ -13,8 +13,11 @@ layui.use(['element', 'layer', 'laydate', 'form'], function () {
 
     $ = layui.jquery;
 
-    doPostQuery(dateFormatYear());
-    doPostQueryNet(dateFormatYear());
+    doPostQuery();
+    doPostQueryNet();
+
+    doPostExpendDaily();
+    doPostExpendLiving();
 });
 
 function doPostQuery() {
@@ -26,6 +29,26 @@ function doPostQuery() {
 function doPostQueryNet() {
     doPost("report/queryNet", null, function (result) {
         barChartReport(result, '净收支报表', "report-query-net-bar-chart");
+    })
+}
+
+function doPostExpendDaily() {
+    const data = {
+        reportClass: 1
+    }
+
+    doPost("report/expend", data, function (result) {
+        barChartExpend(result, '日常支出', "report-expend-daily-bar-chart");
+    })
+}
+
+function doPostExpendLiving() {
+    const data = {
+        reportClass: 2
+    }
+
+    doPost("report/expend", data, function (result) {
+        barChartExpend(result, '生活支出', "report-expend-living-bar-chart");
     })
 }
 
@@ -77,6 +100,122 @@ function barChartReport(result, title, id) {
             }
         ]
     };
+
+    barChart.setOption(option);
+}
+
+function barChartExpend(result, title, id) {
+    let seriesData = [];
+    const expendData = new Map(Object.entries(result.data.expendData));
+    for (let i = 0; i < result.data.date.length; i++) {
+        const date = result.data.date[i];
+        const seriesDataItem = {
+            value: expendData.get(date),
+            groupId: date
+        };
+
+        seriesData.push(seriesDataItem)
+    }
+
+    const option = {
+        title: {
+            text: title
+        },
+        xAxis: {
+            data: result.data.date,
+            axisLabel: {
+                interval: 0,
+                rotate: 30
+            }
+        },
+        yAxis: {},
+        dataGroupId: '',
+        animationDurationUpdate: 500,
+        series: {
+            type: 'bar',
+            id: 'sales',
+            data: seriesData,
+            label: {
+                show: true,
+                position: 'top'
+            },
+            universalTransition: {
+                enabled: true,
+                divideShape: 'clone'
+            }
+        }
+    };
+
+    let drilldownData = [];
+    for (let i = 0; i < result.data.date.length; i++) {
+        const date = result.data.date[i];
+        const expendClassData = result.data.expendClassData[date];
+        const expendClassDataMap = new Map(Object.entries(isEmpty(expendClassData) ? {} : expendClassData));
+
+        const data = [];
+        expendClassDataMap.forEach((value, key) => {
+            const dataItem = [];
+            dataItem.push(key);
+            dataItem.push(value);
+            data.push(dataItem);
+        })
+
+        const drilldownDataItem = {
+            data: data,
+            dataGroupId: date
+        };
+
+        drilldownData.push(drilldownDataItem)
+    }
+
+    const dom = document.getElementById(id);
+    var barChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+    });
+    barChart.on('click', function (event) {
+        if (event.data) {
+            const subData = drilldownData.find(function (data) {
+                return data.dataGroupId === event.data.groupId;
+            });
+            if (!subData) {
+                return;
+            }
+            barChart.setOption({
+                xAxis: {
+                    data: subData.data.map(function (item) {
+                        return item[0];
+                    })
+                },
+                series: {
+                    type: 'bar',
+                    id: 'sales',
+                    dataGroupId: subData.dataGroupId,
+                    data: subData.data.map(function (item) {
+                        return item[1];
+                    }),
+                    universalTransition: {
+                        enabled: true,
+                        divideShape: 'clone'
+                    }
+                },
+                graphic: [
+                    {
+                        type: 'text',
+                        left: 50,
+                        top: 20,
+                        style: {
+                            text: 'Back',
+                            fontSize: 18
+                        },
+                        onclick: function () {
+                            barChart.setOption(option);
+                        }
+                    }
+                ]
+            });
+        }
+    });
 
     barChart.setOption(option);
 }

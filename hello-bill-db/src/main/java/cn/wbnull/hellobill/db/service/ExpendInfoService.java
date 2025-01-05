@@ -2,6 +2,7 @@ package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
+import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.common.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
@@ -96,47 +97,43 @@ public class ExpendInfoService {
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ExpendInfo> getExpendReportByClass(String username, String reportDate) {
-        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("topClass, sum(amount) as amount");
-        queryWrapper.eq("username", username);
-        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
-        queryWrapper.groupBy("topClass");
-
-        return expendInfoMapper.selectList(queryWrapper);
-    }
-
-    public List<ExpendInfo> getExpendReportBySecondClass(String username, String reportDate) {
-        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("topClass, secondClass, sum(amount) as amount");
-        queryWrapper.eq("username", username);
-        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
-        queryWrapper.groupBy("topClass, secondClass");
-
-        return expendInfoMapper.selectList(queryWrapper);
-    }
-
-    public List<ExpendInfo> getExpendReportByDate(String username, String reportDate) {
-        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("topClass, DATE_FORMAT(expendTime, '%Y-%m') as remark, sum(amount) as amount");
-        queryWrapper.eq("username", username);
-        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')",
-                reportDate.substring(0, 4));
-        queryWrapper.groupBy("topClass", "DATE_FORMAT(expendTime, '%Y-%m')");
-
-        return expendInfoMapper.selectList(queryWrapper);
-    }
-
-    public List<ExpendInfo> getExpendReportByDateSum(String username, String reportDate) {
+    public List<ExpendInfo> getExpendReportByDate(String username, String reportDate, String reportClass) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(expendTime, '%Y-%m') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')",
-                reportDate.substring(0, 4));
+        convertQueryWrapper(queryWrapper, reportDate, reportClass);
         queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y-%m')");
         queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y-%m')");
 
         return expendInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<ExpendInfo> getExpendReportByClass(String username, String reportDate, String reportClass) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("DATE_FORMAT(expendTime, '%Y-%m') as remark, topClass, secondClass, sum(amount) as amount");
+        queryWrapper.eq("username", username);
+        convertQueryWrapper(queryWrapper, reportDate, reportClass);
+        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y-%m')", "topClass", "secondClass");
+        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y-%m')", "secondClass");
+
+        return expendInfoMapper.selectList(queryWrapper);
+    }
+
+    private void convertQueryWrapper(QueryWrapper<ExpendInfo> queryWrapper, String reportDate, String reportClass) {
+        if (StringUtils.isEmpty(reportDate)) {
+            queryWrapper.ge("expendTime", DateUtils.atStartOfMonth());
+        } else {
+//            queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')",
+//                    reportDate.substring(0, 4));
+            queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
+        }
+
+        if ("1".equals(reportClass)) {
+            queryWrapper.eq("topClass", "日常支出");
+        }
+        if ("2".equals(reportClass)) {
+            queryWrapper.eq("topClass", "生活支出");
+        }
     }
 
     public List<ExpendInfo> getExpendInfoByClass(String username, String reportDate, String topClass) {

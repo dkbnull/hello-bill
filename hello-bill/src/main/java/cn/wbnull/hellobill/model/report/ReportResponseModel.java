@@ -1,12 +1,15 @@
 package cn.wbnull.hellobill.model.report;
 
+import cn.wbnull.hellobill.common.util.BigDecimalUtils;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import com.alibaba.fastjson.JSONArray;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 支出、收入信息报表接口响应参数
@@ -17,32 +20,41 @@ import java.util.List;
 @Data
 public class ReportResponseModel<T> {
 
+    @Deprecated
     private List<T> reportClass;
+    @Deprecated
     private List<ReportSecondClassBean<T>> reportSecondClass;
+    @Deprecated
     private JSONArray reportDate;
-    private JSONArray date;
+    @Deprecated
     private JSONArray total;
 
-    public static ReportResponseModel<ExpendInfo> buildExpend(List<ExpendInfo> expendInfos,
+    private List<String> date;
+    private Map<String, String> expendData;
+    private Map<String, Map<String, String>> expendClassData;
+
+    public static ReportResponseModel<ExpendInfo> buildExpend(List<String> date,
+                                                              List<ExpendInfo> expendInfosDateSum,
                                                               List<ExpendInfo> expendInfosSecond) {
         ReportResponseModel<ExpendInfo> responseModel = new ReportResponseModel<>();
-        responseModel.reportClass = expendInfos;
-        responseModel.reportSecondClass = new ArrayList<>();
+        responseModel.date = date;
 
+        responseModel.expendData = new HashMap<>();
+        for (ExpendInfo expendInfo : expendInfosDateSum) {
+            responseModel.expendData.put(expendInfo.getRemark(), BigDecimalUtils.format2Decimal(expendInfo.getAmount()));
+        }
+
+        responseModel.expendClassData = new HashMap<>();
         for (ExpendInfo expendInfo : expendInfosSecond) {
-            ReportSecondClassBean<ExpendInfo> reportSecondClassTemp = null;
-            for (ReportSecondClassBean<ExpendInfo> reportSecondClass : responseModel.reportSecondClass) {
-                if (reportSecondClass.topClass.equals(expendInfo.getTopClass())) {
-                    reportSecondClassTemp = reportSecondClass;
-                    break;
-                }
+            if (responseModel.expendClassData.containsKey(expendInfo.getRemark())) {
+                Map<String, String> data = responseModel.expendClassData.get(expendInfo.getRemark());
+                data.put(expendInfo.getSecondClass(), BigDecimalUtils.format2Decimal(expendInfo.getAmount()));
+                continue;
             }
 
-            if (reportSecondClassTemp == null) {
-                responseModel.reportSecondClass.add(ReportSecondClassBean.build(expendInfo));
-            } else {
-                reportSecondClassTemp.getReportClass().add(expendInfo);
-            }
+            Map<String, String> data = new HashMap<>();
+            data.put(expendInfo.getSecondClass(), BigDecimalUtils.format2Decimal(expendInfo.getAmount()));
+            responseModel.expendClassData.put(expendInfo.getRemark(), data);
         }
 
         return responseModel;

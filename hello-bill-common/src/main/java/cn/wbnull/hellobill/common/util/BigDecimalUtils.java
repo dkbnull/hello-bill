@@ -1,6 +1,7 @@
 package cn.wbnull.hellobill.common.util;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * BigDecimal 工具类
@@ -231,6 +232,11 @@ public class BigDecimalUtils {
      */
     public static String format(String value) {
         return new BigDecimal(value).stripTrailingZeros().toPlainString();
+    }
+
+    public static String format2Decimal(BigDecimal value) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(value.stripTrailingZeros().doubleValue());
     }
 
     /**
