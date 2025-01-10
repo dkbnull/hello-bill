@@ -12,12 +12,10 @@ import cn.wbnull.hellobill.db.service.ExpendInfoService;
 import cn.wbnull.hellobill.db.service.IncomeInfoService;
 import cn.wbnull.hellobill.model.report.*;
 import cn.wbnull.hellobill.service.ReportService;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,14 +63,22 @@ public class ReportServiceImpl implements ReportService {
         List<ExpendInfo> expendInfosClass = expendInfoService.getExpendReportByClass(request.getUsername(),
                 data.getReportDate(), data.getReportClass());
 
+        List<String> date = getReportDateMonth(data.getReportDate());
+
+        ReportResponseModel<ExpendInfo> response = ReportResponseModel.buildExpend(date, expendInfosDate, expendInfosClass);
+
+        return ResponseModel.success(response);
+    }
+
+    private List<String> getReportDateMonth(String reportDate) {
         YearMonth beginMonth;
         YearMonth endMonth;
-        if (StringUtils.isEmpty(data.getReportDate())) {
+        if (StringUtils.isEmpty(reportDate)) {
             beginMonth = YearMonth.now().minusMonths(11);
             endMonth = YearMonth.now();
         } else {
-            beginMonth = YearMonth.of(Integer.parseInt(data.getReportDate()), 1);
-            endMonth = YearMonth.of(Integer.parseInt(data.getReportDate()), 12);
+            beginMonth = YearMonth.of(Integer.parseInt(reportDate), 1);
+            endMonth = YearMonth.of(Integer.parseInt(reportDate), 12);
         }
 
         List<String> date = new ArrayList<>();
@@ -81,88 +87,37 @@ public class ReportServiceImpl implements ReportService {
             beginMonth = beginMonth.plusMonths(1);
         }
 
-        ReportResponseModel<ExpendInfo> response = ReportResponseModel.buildExpend(date, expendInfosDate, expendInfosClass);
-
-        return ResponseModel.success(response);
+        return date;
     }
 
     @Override
     public ResponseModel<Object> income(RequestModel<ReportRequestModel> request) {
         ReportRequestModel data = request.getData();
 
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReportByClass(request.getUsername(),
+        List<IncomeInfo> incomeReportDate = incomeInfoService.getIncomeReportByDate(request.getUsername(),
                 data.getReportDate());
-        List<IncomeInfo> incomeInfosSecond = incomeInfoService.getIncomeReportBySecondClass(request.getUsername(),
-                data.getReportDate());
-
-        ReportResponseModel<IncomeInfo> response = ReportResponseModel.buildIncome(incomeInfos,
-                incomeInfosSecond);
-
-        LocalDate beginDate = LocalDate.of(2021, 1, 1);
-        LocalDate endDate = LocalDate.now();
-
-        List<IncomeInfo> incomeReportByDate = incomeInfoService.getIncomeReportByDate(request.getUsername(),
+        List<IncomeInfo> incomeInfosClass = incomeInfoService.getIncomeReportByClass(request.getUsername(),
                 data.getReportDate());
 
-        JSONArray incomeReport = analysisIncomeReport(incomeReportByDate, beginDate, endDate);
-        response.setReportDate(incomeReport);
+        List<String> date = getReportDateYear(data.getReportDate());
 
-        JSONArray date = new JSONArray();
-        while (!beginDate.isAfter(endDate)) {
-            date.add(beginDate.toString().substring(0, 4));
-            beginDate = beginDate.plusYears(1);
-        }
-//        response.setDate(date);
-
-        List<IncomeInfo> incomeReportByDateSum = incomeInfoService.getIncomeReportByDateSum(request.getUsername(),
-                data.getReportDate());
-        JSONArray total = new JSONArray();
-        for (IncomeInfo incomeInfo : incomeReportByDateSum) {
-            total.add(incomeInfo.getAmount());
-        }
-        response.setTotal(total);
+        ReportResponseModel<IncomeInfo> response = ReportResponseModel.buildIncome(date, incomeReportDate,
+                incomeInfosClass);
 
         return ResponseModel.success(response);
     }
 
-    private JSONArray analysisIncomeReport(List<IncomeInfo> incomeInfos, LocalDate beginDate,
-                                           LocalDate endDate) {
-        JSONObject reportData = new JSONObject();
-        for (IncomeInfo incomeInfo : incomeInfos) {
-            if (reportData.containsKey(incomeInfo.getTopClass())) {
-                JSONObject reportDataItem = reportData.getJSONObject(incomeInfo.getTopClass());
-                reportDataItem.put(incomeInfo.getRemark(), incomeInfo.getAmount());
-            } else {
-                JSONObject reportDataItem = new JSONObject();
-                reportDataItem.put(incomeInfo.getRemark(), incomeInfo.getAmount());
-                reportData.put(incomeInfo.getTopClass(), reportDataItem);
-            }
+    private List<String> getReportDateYear(String reportDate) {
+        Year beginYear = StringUtils.isEmpty(reportDate) ?
+                Year.now().minusYears(5) : Year.of(Integer.parseInt(reportDate));
+        Year endYear = Year.now();
+        List<String> date = new ArrayList<>();
+        while (!beginYear.isAfter(endYear)) {
+            date.add(beginYear.toString());
+            beginYear = beginYear.plusYears(1);
         }
 
-        JSONArray incomeReport = new JSONArray();
-        for (String topClass : reportData.keySet()) {
-            JSONArray incomeReportItem = new JSONArray();
-            JSONObject reportDataItem = reportData.getJSONObject(topClass);
-
-            LocalDate beginDateTemp = LocalDate.ofEpochDay(beginDate.toEpochDay());
-            while (!beginDateTemp.isAfter(endDate)) {
-                String date = beginDateTemp.toString().substring(0, 4);
-                if (reportDataItem.containsKey(date)) {
-                    incomeReportItem.add(reportDataItem.getString(date));
-                } else {
-                    incomeReportItem.add("0.00");
-                }
-
-                beginDateTemp = beginDateTemp.plusYears(1);
-            }
-
-            JSONObject report = new JSONObject();
-            report.put("topClass", topClass);
-            report.put("report", incomeReportItem);
-            incomeReport.add(report);
-        }
-
-        return incomeReport;
+        return date;
     }
 
     @Override

@@ -174,7 +174,11 @@ public class DateUtils {
         return LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.ofHours(8));
     }
 
-    public static LocalDateTime atStartOfMonth() {
-        return YearMonth.now().minusMonths(11).atDay(1).atStartOfDay();
+    public static LocalDate atStartOfMonth(long monthsToSubtract) {
+        return YearMonth.now().minusMonths(monthsToSubtract).atDay(1);
+    }
+
+    public static LocalDate atStartOfYear(long yearsToSubtract) {
+        return Year.now().minusYears(yearsToSubtract).atDay(1);
     }
 }

@@ -18,6 +18,8 @@ layui.use(['element', 'layer', 'laydate', 'form'], function () {
 
     doPostExpendDaily();
     doPostExpendLiving();
+
+    doPostIncome();
 });
 
 function doPostQuery() {
@@ -38,7 +40,7 @@ function doPostExpendDaily() {
     }
 
     doPost("report/expend", data, function (result) {
-        barChartExpend(result, '日常支出', "report-expend-daily-bar-chart");
+        barChartClass(result, '日常支出', "report-expend-daily-bar-chart");
     })
 }
 
@@ -48,7 +50,13 @@ function doPostExpendLiving() {
     }
 
     doPost("report/expend", data, function (result) {
-        barChartExpend(result, '生活支出', "report-expend-living-bar-chart");
+        barChartClass(result, '生活支出', "report-expend-living-bar-chart");
+    })
+}
+
+function doPostIncome() {
+    doPost("report/income", null, function (result) {
+        barChartClass(result, '净收入', "report-income-bar-chart");
     })
 }
 
@@ -104,13 +112,13 @@ function barChartReport(result, title, id) {
     barChart.setOption(option);
 }
 
-function barChartExpend(result, title, id) {
+function barChartClass(result, title, id) {
     let seriesData = [];
-    const expendData = new Map(Object.entries(result.data.expendData));
+    const amountData = new Map(Object.entries(result.data.amountData));
     for (let i = 0; i < result.data.date.length; i++) {
         const date = result.data.date[i];
         const seriesDataItem = {
-            value: expendData.get(date),
+            value: amountData.get(date),
             groupId: date
         };
 
@@ -149,11 +157,11 @@ function barChartExpend(result, title, id) {
     let drilldownData = [];
     for (let i = 0; i < result.data.date.length; i++) {
         const date = result.data.date[i];
-        const expendClassData = result.data.expendClassData[date];
-        const expendClassDataMap = new Map(Object.entries(isEmpty(expendClassData) ? {} : expendClassData));
+        const classAmountData = result.data.classAmountData[date];
+        const classAmountDataMap = new Map(Object.entries(isEmpty(classAmountData) ? {} : classAmountData));
 
         const data = [];
-        expendClassDataMap.forEach((value, key) => {
+        classAmountDataMap.forEach((value, key) => {
             const dataItem = [];
             dataItem.push(key);
             dataItem.push(value);

@@ -121,7 +121,7 @@ public class ExpendInfoService {
 
     private void convertQueryWrapper(QueryWrapper<ExpendInfo> queryWrapper, String reportDate, String reportClass) {
         if (StringUtils.isEmpty(reportDate)) {
-            queryWrapper.ge("expendTime", DateUtils.atStartOfMonth());
+            queryWrapper.ge("expendTime", DateUtils.atStartOfMonth(11).atStartOfDay());
         } else {
 //            queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')",
 //                    reportDate.substring(0, 4));
