@@ -18,6 +18,7 @@ layui.use(['element', 'layer', 'laydate', 'form'], function () {
 
     doPostExpendDaily();
     doPostExpendLiving();
+    doPostExpendChild();
 
     doPostIncome();
 });
@@ -54,9 +55,19 @@ function doPostExpendLiving() {
     })
 }
 
+function doPostExpendChild() {
+    const data = {
+        reportClass: 3
+    }
+
+    doPost("report/expend", data, function (result) {
+        barChartClass(result, '子女支出', "report-expend-child-bar-chart");
+    })
+}
+
 function doPostIncome() {
     doPost("report/income", null, function (result) {
-        barChartClass(result, '净收入', "report-income-bar-chart");
+        barChartClass(result, '净收入', "report-income-bar-chart", 1);
     })
 }
 
@@ -112,7 +123,7 @@ function barChartReport(result, title, id) {
     barChart.setOption(option);
 }
 
-function barChartClass(result, title, id) {
+function barChartClass(result, title, id, tag) {
     let seriesData = [];
     const amountData = new Map(Object.entries(result.data.amountData));
     for (let i = 0; i < result.data.date.length; i++) {
@@ -142,6 +153,7 @@ function barChartClass(result, title, id) {
         series: {
             type: 'bar',
             id: 'sales',
+            color: tag === 1 ? '#91cc75' : '#5470c6',
             data: seriesData,
             label: {
                 show: true,

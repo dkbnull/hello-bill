@@ -134,6 +134,9 @@ public class ExpendInfoService {
         if ("2".equals(reportClass)) {
             queryWrapper.eq("topClass", "生活支出");
         }
+        if ("3".equals(reportClass)) {
+            queryWrapper.eq("topClass", "子女支出");
+        }
     }
 
     public List<ExpendInfo> getExpendInfoByClass(String username, String reportDate, String topClass) {

@@ -38,6 +38,10 @@ Gitee：[https://gitee.com/dkbnull/HelloBill](https://gitee.com/dkbnull/HelloBil
 
 * <mark style='background:LightGreen'> 新增 </mark> 新增净收入报表
 
+`2024-01-12`
+
+* <mark style='background:LightGreen'> 新增 </mark> 新增子女支出报表
+
 ## 1.0.11.25
 
 `2024-12-25`
