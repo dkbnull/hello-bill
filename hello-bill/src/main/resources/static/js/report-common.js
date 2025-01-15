@@ -4,123 +4,11 @@
  * @author dukunbiao(null)  2021-01-27
  * https://github.com/dkbnull/HelloBill
  */
-function callback(result) {
-    barChart(result.data.reportDate, result.data.date, result.data.total);
-    classPieChart(result.data.reportClass);
-    secondClassPieChart(result.data.reportSecondClass);
-}
-
-function classPieChart(data) {
-    let legendData = [];
-    let seriesData = [];
-    for (let i = 0; i < data.length; i++) {
-        let dataItem = data[i];
-
-        legendData.push(dataItem.topClass);
-        const seriesDataItem = {value: dataItem.amount, name: dataItem.topClass};
-        seriesData.push(seriesDataItem);
-    }
-
-    pieChart(legendData, seriesData, 'report-class-pie-chart', "");
-}
-
-function secondClassPieChart(data) {
-    const secondClassPieChart = $("#report-second-class-pie-chart");
-    secondClassPieChart.empty();
-
-    if (data === null) {
-        return;
-    }
-
-    for (let i = 0; i < data.length; i++) {
-        let dataItem = data[i];
-
-        const value = '<div class="layui-col-xs3 report-second-class-pie-chart-item" id="report-second-class-pie-chart-' + i + '">' +
-            '</div>';
-        secondClassPieChart.append(value);
-        form.render();
-
-        let legendData = [];
-        let seriesData = [];
-        for (let i = 0; i < dataItem.reportClass.length; i++) {
-            let dataClassItem = dataItem.reportClass[i];
-
-            legendData.push(dataClassItem.secondClass);
-            const seriesDataItem = {value: dataClassItem.amount, name: dataClassItem.secondClass};
-            seriesData.push(seriesDataItem);
-        }
-
-        pieChart(legendData, seriesData, 'report-second-class-pie-chart-' + i, dataItem.topClass);
-    }
-}
-
-function pieChart(legendData, seriesData, id, title) {
-    const pieChart = echarts.init(document.getElementById(id));
+function barChartReport(result, title, id) {
     const option = {
         title: {
-            text: title,
-            left: 'center'
+            text: title
         },
-        tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
-        },
-        legend: {
-            type: 'scroll',
-            orient: 'vertical',
-            right: 10,
-            top: 20,
-            bottom: 20,
-            data: legendData
-        },
-        series: [
-            {
-                name: '金额',
-                type: 'pie',
-                radius: '55%',
-                center: ['40%', '50%'],
-                data: seriesData,
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }
-        ]
-    };
-    pieChart.setOption(option);
-}
-
-function barChart(data, date, total) {
-    let seriesData = [];
-    for (let i = 0; i < data.length; i++) {
-        const dataItem = data[i];
-        const seriesDataItem = {
-            name: dataItem.topClass,
-            type: 'bar',
-            stack: '金额',
-            label: {
-                show: true
-            },
-            emphasis: {
-                focus: 'series'
-            },
-            data: dataItem.report
-        };
-
-        seriesData.push(seriesDataItem)
-    }
-
-    seriesData.push({
-        name: '总金额',
-        type: 'line',
-        data: total
-    })
-
-    const barChart = echarts.init(document.getElementById("report-class-bar-chart"));
-    const option = {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -134,17 +22,253 @@ function barChart(data, date, total) {
             bottom: '3%',
             containLabel: true
         },
-        yAxis: [{
-            type: 'value'
-        }, {
-            type: 'value'
-        }],
         xAxis: {
             type: 'category',
-            data: date
+            data: result.data.date
         },
-        series: seriesData
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+        },
+        series: [
+            {
+                name: '收入',
+                type: 'bar',
+                data: result.data.incomeData,
+                label: {
+                    show: true,
+                    position: 'top'
+                },
+            },
+            {
+                name: '支出',
+                type: 'bar',
+                data: result.data.expendData,
+                label: {
+                    show: true,
+                    position: 'top'
+                },
+            }
+        ]
     };
 
+    const barChart = echarts.init(document.getElementById(id));
+    barChart.setOption(option);
+}
+
+function barChartClass(result, title, id, tag) {
+    let seriesData = [];
+    const amountData = new Map(Object.entries(result.data.amountData));
+    for (let i = 0; i < result.data.date.length; i++) {
+        const date = result.data.date[i];
+        const seriesDataItem = {
+            value: amountData.get(date),
+            groupId: date
+        };
+
+        seriesData.push(seriesDataItem)
+    }
+
+    const option = {
+        title: {
+            text: title
+        },
+        xAxis: {
+            data: result.data.date,
+            axisLabel: {
+                interval: 0,
+                rotate: 30
+            }
+        },
+        yAxis: {},
+        dataGroupId: '',
+        animationDurationUpdate: 500,
+        series: {
+            type: 'bar',
+            id: 'sales',
+            color: tag === 1 ? '#91cc75' : '#5470c6',
+            data: seriesData,
+            label: {
+                show: true,
+                position: 'top'
+            },
+            universalTransition: {
+                enabled: true,
+                divideShape: 'clone'
+            }
+        }
+    };
+
+    let drilldownData = [];
+    for (let i = 0; i < result.data.date.length; i++) {
+        const date = result.data.date[i];
+        const classAmountData = result.data.classAmountData[date];
+        const classAmountDataMap = new Map(Object.entries(isEmpty(classAmountData) ? {} : classAmountData));
+
+        const data = [];
+        classAmountDataMap.forEach((value, key) => {
+            const dataItem = [];
+            dataItem.push(key);
+            dataItem.push(value);
+            data.push(dataItem);
+        })
+
+        const drilldownDataItem = {
+            data: data,
+            dataGroupId: date
+        };
+
+        drilldownData.push(drilldownDataItem)
+    }
+
+    const dom = document.getElementById(id);
+    var barChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+    });
+    barChart.on('click', function (event) {
+        if (event.data) {
+            const subData = drilldownData.find(function (data) {
+                return data.dataGroupId === event.data.groupId;
+            });
+            if (!subData) {
+                return;
+            }
+            barChart.setOption({
+                xAxis: {
+                    data: subData.data.map(function (item) {
+                        return item[0];
+                    })
+                },
+                series: {
+                    type: 'bar',
+                    id: 'sales',
+                    dataGroupId: subData.dataGroupId,
+                    data: subData.data.map(function (item) {
+                        return item[1];
+                    }),
+                    universalTransition: {
+                        enabled: true,
+                        divideShape: 'clone'
+                    }
+                },
+                graphic: [
+                    {
+                        type: 'text',
+                        left: 50,
+                        top: 20,
+                        style: {
+                            text: 'Back',
+                            fontSize: 18
+                        },
+                        onclick: function () {
+                            barChart.setOption(option);
+                        }
+                    }
+                ]
+            });
+        }
+    });
+
+    barChart.setOption(option);
+}
+
+function barChartReportClass(data, seriesData) {
+    let option = {
+        xAxis: {
+            type: 'category',
+            data: data
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: seriesData,
+                type: 'bar',
+                label: {
+                    show: true,
+                    position: 'top'
+                },
+            }
+        ]
+    };
+
+    const barChart = echarts.init(document.getElementById("report-class-bar-chart"));
+    barChart.setOption(option);
+}
+
+function pieChartReportClass(data, seriesData) {
+    let seriesDataNew = [];
+    for (let i = 0; i < data.length; i++) {
+        seriesDataNew.push({
+            value: seriesData[i],
+            name: data[i]
+        })
+    }
+
+    const option = {
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'right'
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '50%',
+                data: seriesDataNew,
+                label: {
+                    formatter: '{name|{b}}\n{per|{d}%}',
+                    // formatter: '{b}{abg}\n  {c}  {d}%  ',
+                    rich: {
+                        per: {
+                            fontSize: 10,
+                            color: '#999',
+                            fontWeight: 'bold',
+                            padding: [3, 4],
+                            marginTop: 10
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    const pieChart = echarts.init(document.getElementById("report-class-pie-chart"));
+    pieChart.setOption(option);
+}
+
+function barChartReportDetail(data, seriesData) {
+    let option = {
+        yAxis: {
+            type: 'category',
+            data: data
+        },
+        xAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: seriesData,
+                type: 'bar',
+                label: {
+                    show: true,
+                    position: 'right'
+                },
+            }
+        ]
+    };
+
+    const barChart = echarts.init(document.getElementById("report-detail-bar-chart"));
     barChart.setOption(option);
 }

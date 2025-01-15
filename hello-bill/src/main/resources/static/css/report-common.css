@@ -9,14 +9,6 @@
     text-align: center;
 }
 
-#report-class-pie-chart,
-#report-class-bar-chart,
-#report-detail-bar-chart {
-    width: 700px;
-    height: 800px;
-    margin: 0 auto;
-}
-
 .report-chart {
     height: 500px;
     margin: 0 auto;
