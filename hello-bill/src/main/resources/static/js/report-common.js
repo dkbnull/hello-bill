@@ -4,7 +4,7 @@
  * @author dukunbiao(null)  2021-01-27
  * https://github.com/dkbnull/HelloBill
  */
-function barChartReport(result, title, id) {
+function barChartQuery(result, title, id) {
     const option = {
         title: {
             text: title
@@ -34,6 +34,7 @@ function barChartReport(result, title, id) {
             {
                 name: '收入',
                 type: 'bar',
+                color: '#91cc75',
                 data: result.data.incomeData,
                 label: {
                     show: true,
@@ -43,6 +44,7 @@ function barChartReport(result, title, id) {
             {
                 name: '支出',
                 type: 'bar',
+                color: '#5470c6',
                 data: result.data.expendData,
                 label: {
                     show: true,
@@ -72,6 +74,12 @@ function barChartClass(result, title, id, tag) {
     const option = {
         title: {
             text: title
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
         },
         xAxis: {
             data: result.data.date,
@@ -175,6 +183,12 @@ function barChartClass(result, title, id, tag) {
 
 function barChartReportClass(data, seriesData) {
     let option = {
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
         xAxis: {
             type: 'category',
             data: data
@@ -215,6 +229,12 @@ function pieChartReportClass(data, seriesData) {
             orient: 'vertical',
             left: 'right'
         },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
         series: [
             {
                 type: 'pie',
@@ -250,6 +270,11 @@ function pieChartReportClass(data, seriesData) {
 
 function barChartReportDetail(data, seriesData) {
     let option = {
+        grid: {
+            left: '3%',
+            bottom: '3%',
+            containLabel: true
+        },
         yAxis: {
             type: 'category',
             data: data

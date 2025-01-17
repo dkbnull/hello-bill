@@ -109,7 +109,7 @@ public class ReportServiceImpl implements ReportService {
 
     private List<String> getReportDateYear(String reportDate) {
         Year beginYear = StringUtils.isEmpty(reportDate) ?
-                Year.now().minusYears(5) : Year.of(Integer.parseInt(reportDate));
+                Year.now().minusYears(4) : Year.of(Integer.parseInt(reportDate));
         Year endYear = Year.now();
         List<String> date = new ArrayList<>();
         while (!beginYear.isAfter(endYear)) {

@@ -124,7 +124,7 @@ public class IncomeInfoService {
         topClassList.add("职外收入");
         queryWrapper.in("topClass", topClassList);
         if (StringUtils.isEmpty(reportDate)) {
-            queryWrapper.ge("incomeDate", DateUtils.atStartOfYear(5));
+            queryWrapper.ge("incomeDate", DateUtils.atStartOfYear(4));
         } else {
             queryWrapper.like("DATE_FORMAT(incomeDate, '%Y-%m-%d %H:%i:%s')", reportDate);
         }

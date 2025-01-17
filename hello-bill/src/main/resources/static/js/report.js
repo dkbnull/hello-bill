@@ -25,13 +25,13 @@ layui.use(['element', 'layer', 'laydate', 'form'], function () {
 
 function doPostQuery() {
     doPost("report/query", null, function (result) {
-        barChartReport(result, '总收支报表', "report-query-bar-chart");
+        barChartQuery(result, '总收支报表', "report-query-bar-chart");
     })
 }
 
 function doPostQueryNet() {
     doPost("report/queryNet", null, function (result) {
-        barChartReport(result, '净收支报表', "report-query-net-bar-chart");
+        barChartQuery(result, '净收支报表', "report-query-net-bar-chart");
     })
 }
 
