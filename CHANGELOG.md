@@ -6,33 +6,6 @@
 
 # 版本信息
 
-## 1.1.11
-
-`2024-01-24`
-
-* <mark style='background:LightGreen'> 新增 </mark> Spring Boot 版本升级至2.7.18
-* <mark style='background:LightGreen'> 新增 </mark> Mybatis Plus 版本升级至3.5.9
-* <mark style='background:Yellow'> 优化 </mark> 收入、支出明细支持按时间正序、倒序排列
-* <mark style='background:Yellow'> 优化 </mark> 收入、支出明细支持删除
-* <mark style='background:Yellow'> 优化 </mark> 收入、支出明细支持修改
-* <mark style='background:Yellow'> 优化 </mark> 收入、支出明细金额显示两位小数
-* <mark style='background:Yellow'> 优化 </mark> 收入、支出明细记账时不可选择未来时间
-* <mark style='background:Yellow'> 优化 </mark> 支出明细记账支持直接录入时间
-* <mark style='background:Yellow'> 优化 </mark> 界面配色、字体调整
-* <mark style='background:LightGreen'> 新增 </mark> 支持分类管理
-* <mark style='background:LightGreen'> 新增 </mark> 支持禁用分类
-* <mark style='background:LightGreen'> 新增 </mark> 支持JWT认证
-* <mark style='background:LightGreen'> 新增 </mark> 支持修改密码
-* <mark style='background:LightGreen'> 新增 </mark> 导航页增加选项卡
-* <mark style='background:LightGreen'> 新增 </mark> 新增收入分类报表
-* <mark style='background:LightGreen'> 新增 </mark> 新增支出分类报表
-* <mark style='background:LightGreen'> 新增 </mark> 新增总收支报表
-* <mark style='background:LightGreen'> 新增 </mark> 新增净收支报表
-* <mark style='background:LightGreen'> 新增 </mark> 新增日常支出报表
-* <mark style='background:LightGreen'> 新增 </mark> 新增生活支出报表
-* <mark style='background:LightGreen'> 新增 </mark> 新增子女支出报表
-* <mark style='background:LightGreen'> 新增 </mark> 新增净收入报表
-
 ## 1.0.0
 
 `2021-01-01`
