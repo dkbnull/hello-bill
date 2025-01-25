@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Logger 工具类
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 @Slf4j

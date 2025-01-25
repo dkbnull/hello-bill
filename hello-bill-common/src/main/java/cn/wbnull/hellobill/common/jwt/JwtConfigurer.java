@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * 全局配置
  *
- * @author dukunbiao(null)  2024-11-30
+ * @author null  2024-11-30
  */
 @Configuration
 public class JwtConfigurer implements WebMvcConfigurer {

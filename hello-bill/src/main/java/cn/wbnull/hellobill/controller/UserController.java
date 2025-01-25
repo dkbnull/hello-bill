@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 用户接口
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 @RestController

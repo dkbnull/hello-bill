@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * 全局异常处理
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 @ControllerAdvice

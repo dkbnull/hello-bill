@@ -11,7 +11,7 @@ import java.util.Locale;
 /**
  * Date 工具类
  *
- * @author dukunbiao(null)  2018-08-31
+ * @author null  2018-08-31
  * https://github.com/dkbnull/HelloUtil
  */
 public class DateUtils {

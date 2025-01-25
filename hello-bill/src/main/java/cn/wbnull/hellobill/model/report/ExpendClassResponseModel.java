@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 支出分类报表查询接口响应参数
  *
- * @author dukunbiao(null)  2024-02-11
+ * @author null  2024-02-11
  * https://github.com/dkbnull/HelloBill
  */
 @Data

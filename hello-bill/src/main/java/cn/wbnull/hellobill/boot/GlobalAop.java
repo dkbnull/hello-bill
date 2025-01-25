@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * 全局AOP拦截器
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 @Aspect

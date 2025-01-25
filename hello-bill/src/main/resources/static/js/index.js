@@ -1,7 +1,7 @@
 /**
  * index.html js
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 layui.use(['layer', 'form'], function () {

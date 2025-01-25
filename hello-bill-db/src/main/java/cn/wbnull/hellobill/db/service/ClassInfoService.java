@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 分类信息表 服务类
  *
- * @author dukunbiao(null)  2021-01-01
+ * @author null  2021-01-01
  */
 @Service
 public class ClassInfoService {

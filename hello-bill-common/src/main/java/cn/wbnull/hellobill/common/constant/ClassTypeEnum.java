@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * Type枚举
  *
- * @author dukunbiao(null)  2022-01-04
+ * @author null  2022-01-04
  */
 @Getter
 public enum ClassTypeEnum {

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * String 工具类
  *
- * @author dukunbiao(null)  2018-07-26
+ * @author null  2018-07-26
  * https://github.com/dkbnull/HelloUtil
  */
 public class StringUtils {

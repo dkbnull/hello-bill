@@ -1,7 +1,7 @@
 /**
  * expend-info-add.html js
  *
- * @author dukunbiao(null)  2020-12-31
+ * @author null  2020-12-31
  * https://github.com/dkbnull/HelloBill
  */
 let $, form;

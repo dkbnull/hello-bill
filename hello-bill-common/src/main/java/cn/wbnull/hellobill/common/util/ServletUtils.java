@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Servlet 工具类
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 public class ServletUtils {

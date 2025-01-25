@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 支出信息接口服务类
  *
- * @author dukunbiao(null)  2020-12-31
+ * @author null  2020-12-31
  * https://github.com/dkbnull/HelloBill
  */
 public interface ExpendService {

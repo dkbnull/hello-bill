@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 /**
  * 用户接口服务类
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 @Service

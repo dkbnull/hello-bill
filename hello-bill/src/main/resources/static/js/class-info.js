@@ -1,7 +1,7 @@
 /**
  * class-info.html js
  *
- * @author dukunbiao(null)  2022-01-04
+ * @author null  2022-01-04
  * https://github.com/dkbnull/HelloBill
  */
 let $, form;

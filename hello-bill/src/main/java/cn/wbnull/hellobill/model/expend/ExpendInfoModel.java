@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 支出信息Model
  *
- * @author dukunbiao(null)  2024-11-17
+ * @author null  2024-11-17
  */
 @Data
 public class ExpendInfoModel {

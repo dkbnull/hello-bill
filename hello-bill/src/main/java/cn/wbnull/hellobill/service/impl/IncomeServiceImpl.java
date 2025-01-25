@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 收入信息接口服务类
  *
- * @author dukunbiao(null)  2021-01-01
+ * @author null  2021-01-01
  * https://github.com/dkbnull/HelloBill
  */
 @Service

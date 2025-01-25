@@ -1,7 +1,7 @@
 /**
  * report-income-class.html js
  *
- * @author dukunbiao(null)  2024-02-12
+ * @author null  2024-02-12
  * https://github.com/dkbnull/HelloBill
  */
 let $, form;

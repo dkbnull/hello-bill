@@ -1,7 +1,7 @@
 /**
  * report.html js
  *
- * @author dukunbiao(null)  2023-01-28
+ * @author null  2023-01-28
  * https://github.com/dkbnull/HelloBill
  */
 let $;

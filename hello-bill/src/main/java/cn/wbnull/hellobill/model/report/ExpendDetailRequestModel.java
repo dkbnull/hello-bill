@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 /**
  * 支出详情报表查询接口请求参数
  *
- * @author dukunbiao(null)  2024-02-12
+ * @author null  2024-02-12
  * https://github.com/dkbnull/HelloBill
  */
 @Data

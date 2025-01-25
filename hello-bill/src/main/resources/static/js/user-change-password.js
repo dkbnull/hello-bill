@@ -1,7 +1,7 @@
 /**
  * user-change-password.html js
  *
- * @author dukunbiao(null)  2024-02-19
+ * @author null  2024-02-19
  */
 let $;
 

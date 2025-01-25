@@ -1,7 +1,7 @@
 /**
  * *-report.html js
  *
- * @author dukunbiao(null)  2021-01-27
+ * @author null  2021-01-27
  * https://github.com/dkbnull/HelloBill
  */
 function barChartQuery(result, title, id) {

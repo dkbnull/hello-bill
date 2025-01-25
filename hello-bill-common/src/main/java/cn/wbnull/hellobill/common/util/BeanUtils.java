@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * BeanUtils
  *
- * @author dukunbiao(null)  2024-11-17
+ * @author null  2024-11-17
  */
 public class BeanUtils {
 

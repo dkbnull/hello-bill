@@ -1,7 +1,7 @@
 /**
  * home.html js
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 let $, element;

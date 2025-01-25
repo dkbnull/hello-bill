@@ -13,7 +13,7 @@ import java.util.Collections;
 /**
  * Mybatis Plus 代码生成器
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 public class CodeGenerator {
@@ -29,7 +29,7 @@ public class CodeGenerator {
     public static void main(String[] args) {
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)
                 .globalConfig(builder -> builder
-                        .author("dukunbiao(null)")
+                        .author("null")
                         .outputDir(PACKAGE_PATH)
                         .disableOpenDir())
                 .dataSourceConfig(builder -> builder

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * JWT
  *
- * @author dukunbiao(null)  2024-11-30
+ * @author null  2024-11-30
  */
 @Component
 public class JwtInterceptor implements HandlerInterceptor {

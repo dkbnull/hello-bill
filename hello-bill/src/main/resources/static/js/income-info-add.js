@@ -1,7 +1,7 @@
 /**
  * income-info-add.html js
  *
- * @author dukunbiao(null)  2021-01-01
+ * @author null  2021-01-01
  * https://github.com/dkbnull/HelloBill
  */
 let $, form;

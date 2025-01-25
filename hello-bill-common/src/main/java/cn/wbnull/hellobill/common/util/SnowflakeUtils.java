@@ -3,7 +3,7 @@ package cn.wbnull.hellobill.common.util;
 /**
  * 雪花算法工具类
  *
- * @author dukunbiao(null)  2024-11-17
+ * @author null  2024-11-17
  */
 public class SnowflakeUtils {
 

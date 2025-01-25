@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * Jwt配置
  *
- * @author dukunbiao(null)  2024-11-30
+ * @author null  2024-11-30
  */
 @Data
 @Component

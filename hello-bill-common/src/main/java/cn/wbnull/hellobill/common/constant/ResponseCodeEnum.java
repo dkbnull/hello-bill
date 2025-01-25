@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * 返回参数code枚举
  *
- * @author dukunbiao(null)  2024-11-30
+ * @author null  2024-11-30
  */
 @Getter
 public enum ResponseCodeEnum {

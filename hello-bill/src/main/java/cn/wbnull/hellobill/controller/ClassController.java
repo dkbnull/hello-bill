@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 分类信息接口
  *
- * @author dukunbiao(null)  2022-01-04
+ * @author null  2022-01-04
  * https://github.com/dkbnull/HelloBill
  */
 @RestController

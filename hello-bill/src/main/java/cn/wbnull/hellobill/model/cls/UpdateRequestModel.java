@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 /**
  * 分类信息更新接口请求参数
  *
- * @author dukunbiao(null)  2022-01-04
+ * @author null  2022-01-04
  * https://github.com/dkbnull/HelloBill
  */
 @Data

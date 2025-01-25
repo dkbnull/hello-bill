@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 报表查询接口响应参数
  *
- * @author dukunbiao(null)  2023-01-28
+ * @author null  2023-01-28
  * https://github.com/dkbnull/HelloBill
  */
 @Data

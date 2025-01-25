@@ -7,7 +7,7 @@ import lombok.Getter;
 /**
  * 全局异常
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 public class GlobalException extends RuntimeException {

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 响应参数
  *
- * @author dukunbiao(null)  2020-12-29
+ * @author null  2020-12-29
  * https://github.com/dkbnull/HelloBill
  */
 @Data

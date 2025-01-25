@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 支出信息明细查询接口请求参数
  *
- * @author dukunbiao(null)  2020-12-31
+ * @author null  2020-12-31
  * https://github.com/dkbnull/HelloBill
  */
 @Data
