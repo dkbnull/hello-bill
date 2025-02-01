@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wbnull.hellobill.db.mapper.ImportBillClassMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.wbnull.hellobill.db.entity.ImportBillClass">
+        <id column="id" property="id"/>
+        <result column="detail" property="detail"/>
+        <result column="topClass" property="topClass"/>
+        <result column="secondClass" property="secondClass"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , detail, topClass, secondClass, createTime, updateTime
+    </sql>
+
+    <select id="getImportBillClass" resultMap="BaseResultMap">
+        SELECT *
+        FROM hellobill_test.import_bill_class
+        WHERE detail LIKE '%${detail}%'
+           OR locate(detail, '${detail}') > 0
+        ORDER BY id DESC LIMIT 1;
+    </select>
+</mapper>

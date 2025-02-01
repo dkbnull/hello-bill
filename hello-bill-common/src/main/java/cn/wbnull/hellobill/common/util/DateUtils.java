@@ -174,6 +174,10 @@ public class DateUtils {
         return LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.ofHours(8));
     }
 
+    public static LocalDateTime toLocalDateTime(Date date) {
+        return date.toInstant().atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
+    }
+
     public static LocalDate atStartOfMonth(long monthsToSubtract) {
         return YearMonth.now().minusMonths(monthsToSubtract).atDay(1);
     }

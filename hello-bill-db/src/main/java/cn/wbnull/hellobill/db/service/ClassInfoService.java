@@ -23,6 +23,14 @@ public class ClassInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
+    public ClassInfo getClassInfoBySecondClass(String type, String secondClass) {
+        LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ClassInfo::getSecondClass, secondClass);
+        queryWrapper.eq(ClassInfo::getType, type);
+
+        return classInfoMapper.selectOne(queryWrapper);
+    }
+
     public List<ClassInfo> getClassInfos(String type) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(!StringUtils.isEmpty(type), ClassInfo::getType, type);
@@ -39,22 +47,22 @@ public class ClassInfoService {
         classInfoMapper.update(null, updateWrapper);
     }
 
-    public List<ClassInfo> getSecondClassInfos(String type) {
-        LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.select(ClassInfo::getSecondClass);
-        queryWrapper.eq(ClassInfo::getType, type);
-        queryWrapper.eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus());
-        queryWrapper.orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
-
-        return classInfoMapper.selectList(queryWrapper);
-    }
-
     public List<ClassInfo> getTopClassInfos(String type) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("distinct topClass").lambda()
                 .eq(ClassInfo::getType, type)
                 .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())
                 .orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
+
+        return classInfoMapper.selectList(queryWrapper);
+    }
+
+    public List<ClassInfo> getSecondClassInfos(String type) {
+        LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(ClassInfo::getSecondClass);
+        queryWrapper.eq(ClassInfo::getType, type);
+        queryWrapper.eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus());
+        queryWrapper.orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);
     }

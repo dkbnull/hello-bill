@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Bill</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/home.css" media="all">
+</head>
+<body style="text-align: center">
+<div class="layui-inline">
+    <form class="layui-form layui-form-pane" lay-filter="billInfo" style="margin-top: 10px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="bill-time-input" name="billTime" lay-verify="billTime"
+                       autocomplete="off" readonly>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类</label>
+            <div class="layui-input-inline">
+                <select name="secondClass" id="second-class-select" lay-filter="secondClass"></select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">明细</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="detail-input" name="detail" lay-verify="detail"
+                       autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">金额</label>
+            <div class="layui-input-inline">
+                <input type="number" min="0.00" class="layui-input" id="amount-input" name="amount" lay-verify="amount"
+                       autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="remark-input" name="remark" lay-verify="remark"
+                       autocomplete="off">
+            </div>
+        </div>
+    </form>
+    <div class="error" style="color: red"></div>
+</div>
+
+<script src="lib/layui/layui.js" charset="utf-8"></script>
+<script src="js/common.js" charset="utf-8"></script>
+<script src="js/web.js" charset="utf-8"></script>
+<script src="js/import-edit.js" charset="utf-8"></script>
+</body>
+</html>

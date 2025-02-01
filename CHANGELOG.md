@@ -8,7 +8,7 @@
 
 ## 1.1.11
 
-`2024-01-24`
+`2025-01-24`
 
 * <mark style='background:LightGreen'> 新增 </mark> Spring Boot 版本升级至2.7.18
 * <mark style='background:LightGreen'> 新增 </mark> Mybatis Plus 版本升级至3.5.9
@@ -42,39 +42,53 @@
 
 # 更新日志
 
+## 1.2.0.27
+
+`2025-02-01`
+
+* <mark style='background:LightGreen'> 新增 </mark> 新增账单导入信息表
+* <mark style='background:LightGreen'> 新增 </mark> 新增账单导入分类表
+* <mark style='background:LightGreen'> 新增 </mark> 新增导入数据页面
+* <mark style='background:LightGreen'> 新增 </mark> 新增导入数据修改页面
+* <mark style='background:LightGreen'> 新增 </mark> 支持账单文件导入
+* <mark style='background:LightGreen'> 新增 </mark> 支持账单明细列表查询
+* <mark style='background:LightGreen'> 新增 </mark> 支持账单信息查询
+* <mark style='background:LightGreen'> 新增 </mark> 支持修改、删除、确认账单信息
+* <mark style='background:LightGreen'> 新增 </mark> 支持导入微信账单
+
 ## 1.1.11.26
 
-`2024-01-01`
+`2025-01-01`
 
 * <mark style='background:LightGreen'> 新增 </mark> 新增净收支报表
 
-`2024-01-05`
+`2025-01-05`
 
 * <mark style='background:LightGreen'> 新增 </mark> 新增日常支出报表
 * <mark style='background:LightGreen'> 新增 </mark> 新增生活支出报表
 
-`2024-01-10`
+`2025-01-10`
 
 * <mark style='background:LightGreen'> 新增 </mark> 新增净收入报表
 
-`2024-01-12`
+`2025-01-12`
 
 * <mark style='background:LightGreen'> 新增 </mark> 新增子女支出报表
 
-`2024-01-15`
+`2025-01-15`
 
 * <mark style='background:Yellow'> 优化 </mark> 支出分类报表优化
 * <mark style='background:Yellow'> 优化 </mark> 收入分类报表优化
 
 ## 1.1.10.25
 
+`2024-12-23`
+
+- <mark style='background:Yellow'> 优化 </mark> 左侧导航栏优化
+
 `2024-12-25`
 
 * <mark style='background:Yellow'> 优化 </mark> 首页默认打开收支报表
-
-`2024-12-23`
-
-* <mark style='background:Yellow'> 优化 </mark> 左侧导航栏优化
 
 ## 1.1.10.24
 

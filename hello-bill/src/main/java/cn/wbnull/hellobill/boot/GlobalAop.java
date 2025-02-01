@@ -19,7 +19,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class GlobalAop {
 
-    @Pointcut("execution(public * cn.wbnull.hellobill.controller.*.*(..))")
+    @Pointcut("execution(public * cn.wbnull.hellobill.controller.*.*(..))" +
+            "&& !execution(public * cn.wbnull.hellobill.controller.ImportController.billFile(..))")
     private void globalAop() {
 
     }
