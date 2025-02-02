@@ -55,6 +55,10 @@
 * <mark style='background:LightGreen'> 新增 </mark> 支持查询、修改、删除、确认账单信息
 * <mark style='background:LightGreen'> 新增 </mark> 支持导入微信账单
 
+`2025-02-02`
+
+* <mark style='background:LightGreen'> 新增 </mark> 支持导入支付宝账单
+
 ## 1.1.11.26
 
 `2025-01-01`

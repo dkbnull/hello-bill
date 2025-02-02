@@ -72,6 +72,11 @@ public class ImportServiceImpl implements ImportService {
                 List<ImportBillInfo> importBillInfoList = importWeixinBill(username, csvReader);
                 importBillInfoMapper.insertBatch(importBillInfoList);
             }
+            // 支付宝对账单格式，第一行为：支付宝交易记录明细查询
+            else if (line[0].contains("支付宝")) {
+                List<ImportBillInfo> importBillInfoList = importAlipayBill(username, csvReader);
+                importBillInfoMapper.insertBatch(importBillInfoList);
+            }
         } catch (Exception e) {
             LoggerUtils.error("账单文件导入异常", e);
         }
@@ -130,6 +135,70 @@ public class ImportServiceImpl implements ImportService {
             }
             importBillInfo.setDetail(line[2]);
             importBillInfo.setAmount(new BigDecimal(line[5].replace("¥", "")));
+            importBillInfo.setCreateTime(LocalDateTime.now());
+            importBillInfo.setUpdateTime(LocalDateTime.now());
+
+            importBillInfoList.add(importBillInfo);
+        }
+
+        return importBillInfoList;
+    }
+
+    private List<ImportBillInfo> importAlipayBill(String username, CSVReader csvReader) throws Exception {
+        List<ImportBillInfo> importBillInfoList = new ArrayList<>();
+
+        String[] line;
+        // 标识是否到了账单部分
+        boolean tag = false;
+        while ((line = csvReader.readNext()) != null) {
+            // 表头
+            if (line[0].contains("交易号")) {
+                tag = true;
+                continue;
+            }
+
+            if (!tag) {
+                continue;
+            }
+
+            if ("------------------------------------------------------------------------------------".equals(line[0].trim())) {
+                break;
+            }
+
+            if ("不计收支".equals(line[10].trim()) || !"交易成功".equals(line[11].trim())) {
+                continue;
+            }
+
+            // ---------------------------------交易记录明细列表------------------------------------
+            // 交易号        商家订单号    交易创建时间           付款时间             最近修改时间           交易来源地    类型        交易对方   商品名称    金额（元）   收/支     交易状态    	服务费（元）   	成功退款（元）  	备注        资金状态
+            // "20240901"   "231266"	2024-09-27 11:59:52 2024-09-27 11:59:52 2024-09-27 11:59:52 支付宝网站	即时到账交易  青岛***   青岛***     14.97     支出       交易成功    	0	            0	                    	已支出
+            ImportBillInfo importBillInfo = new ImportBillInfo();
+            // 交易时间
+            Date date = DateUtils.dateParse(line[2].trim(), "yyyy-MM-dd HH:mm:ss");
+            LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
+            long epochMilli = DateUtils.toEpochMilli(localDateTime);
+
+            importBillInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
+            importBillInfo.setUsername(username);
+            if ("支出".equals(line[10].trim())) {
+                importBillInfo.setBillType((byte) 0);
+            }
+            if ("收入".equals(line[10].trim())) {
+                importBillInfo.setBillType((byte) 1);
+            }
+
+            importBillInfo.setBillTime(localDateTime);
+
+            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(line[7].trim());
+            if (importBillClass == null) {
+                importBillClass = importBillClassMapper.getImportBillClass(line[8].trim());
+            }
+            if (importBillClass != null) {
+                importBillInfo.setTopClass(importBillClass.getTopClass());
+                importBillInfo.setSecondClass(importBillClass.getSecondClass());
+            }
+            importBillInfo.setDetail(line[7].trim());
+            importBillInfo.setAmount(new BigDecimal(line[9].trim()));
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
 
