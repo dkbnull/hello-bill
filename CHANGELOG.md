@@ -52,8 +52,7 @@
 * <mark style='background:LightGreen'> 新增 </mark> 新增导入数据修改页面
 * <mark style='background:LightGreen'> 新增 </mark> 支持账单文件导入
 * <mark style='background:LightGreen'> 新增 </mark> 支持账单明细列表查询
-* <mark style='background:LightGreen'> 新增 </mark> 支持账单信息查询
-* <mark style='background:LightGreen'> 新增 </mark> 支持修改、删除、确认账单信息
+* <mark style='background:LightGreen'> 新增 </mark> 支持查询、修改、删除、确认账单信息
 * <mark style='background:LightGreen'> 新增 </mark> 支持导入微信账单
 
 ## 1.1.11.26

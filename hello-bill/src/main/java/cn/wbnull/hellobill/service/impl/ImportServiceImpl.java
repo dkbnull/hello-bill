@@ -97,8 +97,12 @@ public class ImportServiceImpl implements ImportService {
             }
 
             // ----------------------微信支付账单明细列表--------------------
-            // 交易时间	        交易类型	交易对方	商品	    收/支	金额(元)	支付方式	当前状态	交易单号	    商户单号    备注
-            // 2025-1-19 14:21	商户消费	青岛***	青岛***	支出	    ¥10.00	零钱	    支付成功	"420000"	"202501"    /
+            // 交易时间	            交易类型	交易对方	商品	    收/支	金额(元)	支付方式	当前状态	交易单号	    商户单号    备注
+            // 2025-01-19 14:21:00	商户消费	青岛***	青岛***	支出	    ¥10.00	零钱	    支付成功	"420000"	"202501"    /
+            if ("/".equals(line[4])) {
+                continue;
+            }
+
             ImportBillInfo importBillInfo = new ImportBillInfo();
             // 交易时间
             Date date = DateUtils.dateParse(line[0], "yyyy-MM-dd HH:mm:ss");
