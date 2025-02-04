@@ -1,12 +1,9 @@
 package cn.wbnull.hellobill.db.service;
 
-import cn.wbnull.hellobill.common.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
 import cn.wbnull.hellobill.common.util.DateUtils;
 import cn.wbnull.hellobill.common.util.StringUtils;
-import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
-import cn.wbnull.hellobill.db.mapper.ClassInfoMapper;
 import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -28,9 +25,6 @@ public class ExpendInfoService {
     @Autowired
     private ExpendInfoMapper expendInfoMapper;
 
-    @Autowired
-    private ClassInfoMapper classInfoMapper;
-
     public List<ExpendInfo> getExpendInfos(String username, QueryListRequestModel request) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ExpendInfo::getUsername, username);
@@ -44,13 +38,7 @@ public class ExpendInfoService {
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public void addExpendInfo(String username, ExpendInfo expendInfo) {
-        LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ClassInfo::getSecondClass, expendInfo.getSecondClass());
-        queryWrapper.eq(ClassInfo::getType, ClassTypeEnum.EXPEND.getTypeCode());
-        ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
-
-        expendInfo.build(username, classInfo.getTopClass());
+    public void addExpendInfo(ExpendInfo expendInfo) {
         expendInfoMapper.insert(expendInfo);
     }
 
@@ -59,13 +47,6 @@ public class ExpendInfoService {
     }
 
     public void updateExpendInfo(ExpendInfo expendInfo) {
-        LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ClassInfo::getSecondClass, expendInfo.getSecondClass());
-        queryWrapper.eq(ClassInfo::getType, ClassTypeEnum.EXPEND.getTypeCode());
-        ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
-
-        expendInfo.setTopClass(classInfo.getTopClass());
-
         expendInfoMapper.updateById(expendInfo);
     }
 

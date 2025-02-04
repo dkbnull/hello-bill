@@ -1,14 +1,19 @@
 package cn.wbnull.hellobill.service.impl;
 
+import cn.wbnull.hellobill.common.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.model.RequestModel;
 import cn.wbnull.hellobill.common.model.ResponseModel;
 import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
 import cn.wbnull.hellobill.common.util.BeanUtils;
+import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
+import cn.wbnull.hellobill.db.service.ClassInfoService;
 import cn.wbnull.hellobill.db.service.ExpendInfoService;
 import cn.wbnull.hellobill.model.common.DeleteRequestModel;
 import cn.wbnull.hellobill.model.common.QueryRequestModel;
-import cn.wbnull.hellobill.model.expend.*;
+import cn.wbnull.hellobill.model.expend.AddRequestModel;
+import cn.wbnull.hellobill.model.expend.ExpendInfoModel;
+import cn.wbnull.hellobill.model.expend.UpdateRequestModel;
 import cn.wbnull.hellobill.service.ExpendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +31,8 @@ public class ExpendServiceImpl implements ExpendService {
 
     @Autowired
     private ExpendInfoService expendInfoService;
+    @Autowired
+    private ClassInfoService classInfoService;
 
     @Override
     public ResponseModel<List<ExpendInfoModel>> queryList(RequestModel<QueryListRequestModel> request) {
@@ -38,7 +45,11 @@ public class ExpendServiceImpl implements ExpendService {
     @Override
     public ResponseModel<Object> add(RequestModel<AddRequestModel> request) {
         ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
-        expendInfoService.addExpendInfo(request.getUsername(), expendInfo);
+        ClassInfo classInfo = classInfoService.getClassInfoBySecondClass(ClassTypeEnum.EXPEND.getTypeCode(),
+                expendInfo.getSecondClass());
+        expendInfo.build(request.getUsername(), classInfo.getTopClass());
+
+        expendInfoService.addExpendInfo(expendInfo);
 
         return ResponseModel.success("记账成功");
     }
@@ -54,6 +65,10 @@ public class ExpendServiceImpl implements ExpendService {
     @Override
     public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) {
         ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
+        ClassInfo classInfo = classInfoService.getClassInfoBySecondClass(ClassTypeEnum.EXPEND.getTypeCode(),
+                expendInfo.getSecondClass());
+        expendInfo.setTopClass(classInfo.getTopClass());
+
         expendInfoService.updateExpendInfo(expendInfo);
 
         return ResponseModel.success("修改成功");

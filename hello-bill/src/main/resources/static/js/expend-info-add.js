@@ -146,7 +146,6 @@ function callback(result) {
 
 function callbackQuery(result) {
     const data = result.data;
-    initDatetime(data.expendTime);
     $("#expend-time-value-input").val(data.expendTime);
     $("#second-class-select").val(data.secondClass);
     $("#detail-input").val(data.detail);
@@ -154,6 +153,8 @@ function callbackQuery(result) {
     $("#remark-input").val(data.remark);
 
     form.render();
+
+    initDatetime(data.expendTime);
 }
 
 function callbackAdd(result) {

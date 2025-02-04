@@ -12,7 +12,6 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 /**
  * <p>
@@ -58,10 +57,8 @@ public class IncomeInfo {
     private LocalDateTime updateTime;
 
     public void build(String username, String topClass) {
-        LocalTime time = LocalTime.of(0, 0, 0);
-        assert this.incomeDate != null;
-        LocalDateTime dateTime = this.incomeDate.atTime(time);
-        long epochMilli = DateUtils.toEpochMilli(dateTime);
+        LocalDateTime localDateTime = this.incomeDate.atStartOfDay();
+        long epochMilli = DateUtils.toEpochMilli(localDateTime);
 
         this.id = SnowflakeUtils.getInstance().nextId(epochMilli);
         this.username = username;

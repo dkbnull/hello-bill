@@ -62,6 +62,7 @@ public class ExpendInfo {
 
     public void build(String username, String topClass) {
         long epochMilli = DateUtils.toEpochMilli(this.expendTime);
+
         this.id = SnowflakeUtils.getInstance().nextId(epochMilli);
         this.username = username;
         this.topClass = topClass;

@@ -120,13 +120,14 @@ function callback(result) {
 
 function callbackQuery(result) {
     const data = result.data;
-    initDatetime(data.incomeDate);
     $("#second-class-select").val(data.secondClass);
     $("#detail-input").val(data.detail);
     $("#amount-input").val(data.amount);
     $("#remark-input").val(data.remark);
 
     form.render();
+
+    initDatetime(data.incomeDate);
 }
 
 function callbackAdd(result) {

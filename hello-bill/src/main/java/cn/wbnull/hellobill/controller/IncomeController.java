@@ -34,7 +34,7 @@ public class IncomeController {
     private IncomeService incomeService;
 
     /**
-     * 收入信息明细查询接口
+     * 收入信息列表查询接口
      *
      * @param request
      * @return
