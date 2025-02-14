@@ -212,6 +212,15 @@ public class ImportServiceImpl implements ImportService {
     public ResponseModel<List<ImportBillInfoModel>> queryList(RequestModel<Object> request) {
         List<ImportBillInfo> importBillInfoList = importBillService.getImportBillInfos(request.getUsername());
         List<ImportBillInfoModel> importBillInfoModelList = BeanUtils.copyPropertyList(importBillInfoList, ImportBillInfoModel.class);
+        for (ImportBillInfoModel importBillInfo : importBillInfoModelList) {
+            if ("0".equals(importBillInfo.getBillType())) {
+                importBillInfo.setBillTypeValue("支出");
+            }
+            if ("1".equals(importBillInfo.getBillType())) {
+                importBillInfo.setBillTypeValue("收入");
+            }
+        }
+
         return ResponseModel.success(importBillInfoModelList);
     }
 

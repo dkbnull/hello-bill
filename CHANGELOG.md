@@ -44,13 +44,17 @@
 
 ## 1.2.0.29
 
-`2024-02-10`
+`2025-02-14`
+
+* <mark style='background:Yellow'> 优化 </mark> 导入数据页面账单类型显示中文含义
+
+`2025-02-10`
 
 * <mark style='background:Yellow'> 优化 </mark> 报表显示效果优化
 
 ## 1.2.0.28
 
-`2024-02-04`
+`2025-02-04`
 
 * <mark style='background:Yellow'> 优化 </mark> 收入、支出明细保存逻辑优化
 
