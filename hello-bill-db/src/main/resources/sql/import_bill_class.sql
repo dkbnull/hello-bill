@@ -17,8 +17,8 @@ INSERT INTO import_bill_class(SELECT id,
                                      secondClass,
                                      createTime,
                                      updateTime
-                              FROM hellobill_test.expend_info ei
+                              FROM expend_info ei
                                        JOIN
                                    (SELECT MAX(id) AS maxId
-                                    FROM hellobill_test.expend_info
+                                    FROM expend_info
                                     GROUP BY detail) AS dei ON ei.id = dei.maxId);
