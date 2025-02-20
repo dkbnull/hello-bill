@@ -42,6 +42,14 @@
 
 # 更新日志
 
+## 1.2.1.30
+
+`2024-02-20`
+
+* <mark style='background:LightGreen'> 新增 </mark> 新增账单导入明细转换表
+* <mark style='background:LightGreen'> 新增 </mark> 账单导入支持自动转换明细信息
+* <mark style='background:LightGreen'> 新增 </mark> 修改账单信息同步更新明细转换表
+
 ## 1.2.0.29
 
 `2025-02-14`

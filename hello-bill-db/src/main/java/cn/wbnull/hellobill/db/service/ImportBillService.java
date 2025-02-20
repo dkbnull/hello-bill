@@ -1,6 +1,9 @@
 package cn.wbnull.hellobill.db.service;
 
+import cn.wbnull.hellobill.common.util.BeanUtils;
+import cn.wbnull.hellobill.db.entity.ImportBillDetailConvert;
 import cn.wbnull.hellobill.db.entity.ImportBillInfo;
+import cn.wbnull.hellobill.db.mapper.ImportBillDetailConvertMapper;
 import cn.wbnull.hellobill.db.mapper.ImportBillInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -20,6 +23,8 @@ public class ImportBillService {
 
     @Autowired
     private ImportBillInfoMapper importBillInfoMapper;
+    @Autowired
+    private ImportBillDetailConvertMapper importBillDetailConvertMapper;
 
     public List<ImportBillInfo> getImportBillInfos(String username) {
         LambdaQueryWrapper<ImportBillInfo> queryWrapper = new LambdaQueryWrapper<>();
@@ -38,5 +43,25 @@ public class ImportBillService {
         queryWrapper.eq(ImportBillInfo::getId, importBillInfo.getId());
 
         importBillInfoMapper.update(null, queryWrapper);
+    }
+
+    public ImportBillDetailConvert getImportBillDetailConvert(String detail) {
+        LambdaQueryWrapper<ImportBillDetailConvert> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ImportBillDetailConvert::getDetail, detail);
+        queryWrapper.last("limit 1");
+
+        return importBillDetailConvertMapper.selectOne(queryWrapper);
+    }
+
+    public void updateImportBillDetailConvert(ImportBillInfo importBillInfo) {
+        ImportBillInfo importBillInfoTemp = importBillInfoMapper.selectById(importBillInfo.getId());
+        if (importBillInfoTemp.getDetail().equals(importBillInfo.getDetail())) {
+            return;
+        }
+
+        ImportBillDetailConvert importBillDetailConvert = BeanUtils.copyProperties(importBillInfoTemp, ImportBillDetailConvert.class);
+        importBillDetailConvert.setDetailConvert(importBillInfo.getDetail());
+
+        importBillDetailConvertMapper.insertOrUpdate(importBillDetailConvert);
     }
 }

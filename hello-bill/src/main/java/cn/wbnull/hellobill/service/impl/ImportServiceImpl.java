@@ -133,7 +133,7 @@ public class ImportServiceImpl implements ImportService {
                 importBillInfo.setTopClass(importBillClass.getTopClass());
                 importBillInfo.setSecondClass(importBillClass.getSecondClass());
             }
-            importBillInfo.setDetail(line[2]);
+            importBillInfo.setDetail(convertDetail(line[2]));
             importBillInfo.setAmount(new BigDecimal(line[5].replace("¥", "")));
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
@@ -197,7 +197,7 @@ public class ImportServiceImpl implements ImportService {
                 importBillInfo.setTopClass(importBillClass.getTopClass());
                 importBillInfo.setSecondClass(importBillClass.getSecondClass());
             }
-            importBillInfo.setDetail(line[7].trim());
+            importBillInfo.setDetail(convertDetail(line[7].trim()));
             importBillInfo.setAmount(new BigDecimal(line[9].trim()));
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
@@ -206,6 +206,15 @@ public class ImportServiceImpl implements ImportService {
         }
 
         return importBillInfoList;
+    }
+
+    private String convertDetail(String detail) {
+        ImportBillDetailConvert importBillDetailConvert = importBillService.getImportBillDetailConvert(detail);
+        if (importBillDetailConvert == null) {
+            return detail;
+        }
+
+        return importBillDetailConvert.getDetailConvert();
     }
 
     @Override
@@ -239,6 +248,7 @@ public class ImportServiceImpl implements ImportService {
                 data.getSecondClass());
         importBillInfo.setTopClass(classInfo.getTopClass());
 
+        importBillService.updateImportBillDetailConvert(importBillInfo);
         importBillService.updateImportBillInfo(importBillInfo);
 
         return ResponseModel.success("修改成功");
