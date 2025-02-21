@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>hello-bill</artifactId>
-    <version>1.2.1.31</version>
+    <version>1.2.1.32</version>
     <packaging>jar</packaging>
 
     <parent>

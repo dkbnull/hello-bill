@@ -1,8 +1,10 @@
 package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.util.BeanUtils;
+import cn.wbnull.hellobill.db.entity.ImportBillClass;
 import cn.wbnull.hellobill.db.entity.ImportBillDetailConvert;
 import cn.wbnull.hellobill.db.entity.ImportBillInfo;
+import cn.wbnull.hellobill.db.mapper.ImportBillClassMapper;
 import cn.wbnull.hellobill.db.mapper.ImportBillDetailConvertMapper;
 import cn.wbnull.hellobill.db.mapper.ImportBillInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -23,6 +25,8 @@ public class ImportBillService {
 
     @Autowired
     private ImportBillInfoMapper importBillInfoMapper;
+    @Autowired
+    private ImportBillClassMapper importBillClassMapper;
     @Autowired
     private ImportBillDetailConvertMapper importBillDetailConvertMapper;
 
@@ -45,9 +49,19 @@ public class ImportBillService {
         importBillInfoMapper.update(null, queryWrapper);
     }
 
+    public ImportBillClass getImportBillClass(String detail) {
+        LambdaQueryWrapper<ImportBillClass> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ImportBillClass::getDetail, detail);
+        queryWrapper.orderByDesc(ImportBillClass::getUpdateTime);
+        queryWrapper.last("limit 1");
+
+        return importBillClassMapper.selectOne(queryWrapper);
+    }
+
     public ImportBillDetailConvert getImportBillDetailConvert(String detail) {
         LambdaQueryWrapper<ImportBillDetailConvert> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ImportBillDetailConvert::getDetail, detail);
+        queryWrapper.orderByDesc(ImportBillDetailConvert::getUpdateTime);
         queryWrapper.last("limit 1");
 
         return importBillDetailConvertMapper.selectOne(queryWrapper);

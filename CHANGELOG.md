@@ -42,7 +42,13 @@
 
 # 更新日志
 
-## 1.2.1.30
+## 1.2.1.32
+
+`2024-02-21`
+
+* <mark style='background:Yellow'> 优化 </mark> 自动新增账单导入分类表时增加重复数据检查
+
+## 1.2.1.31
 
 `2024-02-20`
 
@@ -50,11 +56,13 @@
 * <mark style='background:LightGreen'> 新增 </mark> 账单导入支持自动转换明细信息
 * <mark style='background:LightGreen'> 新增 </mark> 修改账单信息同步更新明细转换表
 
-## 1.2.0.29
+## 1.2.0.30
 
 `2025-02-14`
 
 * <mark style='background:Yellow'> 优化 </mark> 导入数据页面账单类型显示中文含义
+
+## 1.2.0.29
 
 `2025-02-10`
 
