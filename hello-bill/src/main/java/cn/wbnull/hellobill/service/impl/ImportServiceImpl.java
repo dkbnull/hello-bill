@@ -279,13 +279,7 @@ public class ImportServiceImpl implements ImportService {
         }
 
         // 保存或更新明细品类对应信息
-        ImportBillClass importBillClass = importBillService.getImportBillClass(importBillInfo.getDetail());
-        if (importBillClass == null || !importBillClass.getTopClass().equals(importBillInfo.getTopClass()) ||
-                !importBillClass.getSecondClass().equals(importBillInfo.getSecondClass())) {
-            importBillClass = BeanUtils.copyProperties(importBillInfo, ImportBillClass.class);
-            importBillClassMapper.insertOrUpdate(importBillClass);
-        }
-
+        importBillService.updateImportBillClass(importBillInfo);
         importBillInfoMapper.deleteById(importBillInfo.getId());
 
         return ResponseModel.success("确认成功");
