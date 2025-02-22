@@ -99,6 +99,15 @@ public class ImportBillService {
             return;
         }
 
+        if (importBillDetailConvert != null) {
+            LambdaUpdateWrapper<ImportBillDetailConvert> queryWrapper = new LambdaUpdateWrapper<>();
+            queryWrapper.set(ImportBillDetailConvert::getDetailConvert, importBillInfo.getDetail());
+            queryWrapper.eq(ImportBillDetailConvert::getDetail, importBillInfoTemp.getDetail());
+
+            importBillDetailConvertMapper.update(null, queryWrapper);
+            return;
+        }
+
         importBillDetailConvert = BeanUtils.copyProperties(importBillInfoTemp, ImportBillDetailConvert.class);
         importBillDetailConvert.setDetailConvert(importBillInfo.getDetail());
 
