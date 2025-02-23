@@ -79,6 +79,7 @@ public class ImportServiceImpl implements ImportService {
             }
         } catch (Exception e) {
             LoggerUtils.error("账单文件导入异常", e);
+            return ResponseModel.fail("账单文件导入异常: " + e);
         }
 
         return ResponseModel.success("导入成功");
@@ -124,8 +125,9 @@ public class ImportServiceImpl implements ImportService {
             }
 
             importBillInfo.setBillTime(localDateTime);
+            importBillInfo.setDetail(convertDetail(line[2]));
 
-            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(line[2]);
+            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetail());
             if (importBillClass == null) {
                 importBillClass = importBillClassMapper.getImportBillClass(line[3]);
             }
@@ -133,7 +135,7 @@ public class ImportServiceImpl implements ImportService {
                 importBillInfo.setTopClass(importBillClass.getTopClass());
                 importBillInfo.setSecondClass(importBillClass.getSecondClass());
             }
-            importBillInfo.setDetail(convertDetail(line[2]));
+
             importBillInfo.setAmount(new BigDecimal(line[5].replace("¥", "")));
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
@@ -188,8 +190,9 @@ public class ImportServiceImpl implements ImportService {
             }
 
             importBillInfo.setBillTime(localDateTime);
+            importBillInfo.setDetail(convertDetail(line[7].trim()));
 
-            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(line[7].trim());
+            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetail());
             if (importBillClass == null) {
                 importBillClass = importBillClassMapper.getImportBillClass(line[8].trim());
             }
@@ -197,7 +200,7 @@ public class ImportServiceImpl implements ImportService {
                 importBillInfo.setTopClass(importBillClass.getTopClass());
                 importBillInfo.setSecondClass(importBillClass.getSecondClass());
             }
-            importBillInfo.setDetail(convertDetail(line[7].trim()));
+
             importBillInfo.setAmount(new BigDecimal(line[9].trim()));
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
@@ -209,6 +212,8 @@ public class ImportServiceImpl implements ImportService {
     }
 
     private String convertDetail(String detail) {
+        detail = detail.replace("'", "");
+
         ImportBillDetailConvert importBillDetailConvert = importBillService.getImportBillDetailConvert(detail);
         if (importBillDetailConvert == null) {
             return detail;

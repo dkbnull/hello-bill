@@ -44,15 +44,19 @@
 
 ## 1.2.1.33
 
-`2025-02-22`
+`2025-02-23`
 
-* <mark style='background:Yellow'> 优化 </mark> 自动新增账单明细转换表时增加重复数据检查
+- <mark style='background:Yellow'> 优化 </mark> 账单导入时根据转换的明细信息匹配分类
 
 ## 1.2.1.32
 
 `2025-02-21`
 
 * <mark style='background:Yellow'> 优化 </mark> 自动新增账单导入分类表时增加重复数据检查
+
+`2025-02-22`
+
+- <mark style='background:Yellow'> 优化 </mark> 自动新增账单明细转换表时增加重复数据检查
 
 ## 1.2.1.31
 
