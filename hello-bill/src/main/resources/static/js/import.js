@@ -71,16 +71,7 @@ function callback(result) {
     });
 
     table.on('tool(infoTable)', function (obj) {
-        if (obj.event === 'del') {
-            layer.confirm('是否删除当前账单明细？', function (index) {
-                const data = {
-                    id: obj.data.id
-                };
-
-                doPost("import/delete", data, callbackQuery)
-                layer.close(index);
-            });
-        } else if (obj.event === 'edit') {
+        if (obj.event === 'edit') {
             layer.open({
                 type: 2,
                 title: '修改',
@@ -98,12 +89,21 @@ function callback(result) {
                 }
             });
         } else if (obj.event === 'confirm') {
-            layer.confirm('是否确认当前账单明细？', function (index) {
+            layer.confirm('是否确认当前账单明细？', {icon: 1}, function (index) {
                 const data = {
                     id: obj.data.id
                 };
 
                 doPost("import/confirm", data, callbackQuery)
+                layer.close(index);
+            });
+        } else if (obj.event === 'del') {
+            layer.confirm('是否删除当前账单明细？', {icon: 2}, function (index) {
+                const data = {
+                    id: obj.data.id
+                };
+
+                doPost("import/delete", data, callbackQuery)
                 layer.close(index);
             });
         }
