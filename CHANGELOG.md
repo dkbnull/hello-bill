@@ -42,6 +42,16 @@
 
 # 更新日志
 
+## 1.2.2.35
+
+`2025-02-26`
+
+* <mark style='background:LightGreen'> 新增 </mark> 账单导入信息表新增“转换后明细”字段
+* <mark style='background:LightGreen'> 新增 </mark> 账单导入信息相关操作使用“转换后明细”参数
+* <mark style='background:LightGreen'> 新增 </mark> 新增账单明细转换数据调整为确认账单信息时执行
+* <mark style='background:LightGreen'> 新增 </mark> 新增账单明细转换数据时使用“转换后明细”参数
+* <mark style='background:LightGreen'> 新增 </mark> 新增账单导入分类数据时使用“转换后明细”参数
+
 ## 1.2.1.34
 
 `2025-02-24`

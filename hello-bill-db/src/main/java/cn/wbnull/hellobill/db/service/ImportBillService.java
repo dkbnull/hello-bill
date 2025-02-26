@@ -41,7 +41,7 @@ public class ImportBillService {
         LambdaUpdateWrapper<ImportBillInfo> queryWrapper = new LambdaUpdateWrapper<>();
         queryWrapper.set(ImportBillInfo::getTopClass, importBillInfo.getTopClass());
         queryWrapper.set(ImportBillInfo::getSecondClass, importBillInfo.getSecondClass());
-        queryWrapper.set(ImportBillInfo::getDetail, importBillInfo.getDetail());
+        queryWrapper.set(ImportBillInfo::getDetailConvert, importBillInfo.getDetailConvert());
         queryWrapper.set(ImportBillInfo::getAmount, importBillInfo.getAmount());
         queryWrapper.set(ImportBillInfo::getRemark, importBillInfo.getRemark());
         queryWrapper.eq(ImportBillInfo::getId, importBillInfo.getId());
@@ -59,7 +59,7 @@ public class ImportBillService {
     }
 
     public void updateImportBillClass(ImportBillInfo importBillInfo) {
-        ImportBillClass importBillClass = getImportBillClass(importBillInfo.getDetail());
+        ImportBillClass importBillClass = getImportBillClass(importBillInfo.getDetailConvert());
         if (importBillClass != null && importBillClass.getTopClass().equals(importBillInfo.getTopClass()) &&
                 importBillClass.getSecondClass().equals(importBillInfo.getSecondClass())) {
             return;
@@ -69,13 +69,16 @@ public class ImportBillService {
             LambdaUpdateWrapper<ImportBillClass> queryWrapper = new LambdaUpdateWrapper<>();
             queryWrapper.set(ImportBillClass::getTopClass, importBillInfo.getTopClass());
             queryWrapper.set(ImportBillClass::getSecondClass, importBillInfo.getSecondClass());
-            queryWrapper.eq(ImportBillClass::getDetail, importBillInfo.getDetail());
+            queryWrapper.eq(ImportBillClass::getDetail, importBillInfo.getDetailConvert());
 
             importBillClassMapper.update(null, queryWrapper);
             return;
         }
 
         importBillClass = BeanUtils.copyProperties(importBillInfo, ImportBillClass.class);
+        importBillClass.setDetail(importBillInfo.getDetailConvert());
+        importBillClass.setUpdateTime(null);
+
         importBillClassMapper.insert(importBillClass);
     }
 
@@ -89,28 +92,24 @@ public class ImportBillService {
     }
 
     public void updateImportBillDetailConvert(ImportBillInfo importBillInfo) {
-        ImportBillInfo importBillInfoTemp = importBillInfoMapper.selectById(importBillInfo.getId());
-        if (importBillInfoTemp.getDetail().equals(importBillInfo.getDetail())) {
-            return;
-        }
-
-        ImportBillDetailConvert importBillDetailConvert = getImportBillDetailConvert(importBillInfoTemp.getDetail());
-        if (importBillDetailConvert != null && importBillDetailConvert.getDetailConvert().equals(importBillInfo.getDetail())) {
+        ImportBillDetailConvert importBillDetailConvert = getImportBillDetailConvert(importBillInfo.getDetail());
+        if (importBillDetailConvert != null && importBillDetailConvert.getDetailConvert()
+                .equals(importBillInfo.getDetailConvert())) {
             return;
         }
 
         if (importBillDetailConvert != null) {
             LambdaUpdateWrapper<ImportBillDetailConvert> queryWrapper = new LambdaUpdateWrapper<>();
-            queryWrapper.set(ImportBillDetailConvert::getDetailConvert, importBillInfo.getDetail());
-            queryWrapper.eq(ImportBillDetailConvert::getDetail, importBillInfoTemp.getDetail());
+            queryWrapper.set(ImportBillDetailConvert::getDetailConvert, importBillInfo.getDetailConvert());
+            queryWrapper.eq(ImportBillDetailConvert::getDetail, importBillInfo.getDetail());
 
             importBillDetailConvertMapper.update(null, queryWrapper);
             return;
         }
 
-        importBillDetailConvert = BeanUtils.copyProperties(importBillInfoTemp, ImportBillDetailConvert.class);
-        importBillDetailConvert.setDetailConvert(importBillInfo.getDetail());
+        importBillDetailConvert = BeanUtils.copyProperties(importBillInfo, ImportBillDetailConvert.class);
+        importBillDetailConvert.setUpdateTime(null);
 
-        importBillDetailConvertMapper.insertOrUpdate(importBillDetailConvert);
+        importBillDetailConvertMapper.insert(importBillDetailConvert);
     }
 }

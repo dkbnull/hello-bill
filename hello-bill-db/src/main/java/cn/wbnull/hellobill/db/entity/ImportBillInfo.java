@@ -54,6 +54,9 @@ public class ImportBillInfo {
     @TableField("detail")
     private String detail;
 
+    @TableField("detailConvert")
+    private String detailConvert;
+
     @TableField("amount")
     private BigDecimal amount;
 

@@ -19,6 +19,7 @@ public class ImportBillInfoModel {
     private String topClass;
     private String secondClass;
     private String detail;
+    private String detailConvert;
     private String amount;
     private String remark;
     private String createTime;

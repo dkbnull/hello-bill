@@ -125,9 +125,10 @@ public class ImportServiceImpl implements ImportService {
             }
 
             importBillInfo.setBillTime(localDateTime);
-            importBillInfo.setDetail(convertDetail(line[2]));
+            importBillInfo.setDetail(line[2]);
+            importBillInfo.setDetailConvert(convertDetail(line[2]));
 
-            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetail());
+            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetailConvert());
             if (importBillClass == null) {
                 importBillClass = importBillClassMapper.getImportBillClass(line[3]);
             }
@@ -190,9 +191,10 @@ public class ImportServiceImpl implements ImportService {
             }
 
             importBillInfo.setBillTime(localDateTime);
-            importBillInfo.setDetail(convertDetail(line[7].trim()));
+            importBillInfo.setDetail(line[7].trim());
+            importBillInfo.setDetailConvert(convertDetail(line[7].trim()));
 
-            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetail());
+            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetailConvert());
             if (importBillClass == null) {
                 importBillClass = importBillClassMapper.getImportBillClass(line[8].trim());
             }
@@ -253,7 +255,6 @@ public class ImportServiceImpl implements ImportService {
                 data.getSecondClass());
         importBillInfo.setTopClass(classInfo.getTopClass());
 
-        importBillService.updateImportBillDetailConvert(importBillInfo);
         importBillService.updateImportBillInfo(importBillInfo);
 
         return ResponseModel.success("修改成功");
@@ -276,13 +277,17 @@ public class ImportServiceImpl implements ImportService {
         if (ClassTypeEnum.INCOME.getTypeCode().equals(String.valueOf(importBillInfo.getBillType()))) {
             IncomeInfo incomeInfo = BeanUtils.copyProperties(importBillInfo, IncomeInfo.class);
             incomeInfo.setIncomeDate(importBillInfo.getBillTime().toLocalDate());
+            incomeInfo.setDetail(importBillInfo.getDetailConvert());
             incomeInfoMapper.insert(incomeInfo);
         } else {
             ExpendInfo expendInfo = BeanUtils.copyProperties(importBillInfo, ExpendInfo.class);
             expendInfo.setExpendTime(importBillInfo.getBillTime());
+            expendInfo.setDetail(importBillInfo.getDetailConvert());
             expendInfoMapper.insert(expendInfo);
         }
 
+        // 保存或更新明细转换对应信息
+        importBillService.updateImportBillDetailConvert(importBillInfo);
         // 保存或更新明细品类对应信息
         importBillService.updateImportBillClass(importBillInfo);
         importBillInfoMapper.deleteById(importBillInfo.getId());

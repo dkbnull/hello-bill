@@ -22,8 +22,8 @@ public class UpdateRequestModel {
     @NotEmpty(message = "secondClass 不能为空")
     private String secondClass;
 
-    @NotEmpty(message = "detail 不能为空")
-    private String detail;
+    @NotEmpty(message = "detailConvert 不能为空")
+    private String detailConvert;
 
     @NotEmpty(message = "amount 不能为空")
     private String amount;

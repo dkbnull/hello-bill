@@ -29,7 +29,7 @@ function callbackQuery(result) {
     secondClass = data.secondClass;
 
     $("#bill-time-input").val(data.billTime);
-    $("#detail-input").val(data.detail);
+    $("#detail-convert-input").val(data.detailConvert);
     $("#amount-input").val(data.amount);
     $("#remark-input").val(data.remark);
 
@@ -59,11 +59,11 @@ function callbackClass(result) {
 function initMethod() {
     $('#second-class-select').on('keydown', function (event) {
         if (event.keyCode === 13) {
-            $('#detail-input').focus();
+            $('#detail-convert-input').focus();
             return false
         }
     });
-    $('#detail-input').on('keydown', function (event) {
+    $('#detail-convert-input').on('keydown', function (event) {
         if (event.keyCode === 13) {
             $('#amount-input').focus();
             return false
@@ -101,7 +101,7 @@ function checkData(data) {
         error.text("分类不能为空");
         return false;
     }
-    if (data.detail.length === 0) {
+    if (data.detailConvert.length === 0) {
         error.text("明细不能为空");
         return false;
     }

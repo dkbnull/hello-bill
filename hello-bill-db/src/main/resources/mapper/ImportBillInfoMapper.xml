@@ -11,6 +11,7 @@
         <result column="topClass" property="topClass"/>
         <result column="secondClass" property="secondClass"/>
         <result column="detail" property="detail"/>
+        <result column="detailConvert" property="detailConvert"/>
         <result column="amount" property="amount"/>
         <result column="remark" property="remark"/>
         <result column="createTime" property="createTime"/>
@@ -20,7 +21,7 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id
-        , username, billType, billTime, topClass, secondClass, detail, amount, remark, createTime, updateTime
+        , username, billType, billTime, topClass, secondClass, detail, detailConvert, amount, remark, createTime, updateTime
     </sql>
 
     <insert id="insertBatch">
@@ -35,6 +36,7 @@
             #{item.topClass},
             #{item.secondClass},
             #{item.detail},
+            #{item.detailConvert},
             #{item.amount},
             #{item.remark},
             #{item.createTime},
