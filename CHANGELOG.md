@@ -59,6 +59,10 @@
 * <mark style='background:Yellow'> 优化 </mark> 账单明细确认按钮颜色调整
 * <mark style='background:Yellow'> 优化 </mark> 账单明细确认、删除提示框增加图标标识
 
+`2025-02-26`
+
+* <mark style='background:Yellow'> 优化 </mark> 支出、收入明细修改、删除提示框增加图标标识
+
 ## 1.2.1.33
 
 `2025-02-23`

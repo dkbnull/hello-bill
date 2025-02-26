@@ -109,17 +109,8 @@ function callback(result) {
     });
 
     table.on('tool(infoTable)', function (obj) {
-        if (obj.event === 'del') {
-            layer.confirm('是否删除当前支出明细？', function (index) {
-                const data = {
-                    id: obj.data.id
-                };
-
-                doPost("expend/delete", data, callbackDelete)
-                layer.close(index);
-            });
-        } else if (obj.event === 'edit') {
-            layer.confirm('是否修改当前支出明细？', function (index) {
+        if (obj.event === 'edit') {
+            layer.confirm('是否修改当前支出明细？', {icon: 3}, function (index) {
                 layer.open({
                     type: 2
                     , title: '修改'
@@ -137,6 +128,15 @@ function callback(result) {
                     }
                 });
 
+                layer.close(index);
+            });
+        } else if (obj.event === 'del') {
+            layer.confirm('是否删除当前支出明细？', {icon: 2}, function (index) {
+                const data = {
+                    id: obj.data.id
+                };
+
+                doPost("expend/delete", data, callbackDelete)
                 layer.close(index);
             });
         }
