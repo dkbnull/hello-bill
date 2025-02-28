@@ -20,7 +20,7 @@
 
     <select id="getImportBillClass" resultMap="BaseResultMap">
         SELECT *
-        FROM hellobill_test.import_bill_class
+        FROM import_bill_class
         WHERE detail LIKE '%${detail}%'
            OR locate(detail, '${detail}') > 0
         ORDER BY id DESC LIMIT 1;
