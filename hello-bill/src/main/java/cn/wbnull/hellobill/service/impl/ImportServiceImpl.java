@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -110,13 +111,8 @@ public class ImportServiceImpl implements ImportService {
             }
 
             ImportBillInfo importBillInfo = new ImportBillInfo();
-            // 交易时间
-            Date date = DateUtils.dateParse(line[0], "yyyy-MM-dd HH:mm:ss");
-            LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
-            long epochMilli = DateUtils.toEpochMilli(localDateTime);
-
-            importBillInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
             importBillInfo.setUsername(username);
+
             if ("支出".equals(line[4])) {
                 importBillInfo.setBillType((byte) 0);
             }
@@ -124,7 +120,11 @@ public class ImportServiceImpl implements ImportService {
                 importBillInfo.setBillType((byte) 1);
             }
 
+            // 交易时间
+            Date date = DateUtils.dateParse(line[0], "yyyy-MM-dd HH:mm:ss");
+            LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
             importBillInfo.setBillTime(localDateTime);
+
             importBillInfo.setDetail(line[2]);
             importBillInfo.setDetailConvert(convertDetail(line[2]));
 
@@ -143,6 +143,8 @@ public class ImportServiceImpl implements ImportService {
 
             importBillInfoList.add(importBillInfo);
         }
+
+        reverseImportBillInfoList(importBillInfoList);
 
         return importBillInfoList;
     }
@@ -168,7 +170,7 @@ public class ImportServiceImpl implements ImportService {
                 break;
             }
 
-            if ("不计收支".equals(line[10].trim()) || !"交易成功".equals(line[11].trim())) {
+            if (!"交易成功".equals(line[11].trim()) && !"支付成功".equals(line[11].trim())) {
                 continue;
             }
 
@@ -176,23 +178,30 @@ public class ImportServiceImpl implements ImportService {
             // 交易号        商家订单号    交易创建时间           付款时间             最近修改时间           交易来源地    类型        交易对方   商品名称    金额（元）   收/支     交易状态    	服务费（元）   	成功退款（元）  	备注        资金状态
             // "20240901"   "231266"	2024-09-27 11:59:52 2024-09-27 11:59:52 2024-09-27 11:59:52 支付宝网站	即时到账交易  青岛***   青岛***     14.97     支出       交易成功    	0	            0	                    	已支出
             ImportBillInfo importBillInfo = new ImportBillInfo();
-            // 交易时间
-            Date date = DateUtils.dateParse(line[2].trim(), "yyyy-MM-dd HH:mm:ss");
-            LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
-            long epochMilli = DateUtils.toEpochMilli(localDateTime);
-
-            importBillInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
             importBillInfo.setUsername(username);
+
             if ("支出".equals(line[10].trim())) {
                 importBillInfo.setBillType((byte) 0);
             }
             if ("收入".equals(line[10].trim())) {
                 importBillInfo.setBillType((byte) 1);
             }
+            if ("不计收支".equals(line[10].trim()) && ("已支出".equals(line[15].trim()) || StringUtils.isEmpty(line[15].trim()))) {
+                importBillInfo.setBillType((byte) 0);
+            }
+            if ("不计收支".equals(line[10].trim()) && "已收入".equals(line[15].trim())) {
+                importBillInfo.setBillType((byte) 1);
+            }
 
+            // 交易时间
+            Date date = DateUtils.dateParse(line[2].trim(), "yyyy-MM-dd HH:mm:ss");
+            LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
             importBillInfo.setBillTime(localDateTime);
-            importBillInfo.setDetail(line[7].trim());
-            importBillInfo.setDetailConvert(convertDetail(line[7].trim()));
+
+            // 交易对方列为脱敏商家名称，则使用商品名称
+            String detail = line[7].contains("**") ? line[8].trim() : line[7].trim();
+            importBillInfo.setDetail(detail);
+            importBillInfo.setDetailConvert(convertDetail(detail));
 
             ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetailConvert());
             if (importBillClass == null) {
@@ -203,12 +212,14 @@ public class ImportServiceImpl implements ImportService {
                 importBillInfo.setSecondClass(importBillClass.getSecondClass());
             }
 
-            importBillInfo.setAmount(new BigDecimal(line[9].trim()));
+            importBillInfo.setAmount(new BigDecimal(line[9].trim()).subtract(new BigDecimal(line[13].trim())));
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
 
             importBillInfoList.add(importBillInfo);
         }
+
+        reverseImportBillInfoList(importBillInfoList);
 
         return importBillInfoList;
     }
@@ -222,6 +233,15 @@ public class ImportServiceImpl implements ImportService {
         }
 
         return importBillDetailConvert.getDetailConvert();
+    }
+
+    private void reverseImportBillInfoList(List<ImportBillInfo> importBillInfoList) {
+        // 导出的账单为倒序，进行翻转后再生成ID
+        Collections.reverse(importBillInfoList);
+        for (ImportBillInfo importBillInfo : importBillInfoList) {
+            long epochMilli = DateUtils.toEpochMilli(importBillInfo.getBillTime());
+            importBillInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
+        }
     }
 
     @Override
@@ -278,11 +298,13 @@ public class ImportServiceImpl implements ImportService {
             IncomeInfo incomeInfo = BeanUtils.copyProperties(importBillInfo, IncomeInfo.class);
             incomeInfo.setIncomeDate(importBillInfo.getBillTime().toLocalDate());
             incomeInfo.setDetail(importBillInfo.getDetailConvert());
+            incomeInfo.setUpdateTime(null);
             incomeInfoMapper.insert(incomeInfo);
         } else {
             ExpendInfo expendInfo = BeanUtils.copyProperties(importBillInfo, ExpendInfo.class);
             expendInfo.setExpendTime(importBillInfo.getBillTime());
             expendInfo.setDetail(importBillInfo.getDetailConvert());
+            expendInfo.setUpdateTime(null);
             expendInfoMapper.insert(expendInfo);
         }
 

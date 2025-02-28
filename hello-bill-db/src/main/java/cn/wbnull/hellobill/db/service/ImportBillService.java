@@ -92,6 +92,10 @@ public class ImportBillService {
     }
 
     public void updateImportBillDetailConvert(ImportBillInfo importBillInfo) {
+        if (importBillInfo.getDetail().equals(importBillInfo.getDetailConvert())) {
+            return;
+        }
+
         ImportBillDetailConvert importBillDetailConvert = getImportBillDetailConvert(importBillInfo.getDetail());
         if (importBillDetailConvert != null && importBillDetailConvert.getDetailConvert()
                 .equals(importBillInfo.getDetailConvert())) {

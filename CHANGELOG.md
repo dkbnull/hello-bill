@@ -42,6 +42,15 @@
 
 # 更新日志
 
+## 1.2.2.36
+
+`2025-02-28`
+
+* <mark style='background:Yellow'> 优化 </mark> 导入账单时账单明细按时间正序保存
+* <mark style='background:Yellow'> 优化 </mark> 导入支付宝账单逻辑优化
+* <mark style='background:Yellow'> 优化 </mark> 确认账单信息逻辑优化
+* <mark style='background:Yellow'> 优化 </mark> 账单明细无需转换时不再生成账单明细转换表数据
+
 ## 1.2.2.35
 
 `2025-02-26`
@@ -67,17 +76,17 @@
 
 `2025-02-23`
 
-- <mark style='background:Yellow'> 优化 </mark> 账单导入时根据转换的明细信息匹配分类
+- <mark style='background:Yellow'> 优化 </mark> 账单导入时根据转换后明细信息匹配分类
 
 ## 1.2.1.32
 
 `2025-02-21`
 
-* <mark style='background:Yellow'> 优化 </mark> 自动新增账单导入分类表时增加重复数据检查
+* <mark style='background:Yellow'> 优化 </mark> 生成账单导入分类表数据时增加重复数据检查
 
 `2025-02-22`
 
-- <mark style='background:Yellow'> 优化 </mark> 自动新增账单明细转换表时增加重复数据检查
+- <mark style='background:Yellow'> 优化 </mark> 生成账单明细转换表数据时增加重复数据检查
 
 ## 1.2.1.31
 
