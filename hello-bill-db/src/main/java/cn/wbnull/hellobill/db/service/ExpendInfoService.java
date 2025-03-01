@@ -33,7 +33,7 @@ public class ExpendInfoService {
         queryWrapper.like(!StringUtils.isEmpty(request.getDetail()), ExpendInfo::getDetail, request.getDetail());
         queryWrapper.ge(!StringUtils.isEmpty(request.getBeginDate()), ExpendInfo::getExpendTime, request.getBeginDate() + " 00:00:00");
         queryWrapper.le(!StringUtils.isEmpty(request.getEndDate()), ExpendInfo::getExpendTime, request.getEndDate() + " 23:59:59");
-        queryWrapper.orderBy(true, request.orderByAsc(), ExpendInfo::getExpendTime);
+        queryWrapper.orderBy(true, request.orderByAsc(), ExpendInfo::getExpendTime, ExpendInfo::getId);
 
         return expendInfoMapper.selectList(queryWrapper);
     }

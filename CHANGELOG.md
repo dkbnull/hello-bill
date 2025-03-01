@@ -47,6 +47,7 @@
 `2025-03-01`
 
 * <mark style='background:Yellow'> 优化 </mark> 确认账单信息主键冲突时重新获取主键
+* <mark style='background:Yellow'> 优化 </mark> 收入、支出明细列表查询增加按主键ID排序
 
 ## 1.2.3.37
 

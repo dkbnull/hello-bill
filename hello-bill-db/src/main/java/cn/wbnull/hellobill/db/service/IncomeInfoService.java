@@ -38,7 +38,7 @@ public class IncomeInfoService {
         queryWrapper.like(!StringUtils.isEmpty(request.getDetail()), IncomeInfo::getDetail, request.getDetail());
         queryWrapper.ge(!StringUtils.isEmpty(request.getBeginDate()), IncomeInfo::getIncomeDate, request.getBeginDate());
         queryWrapper.le(!StringUtils.isEmpty(request.getBeginDate()), IncomeInfo::getIncomeDate, request.getEndDate());
-        queryWrapper.orderBy(true, request.orderByAsc(), IncomeInfo::getIncomeDate);
+        queryWrapper.orderBy(true, request.orderByAsc(), IncomeInfo::getIncomeDate, IncomeInfo::getId);
 
         return incomeInfoMapper.selectList(queryWrapper);
     }
