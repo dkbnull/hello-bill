@@ -19,6 +19,7 @@ import cn.wbnull.hellobill.model.imp.UpdateRequestModel;
 import cn.wbnull.hellobill.service.ImportService;
 import com.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -374,13 +375,27 @@ public class ImportServiceImpl implements ImportService {
             incomeInfo.setIncomeDate(importBillInfo.getBillTime().toLocalDate());
             incomeInfo.setDetail(importBillInfo.getDetailConvert());
             incomeInfo.setUpdateTime(null);
-            incomeInfoMapper.insert(incomeInfo);
+            try {
+                incomeInfoMapper.insert(incomeInfo);
+            } catch (DuplicateKeyException e) {
+                LoggerUtils.error("确认账单信息异常", e);
+                long epochMilli = DateUtils.toEpochMilli(importBillInfo.getBillTime());
+                incomeInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
+                incomeInfoMapper.insert(incomeInfo);
+            }
         } else {
             ExpendInfo expendInfo = BeanUtils.copyProperties(importBillInfo, ExpendInfo.class);
             expendInfo.setExpendTime(importBillInfo.getBillTime());
             expendInfo.setDetail(importBillInfo.getDetailConvert());
             expendInfo.setUpdateTime(null);
-            expendInfoMapper.insert(expendInfo);
+            try {
+                expendInfoMapper.insert(expendInfo);
+            } catch (DuplicateKeyException e) {
+                LoggerUtils.error("确认账单信息异常", e);
+                long epochMilli = DateUtils.toEpochMilli(importBillInfo.getBillTime());
+                expendInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
+                expendInfoMapper.insert(expendInfo);
+            }
         }
 
         // 保存或更新明细转换对应信息
