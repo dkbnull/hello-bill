@@ -48,6 +48,7 @@
 
 * <mark style='background:Yellow'> 优化 </mark> 确认账单信息主键冲突时重新获取主键
 * <mark style='background:Yellow'> 优化 </mark> 收入、支出明细列表查询增加按主键ID排序
+* <mark style='background:Red'> 修复 </mark> 修复总收支报表、净收支报表，收入、支出汇总年份不匹配时报表展示问题
 
 ## 1.2.3.37
 

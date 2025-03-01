@@ -5,6 +5,7 @@ import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,12 +28,37 @@ public class QueryResponseModel {
         responseModel.date = new ArrayList<>();
 
         for (ExpendInfo expendInfo : expendInfos) {
-            responseModel.expendData.add(expendInfo.getAmount().toString());
             responseModel.date.add(expendInfo.getRemark());
         }
 
         for (IncomeInfo incomeInfo : incomeInfos) {
-            responseModel.incomeData.add(incomeInfo.getAmount().toString());
+            if (!responseModel.date.contains(incomeInfo.getRemark())) {
+                responseModel.date.add(incomeInfo.getRemark());
+            }
+        }
+
+        Collections.sort(responseModel.date);
+
+        for (String date : responseModel.date) {
+            ExpendInfo expendInfoTemp = null;
+            for (ExpendInfo expendInfo : expendInfos) {
+                if (expendInfo.getRemark().equals(date)) {
+                    expendInfoTemp = expendInfo;
+                    break;
+                }
+            }
+
+            responseModel.expendData.add(expendInfoTemp != null ? expendInfoTemp.getAmount().toString() : "0.00");
+
+            IncomeInfo incomeInfoTemp = null;
+            for (IncomeInfo incomeInfo : incomeInfos) {
+                if (incomeInfo.getRemark().equals(date)) {
+                    incomeInfoTemp = incomeInfo;
+                    break;
+                }
+            }
+
+            responseModel.incomeData.add(incomeInfoTemp != null ? incomeInfoTemp.getAmount().toString() : "0.00");
         }
 
         return responseModel;
