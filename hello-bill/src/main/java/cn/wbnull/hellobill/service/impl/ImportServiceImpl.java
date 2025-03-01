@@ -73,9 +73,14 @@ public class ImportServiceImpl implements ImportService {
                 List<ImportBillInfo> importBillInfoList = importWeixinBill(username, csvReader);
                 importBillInfoMapper.insertBatch(importBillInfoList);
             }
-            // 支付宝对账单格式，第一行为：支付宝交易记录明细查询
+            // 支付宝账单格式，第一行为：支付宝交易记录明细查询
             else if (line[0].contains("支付宝")) {
                 List<ImportBillInfo> importBillInfoList = importAlipayBill(username, csvReader);
+                importBillInfoMapper.insertBatch(importBillInfoList);
+            }
+            // 京东账单格式，第一行为：导出信息：   第二行为：京东账号名
+            else if (line[0].contains("导出信息") && csvReader.readNext()[0].contains("京东")) {
+                List<ImportBillInfo> importBillInfoList = importJdBill(username, csvReader);
                 importBillInfoMapper.insertBatch(importBillInfoList);
             }
         } catch (Exception e) {
@@ -213,6 +218,76 @@ public class ImportServiceImpl implements ImportService {
             }
 
             importBillInfo.setAmount(new BigDecimal(line[9].trim()).subtract(new BigDecimal(line[13].trim())));
+            importBillInfo.setCreateTime(LocalDateTime.now());
+            importBillInfo.setUpdateTime(LocalDateTime.now());
+
+            importBillInfoList.add(importBillInfo);
+        }
+
+        reverseImportBillInfoList(importBillInfoList);
+
+        return importBillInfoList;
+    }
+
+    private List<ImportBillInfo> importJdBill(String username, CSVReader csvReader) throws Exception {
+        List<ImportBillInfo> importBillInfoList = new ArrayList<>();
+
+        String[] line;
+        // 标识是否到了账单部分
+        boolean tag = false;
+        while ((line = csvReader.readNext()) != null) {
+            // 表头
+            if ("交易时间".equals(line[0])) {
+                tag = true;
+                continue;
+            }
+
+            if (!tag) {
+                continue;
+            }
+
+            // 交易时间	            商户名称	    交易说明    金额      收/付款方式	交易状态	收/支	交易分类	交易订单号	商家订单号	备注
+            // 2024-09-29 21:56:11	京东平台商户	小鹿蓝蓝    29.28	    京东白条	    交易成功	支出	    母婴用品	2972***	    1156***	    计入10月账单，还款日2024-10-23
+            if (!"交易成功".equals(line[5].trim())) {
+                continue;
+            }
+
+            ImportBillInfo importBillInfo = new ImportBillInfo();
+            importBillInfo.setUsername(username);
+
+            if ("支出".equals(line[6])) {
+                importBillInfo.setBillType((byte) 0);
+            }
+            if ("收入".equals(line[6])) {
+                importBillInfo.setBillType((byte) 1);
+            }
+
+            // 交易时间
+            Date date = DateUtils.dateParse(line[0], "yyyy-MM-dd HH:mm:ss");
+            LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
+            importBillInfo.setBillTime(localDateTime);
+
+            importBillInfo.setDetail(line[2]);
+            importBillInfo.setDetailConvert(convertDetail(line[2]));
+
+            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetailConvert());
+            if (importBillClass != null) {
+                importBillInfo.setTopClass(importBillClass.getTopClass());
+                importBillInfo.setSecondClass(importBillClass.getSecondClass());
+            }
+
+            String amount = line[3];
+            // 部分退款格式：106.76(已退款35.54)
+            // 全额退款格式：67.47(已全额退款)
+            if (amount.contains("已退款")) {
+                String[] amounts = amount.replace("(", "").replace(")", "").split("已退款");
+                importBillInfo.setAmount(new BigDecimal(amounts[0]).subtract(new BigDecimal(amounts[1])));
+            } else if (amount.contains("已全额退款")) {
+                importBillInfo.setAmount(new BigDecimal(0));
+            } else {
+                importBillInfo.setAmount(new BigDecimal(amount));
+            }
+
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
 
