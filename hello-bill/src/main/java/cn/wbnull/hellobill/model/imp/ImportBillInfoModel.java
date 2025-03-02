@@ -21,6 +21,7 @@ public class ImportBillInfoModel {
     private String detail;
     private String detailConvert;
     private String amount;
+    private String payMode;
     private String remark;
     private String createTime;
     private String updateTime;

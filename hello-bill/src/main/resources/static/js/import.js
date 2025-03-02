@@ -59,10 +59,11 @@ function callback(result) {
         cols: [[
             {field: 'billTypeValue', title: '类型'},
             {field: 'billTime', title: '时间', width: 180},
-            {field: 'topClass', title: '顶级分类', width: 110},
-            {field: 'secondClass', title: '二级分类', width: 110},
+            {field: 'topClass', title: '顶级分类'},
+            {field: 'secondClass', title: '二级分类'},
             {field: 'detailConvert', title: '明细'},
             {field: 'amount', title: '金额'},
+            {field: 'payMode', title: '支付方式'},
             {field: 'remark', title: '备注'},
             {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 160}
         ]],

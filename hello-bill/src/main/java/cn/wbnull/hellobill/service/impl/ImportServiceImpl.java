@@ -144,6 +144,7 @@ public class ImportServiceImpl implements ImportService {
             }
 
             importBillInfo.setAmount(new BigDecimal(line[5].replace("¥", "")));
+            importBillInfo.setPayMode(line[6]);
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
 
@@ -289,6 +290,7 @@ public class ImportServiceImpl implements ImportService {
                 importBillInfo.setAmount(new BigDecimal(amount));
             }
 
+            importBillInfo.setPayMode(line[4]);
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
 

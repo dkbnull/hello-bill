@@ -9,6 +9,7 @@ CREATE TABLE `import_bill_info`
     `detail`        varchar(100)   NOT NULL,
     `detailConvert` varchar(100)   NOT NULL,
     `amount`        decimal(10, 2) NOT NULL,
+    `payMode`       varchar(50)             DEFAULT NULL,
     `remark`        varchar(100)            DEFAULT NULL,
     `createTime`    timestamp      NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updateTime`    timestamp      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

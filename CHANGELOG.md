@@ -42,6 +42,14 @@
 
 # 更新日志
 
+## 1.2.4.39
+
+`2025-03-02`
+
+* <mark style='background:LightGreen'> 新增 </mark> 账单导入信息表增加“支付方式”字段
+* <mark style='background:LightGreen'> 新增 </mark> 导入微信、京东账单同步导入支付方式
+* <mark style='background:LightGreen'> 新增 </mark> 导入数据页面账单明细列表显示支付方式
+
 ## 1.2.3.38
 
 `2025-03-01`

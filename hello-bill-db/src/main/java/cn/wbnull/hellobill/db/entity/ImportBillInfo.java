@@ -60,6 +60,9 @@ public class ImportBillInfo {
     @TableField("amount")
     private BigDecimal amount;
 
+    @TableField("payMode")
+    private String payMode;
+
     @TableField("remark")
     private String remark;
 
