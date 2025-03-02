@@ -8,8 +8,9 @@ import javax.validation.constraints.NotNull;
 /**
  * 分类信息更新接口请求参数
  *
- * @author null  2022-01-04
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2022-01-04
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Data
 public class UpdateRequest {

@@ -5,7 +5,9 @@ import lombok.Getter;
 /**
  * 返回参数code枚举
  *
- * @author null  2024-11-30
+ * @author null
+ * @date 2024-11-30
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Getter
 public enum ResponseCode {

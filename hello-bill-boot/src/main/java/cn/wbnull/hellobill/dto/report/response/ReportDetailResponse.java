@@ -10,8 +10,9 @@ import java.util.List;
 /**
  * 支出详情报表查询接口响应参数
  *
- * @author null  2024-02-12
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2024-02-12
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Data
 public class ReportDetailResponse {

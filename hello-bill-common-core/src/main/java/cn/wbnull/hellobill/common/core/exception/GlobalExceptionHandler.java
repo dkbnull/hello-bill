@@ -15,8 +15,9 @@ import java.util.Objects;
 /**
  * 全局异常处理器
  *
- * @author null  2020-12-29
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-29
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {

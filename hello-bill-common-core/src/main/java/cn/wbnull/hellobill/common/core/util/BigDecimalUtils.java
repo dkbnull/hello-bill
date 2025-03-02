@@ -6,8 +6,9 @@ import java.text.DecimalFormat;
 /**
  * BigDecimal 工具类
  *
- * @author null  2019-03-29
- * https://github.com/dkbnull/HelloUtil
+ * @author null
+ * @date 2019-03-29
+ * @link <a href="https://github.com/dkbnull/HelloUtil">GitHub</a>
  */
 public class BigDecimalUtils {
 

@@ -22,8 +22,9 @@ import java.util.List;
 /**
  * 收入信息接口
  *
- * @author null  2021-01-01
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2021-01-01
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @RestController
 @Scope("prototype")

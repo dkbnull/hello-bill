@@ -1,8 +1,9 @@
 /**
  * home.html js
  *
- * @author null  2020-12-29
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-29
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 let $, element;
 

@@ -12,8 +12,9 @@ import java.util.Map;
 /**
  * 收入/支出信息报表接口响应参数
  *
- * @author null  2021-01-26
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2021-01-26
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Data
 public class ReportResponse<T> {

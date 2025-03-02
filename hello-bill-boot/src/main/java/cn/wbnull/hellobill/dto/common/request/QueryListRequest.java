@@ -5,8 +5,9 @@ import lombok.Data;
 /**
  * 收入/支出信息明细查询接口请求参数
  *
- * @author null  2020-12-31
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-31
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Data
 public class QueryListRequest {

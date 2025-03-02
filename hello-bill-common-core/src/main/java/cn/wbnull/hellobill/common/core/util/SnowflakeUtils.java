@@ -3,7 +3,9 @@ package cn.wbnull.hellobill.common.core.util;
 /**
  * 雪花算法工具类
  *
- * @author null  2024-11-17
+ * @author null
+ * @date 2024-11-17
+ * @link <a href="https://github.com/dkbnull/HelloUtil">GitHub</a>
  */
 public class SnowflakeUtils {
 

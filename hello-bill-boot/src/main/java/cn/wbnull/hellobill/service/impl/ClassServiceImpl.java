@@ -20,8 +20,9 @@ import java.util.stream.Collectors;
 /**
  * 分类信息接口服务类
  *
- * @author null  2022-01-04
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2022-01-04
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Service
 public class ClassServiceImpl implements ClassService {

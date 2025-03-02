@@ -8,8 +8,9 @@ import java.time.LocalDateTime;
 /**
  * 分类信息查询接口响应参数
  *
- * @author null  2025-03-02
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2025-03-02
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Data
 public class QueryResponse {

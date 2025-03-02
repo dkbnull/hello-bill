@@ -7,8 +7,9 @@ import javax.validation.constraints.NotEmpty;
 /**
  * 修改收入信息接口请求参数
  *
- * @author null  2021-01-17
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2021-01-17
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Data
 public class UpdateRequest {

@@ -5,7 +5,9 @@ import lombok.Data;
 /**
  * 用户信息实体
  *
- * @author null  2024-11-30
+ * @author null
+ * @date 2024-11-30
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Data
 public class TokenModel {

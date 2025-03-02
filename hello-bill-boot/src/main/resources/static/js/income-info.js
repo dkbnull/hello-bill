@@ -1,8 +1,9 @@
 /**
  * income-info.html js
  *
- * @author null  2021-01-01
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2021-01-01
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 let $;
 

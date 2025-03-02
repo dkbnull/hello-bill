@@ -36,8 +36,9 @@ import java.util.List;
 /**
  * 账单导入接口服务类
  *
- * @author null  2025-01-25
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2025-01-25
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Service
 @Transactional(rollbackFor = Exception.class)

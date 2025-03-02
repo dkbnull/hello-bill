@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Servlet 工具类
  *
- * @author null  2020-12-29
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-29
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 public class ServletUtils {
 

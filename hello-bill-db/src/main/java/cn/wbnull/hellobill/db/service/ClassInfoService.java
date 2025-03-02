@@ -15,7 +15,9 @@ import java.util.List;
 /**
  * 分类信息表 服务类
  *
- * @author null  2021-01-01
+ * @author null
+ * @date 2021-01-01
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Service
 public class ClassInfoService {

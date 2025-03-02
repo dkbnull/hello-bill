@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 报表接口
  *
- * @author null  2023-01-28
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2023-01-28
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @RestController
 @Scope("prototype")

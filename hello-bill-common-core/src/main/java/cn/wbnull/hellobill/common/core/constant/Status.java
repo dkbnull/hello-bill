@@ -5,7 +5,9 @@ import lombok.Getter;
 /**
  * 状态枚举
  *
- * @author null  2022-01-04
+ * @author null
+ * @date 2022-01-04
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Getter
 public enum Status {

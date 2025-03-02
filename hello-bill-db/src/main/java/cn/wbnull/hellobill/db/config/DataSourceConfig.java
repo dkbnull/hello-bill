@@ -7,8 +7,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * 数据源配置
  *
- * @author null  2020-12-29
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-29
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Configuration
 @EnableTransactionManagement

@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Logger 工具类
  *
- * @author null  2020-12-29
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-29
+ * @link <a href="https://github.com/dkbnull/HelloUtil">GitHub</a>
  */
 @Slf4j
 public class LoggerUtils {

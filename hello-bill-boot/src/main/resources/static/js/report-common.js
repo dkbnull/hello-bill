@@ -1,8 +1,9 @@
 /**
  * *-report.html js
  *
- * @author null  2021-01-27
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2021-01-27
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 function barChartQuery(result, title, id) {
     const option = {

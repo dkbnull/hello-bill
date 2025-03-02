@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * JWT 拦截器
  *
- * @author null  2024-11-30
+ * @author null
+ * @date 2024-11-30
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Component
 public class JwtInterceptor implements HandlerInterceptor {

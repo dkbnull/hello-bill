@@ -1,8 +1,9 @@
 /**
  * expend-info-add.html js
  *
- * @author null  2020-12-31
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-31
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 let $, form;
 

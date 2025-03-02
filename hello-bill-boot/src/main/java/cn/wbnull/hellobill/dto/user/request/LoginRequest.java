@@ -7,8 +7,9 @@ import javax.validation.constraints.NotEmpty;
 /**
  * 用户登录接口请求参数
  *
- * @author null  2020-12-29
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-29
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Data
 public class LoginRequest {

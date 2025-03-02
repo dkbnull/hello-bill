@@ -5,7 +5,9 @@ import lombok.Getter;
 /**
  * 分类类型枚举
  *
- * @author null  2022-01-04
+ * @author null
+ * @date 2022-01-04
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Getter
 public enum ClassType {

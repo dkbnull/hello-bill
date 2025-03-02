@@ -8,7 +8,9 @@ import java.util.List;
 /**
  * BeanUtils
  *
- * @author null  2024-11-17
+ * @author null
+ * @date 2024-11-17
+ * @link <a href="https://github.com/dkbnull/HelloUtil">GitHub</a>
  */
 public class BeanUtils {
 

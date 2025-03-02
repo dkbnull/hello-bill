@@ -1,7 +1,9 @@
 /**
  * user-change-password.html js
  *
- * @author null  2024-02-19
+ * @author null
+ * @date 2024-02-19
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 let $;
 

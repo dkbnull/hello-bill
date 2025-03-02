@@ -6,8 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * 入口类
  *
- * @author null  2020-12-28
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-28
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @SpringBootApplication
 public class HelloBillApplication {

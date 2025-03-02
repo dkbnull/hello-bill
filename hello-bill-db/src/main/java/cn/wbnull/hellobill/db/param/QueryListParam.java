@@ -5,8 +5,9 @@ import lombok.Data;
 /**
  * 批量查询参数
  *
- * @author null  2025-03-02
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2025-03-02
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Data
 public class QueryListParam {

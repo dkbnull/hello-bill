@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 /**
  * 用户信息表 服务类
  *
- * @author null  2020-12-29
- * https://github.com/dkbnull/HelloBill
+ * @author null
+ * @date 2020-12-29
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Service
 public class UserInfoService {

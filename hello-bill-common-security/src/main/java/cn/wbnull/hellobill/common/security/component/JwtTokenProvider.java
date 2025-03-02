@@ -19,7 +19,9 @@ import java.util.Date;
 /**
  * JWT 工具类
  *
- * @author null  2024-11-30
+ * @author null
+ * @date 2024-11-30
+ * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Component
 public class JwtTokenProvider {
