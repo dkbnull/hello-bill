@@ -70,11 +70,18 @@
 
 # 更新日志
 
+## 1.3.1.43
+
+`2025-03-02`
+
+* <mark style='background:LightGreen'> 新增 </mark> 收入、支出信息表增加索引
+* <mark style='background:Yellow'> 优化 </mark> 账单导入分类表查询SQL优化
+
 ## 1.3.1.42
 
 `2025-03-02`
 
-* 数据库字段名调整为小写字母下划线格式
+* <mark style='background:Orange'> 风格 </mark> 数据库字段名调整为小写字母下划线格式
 
 ## 1.3.0.41
 

@@ -22,10 +22,15 @@
     </sql>
 
     <select id="getByDetail" resultMap="BaseResultMap">
-        SELECT *
+        SELECT top_class, second_class
         FROM import_bill_class
-        WHERE detail LIKE '%${detail}%'
-           OR locate(detail, '${detail}') > 0
-        ORDER BY id DESC LIMIT 1;
+        WHERE
+            -- 条件1：参数是字段的子串（参数短，字段长）
+            detail LIKE CONCAT('%', #{detail}, '%')
+        OR
+            -- 条件2：字段是参数的子串（参数长，字段短）
+            LOCATE(detail, #{detail}) > 0
+        ORDER BY id DESC
+        LIMIT 1;
     </select>
 </mapper>

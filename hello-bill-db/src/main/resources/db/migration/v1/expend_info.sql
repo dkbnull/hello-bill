@@ -12,3 +12,7 @@ CREATE TABLE `expend_info`
     `gmt_modified` timestamp      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );
+
+ALTER TABLE `expend_info`
+ADD INDEX `idx_expend_info_id_username` (`id` ASC, `username` ASC) VISIBLE;
+;
