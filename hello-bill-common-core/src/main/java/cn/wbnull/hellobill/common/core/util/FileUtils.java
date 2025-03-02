@@ -4,6 +4,7 @@ import cn.wbnull.hellobill.common.core.exception.BusinessException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class FileUtils {
                     file.delete();
                 }
 
-                outputStream = new FileOutputStream(file);
+                outputStream = Files.newOutputStream(file.toPath());
             } else if (FILE_TAG_APPEND == tag) {
                 outputStream = new FileOutputStream(file, true);
             } else {
@@ -69,8 +70,7 @@ public class FileUtils {
                     outputStream.flush();
                     outputStream.close();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ignore) {
             }
         }
     }
@@ -96,7 +96,7 @@ public class FileUtils {
             }
 
             List<String> listValue = new ArrayList<>();
-            inputStream = new FileInputStream(file);
+            inputStream = Files.newInputStream(file.toPath());
             inputStreamReader = new InputStreamReader(inputStream, charset);
             bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -117,8 +117,8 @@ public class FileUtils {
                 if (bufferedReader != null) {
                     bufferedReader.close();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ignore) {
+
             }
         }
     }
@@ -136,7 +136,7 @@ public class FileUtils {
             }
 
             List<String> listValue = new ArrayList<>();
-            inputStream = new FileInputStream(file);
+            inputStream = Files.newInputStream(file.toPath());
             inputStreamReader = new InputStreamReader(inputStream, charset);
             bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -161,14 +161,13 @@ public class FileUtils {
                 if (bufferedReader != null) {
                     bufferedReader.close();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ignore) {
+
             }
         }
     }
 
-    @SuppressWarnings("all")
-    public static File transfer(String path, MultipartFile file) throws Exception {
+    public static File transfer(String path, MultipartFile file) {
         if (file == null || file.isEmpty()) {
             throw new BusinessException("file 不能为空");
         }

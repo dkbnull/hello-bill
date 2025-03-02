@@ -4,6 +4,7 @@ import cn.wbnull.hellobill.common.core.constant.UtilConstants;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -24,8 +25,8 @@ public class StringUtils {
     private static final String SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final Random RANDOM = new SecureRandom();
 
-    private static Pattern PATTERN_IS_NUMERIC = Pattern.compile("-?[0-9]*+.?[0-9]*");
-    private static Pattern PATTERN_IS_INTEGER = Pattern.compile("-?[0-9]*");
+    private static final Pattern PATTERN_IS_NUMERIC = Pattern.compile("-?[0-9]*+.?[0-9]*");
+    private static final Pattern PATTERN_IS_INTEGER = Pattern.compile("-?[0-9]*");
 
     private StringUtils() {
     }
@@ -181,8 +182,8 @@ public class StringUtils {
      * @return 数值
      */
     public static int toInt(String value, int defaultValue) {
-        if ((!isEmpty(value)) && (isInteger(value))) {
-            return Integer.valueOf(value);
+        if (!isEmpty(value) && isInteger(value)) {
+            return Integer.parseInt(value);
         }
 
         return defaultValue;
@@ -196,8 +197,8 @@ public class StringUtils {
      * @return 数值
      */
     public static long toLong(String value, long defaultValue) {
-        if ((!isEmpty(value)) && (isInteger(value))) {
-            return Long.valueOf(value);
+        if (!isEmpty(value) && isInteger(value)) {
+            return Long.parseLong(value);
         }
 
         return defaultValue;
@@ -211,8 +212,8 @@ public class StringUtils {
      * @return 数值
      */
     public static double toDouble(String value, double defaultValue) {
-        if ((!isEmpty(value)) && (isNumeric(value))) {
-            return Double.valueOf(value);
+        if (!isEmpty(value) && isNumeric(value)) {
+            return Double.parseDouble(value);
         }
 
         return defaultValue;
@@ -304,7 +305,7 @@ public class StringUtils {
      * @throws Exception
      */
     public static String toUTF8String(String value, String fromCharset) throws Exception {
-        return new String(value.getBytes(fromCharset), UtilConstants.CHARSET_UTF8);
+        return new String(value.getBytes(fromCharset), StandardCharsets.UTF_8);
     }
 
     /**
@@ -315,7 +316,7 @@ public class StringUtils {
      * @throws Exception
      */
     public static String toUTF8String(String value) throws Exception {
-        return new String(value.getBytes(UtilConstants.CHARSET_GB2312), UtilConstants.CHARSET_UTF8);
+        return new String(value.getBytes(UtilConstants.CHARSET_GB2312), StandardCharsets.UTF_8);
     }
 
     /**
@@ -348,7 +349,7 @@ public class StringUtils {
         try {
             int lengthValue = value.getBytes(charset).length;
             length = length - (lengthValue - value.length());
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException ignore) {
 
         }
 
@@ -395,7 +396,7 @@ public class StringUtils {
         int lengthValue = 0;
         try {
             lengthValue = value.getBytes(charset).length;
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException ignore) {
 
         }
 

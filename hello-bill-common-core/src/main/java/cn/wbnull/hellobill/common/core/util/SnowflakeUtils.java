@@ -40,14 +40,14 @@ public class SnowflakeUtils {
     private long lastTimestamp = -1L;
 
     private static final class SnowflakeUtilsHolder {
-        static final SnowflakeUtils snowflakeUtils = new SnowflakeUtils();
+        static final SnowflakeUtils SNOWFLAKE_UTILS = new SnowflakeUtils();
     }
 
     public static synchronized SnowflakeUtils getInstance() {
-        return SnowflakeUtilsHolder.snowflakeUtils;
+        return SnowflakeUtilsHolder.SNOWFLAKE_UTILS;
     }
 
-    public SnowflakeUtils() {
+    private SnowflakeUtils() {
         this.workerId = 1L;
         this.dataCenterId = 1L;
     }

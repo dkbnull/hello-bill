@@ -74,7 +74,8 @@
 
 `2025-03-02`
 
-* 
+* <mark style='background:Yellow'> 优化 </mark> 分类类型枚举类，分类编码参数属性类型调整
+* <mark style='background:Yellow'> 优化 </mark> 工具类逻辑优化
 
 ## 1.3.1.43
 

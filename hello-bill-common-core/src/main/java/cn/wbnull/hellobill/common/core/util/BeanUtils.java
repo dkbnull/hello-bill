@@ -15,6 +15,9 @@ import java.util.List;
  */
 public class BeanUtils {
 
+    private BeanUtils() {
+    }
+
     public static <T> T copyProperties(Object source, Class<T> target) {
         return JSONObject.parseObject(JSONObject.toJSONString(source), target);
     }

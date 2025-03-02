@@ -12,31 +12,42 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoggerUtils {
 
+    private LoggerUtils() {
+    }
+
     public static void info(String message) {
-        log.info(message);
+        if (log.isInfoEnabled()) {
+            log.info(message);
+        }
     }
 
     public static void info(String position, String method, String content) {
-        log.info(toMessage(position, method, content));
+        if (log.isInfoEnabled()) {
+            log.info("[{}]\n方法：{}\n参数：{}\n", position, method, content);
+        }
     }
 
     public static void error(String message) {
-        log.error(message);
+        if (log.isErrorEnabled()) {
+            log.error(message);
+        }
     }
 
     public static void error(String position, String method, String content) {
-        log.error(toMessage(position, method, content));
+        if (log.isErrorEnabled()) {
+            log.error("[{}]\n方法：{}\n参数：{}\n", position, method, content);
+        }
     }
 
     public static void error(String message, Throwable t) {
-        log.error(message, t);
+        if (log.isErrorEnabled()) {
+            log.error(message, t);
+        }
     }
 
     public static void error(String position, String method, String content, Throwable t) {
-        log.error(toMessage(position, method, content), t);
-    }
-
-    private static String toMessage(String position, String method, String content) {
-        return String.format("[%s]\n方法：%s\n参数：%s\n", position, method, content);
+        if (log.isErrorEnabled()) {
+            log.error("[{}]\n方法：{}\n参数：{}\n", position, method, content, t);
+        }
     }
 }
