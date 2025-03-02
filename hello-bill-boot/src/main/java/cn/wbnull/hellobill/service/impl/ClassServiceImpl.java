@@ -1,5 +1,6 @@
 package cn.wbnull.hellobill.service.impl;
 
+import cn.wbnull.hellobill.common.core.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.BeanUtils;
@@ -35,7 +36,7 @@ public class ClassServiceImpl implements ClassService {
         List<ClassInfo> classInfos = classInfoRepository.listByType(request.getData().getType());
         List<QueryResponse> queryResponses = BeanUtils.copyToList(classInfos, QueryResponse.class);
         for (QueryResponse queryResponse : queryResponses) {
-            queryResponse.analyse();
+            queryResponse.setTypeName(ClassTypeEnum.getTypeName(queryResponse.getType()));
         }
 
         return ApiResponse.success(queryResponses);
@@ -57,7 +58,8 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public ApiResponse<List<String>> secondClassQuery(ApiRequest<QueryRequest> request) {
         List<ClassInfo> classInfos = classInfoRepository.listSecondByType(request.getData().getType());
-        List<String> secondClasses = classInfos.stream().map(ClassInfo::getSecondClass).collect(Collectors.toList());
+        List<String> secondClasses = classInfos.stream().map(ClassInfo::getSecondClass)
+                .collect(Collectors.toList());
 
         return ApiResponse.success(secondClasses);
     }
@@ -71,7 +73,8 @@ public class ClassServiceImpl implements ClassService {
             List<ClassInfo> classInfos = classInfoRepository.listTopByType(data.getType());
             classes = classInfos.stream().map(ClassInfo::getTopClass).collect(Collectors.toList());
         } else {
-            List<ClassInfo> classInfos = classInfoRepository.listSecondByTypeAndTop(data.getType(), data.getTopClass());
+            List<ClassInfo> classInfos = classInfoRepository.listSecondByTypeAndTop(
+                    data.getType(), data.getTopClass());
             classes = classInfos.stream().map(ClassInfo::getSecondClass).collect(Collectors.toList());
         }
 

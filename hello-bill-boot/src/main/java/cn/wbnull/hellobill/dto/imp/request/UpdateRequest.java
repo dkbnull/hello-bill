@@ -3,6 +3,7 @@ package cn.wbnull.hellobill.dto.imp.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * 修改账单信息接口请求参数
@@ -17,8 +18,8 @@ public class UpdateRequest {
     @NotEmpty(message = "id 不能为空")
     private String id;
 
-    @NotEmpty(message = "billType 不能为空")
-    private String billType;
+    @NotNull(message = "billType 不能为空")
+    private Integer billType;
 
     @NotEmpty(message = "secondClass 不能为空")
     private String secondClass;

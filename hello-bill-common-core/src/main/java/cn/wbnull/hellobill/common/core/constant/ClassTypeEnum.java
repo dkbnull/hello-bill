@@ -12,25 +12,25 @@ import lombok.Getter;
 @Getter
 public enum ClassTypeEnum {
 
-    EXPEND("0", "支出"),
-    INCOME("1", "收入"),
-    OTHER("", "其他");
+    EXPEND(0, "支出"),
+    INCOME(1, "收入"),
+    OTHER(2, "其他");
 
-    private final String typeCode;
+    private final int typeCode;
     private final String typeName;
 
-    ClassTypeEnum(String typeCode, String typeName) {
+    ClassTypeEnum(int typeCode, String typeName) {
         this.typeCode = typeCode;
         this.typeName = typeName;
     }
 
-    public static ClassTypeEnum getClassType(String typeCode) {
+    public static String getTypeName(int typeCode) {
         for (ClassTypeEnum classTypeEnum : ClassTypeEnum.values()) {
-            if (classTypeEnum.typeCode.equals(typeCode)) {
-                return classTypeEnum;
+            if (classTypeEnum.typeCode == typeCode) {
+                return classTypeEnum.getTypeName();
             }
         }
 
-        return OTHER;
+        return null;
     }
 }

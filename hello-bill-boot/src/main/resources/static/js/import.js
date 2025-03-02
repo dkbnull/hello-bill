@@ -58,7 +58,7 @@ function callback(result) {
         data: result.data,
         totalRow: true,
         cols: [[
-            {field: 'billTypeValue', title: '类型'},
+            {field: 'billTypeName', title: '类型'},
             {field: 'billTime', title: '时间', width: 180},
             {field: 'topClass', title: '顶级分类'},
             {field: 'secondClass', title: '二级分类'},

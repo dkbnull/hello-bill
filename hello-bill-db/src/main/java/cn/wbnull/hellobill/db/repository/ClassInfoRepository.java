@@ -25,7 +25,7 @@ public class ClassInfoRepository {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public ClassInfo getByTypeAndSecondClass(String type, String secondClass) {
+    public ClassInfo getByTypeAndSecondClass(int type, String secondClass) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, secondClass);
         queryWrapper.eq(ClassInfo::getType, type);
@@ -49,7 +49,7 @@ public class ClassInfoRepository {
         classInfoMapper.update(null, updateWrapper);
     }
 
-    public List<ClassInfo> listTopByType(String type) {
+    public List<ClassInfo> listTopByType(int type) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("distinct top_class").lambda()
                 .eq(ClassInfo::getType, type)
@@ -69,7 +69,7 @@ public class ClassInfoRepository {
         return classInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ClassInfo> listSecondByTypeAndTop(String type, String topClass) {
+    public List<ClassInfo> listSecondByTypeAndTop(int type, String topClass) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("distinct second_class").lambda()
                 .eq(ClassInfo::getTopClass, topClass)

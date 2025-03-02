@@ -128,10 +128,10 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setUsername(username);
 
             if ("支出".equals(line[4])) {
-                importBillInfo.setBillType((byte) 0);
+                importBillInfo.setBillType((byte) ClassTypeEnum.EXPEND.getTypeCode());
             }
             if ("收入".equals(line[4])) {
-                importBillInfo.setBillType((byte) 1);
+                importBillInfo.setBillType((byte) ClassTypeEnum.INCOME.getTypeCode());
             }
 
             // 交易时间
@@ -196,16 +196,16 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setUsername(username);
 
             if ("支出".equals(line[10].trim())) {
-                importBillInfo.setBillType((byte) 0);
+                importBillInfo.setBillType((byte) ClassTypeEnum.EXPEND.getTypeCode());
             }
             if ("收入".equals(line[10].trim())) {
-                importBillInfo.setBillType((byte) 1);
+                importBillInfo.setBillType((byte) ClassTypeEnum.INCOME.getTypeCode());
             }
             if ("不计收支".equals(line[10].trim()) && ("已支出".equals(line[15].trim()) || StringUtils.isEmpty(line[15].trim()))) {
-                importBillInfo.setBillType((byte) 0);
+                importBillInfo.setBillType((byte) ClassTypeEnum.EXPEND.getTypeCode());
             }
             if ("不计收支".equals(line[10].trim()) && "已收入".equals(line[15].trim())) {
-                importBillInfo.setBillType((byte) 1);
+                importBillInfo.setBillType((byte) ClassTypeEnum.INCOME.getTypeCode());
             }
 
             // 交易时间
@@ -266,10 +266,10 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setUsername(username);
 
             if ("支出".equals(line[6])) {
-                importBillInfo.setBillType((byte) 0);
+                importBillInfo.setBillType((byte) ClassTypeEnum.EXPEND.getTypeCode());
             }
             if ("收入".equals(line[6])) {
-                importBillInfo.setBillType((byte) 1);
+                importBillInfo.setBillType((byte) ClassTypeEnum.INCOME.getTypeCode());
             }
 
             // 交易时间
@@ -335,12 +335,7 @@ public class ImportServiceImpl implements ImportService {
         List<ImportBillInfo> importBillInfos = importBillInfoRepository.list(request.getUsername());
         List<QueryResponse> queryResponses = BeanUtils.copyToList(importBillInfos, QueryResponse.class);
         for (QueryResponse queryResponse : queryResponses) {
-            if ("0".equals(queryResponse.getBillType())) {
-                queryResponse.setBillTypeValue("支出");
-            }
-            if ("1".equals(queryResponse.getBillType())) {
-                queryResponse.setBillTypeValue("收入");
-            }
+            queryResponse.setBillTypeName(ClassTypeEnum.getTypeName(queryResponse.getBillType()));
         }
 
         return ApiResponse.success(queryResponses);
@@ -382,7 +377,7 @@ public class ImportServiceImpl implements ImportService {
             return ApiResponse.fail("账单信息不完整");
         }
 
-        if (ClassTypeEnum.INCOME.getTypeCode().equals(String.valueOf(importBillInfo.getBillType()))) {
+        if (ClassTypeEnum.INCOME.getTypeCode() == importBillInfo.getBillType()) {
             IncomeInfo incomeInfo = BeanUtils.copyProperties(importBillInfo, IncomeInfo.class);
             incomeInfo.setIncomeDate(importBillInfo.getBillTime().toLocalDate());
             incomeInfo.setDetail(importBillInfo.getDetailConvert());

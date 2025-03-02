@@ -2,7 +2,7 @@ package cn.wbnull.hellobill.dto.cls.request;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * 报表分类查询接口请求参数
@@ -14,8 +14,8 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class QueryClassRequest {
 
-    @NotEmpty(message = "type 不能为空")
-    private String type;
+    @NotNull(message = "type 不能为空")
+    private Integer type;
 
     private String topClass;
 }

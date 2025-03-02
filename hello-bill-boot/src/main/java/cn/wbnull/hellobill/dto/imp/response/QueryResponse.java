@@ -14,8 +14,8 @@ public class QueryResponse {
 
     private String id;
     private String username;
-    private String billType;
-    private String billTypeValue;
+    private Integer billType;
+    private String billTypeName;
     private String billTime;
     private String topClass;
     private String secondClass;
