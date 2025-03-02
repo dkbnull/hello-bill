@@ -32,13 +32,13 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public ApiResponse<List<QueryResponse>> query(ApiRequest<QueryRequest> request) {
-        List<ClassInfo> classInfoList = classInfoRepository.listByType(request.getData().getType());
-        List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(classInfoList, QueryResponse.class);
-        for (QueryResponse queryResponse : queryResponseList) {
+        List<ClassInfo> classInfos = classInfoRepository.listByType(request.getData().getType());
+        List<QueryResponse> queryResponses = BeanUtils.copyToList(classInfos, QueryResponse.class);
+        for (QueryResponse queryResponse : queryResponses) {
             queryResponse.analyse();
         }
 
-        return ApiResponse.success(queryResponseList);
+        return ApiResponse.success(queryResponses);
     }
 
     @Override

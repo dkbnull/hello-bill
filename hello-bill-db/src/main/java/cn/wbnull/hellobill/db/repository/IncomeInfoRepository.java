@@ -87,10 +87,10 @@ public class IncomeInfoRepository {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        List<String> topClassList = new ArrayList<>();
-        topClassList.add("人情往来");
-        topClassList.add("父母补贴");
-        queryWrapper.notIn("topClass", topClassList);
+        List<String> topClasses = new ArrayList<>();
+        topClasses.add("人情往来");
+        topClasses.add("父母补贴");
+        queryWrapper.notIn("topClass", topClasses);
         queryWrapper.groupBy("DATE_FORMAT(incomeDate, '%Y')");
         queryWrapper.orderByAsc("DATE_FORMAT(incomeDate, '%Y')");
 
@@ -120,10 +120,10 @@ public class IncomeInfoRepository {
     }
 
     private void convertQueryWrapper(QueryWrapper<IncomeInfo> queryWrapper, String reportDate) {
-        List<String> topClassList = new ArrayList<>();
-        topClassList.add("工资收入");
-        topClassList.add("职外收入");
-        queryWrapper.in("topClass", topClassList);
+        List<String> topClasses = new ArrayList<>();
+        topClasses.add("工资收入");
+        topClasses.add("职外收入");
+        queryWrapper.in("topClass", topClasses);
         if (StringUtils.isEmpty(reportDate)) {
             queryWrapper.ge("incomeDate", DateUtils.atStartOfYear(4));
         } else {

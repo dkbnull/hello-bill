@@ -74,10 +74,10 @@ public class ExpendInfoRepository {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(expendTime, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        List<String> topClassList = new ArrayList<>();
-        topClassList.add("人情往来");
-        topClassList.add("五险一金");
-        queryWrapper.notIn("topClass", topClassList);
+        List<String> topClasses = new ArrayList<>();
+        topClasses.add("人情往来");
+        topClasses.add("五险一金");
+        queryWrapper.notIn("topClass", topClasses);
         queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y')");
         queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y')");
 

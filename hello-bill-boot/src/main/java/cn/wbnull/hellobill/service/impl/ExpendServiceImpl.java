@@ -40,9 +40,9 @@ public class ExpendServiceImpl implements ExpendService {
     public ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request) {
         QueryListParam queryListParam = BeanUtils.copyProperties(request.getData(), QueryListParam.class);
         List<ExpendInfo> expendInfos = expendInfoRepository.listByParam(request.getUsername(), queryListParam);
-        List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(expendInfos, QueryResponse.class);
+        List<QueryResponse> queryResponses = BeanUtils.copyToList(expendInfos, QueryResponse.class);
 
-        return ApiResponse.success(queryResponseList);
+        return ApiResponse.success(queryResponses);
     }
 
     @Override

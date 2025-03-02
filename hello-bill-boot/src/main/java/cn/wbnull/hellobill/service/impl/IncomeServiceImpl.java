@@ -35,9 +35,9 @@ public class IncomeServiceImpl implements IncomeService {
     public ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request) {
         QueryListParam queryListParam = BeanUtils.copyProperties(request.getData(), QueryListParam.class);
         List<IncomeInfo> incomeInfos = incomeInfoRepository.listByParam(request.getUsername(), queryListParam);
-        List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(incomeInfos, QueryResponse.class);
+        List<QueryResponse> queryResponses = BeanUtils.copyToList(incomeInfos, QueryResponse.class);
 
-        return ApiResponse.success(queryResponseList);
+        return ApiResponse.success(queryResponses);
     }
 
     @Override

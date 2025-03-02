@@ -79,18 +79,18 @@ public class ImportServiceImpl implements ImportService {
             String[] line = csvReader.readNext();
             // 微信支付账单格式，第一行为： 微信支付账单明细
             if (line[0].contains("微信")) {
-                List<ImportBillInfo> importBillInfoList = importWeixinBill(username, csvReader);
-                importBillInfoMapper.insertBatch(importBillInfoList);
+                List<ImportBillInfo> importBillInfos = importWeixinBill(username, csvReader);
+                importBillInfoMapper.insertBatch(importBillInfos);
             }
             // 支付宝账单格式，第一行为：支付宝交易记录明细查询
             else if (line[0].contains("支付宝")) {
-                List<ImportBillInfo> importBillInfoList = importAlipayBill(username, csvReader);
-                importBillInfoMapper.insertBatch(importBillInfoList);
+                List<ImportBillInfo> importBillInfos = importAlipayBill(username, csvReader);
+                importBillInfoMapper.insertBatch(importBillInfos);
             }
             // 京东账单格式，第一行为：导出信息：   第二行为：京东账号名
             else if (line[0].contains("导出信息") && csvReader.readNext()[0].contains("京东")) {
-                List<ImportBillInfo> importBillInfoList = importJdBill(username, csvReader);
-                importBillInfoMapper.insertBatch(importBillInfoList);
+                List<ImportBillInfo> importBillInfos = importJdBill(username, csvReader);
+                importBillInfoMapper.insertBatch(importBillInfos);
             }
         } catch (Exception e) {
             LoggerUtils.error("账单文件导入异常", e);
@@ -101,7 +101,7 @@ public class ImportServiceImpl implements ImportService {
     }
 
     private List<ImportBillInfo> importWeixinBill(String username, CSVReader csvReader) throws Exception {
-        List<ImportBillInfo> importBillInfoList = new ArrayList<>();
+        List<ImportBillInfo> importBillInfos = new ArrayList<>();
 
         String[] line;
         // 标识是否到了账单部分
@@ -156,16 +156,16 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
 
-            importBillInfoList.add(importBillInfo);
+            importBillInfos.add(importBillInfo);
         }
 
-        reverseImportBillInfoList(importBillInfoList);
+        reverseImportBillInfos(importBillInfos);
 
-        return importBillInfoList;
+        return importBillInfos;
     }
 
     private List<ImportBillInfo> importAlipayBill(String username, CSVReader csvReader) throws Exception {
-        List<ImportBillInfo> importBillInfoList = new ArrayList<>();
+        List<ImportBillInfo> importBillInfos = new ArrayList<>();
 
         String[] line;
         // 标识是否到了账单部分
@@ -231,16 +231,16 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
 
-            importBillInfoList.add(importBillInfo);
+            importBillInfos.add(importBillInfo);
         }
 
-        reverseImportBillInfoList(importBillInfoList);
+        reverseImportBillInfos(importBillInfos);
 
-        return importBillInfoList;
+        return importBillInfos;
     }
 
     private List<ImportBillInfo> importJdBill(String username, CSVReader csvReader) throws Exception {
-        List<ImportBillInfo> importBillInfoList = new ArrayList<>();
+        List<ImportBillInfo> importBillInfos = new ArrayList<>();
 
         String[] line;
         // 标识是否到了账单部分
@@ -302,12 +302,12 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setCreateTime(LocalDateTime.now());
             importBillInfo.setUpdateTime(LocalDateTime.now());
 
-            importBillInfoList.add(importBillInfo);
+            importBillInfos.add(importBillInfo);
         }
 
-        reverseImportBillInfoList(importBillInfoList);
+        reverseImportBillInfos(importBillInfos);
 
-        return importBillInfoList;
+        return importBillInfos;
     }
 
     private String convertDetail(String detail) {
@@ -321,7 +321,7 @@ public class ImportServiceImpl implements ImportService {
         return importBillDetailConvert.getDetailConvert();
     }
 
-    private void reverseImportBillInfoList(List<ImportBillInfo> importBillInfoList) {
+    private void reverseImportBillInfos(List<ImportBillInfo> importBillInfoList) {
         // 导出的账单为倒序，进行翻转后再生成ID
         Collections.reverse(importBillInfoList);
         for (ImportBillInfo importBillInfo : importBillInfoList) {
@@ -332,9 +332,9 @@ public class ImportServiceImpl implements ImportService {
 
     @Override
     public ApiResponse<List<QueryResponse>> queryList(ApiRequest<Object> request) {
-        List<ImportBillInfo> importBillInfoList = importBillInfoRepository.list(request.getUsername());
-        List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(importBillInfoList, QueryResponse.class);
-        for (QueryResponse queryResponse : queryResponseList) {
+        List<ImportBillInfo> importBillInfos = importBillInfoRepository.list(request.getUsername());
+        List<QueryResponse> queryResponses = BeanUtils.copyToList(importBillInfos, QueryResponse.class);
+        for (QueryResponse queryResponse : queryResponses) {
             if ("0".equals(queryResponse.getBillType())) {
                 queryResponse.setBillTypeValue("支出");
             }
@@ -343,7 +343,7 @@ public class ImportServiceImpl implements ImportService {
             }
         }
 
-        return ApiResponse.success(queryResponseList);
+        return ApiResponse.success(queryResponses);
     }
 
     @Override

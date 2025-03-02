@@ -4,6 +4,10 @@
 
 <mark style='background:Red'> 修复 </mark> 
 
+<mark style='background:LightBlue'> 文档 </mark> 
+
+<mark style='background:Orange'> 风格 </mark> 
+
 # 版本信息
 
 ## 1.1.11
@@ -53,7 +57,12 @@
 
 `2025-03-02`
 
-* <mark style='background:LightGreen'> 新增 </mark> 模块划分与类名命名调整
+* <mark style='background:Orange'> 风格 </mark> 模块划分调整
+* <mark style='background:Orange'> 风格 </mark> 包名命名调整
+* <mark style='background:Orange'> 风格 </mark> 类名命名调整
+* <mark style='background:Orange'> 风格 </mark> 方法命名调整
+* <mark style='background:Orange'> 风格 </mark> 对象命名调整
+* <mark style='background:Orange'> 风格 </mark> 类注解格式调整
 
 ## 1.2.4.39
 
