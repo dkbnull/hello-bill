@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017-2025 null. All rights reserved.
+ */
+
 package cn.wbnull.hellobill.db.entity;
 
 import cn.wbnull.hellobill.common.core.constant.UtilConstants;
@@ -19,7 +23,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author null
- * @since 2025-01-25
+ * @since 2025-03-02
  */
 @Getter
 @Setter
@@ -32,43 +36,38 @@ public class ImportBillInfo {
     @TableField("username")
     private String username;
 
-    /**
-     * 0 - 支出
-     * 1 - 收入
-     * 2 - 未知
-     */
-    @TableField("billType")
+    @TableField("bill_type")
     private Byte billType;
 
     @JSONField(format = UtilConstants.DATE_FORMAT)
     @JsonFormat(pattern = UtilConstants.DATE_FORMAT)
-    @TableField("billTime")
+    @TableField("bill_time")
     private LocalDateTime billTime;
 
-    @TableField("topClass")
+    @TableField("top_class")
     private String topClass;
 
-    @TableField("secondClass")
+    @TableField("second_class")
     private String secondClass;
 
     @TableField("detail")
     private String detail;
 
-    @TableField("detailConvert")
+    @TableField("detail_convert")
     private String detailConvert;
 
     @TableField("amount")
     private BigDecimal amount;
 
-    @TableField("payMode")
+    @TableField("pay_mode")
     private String payMode;
 
     @TableField("remark")
     private String remark;
 
-    @TableField("createTime")
-    private LocalDateTime createTime;
+    @TableField("gmt_create")
+    private LocalDateTime gmtCreate;
 
-    @TableField("updateTime")
-    private LocalDateTime updateTime;
+    @TableField("gmt_modified")
+    private LocalDateTime gmtModified;
 }

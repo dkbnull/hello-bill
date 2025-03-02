@@ -25,7 +25,7 @@ public class ImportBillClassRepository {
     public ImportBillClass getByDetail(String detail) {
         LambdaQueryWrapper<ImportBillClass> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ImportBillClass::getDetail, detail);
-        queryWrapper.orderByDesc(ImportBillClass::getUpdateTime);
+        queryWrapper.orderByDesc(ImportBillClass::getGmtCreate);
         queryWrapper.last("limit 1");
 
         return importBillClassMapper.selectOne(queryWrapper);
@@ -50,7 +50,7 @@ public class ImportBillClassRepository {
 
         importBillClass = BeanUtils.copyProperties(importBillInfo, ImportBillClass.class);
         importBillClass.setDetail(importBillInfo.getDetailConvert());
-        importBillClass.setUpdateTime(null);
+        importBillClass.setGmtModified(null);
 
         importBillClassMapper.insert(importBillClass);
     }

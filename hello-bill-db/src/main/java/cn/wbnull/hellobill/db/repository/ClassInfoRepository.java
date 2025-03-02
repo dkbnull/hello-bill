@@ -51,7 +51,7 @@ public class ClassInfoRepository {
 
     public List<ClassInfo> listTopByType(String type) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("distinct topClass").lambda()
+        queryWrapper.select("distinct top_class").lambda()
                 .eq(ClassInfo::getType, type)
                 .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())
                 .orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
@@ -71,7 +71,7 @@ public class ClassInfoRepository {
 
     public List<ClassInfo> listSecondByTypeAndTop(String type, String topClass) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("distinct secondClass").lambda()
+        queryWrapper.select("distinct second_class").lambda()
                 .eq(ClassInfo::getTopClass, topClass)
                 .eq(ClassInfo::getType, type)
                 .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())

@@ -10,6 +10,30 @@
 
 # 版本信息
 
+## 1.2.4
+
+`2024-03-02`
+
+- <mark style='background:LightGreen'> 新增 </mark> 新增账单导入信息表
+- <mark style='background:LightGreen'> 新增 </mark> 新增账单导入分类表
+- <mark style='background:LightGreen'> 新增 </mark> 新增账单导入明细转换表
+- <mark style='background:LightGreen'> 新增 </mark> 新增导入数据页面
+- <mark style='background:LightGreen'> 新增 </mark> 新增导入数据修改页面
+- <mark style='background:LightGreen'> 新增 </mark> 支持账单文件导入
+- <mark style='background:LightGreen'> 新增 </mark> 账单导入支持自动转换明细信息
+- <mark style='background:LightGreen'> 新增 </mark> 支持账单明细列表查询
+- <mark style='background:LightGreen'> 新增 </mark> 支持查询、修改、删除、确认账单信息
+- <mark style='background:LightGreen'> 新增 </mark> 确认账单信息同步更新账单导入分类表
+- <mark style='background:LightGreen'> 新增 </mark> 确认账单信息同步更新账单导入明细转换表
+- <mark style='background:LightGreen'> 新增 </mark> 支持导入微信账单
+- <mark style='background:LightGreen'> 新增 </mark> 支持导入支付宝账单
+- <mark style='background:LightGreen'> 新增 </mark> 支持导入京东账单
+- <mark style='background:Yellow'> 优化 </mark> 报表显示效果优化
+- <mark style='background:Yellow'> 优化 </mark> 收入、支出明细保存逻辑优化
+- <mark style='background:Yellow'> 优化 </mark> 收入、支出明细，修改、删除提示框增加图标标识
+- <mark style='background:Yellow'> 优化 </mark> 收入、支出明细列表查询增加按主键ID排序
+- <mark style='background:Red'> 修复 </mark> 修复总收支报表、净收支报表，收入、支出汇总年份不匹配时报表展示问题
+
 ## 1.1.11
 
 `2025-01-24`
@@ -46,14 +70,20 @@
 
 # 更新日志
 
-## 1.2.5.41
+## 1.3.1.42
+
+`2025-03-02`
+
+* 数据库字段名调整为小写字母下划线格式
+
+## 1.3.0.41
 
 `2025-03-02`
 
 * <mark style='background:Yellow'> 优化 </mark> 接口请求token传值格式调整
 * <mark style='background:Yellow'> 优化 </mark> Web端接口请求错误时报错信息调整
 
-## 1.2.5.40
+## 1.3.0.40
 
 `2025-03-02`
 
@@ -138,7 +168,7 @@
 
 * <mark style='background:LightGreen'> 新增 </mark> 新增账单导入明细转换表
 * <mark style='background:LightGreen'> 新增 </mark> 账单导入支持自动转换明细信息
-* <mark style='background:LightGreen'> 新增 </mark> 修改账单信息同步更新明细转换表
+* <mark style='background:LightGreen'> 新增 </mark> 修改账单信息同步更新账单导入明细转换表
 
 ## 1.2.0.30
 

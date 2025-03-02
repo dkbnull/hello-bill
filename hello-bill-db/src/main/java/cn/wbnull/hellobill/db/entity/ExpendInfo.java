@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017-2025 null. All rights reserved.
+ */
+
 package cn.wbnull.hellobill.db.entity;
 
 import cn.wbnull.hellobill.common.core.constant.UtilConstants;
@@ -21,7 +25,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author null
- * @since 2024-11-22
+ * @since 2025-03-02
  */
 @Getter
 @Setter
@@ -36,13 +40,13 @@ public class ExpendInfo {
 
     @JSONField(format = UtilConstants.DATE_FORMAT)
     @JsonFormat(pattern = UtilConstants.DATE_FORMAT)
-    @TableField("expendTime")
+    @TableField("expend_time")
     private LocalDateTime expendTime;
 
-    @TableField("topClass")
+    @TableField("top_class")
     private String topClass;
 
-    @TableField("secondClass")
+    @TableField("second_class")
     private String secondClass;
 
     @TableField("detail")
@@ -54,11 +58,11 @@ public class ExpendInfo {
     @TableField("remark")
     private String remark;
 
-    @TableField("createTime")
-    private LocalDateTime createTime;
+    @TableField("gmt_create")
+    private LocalDateTime gmtCreate;
 
-    @TableField("updateTime")
-    private LocalDateTime updateTime;
+    @TableField("gmt_modified")
+    private LocalDateTime gmtModified;
 
     public void build(String username, String topClass) {
         long epochMilli = DateUtils.toEpochMilli(this.expendTime);

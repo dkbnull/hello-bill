@@ -153,8 +153,8 @@ public class ImportServiceImpl implements ImportService {
 
             importBillInfo.setAmount(new BigDecimal(line[5].replace("¥", "")));
             importBillInfo.setPayMode(line[6]);
-            importBillInfo.setCreateTime(LocalDateTime.now());
-            importBillInfo.setUpdateTime(LocalDateTime.now());
+            importBillInfo.setGmtCreate(LocalDateTime.now());
+            importBillInfo.setGmtModified(LocalDateTime.now());
 
             importBillInfos.add(importBillInfo);
         }
@@ -228,8 +228,8 @@ public class ImportServiceImpl implements ImportService {
             }
 
             importBillInfo.setAmount(new BigDecimal(line[9].trim()).subtract(new BigDecimal(line[13].trim())));
-            importBillInfo.setCreateTime(LocalDateTime.now());
-            importBillInfo.setUpdateTime(LocalDateTime.now());
+            importBillInfo.setGmtCreate(LocalDateTime.now());
+            importBillInfo.setGmtModified(LocalDateTime.now());
 
             importBillInfos.add(importBillInfo);
         }
@@ -299,8 +299,8 @@ public class ImportServiceImpl implements ImportService {
             }
 
             importBillInfo.setPayMode(line[4]);
-            importBillInfo.setCreateTime(LocalDateTime.now());
-            importBillInfo.setUpdateTime(LocalDateTime.now());
+            importBillInfo.setGmtCreate(LocalDateTime.now());
+            importBillInfo.setGmtModified(LocalDateTime.now());
 
             importBillInfos.add(importBillInfo);
         }
@@ -386,7 +386,7 @@ public class ImportServiceImpl implements ImportService {
             IncomeInfo incomeInfo = BeanUtils.copyProperties(importBillInfo, IncomeInfo.class);
             incomeInfo.setIncomeDate(importBillInfo.getBillTime().toLocalDate());
             incomeInfo.setDetail(importBillInfo.getDetailConvert());
-            incomeInfo.setUpdateTime(null);
+            incomeInfo.setGmtModified(null);
             try {
                 incomeInfoMapper.insert(incomeInfo);
             } catch (DuplicateKeyException e) {
@@ -399,7 +399,7 @@ public class ImportServiceImpl implements ImportService {
             ExpendInfo expendInfo = BeanUtils.copyProperties(importBillInfo, ExpendInfo.class);
             expendInfo.setExpendTime(importBillInfo.getBillTime());
             expendInfo.setDetail(importBillInfo.getDetailConvert());
-            expendInfo.setUpdateTime(null);
+            expendInfo.setGmtModified(null);
             try {
                 expendInfoMapper.insert(expendInfo);
             } catch (DuplicateKeyException e) {

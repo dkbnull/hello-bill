@@ -25,7 +25,7 @@ public class ImportBillDetailConvertRepository {
     public ImportBillDetailConvert getByDetail(String detail) {
         LambdaQueryWrapper<ImportBillDetailConvert> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ImportBillDetailConvert::getDetail, detail);
-        queryWrapper.orderByDesc(ImportBillDetailConvert::getUpdateTime);
+        queryWrapper.orderByDesc(ImportBillDetailConvert::getGmtCreate);
         queryWrapper.last("limit 1");
 
         return importBillDetailConvertMapper.selectOne(queryWrapper);
@@ -52,7 +52,7 @@ public class ImportBillDetailConvertRepository {
         }
 
         importBillDetailConvert = BeanUtils.copyProperties(importBillInfo, ImportBillDetailConvert.class);
-        importBillDetailConvert.setUpdateTime(null);
+        importBillDetailConvert.setGmtModified(null);
 
         importBillDetailConvertMapper.insert(importBillDetailConvert);
     }

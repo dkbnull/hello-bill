@@ -1,10 +1,10 @@
-CREATE TABLE IF NOT EXISTS `import_bill_detail_convert`
+CREATE TABLE `import_bill_detail_convert`
 (
-    `id`            BIGINT(20) NOT NULL,
-    `username`      VARCHAR(20)  NOT NULL,
-    `detail`        VARCHAR(100) NOT NULL,
-    `detailConvert` VARCHAR(100) NOT NULL,
-    `createTime`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `id`             bigint(20) unsigned NOT NULL,
+    `username`       varchar(20)  NOT NULL,
+    `detail`         varchar(100) NOT NULL,
+    `detail_convert` varchar(100) NOT NULL,
+    `gmt_create`     timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `gmt_modified`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );

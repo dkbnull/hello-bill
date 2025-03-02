@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017-2025 null. All rights reserved.
+ */
+
 package cn.wbnull.hellobill.db.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -15,7 +19,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author null
- * @since 2025-01-25
+ * @since 2025-03-02
  */
 @Getter
 @Setter
@@ -28,15 +32,15 @@ public class ImportBillClass {
     @TableField("detail")
     private String detail;
 
-    @TableField("topClass")
+    @TableField("top_class")
     private String topClass;
 
-    @TableField("secondClass")
+    @TableField("second_class")
     private String secondClass;
 
-    @TableField("createTime")
-    private LocalDateTime createTime;
+    @TableField("gmt_create")
+    private LocalDateTime gmtCreate;
 
-    @TableField("updateTime")
-    private LocalDateTime updateTime;
+    @TableField("gmt_modified")
+    private LocalDateTime gmtModified;
 }

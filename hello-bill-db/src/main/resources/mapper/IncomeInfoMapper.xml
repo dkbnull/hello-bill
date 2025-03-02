@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2017-2025 null. All rights reserved.
+  -->
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.wbnull.hellobill.db.mapper.IncomeInfoMapper">
 
@@ -6,20 +10,19 @@
     <resultMap id="BaseResultMap" type="cn.wbnull.hellobill.db.entity.IncomeInfo">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
-        <result column="incomeDate" property="incomeDate"/>
-        <result column="topClass" property="topClass"/>
-        <result column="secondClass" property="secondClass"/>
+        <result column="income_date" property="incomeDate"/>
+        <result column="top_class" property="topClass"/>
+        <result column="second_class" property="secondClass"/>
         <result column="detail" property="detail"/>
         <result column="amount" property="amount"/>
         <result column="remark" property="remark"/>
-        <result column="createTime" property="createTime"/>
-        <result column="updateTime" property="updateTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id
-        , username, incomeDate, topClass, secondClass, detail, amount, remark, createTime, updateTime
+        id, username, income_date, top_class, second_class, detail, amount, remark, gmt_create, gmt_modified
     </sql>
 
 </mapper>

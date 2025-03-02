@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017-2025 null. All rights reserved.
+ */
+
 package cn.wbnull.hellobill.db.mapper;
 
 import cn.wbnull.hellobill.db.entity.ImportBillClass;
@@ -11,7 +15,7 @@ import org.apache.ibatis.annotations.Param;
  * </p>
  *
  * @author null
- * @since 2025-01-25
+ * @since 2025-03-02
  */
 @Mapper
 public interface ImportBillClassMapper extends BaseMapper<ImportBillClass> {

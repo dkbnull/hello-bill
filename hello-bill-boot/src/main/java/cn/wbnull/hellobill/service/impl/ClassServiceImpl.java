@@ -45,7 +45,12 @@ public class ClassServiceImpl implements ClassService {
     public ApiResponse<Object> update(ApiRequest<UpdateRequest> request) {
         UpdateRequest data = request.getData();
 
-        classInfoRepository.updateByUuid(data.getUuid(), data.getKey(), data.getValue());
+        if ("serialNo".equals(data.getKey())) {
+            classInfoRepository.updateByUuid(data.getUuid(), "serial_no", data.getValue());
+        } else if ("status".equals(data.getKey())) {
+            classInfoRepository.updateByUuid(data.getUuid(), "status", data.getValue());
+        }
+
         return ApiResponse.success("分类信息更新成功");
     }
 

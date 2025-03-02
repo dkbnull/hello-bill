@@ -23,8 +23,8 @@ public class CodeGenerator {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    private static final String PACKAGE_PATH = System.getProperty("user.dir") + "/hello-bill-dao/src/main/java";
-    private static final String RESOURCES_MAPPER_PATH = System.getProperty("user.dir") + "/hello-bill-dao/src/main/resources/mapper";
+    private static final String PACKAGE_PATH = System.getProperty("user.dir") + "/hello-bill-db/src/main/java";
+    private static final String RESOURCES_MAPPER_PATH = System.getProperty("user.dir") + "/hello-bill-db/src/main/resources/mapper";
     private static final String PACKAGE_PARENT = "cn.wbnull.hellobill.db";
 
     public static void main(String[] args) {

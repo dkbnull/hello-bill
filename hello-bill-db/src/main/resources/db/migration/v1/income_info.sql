@@ -1,14 +1,14 @@
-CREATE TABLE IF NOT EXISTS `income_info`
+CREATE TABLE `income_info`
 (
-    `id`          bigint(20) NOT NULL,
-    `username`    varchar(20)    NOT NULL,
-    `incomeDate`  date           NOT NULL,
-    `topClass`    varchar(8)     NOT NULL,
-    `secondClass` varchar(8)     NOT NULL,
-    `detail`      varchar(100)   NOT NULL,
-    `amount`      decimal(10, 2) NOT NULL,
-    `remark`      varchar(100)            DEFAULT NULL,
-    `createTime`  timestamp      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime`  timestamp      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `id`           bigint(20) unsigned NOT NULL,
+    `username`     varchar(20)    NOT NULL,
+    `income_date`  date           NOT NULL,
+    `top_class`    varchar(8)     NOT NULL,
+    `second_class` varchar(8)     NOT NULL,
+    `detail`       varchar(100)   NOT NULL,
+    `amount`       decimal(10, 2) NOT NULL,
+    `remark`       varchar(100)            DEFAULT NULL,
+    `gmt_create`   timestamp      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `gmt_modified` timestamp      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);

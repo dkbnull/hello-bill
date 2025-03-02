@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017-2025 null. All rights reserved.
+ */
+
 package cn.wbnull.hellobill.db.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -15,7 +19,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author null
- * @since 2024-11-22
+ * @since 2025-03-02
  */
 @Getter
 @Setter
@@ -25,24 +29,24 @@ public class ClassInfo {
     @TableId(value = "uuid", type = IdType.INPUT)
     private String uuid;
 
-    @TableField("topClass")
+    @TableField("top_class")
     private String topClass;
 
-    @TableField("secondClass")
+    @TableField("second_class")
     private String secondClass;
 
     @TableField("type")
-    private String type;
+    private Byte type;
 
-    @TableField("serialNo")
+    @TableField("serial_no")
     private Integer serialNo;
 
     @TableField("status")
     private String status;
 
-    @TableField("createTime")
-    private LocalDateTime createTime;
+    @TableField("gmt_create")
+    private LocalDateTime gmtCreate;
 
-    @TableField("updateTime")
-    private LocalDateTime updateTime;
+    @TableField("gmt_modified")
+    private LocalDateTime gmtModified;
 }

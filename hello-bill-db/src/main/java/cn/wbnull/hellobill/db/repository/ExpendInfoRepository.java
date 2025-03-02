@@ -62,35 +62,35 @@ public class ExpendInfoRepository {
 
     public List<ExpendInfo> listReport(String username) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DATE_FORMAT(expendTime, '%Y') as remark, sum(amount) as amount");
+        queryWrapper.select("DATE_FORMAT(expend_time, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y')");
-        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y')");
+        queryWrapper.groupBy("DATE_FORMAT(expend_time, '%Y')");
+        queryWrapper.orderByAsc("DATE_FORMAT(expend_time, '%Y')");
 
         return expendInfoMapper.selectList(queryWrapper);
     }
 
     public List<ExpendInfo> listReportNet(String username) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DATE_FORMAT(expendTime, '%Y') as remark, sum(amount) as amount");
+        queryWrapper.select("DATE_FORMAT(expend_time, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
         List<String> topClasses = new ArrayList<>();
         topClasses.add("人情往来");
         topClasses.add("五险一金");
-        queryWrapper.notIn("topClass", topClasses);
-        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y')");
-        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y')");
+        queryWrapper.notIn("top_class", topClasses);
+        queryWrapper.groupBy("DATE_FORMAT(expend_time, '%Y')");
+        queryWrapper.orderByAsc("DATE_FORMAT(expend_time, '%Y')");
 
         return expendInfoMapper.selectList(queryWrapper);
     }
 
     public List<ExpendInfo> listReportByDateAndClass(String username, String reportDate, String reportClass) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DATE_FORMAT(expendTime, '%Y-%m') as remark, sum(amount) as amount");
+        queryWrapper.select("DATE_FORMAT(expend_time, '%Y-%m') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
         convertQueryWrapper(queryWrapper, reportDate, reportClass);
-        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y-%m')");
-        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y-%m')");
+        queryWrapper.groupBy("DATE_FORMAT(expend_time, '%Y-%m')");
+        queryWrapper.orderByAsc("DATE_FORMAT(expend_time, '%Y-%m')");
 
         return expendInfoMapper.selectList(queryWrapper);
     }
@@ -98,41 +98,41 @@ public class ExpendInfoRepository {
     public List<ExpendInfo> listReportWithClassByDateAndClass(String username, String reportDate,
                                                               String reportClass) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DATE_FORMAT(expendTime, '%Y-%m') as remark, topClass, secondClass, " +
+        queryWrapper.select("DATE_FORMAT(expend_time, '%Y-%m') as remark, top_class, second_class, " +
                 "sum(amount) as amount");
         queryWrapper.eq("username", username);
         convertQueryWrapper(queryWrapper, reportDate, reportClass);
-        queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y-%m')", "topClass", "secondClass");
-        queryWrapper.orderByAsc("DATE_FORMAT(expendTime, '%Y-%m')", "secondClass");
+        queryWrapper.groupBy("DATE_FORMAT(expend_time, '%Y-%m')", "top_class", "second_class");
+        queryWrapper.orderByAsc("DATE_FORMAT(expend_time, '%Y-%m')", "second_class");
 
         return expendInfoMapper.selectList(queryWrapper);
     }
 
     private void convertQueryWrapper(QueryWrapper<ExpendInfo> queryWrapper, String reportDate, String reportClass) {
         if (StringUtils.isEmpty(reportDate)) {
-            queryWrapper.ge("expendTime", DateUtils.atStartOfMonth(11).atStartOfDay());
+            queryWrapper.ge("expend_time", DateUtils.atStartOfMonth(11).atStartOfDay());
         } else {
-            queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
+            queryWrapper.like("DATE_FORMAT(expend_time, '%Y-%m-%d %H:%i:%s')", reportDate);
         }
 
         if ("1".equals(reportClass)) {
-            queryWrapper.eq("topClass", "日常支出");
+            queryWrapper.eq("top_class", "日常支出");
         }
         if ("2".equals(reportClass)) {
-            queryWrapper.eq("topClass", "生活支出");
+            queryWrapper.eq("top_class", "生活支出");
         }
         if ("3".equals(reportClass)) {
-            queryWrapper.eq("topClass", "子女支出");
+            queryWrapper.eq("top_class", "子女支出");
         }
     }
 
     public List<ExpendInfo> listAmountByDateAndClass(String username, String reportDate, String topClass) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("secondClass, sum(amount) as amount");
+        queryWrapper.select("second_class, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        queryWrapper.eq("topClass", topClass);
-        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
-        queryWrapper.groupBy("secondClass");
+        queryWrapper.eq("top_class", topClass);
+        queryWrapper.like("DATE_FORMAT(expend_time, '%Y-%m-%d %H:%i:%s')", reportDate);
+        queryWrapper.groupBy("second_class");
 
         return expendInfoMapper.selectList(queryWrapper);
     }
@@ -142,11 +142,11 @@ public class ExpendInfoRepository {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("detail, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        queryWrapper.eq("topClass", topClass);
+        queryWrapper.eq("top_class", topClass);
         if (!StringUtils.isEmpty(secondClass)) {
-            queryWrapper.eq("secondClass", secondClass);
+            queryWrapper.eq("second_class", secondClass);
         }
-        queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
+        queryWrapper.like("DATE_FORMAT(expend_time, '%Y-%m-%d %H:%i:%s')", reportDate);
         queryWrapper.groupBy("detail");
         queryWrapper.orderByDesc("amount");
 

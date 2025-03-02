@@ -1,24 +1,24 @@
-CREATE TABLE IF NOT EXISTS `import_bill_class`
+CREATE TABLE `import_bill_class`
 (
-    `id`          bigint(20) NOT NULL,
-    `detail`      varchar(100) NOT NULL,
-    `topClass`    varchar(8)   NOT NULL,
-    `secondClass` varchar(8)   NOT NULL,
-    `createTime`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `id`           bigint(20) unsigned NOT NULL,
+    `detail`       varchar(100) NOT NULL,
+    `top_class`    varchar(8)   NOT NULL,
+    `second_class` varchar(8)   NOT NULL,
+    `gmt_create`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `gmt_modified` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 
 -- 初始化数据 --
 INSERT INTO import_bill_class(SELECT id,
                                      detail,
-                                     topClass,
-                                     secondClass,
-                                     createTime,
-                                     updateTime
+                                     top_class,
+                                     second_class,
+                                     create_time,
+                                     update_time
                               FROM expend_info ei
                                        JOIN
-                                   (SELECT MAX(id) AS maxId
+                                   (SELECT MAX(id) AS max_id
                                     FROM expend_info
-                                    GROUP BY detail) AS dei ON ei.id = dei.maxId);
+                                    GROUP BY detail) AS dei ON ei.id = dei.max_id);

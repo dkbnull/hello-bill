@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017-2025 null. All rights reserved.
+ */
+
 package cn.wbnull.hellobill.db.mapper;
 
 import cn.wbnull.hellobill.db.entity.ClassInfo;
@@ -10,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author null
- * @since 2024-11-22
+ * @since 2025-03-02
  */
 @Mapper
 public interface ClassInfoMapper extends BaseMapper<ClassInfo> {
