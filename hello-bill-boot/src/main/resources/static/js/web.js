@@ -46,7 +46,7 @@ doUpload = function (elem, exts, url, data, callback) {
         accept: 'file',
         exts: exts,
         data: request,
-        headers: {"token": getItem("token")},
+        headers: {"Authorization": 'Bearer ' + getItem("token")},
         progress: function (n, elem, res, index) {
             element.progress('uploadProgress', n + '%');
         },
