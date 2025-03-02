@@ -1,0 +1,28 @@
+package cn.wbnull.hellobill.common.security.interceptor;
+
+import cn.wbnull.hellobill.common.security.component.JwtTokenProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * JWT 拦截器
+ *
+ * @author null  2024-11-30
+ */
+@Component
+public class JwtInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String token = request.getHeader("token");
+
+        return jwtTokenProvider.isTokenExpired(token);
+    }
+}

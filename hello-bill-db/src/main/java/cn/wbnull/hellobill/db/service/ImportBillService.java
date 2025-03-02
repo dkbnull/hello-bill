@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.db.service;
 
-import cn.wbnull.hellobill.common.util.BeanUtils;
+import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.ImportBillClass;
 import cn.wbnull.hellobill.db.entity.ImportBillDetailConvert;
 import cn.wbnull.hellobill.db.entity.ImportBillInfo;

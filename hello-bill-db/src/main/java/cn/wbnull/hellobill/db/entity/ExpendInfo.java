@@ -1,8 +1,8 @@
 package cn.wbnull.hellobill.db.entity;
 
-import cn.wbnull.hellobill.common.constant.UtilConstants;
-import cn.wbnull.hellobill.common.util.DateUtils;
-import cn.wbnull.hellobill.common.util.SnowflakeUtils;
+import cn.wbnull.hellobill.common.core.constant.UtilConstants;
+import cn.wbnull.hellobill.common.core.util.DateUtils;
+import cn.wbnull.hellobill.common.core.util.SnowflakeUtils;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.db.entity;
 
-import cn.wbnull.hellobill.common.util.DateUtils;
-import cn.wbnull.hellobill.common.util.SnowflakeUtils;
+import cn.wbnull.hellobill.common.core.util.DateUtils;
+import cn.wbnull.hellobill.common.core.util.SnowflakeUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

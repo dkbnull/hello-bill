@@ -1,9 +1,9 @@
 package cn.wbnull.hellobill.db.service;
 
-import cn.wbnull.hellobill.common.constant.ClassTypeEnum;
-import cn.wbnull.hellobill.common.model.common.QueryListRequestModel;
-import cn.wbnull.hellobill.common.util.DateUtils;
-import cn.wbnull.hellobill.common.util.StringUtils;
+import cn.wbnull.hellobill.common.core.constant.ClassType;
+import cn.wbnull.hellobill.common.core.model.common.QueryListRequestModel;
+import cn.wbnull.hellobill.common.core.util.DateUtils;
+import cn.wbnull.hellobill.common.core.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.mapper.ClassInfoMapper;
@@ -46,7 +46,7 @@ public class IncomeInfoService {
     public void addIncomeInfo(String username, IncomeInfo incomeInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, incomeInfo.getSecondClass());
-        queryWrapper.eq(ClassInfo::getType, ClassTypeEnum.INCOME.getTypeCode());
+        queryWrapper.eq(ClassInfo::getType, ClassType.INCOME.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         incomeInfo.build(username, classInfo.getTopClass());
@@ -60,7 +60,7 @@ public class IncomeInfoService {
     public void updateIncomeInfo(IncomeInfo incomeInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, incomeInfo.getSecondClass());
-        queryWrapper.eq(ClassInfo::getType, ClassTypeEnum.INCOME.getTypeCode());
+        queryWrapper.eq(ClassInfo::getType, ClassType.INCOME.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         incomeInfo.setTopClass(classInfo.getTopClass());

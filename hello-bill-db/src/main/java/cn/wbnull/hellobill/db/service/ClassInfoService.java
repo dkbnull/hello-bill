@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.db.service;
 
-import cn.wbnull.hellobill.common.constant.StatusEnum;
-import cn.wbnull.hellobill.common.util.StringUtils;
+import cn.wbnull.hellobill.common.core.constant.Status;
+import cn.wbnull.hellobill.common.core.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.mapper.ClassInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -51,7 +51,7 @@ public class ClassInfoService {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("distinct topClass").lambda()
                 .eq(ClassInfo::getType, type)
-                .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())
+                .eq(ClassInfo::getStatus, Status.USABLE.getStatus())
                 .orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);
@@ -61,7 +61,7 @@ public class ClassInfoService {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.select(ClassInfo::getSecondClass);
         queryWrapper.eq(ClassInfo::getType, type);
-        queryWrapper.eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus());
+        queryWrapper.eq(ClassInfo::getStatus, Status.USABLE.getStatus());
         queryWrapper.orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);
@@ -72,7 +72,7 @@ public class ClassInfoService {
         queryWrapper.select("distinct secondClass").lambda()
                 .eq(ClassInfo::getTopClass, topClass)
                 .eq(ClassInfo::getType, type)
-                .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())
+                .eq(ClassInfo::getStatus, Status.USABLE.getStatus())
                 .orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);
