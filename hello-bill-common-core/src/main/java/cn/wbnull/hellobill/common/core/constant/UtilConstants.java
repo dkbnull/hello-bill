@@ -3,8 +3,9 @@ package cn.wbnull.hellobill.common.core.constant;
 /**
  * 常量类
  *
- * @author null 2018-08-08
- * https://github.com/dkbnull/HelloUtil
+ * @author null
+ * @date 2018-08-08
+ * @link <a href="https://github.com/dkbnull/HelloUtil">GitHub</a>
  */
 public class UtilConstants {
 
