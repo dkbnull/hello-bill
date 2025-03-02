@@ -42,6 +42,13 @@
 
 # 更新日志
 
+## 1.2.5.41
+
+`2025-03-02`
+
+* <mark style='background:Yellow'> 优化 </mark> 接口请求token传值格式调整
+* <mark style='background:Yellow'> 优化 </mark> Web端接口请求错误时报错信息调整
+
 ## 1.2.5.40
 
 `2025-03-02`

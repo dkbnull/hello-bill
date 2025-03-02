@@ -19,14 +19,13 @@ doPost = function (url, data, callback) {
         contentType: "application/json;charset=UTF-8",
         url: url,
         data: JSON.stringify(request),
-        headers: {"token": getItem("token")},
+        headers: {"Authorization": 'Bearer ' + getItem("token")},
         dataType: "json",
         success: function (result) {
             callbackSuccess(loading, result, callback);
         },
         error: function (XMLHttpRequest) {
-            callback(XMLHttpRequest.responseJSON);
-            layer.close(loading);
+            callbackFail(loading, XMLHttpRequest, callback);
         }
     });
 }
@@ -104,6 +103,18 @@ function callbackSuccess(loading, result, callback) {
     }
 
     callback(result);
+    layer.close(loading);
+}
+
+function callbackFail(loading, XMLHttpRequest, callback) {
+    if (isEmpty(XMLHttpRequest.responseJSON)) {
+        layer.alert("未知异常");
+        layer.close(loading);
+        return;
+    }
+
+    layer.alert(XMLHttpRequest.responseJSON);
+    callback(XMLHttpRequest.responseJSON);
     layer.close(loading);
 }
 

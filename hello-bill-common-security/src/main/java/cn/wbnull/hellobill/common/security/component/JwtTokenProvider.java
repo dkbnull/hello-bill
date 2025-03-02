@@ -2,7 +2,7 @@ package cn.wbnull.hellobill.common.security.component;
 
 import cn.wbnull.hellobill.common.core.constant.ResponseCode;
 import cn.wbnull.hellobill.common.core.exception.BusinessException;
-import cn.wbnull.hellobill.common.security.config.JwtProperties;
+import cn.wbnull.hellobill.common.security.properties.JwtProperties;
 import cn.wbnull.hellobill.common.security.model.TokenModel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

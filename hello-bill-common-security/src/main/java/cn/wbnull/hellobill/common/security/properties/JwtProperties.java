@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.common.security.config;
+package cn.wbnull.hellobill.common.security.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
