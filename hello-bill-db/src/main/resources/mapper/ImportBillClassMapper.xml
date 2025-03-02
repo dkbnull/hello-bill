@@ -18,7 +18,7 @@
         , detail, topClass, secondClass, createTime, updateTime
     </sql>
 
-    <select id="getImportBillClass" resultMap="BaseResultMap">
+    <select id="getByDetail" resultMap="BaseResultMap">
         SELECT *
         FROM import_bill_class
         WHERE detail LIKE '%${detail}%'

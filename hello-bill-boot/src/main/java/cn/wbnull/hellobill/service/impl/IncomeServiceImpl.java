@@ -5,7 +5,7 @@ import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.param.QueryListParam;
-import cn.wbnull.hellobill.db.service.IncomeInfoService;
+import cn.wbnull.hellobill.db.repository.IncomeInfoRepository;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryListRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
@@ -29,12 +29,12 @@ import java.util.List;
 public class IncomeServiceImpl implements IncomeService {
 
     @Autowired
-    private IncomeInfoService incomeInfoService;
+    private IncomeInfoRepository incomeInfoRepository;
 
     @Override
     public ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request) {
         QueryListParam queryListParam = BeanUtils.copyProperties(request.getData(), QueryListParam.class);
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfos(request.getUsername(), queryListParam);
+        List<IncomeInfo> incomeInfos = incomeInfoRepository.listByParam(request.getUsername(), queryListParam);
         List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(incomeInfos, QueryResponse.class);
 
         return ApiResponse.success(queryResponseList);
@@ -43,14 +43,14 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public ApiResponse<Object> add(ApiRequest<AddRequest> request) {
         IncomeInfo incomeInfo = BeanUtils.copyProperties(request.getData(), IncomeInfo.class);
-        incomeInfoService.addIncomeInfo(request.getUsername(), incomeInfo);
+        incomeInfoRepository.insertIncomeInfo(request.getUsername(), incomeInfo);
 
         return ApiResponse.success("记账成功");
     }
 
     @Override
     public ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request) {
-        IncomeInfo incomeInfo = incomeInfoService.getIncomeInfo(request.getData().getId());
+        IncomeInfo incomeInfo = incomeInfoRepository.getIncomeInfo(request.getData().getId());
         QueryResponse queryResponse = BeanUtils.copyProperties(incomeInfo, QueryResponse.class);
 
         return ApiResponse.success(queryResponse);
@@ -59,14 +59,14 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public ApiResponse<Object> update(ApiRequest<UpdateRequest> request) {
         IncomeInfo incomeInfo = BeanUtils.copyProperties(request.getData(), IncomeInfo.class);
-        incomeInfoService.updateIncomeInfo(incomeInfo);
+        incomeInfoRepository.updateIncomeInfo(incomeInfo);
 
         return ApiResponse.success("修改成功");
     }
 
     @Override
     public ApiResponse<Object> delete(ApiRequest<DeleteRequest> request) {
-        incomeInfoService.deleteIncomeInfo(request.getData().getId());
+        incomeInfoRepository.deleteIncomeInfo(request.getData().getId());
 
         return ApiResponse.success("删除成功");
     }

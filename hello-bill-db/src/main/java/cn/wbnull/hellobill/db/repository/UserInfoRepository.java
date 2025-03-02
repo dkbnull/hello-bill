@@ -1,11 +1,11 @@
-package cn.wbnull.hellobill.db.service;
+package cn.wbnull.hellobill.db.repository;
 
 import cn.wbnull.hellobill.db.entity.UserInfo;
 import cn.wbnull.hellobill.db.mapper.UserInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 /**
  * 用户信息表 服务类
@@ -14,20 +14,20 @@ import org.springframework.stereotype.Service;
  * @date 2020-12-29
  * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
-@Service
-public class UserInfoService {
+@Repository
+public class UserInfoRepository {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-    public UserInfo getUserInfo(String username) {
+    public UserInfo getByUsername(String username) {
         LambdaQueryWrapper<UserInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(UserInfo::getUsername, username);
 
         return userInfoMapper.selectOne(queryWrapper);
     }
 
-    public void updateUserInfo(String username, String password) {
+    public void updatePasswordByUsername(String username, String password) {
         LambdaUpdateWrapper<UserInfo> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.set(UserInfo::getPassword, password);
         updateWrapper.eq(UserInfo::getUsername, username);

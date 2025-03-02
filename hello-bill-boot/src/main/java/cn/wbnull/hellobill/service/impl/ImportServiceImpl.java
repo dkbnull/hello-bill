@@ -9,8 +9,10 @@ import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
 import cn.wbnull.hellobill.db.mapper.ImportBillClassMapper;
 import cn.wbnull.hellobill.db.mapper.ImportBillInfoMapper;
 import cn.wbnull.hellobill.db.mapper.IncomeInfoMapper;
-import cn.wbnull.hellobill.db.service.ClassInfoService;
-import cn.wbnull.hellobill.db.service.ImportBillService;
+import cn.wbnull.hellobill.db.repository.ClassInfoRepository;
+import cn.wbnull.hellobill.db.repository.ImportBillClassRepository;
+import cn.wbnull.hellobill.db.repository.ImportBillDetailConvertRepository;
+import cn.wbnull.hellobill.db.repository.ImportBillInfoRepository;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
 import cn.wbnull.hellobill.dto.imp.request.ConfirmRequest;
@@ -45,18 +47,23 @@ import java.util.List;
 public class ImportServiceImpl implements ImportService {
 
     @Autowired
-    private ImportBillClassMapper importBillClassMapper;
-    @Autowired
-    private ImportBillInfoMapper importBillInfoMapper;
-    @Autowired
-    private ImportBillService importBillService;
+    private ClassInfoRepository classInfoRepository;
 
     @Autowired
-    private ClassInfoService classInfoService;
+    private ImportBillInfoRepository importBillInfoRepository;
+    @Autowired
+    private ImportBillClassRepository importBillClassRepository;
+    @Autowired
+    private ImportBillDetailConvertRepository importBillDetailConvertRepository;
+
     @Autowired
     private ExpendInfoMapper expendInfoMapper;
     @Autowired
     private IncomeInfoMapper incomeInfoMapper;
+    @Autowired
+    private ImportBillClassMapper importBillClassMapper;
+    @Autowired
+    private ImportBillInfoMapper importBillInfoMapper;
 
     @Override
     public ApiResponse<Object> billFile(MultipartFile file, String username) {
@@ -135,9 +142,9 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setDetail(line[2]);
             importBillInfo.setDetailConvert(convertDetail(line[2]));
 
-            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetailConvert());
+            ImportBillClass importBillClass = importBillClassMapper.getByDetail(importBillInfo.getDetailConvert());
             if (importBillClass == null) {
-                importBillClass = importBillClassMapper.getImportBillClass(line[3]);
+                importBillClass = importBillClassMapper.getByDetail(line[3]);
             }
             if (importBillClass != null) {
                 importBillInfo.setTopClass(importBillClass.getTopClass());
@@ -211,9 +218,9 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setDetail(detail);
             importBillInfo.setDetailConvert(convertDetail(detail));
 
-            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetailConvert());
+            ImportBillClass importBillClass = importBillClassMapper.getByDetail(importBillInfo.getDetailConvert());
             if (importBillClass == null) {
-                importBillClass = importBillClassMapper.getImportBillClass(line[8].trim());
+                importBillClass = importBillClassMapper.getByDetail(line[8].trim());
             }
             if (importBillClass != null) {
                 importBillInfo.setTopClass(importBillClass.getTopClass());
@@ -273,7 +280,7 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setDetail(line[2]);
             importBillInfo.setDetailConvert(convertDetail(line[2]));
 
-            ImportBillClass importBillClass = importBillClassMapper.getImportBillClass(importBillInfo.getDetailConvert());
+            ImportBillClass importBillClass = importBillClassMapper.getByDetail(importBillInfo.getDetailConvert());
             if (importBillClass != null) {
                 importBillInfo.setTopClass(importBillClass.getTopClass());
                 importBillInfo.setSecondClass(importBillClass.getSecondClass());
@@ -306,7 +313,7 @@ public class ImportServiceImpl implements ImportService {
     private String convertDetail(String detail) {
         detail = detail.replace("'", "");
 
-        ImportBillDetailConvert importBillDetailConvert = importBillService.getImportBillDetailConvert(detail);
+        ImportBillDetailConvert importBillDetailConvert = importBillDetailConvertRepository.getByDetail(detail);
         if (importBillDetailConvert == null) {
             return detail;
         }
@@ -325,7 +332,7 @@ public class ImportServiceImpl implements ImportService {
 
     @Override
     public ApiResponse<List<QueryResponse>> queryList(ApiRequest<Object> request) {
-        List<ImportBillInfo> importBillInfoList = importBillService.getImportBillInfos(request.getUsername());
+        List<ImportBillInfo> importBillInfoList = importBillInfoRepository.list(request.getUsername());
         List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(importBillInfoList, QueryResponse.class);
         for (QueryResponse queryResponse : queryResponseList) {
             if ("0".equals(queryResponse.getBillType())) {
@@ -351,11 +358,11 @@ public class ImportServiceImpl implements ImportService {
     public ApiResponse<Object> update(ApiRequest<UpdateRequest> request) {
         UpdateRequest data = request.getData();
         ImportBillInfo importBillInfo = BeanUtils.copyProperties(data, ImportBillInfo.class);
-        ClassInfo classInfo = classInfoService.getClassInfoBySecondClass(data.getBillType(),
+        ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(data.getBillType(),
                 data.getSecondClass());
         importBillInfo.setTopClass(classInfo.getTopClass());
 
-        importBillService.updateImportBillInfo(importBillInfo);
+        importBillInfoRepository.updateImportBillInfo(importBillInfo);
 
         return ApiResponse.success("修改成功");
     }
@@ -404,9 +411,9 @@ public class ImportServiceImpl implements ImportService {
         }
 
         // 保存或更新明细转换对应信息
-        importBillService.updateImportBillDetailConvert(importBillInfo);
+        importBillDetailConvertRepository.updateByImportBillInfo(importBillInfo);
         // 保存或更新明细品类对应信息
-        importBillService.updateImportBillClass(importBillInfo);
+        importBillClassRepository.updateByImportBillInfo(importBillInfo);
         importBillInfoMapper.deleteById(importBillInfo.getId());
 
         return ApiResponse.success("确认成功");

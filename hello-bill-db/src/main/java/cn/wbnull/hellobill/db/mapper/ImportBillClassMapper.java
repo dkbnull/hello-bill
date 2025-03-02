@@ -16,5 +16,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ImportBillClassMapper extends BaseMapper<ImportBillClass> {
 
-    ImportBillClass getImportBillClass(@Param("detail") String detail);
+    ImportBillClass getByDetail(@Param("detail") String detail);
 }

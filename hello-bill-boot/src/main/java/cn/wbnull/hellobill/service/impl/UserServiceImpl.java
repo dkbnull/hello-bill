@@ -5,7 +5,7 @@ import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.security.component.JwtTokenProvider;
 import cn.wbnull.hellobill.common.security.model.TokenModel;
 import cn.wbnull.hellobill.db.entity.UserInfo;
-import cn.wbnull.hellobill.db.service.UserInfoService;
+import cn.wbnull.hellobill.db.repository.UserInfoRepository;
 import cn.wbnull.hellobill.dto.user.request.ChangePasswordRequest;
 import cn.wbnull.hellobill.dto.user.request.LoginRequest;
 import cn.wbnull.hellobill.dto.user.response.LoginResponse;
@@ -28,13 +28,13 @@ public class UserServiceImpl implements UserService {
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoRepository userInfoRepository;
 
     @Override
     public ApiResponse<LoginResponse> login(ApiRequest<LoginRequest> request) {
         LoginRequest data = request.getData();
 
-        UserInfo userInfo = userInfoService.getUserInfo(data.getUsername());
+        UserInfo userInfo = userInfoRepository.getByUsername(data.getUsername());
         if (userInfo == null) {
             return ApiResponse.fail("用户名或密码错误");
         }
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public ApiResponse<Object> changePassword(ApiRequest<ChangePasswordRequest> request) {
         ChangePasswordRequest data = request.getData();
 
-        UserInfo userInfo = userInfoService.getUserInfo(request.getUsername());
+        UserInfo userInfo = userInfoRepository.getByUsername(request.getUsername());
         if (userInfo == null) {
             return ApiResponse.fail("用户不存在");
         }
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         }
 
         String password = DigestUtils.md5Hex(data.getNewPassword() + userInfo.getSalt()).toUpperCase();
-        userInfoService.updateUserInfo(request.getUsername(), password);
+        userInfoRepository.updatePasswordByUsername(request.getUsername(), password);
 
         return ApiResponse.success("密码修改成功");
     }

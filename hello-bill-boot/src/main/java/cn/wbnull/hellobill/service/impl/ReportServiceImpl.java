@@ -7,9 +7,9 @@ import cn.wbnull.hellobill.common.core.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
-import cn.wbnull.hellobill.db.service.ClassInfoService;
-import cn.wbnull.hellobill.db.service.ExpendInfoService;
-import cn.wbnull.hellobill.db.service.IncomeInfoService;
+import cn.wbnull.hellobill.db.repository.ClassInfoRepository;
+import cn.wbnull.hellobill.db.repository.ExpendInfoRepository;
+import cn.wbnull.hellobill.db.repository.IncomeInfoRepository;
 import cn.wbnull.hellobill.dto.report.request.ExpendClassRequest;
 import cn.wbnull.hellobill.dto.report.request.ExpendDetailRequest;
 import cn.wbnull.hellobill.dto.report.request.ReportRequest;
@@ -37,26 +37,26 @@ import java.util.List;
 public class ReportServiceImpl implements ReportService {
 
     @Autowired
-    private ClassInfoService classInfoService;
+    private ClassInfoRepository classInfoRepository;
 
     @Autowired
-    private ExpendInfoService expendInfoService;
+    private ExpendInfoRepository expendInfoRepository;
 
     @Autowired
-    private IncomeInfoService incomeInfoService;
+    private IncomeInfoRepository incomeInfoRepository;
 
     @Override
     public ApiResponse<QueryResponse> query(ApiRequest<Object> request) {
-        List<ExpendInfo> expendInfos = expendInfoService.getExpendReport(request.getUsername());
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReport(request.getUsername());
+        List<ExpendInfo> expendInfos = expendInfoRepository.listReport(request.getUsername());
+        List<IncomeInfo> incomeInfos = incomeInfoRepository.listReport(request.getUsername());
 
         return ApiResponse.success(QueryResponse.build(expendInfos, incomeInfos));
     }
 
     @Override
     public ApiResponse<QueryResponse> queryNet(ApiRequest<Object> request) {
-        List<ExpendInfo> expendInfos = expendInfoService.getExpendReportNet(request.getUsername());
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeReportNet(request.getUsername());
+        List<ExpendInfo> expendInfos = expendInfoRepository.listReportNet(request.getUsername());
+        List<IncomeInfo> incomeInfos = incomeInfoRepository.listReportNet(request.getUsername());
 
         return ApiResponse.success(QueryResponse.build(expendInfos, incomeInfos));
     }
@@ -65,9 +65,9 @@ public class ReportServiceImpl implements ReportService {
     public ApiResponse<Object> expend(ApiRequest<ReportRequest> request) {
         ReportRequest data = request.getData();
 
-        List<ExpendInfo> expendInfosDate = expendInfoService.getExpendReportByDate(request.getUsername(),
+        List<ExpendInfo> expendInfosDate = expendInfoRepository.listReportByDateAndClass(request.getUsername(),
                 data.getReportDate(), data.getReportClass());
-        List<ExpendInfo> expendInfosClass = expendInfoService.getExpendReportByClass(request.getUsername(),
+        List<ExpendInfo> expendInfosClass = expendInfoRepository.listReportWithClassByDateAndClass(request.getUsername(),
                 data.getReportDate(), data.getReportClass());
 
         List<String> date = getReportDateMonth(data.getReportDate());
@@ -101,9 +101,9 @@ public class ReportServiceImpl implements ReportService {
     public ApiResponse<Object> income(ApiRequest<ReportRequest> request) {
         ReportRequest data = request.getData();
 
-        List<IncomeInfo> incomeReportDate = incomeInfoService.getIncomeReportByDate(request.getUsername(),
+        List<IncomeInfo> incomeReportDate = incomeInfoRepository.listReportByDate(request.getUsername(),
                 data.getReportDate());
-        List<IncomeInfo> incomeInfosClass = incomeInfoService.getIncomeReportByClass(request.getUsername(),
+        List<IncomeInfo> incomeInfosClass = incomeInfoRepository.listReportWithClassByDate(request.getUsername(),
                 data.getReportDate());
 
         List<String> date = getReportDateYear(data.getReportDate());
@@ -131,10 +131,10 @@ public class ReportServiceImpl implements ReportService {
     public ApiResponse<ReportClassResponse> expendClass(ApiRequest<ExpendClassRequest> request) {
         ExpendClassRequest data = request.getData();
 
-        List<ExpendInfo> expendInfos = expendInfoService.getExpendInfoByClass(request.getUsername(),
+        List<ExpendInfo> expendInfos = expendInfoRepository.listAmountByDateAndClass(request.getUsername(),
                 data.getReportDate(), data.getTopClass());
 
-        List<ClassInfo> classInfos = classInfoService.getSecondClassInfos(ClassType.EXPEND.getTypeCode(),
+        List<ClassInfo> classInfos = classInfoRepository.listSecondByTypeAndTop(ClassType.EXPEND.getTypeCode(),
                 data.getTopClass());
 
         return ApiResponse.success(ReportClassResponse.build(classInfos, expendInfos));
@@ -144,7 +144,7 @@ public class ReportServiceImpl implements ReportService {
     public ApiResponse<ReportDetailResponse> expendDetail(ApiRequest<ExpendDetailRequest> request) {
         ExpendDetailRequest data = request.getData();
 
-        List<ExpendInfo> expendInfos = expendInfoService.getExpendInfoByDetail(request.getUsername(),
+        List<ExpendInfo> expendInfos = expendInfoRepository.listDetailByDateAndClass(request.getUsername(),
                 data.getReportDate(), data.getTopClass(), data.getSecondClass());
 
         return ApiResponse.success(ReportDetailResponse.build(expendInfos));
@@ -154,10 +154,10 @@ public class ReportServiceImpl implements ReportService {
     public ApiResponse<ReportClassResponse> incomeClass(ApiRequest<ReportRequest> request) {
         ReportRequest data = request.getData();
 
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfoByClass(request.getUsername(),
+        List<IncomeInfo> incomeInfos = incomeInfoRepository.listAmountByDate(request.getUsername(),
                 data.getReportDate());
 
-        List<ClassInfo> classInfos = classInfoService.getTopClassInfos(ClassType.INCOME.getTypeCode());
+        List<ClassInfo> classInfos = classInfoRepository.listTopByType(ClassType.INCOME.getTypeCode());
 
         return ApiResponse.success(ReportClassResponse.buildIncome(classInfos, incomeInfos));
     }
@@ -166,7 +166,7 @@ public class ReportServiceImpl implements ReportService {
     public ApiResponse<ReportDetailResponse> incomeDetail(ApiRequest<ReportRequest> request) {
         ReportRequest data = request.getData();
 
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfoByDetail(request.getUsername(),
+        List<IncomeInfo> incomeInfos = incomeInfoRepository.listDetailByDate(request.getUsername(),
                 data.getReportDate());
 
         return ApiResponse.success(ReportDetailResponse.buildIncome(incomeInfos));

@@ -1,4 +1,4 @@
-package cn.wbnull.hellobill.db.service;
+package cn.wbnull.hellobill.db.repository;
 
 import cn.wbnull.hellobill.common.core.constant.ClassType;
 import cn.wbnull.hellobill.common.core.util.DateUtils;
@@ -11,7 +11,7 @@ import cn.wbnull.hellobill.db.param.QueryListParam;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,8 @@ import java.util.List;
  * @date 2021-01-01
  * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
-@Service
-public class IncomeInfoService {
+@Repository
+public class IncomeInfoRepository {
 
     @Autowired
     private IncomeInfoMapper incomeInfoMapper;
@@ -32,7 +32,7 @@ public class IncomeInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<IncomeInfo> getIncomeInfos(String username, QueryListParam param) {
+    public List<IncomeInfo> listByParam(String username, QueryListParam param) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(IncomeInfo::getUsername, username);
         queryWrapper.like(!StringUtils.isEmpty(param.getSecondClass()), IncomeInfo::getSecondClass, param.getSecondClass());
@@ -44,7 +44,7 @@ public class IncomeInfoService {
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    public void addIncomeInfo(String username, IncomeInfo incomeInfo) {
+    public void insertIncomeInfo(String username, IncomeInfo incomeInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, incomeInfo.getSecondClass());
         queryWrapper.eq(ClassInfo::getType, ClassType.INCOME.getTypeCode());
@@ -73,7 +73,7 @@ public class IncomeInfoService {
         incomeInfoMapper.deleteById(id);
     }
 
-    public List<IncomeInfo> getIncomeReport(String username) {
+    public List<IncomeInfo> listReport(String username) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
@@ -83,7 +83,7 @@ public class IncomeInfoService {
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    public List<IncomeInfo> getIncomeReportNet(String username) {
+    public List<IncomeInfo> listReportNet(String username) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
@@ -97,7 +97,7 @@ public class IncomeInfoService {
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    public List<IncomeInfo> getIncomeReportByDate(String username, String reportDate) {
+    public List<IncomeInfo> listReportByDate(String username, String reportDate) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
@@ -108,7 +108,7 @@ public class IncomeInfoService {
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    public List<IncomeInfo> getIncomeReportByClass(String username, String reportDate) {
+    public List<IncomeInfo> listReportWithClassByDate(String username, String reportDate) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(incomeDate, '%Y') as remark, topClass, secondClass, sum(amount) as amount");
         queryWrapper.eq("username", username);
@@ -131,7 +131,7 @@ public class IncomeInfoService {
         }
     }
 
-    public List<IncomeInfo> getIncomeInfoByClass(String username, String reportDate) {
+    public List<IncomeInfo> listAmountByDate(String username, String reportDate) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("topClass, sum(amount) as amount");
         queryWrapper.eq("username", username);
@@ -141,7 +141,7 @@ public class IncomeInfoService {
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    public List<IncomeInfo> getIncomeInfoByDetail(String username, String reportDate) {
+    public List<IncomeInfo> listDetailByDate(String username, String reportDate) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("detail, sum(amount) as amount");
         queryWrapper.eq("username", username);

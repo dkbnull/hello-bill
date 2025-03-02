@@ -7,8 +7,8 @@ import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.db.param.QueryListParam;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
-import cn.wbnull.hellobill.db.service.ClassInfoService;
-import cn.wbnull.hellobill.db.service.ExpendInfoService;
+import cn.wbnull.hellobill.db.repository.ClassInfoRepository;
+import cn.wbnull.hellobill.db.repository.ExpendInfoRepository;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
 import cn.wbnull.hellobill.dto.expend.request.AddRequest;
@@ -32,14 +32,14 @@ import java.util.List;
 public class ExpendServiceImpl implements ExpendService {
 
     @Autowired
-    private ExpendInfoService expendInfoService;
+    private ExpendInfoRepository expendInfoRepository;
     @Autowired
-    private ClassInfoService classInfoService;
+    private ClassInfoRepository classInfoRepository;
 
     @Override
     public ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request) {
         QueryListParam queryListParam = BeanUtils.copyProperties(request.getData(), QueryListParam.class);
-        List<ExpendInfo> expendInfos = expendInfoService.getExpendInfos(request.getUsername(), queryListParam);
+        List<ExpendInfo> expendInfos = expendInfoRepository.listByParam(request.getUsername(), queryListParam);
         List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(expendInfos, QueryResponse.class);
 
         return ApiResponse.success(queryResponseList);
@@ -48,18 +48,18 @@ public class ExpendServiceImpl implements ExpendService {
     @Override
     public ApiResponse<Object> add(ApiRequest<AddRequest> request) {
         ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
-        ClassInfo classInfo = classInfoService.getClassInfoBySecondClass(ClassType.EXPEND.getTypeCode(),
+        ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(ClassType.EXPEND.getTypeCode(),
                 expendInfo.getSecondClass());
         expendInfo.build(request.getUsername(), classInfo.getTopClass());
 
-        expendInfoService.addExpendInfo(expendInfo);
+        expendInfoRepository.insertExpendInfo(expendInfo);
 
         return ApiResponse.success("记账成功");
     }
 
     @Override
     public ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request) {
-        ExpendInfo expendInfo = expendInfoService.getExpendInfo(request.getData().getId());
+        ExpendInfo expendInfo = expendInfoRepository.getById(request.getData().getId());
         QueryResponse queryResponse = BeanUtils.copyProperties(expendInfo, QueryResponse.class);
 
         return ApiResponse.success(queryResponse);
@@ -68,18 +68,18 @@ public class ExpendServiceImpl implements ExpendService {
     @Override
     public ApiResponse<Object> update(ApiRequest<UpdateRequest> request) {
         ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
-        ClassInfo classInfo = classInfoService.getClassInfoBySecondClass(ClassType.EXPEND.getTypeCode(),
+        ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(ClassType.EXPEND.getTypeCode(),
                 expendInfo.getSecondClass());
         expendInfo.setTopClass(classInfo.getTopClass());
 
-        expendInfoService.updateExpendInfo(expendInfo);
+        expendInfoRepository.updateExpendInfo(expendInfo);
 
         return ApiResponse.success("修改成功");
     }
 
     @Override
     public ApiResponse<Object> delete(ApiRequest<DeleteRequest> request) {
-        expendInfoService.deleteExpendInfo(request.getData().getId());
+        expendInfoRepository.deleteById(request.getData().getId());
 
         return ApiResponse.success("删除成功");
     }

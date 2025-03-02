@@ -1,14 +1,14 @@
-package cn.wbnull.hellobill.db.service;
+package cn.wbnull.hellobill.db.repository;
 
 import cn.wbnull.hellobill.common.core.util.DateUtils;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
-import cn.wbnull.hellobill.db.param.QueryListParam;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
+import cn.wbnull.hellobill.db.param.QueryListParam;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,30 +20,35 @@ import java.util.List;
  * @date 2020-12-31
  * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
-@Service
-public class ExpendInfoService {
+@Repository
+public class ExpendInfoRepository {
 
     @Autowired
     private ExpendInfoMapper expendInfoMapper;
 
-    public List<ExpendInfo> getExpendInfos(String username, QueryListParam param) {
+    public List<ExpendInfo> listByParam(String username, QueryListParam param) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ExpendInfo::getUsername, username);
-        queryWrapper.like(!StringUtils.isEmpty(param.getTopClass()), ExpendInfo::getTopClass, param.getTopClass());
-        queryWrapper.like(!StringUtils.isEmpty(param.getSecondClass()), ExpendInfo::getSecondClass, param.getSecondClass());
-        queryWrapper.like(!StringUtils.isEmpty(param.getDetail()), ExpendInfo::getDetail, param.getDetail());
-        queryWrapper.ge(!StringUtils.isEmpty(param.getBeginDate()), ExpendInfo::getExpendTime, param.getBeginDate() + " 00:00:00");
-        queryWrapper.le(!StringUtils.isEmpty(param.getEndDate()), ExpendInfo::getExpendTime, param.getEndDate() + " 23:59:59");
+        queryWrapper.like(!StringUtils.isEmpty(param.getTopClass()), ExpendInfo::getTopClass,
+                param.getTopClass());
+        queryWrapper.like(!StringUtils.isEmpty(param.getSecondClass()), ExpendInfo::getSecondClass,
+                param.getSecondClass());
+        queryWrapper.like(!StringUtils.isEmpty(param.getDetail()), ExpendInfo::getDetail,
+                param.getDetail());
+        queryWrapper.ge(!StringUtils.isEmpty(param.getBeginDate()), ExpendInfo::getExpendTime,
+                param.getBeginDate() + " 00:00:00");
+        queryWrapper.le(!StringUtils.isEmpty(param.getEndDate()), ExpendInfo::getExpendTime,
+                param.getEndDate() + " 23:59:59");
         queryWrapper.orderBy(true, param.orderByAsc(), ExpendInfo::getExpendTime, ExpendInfo::getId);
 
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public void addExpendInfo(ExpendInfo expendInfo) {
+    public void insertExpendInfo(ExpendInfo expendInfo) {
         expendInfoMapper.insert(expendInfo);
     }
 
-    public ExpendInfo getExpendInfo(String id) {
+    public ExpendInfo getById(String id) {
         return expendInfoMapper.selectById(id);
     }
 
@@ -51,11 +56,11 @@ public class ExpendInfoService {
         expendInfoMapper.updateById(expendInfo);
     }
 
-    public void deleteExpendInfo(String id) {
+    public void deleteById(String id) {
         expendInfoMapper.deleteById(id);
     }
 
-    public List<ExpendInfo> getExpendReport(String username) {
+    public List<ExpendInfo> listReport(String username) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(expendTime, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
@@ -65,7 +70,7 @@ public class ExpendInfoService {
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ExpendInfo> getExpendReportNet(String username) {
+    public List<ExpendInfo> listReportNet(String username) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(expendTime, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
@@ -79,7 +84,7 @@ public class ExpendInfoService {
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ExpendInfo> getExpendReportByDate(String username, String reportDate, String reportClass) {
+    public List<ExpendInfo> listReportByDateAndClass(String username, String reportDate, String reportClass) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(expendTime, '%Y-%m') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
@@ -90,9 +95,11 @@ public class ExpendInfoService {
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ExpendInfo> getExpendReportByClass(String username, String reportDate, String reportClass) {
+    public List<ExpendInfo> listReportWithClassByDateAndClass(String username, String reportDate,
+                                                              String reportClass) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DATE_FORMAT(expendTime, '%Y-%m') as remark, topClass, secondClass, sum(amount) as amount");
+        queryWrapper.select("DATE_FORMAT(expendTime, '%Y-%m') as remark, topClass, secondClass, " +
+                "sum(amount) as amount");
         queryWrapper.eq("username", username);
         convertQueryWrapper(queryWrapper, reportDate, reportClass);
         queryWrapper.groupBy("DATE_FORMAT(expendTime, '%Y-%m')", "topClass", "secondClass");
@@ -105,8 +112,6 @@ public class ExpendInfoService {
         if (StringUtils.isEmpty(reportDate)) {
             queryWrapper.ge("expendTime", DateUtils.atStartOfMonth(11).atStartOfDay());
         } else {
-//            queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')",
-//                    reportDate.substring(0, 4));
             queryWrapper.like("DATE_FORMAT(expendTime, '%Y-%m-%d %H:%i:%s')", reportDate);
         }
 
@@ -121,7 +126,7 @@ public class ExpendInfoService {
         }
     }
 
-    public List<ExpendInfo> getExpendInfoByClass(String username, String reportDate, String topClass) {
+    public List<ExpendInfo> listAmountByDateAndClass(String username, String reportDate, String topClass) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("secondClass, sum(amount) as amount");
         queryWrapper.eq("username", username);
@@ -132,8 +137,8 @@ public class ExpendInfoService {
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ExpendInfo> getExpendInfoByDetail(String username, String reportDate, String topClass,
-                                                  String secondClass) {
+    public List<ExpendInfo> listDetailByDateAndClass(String username, String reportDate, String topClass,
+                                                     String secondClass) {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("detail, sum(amount) as amount");
         queryWrapper.eq("username", username);
