@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.db.repository;
 
-import cn.wbnull.hellobill.common.core.constant.Status;
+import cn.wbnull.hellobill.common.core.constant.StatusEnum;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.mapper.ClassInfoMapper;
@@ -53,7 +53,7 @@ public class ClassInfoRepository {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("distinct topClass").lambda()
                 .eq(ClassInfo::getType, type)
-                .eq(ClassInfo::getStatus, Status.USABLE.getStatus())
+                .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())
                 .orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);
@@ -63,7 +63,7 @@ public class ClassInfoRepository {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.select(ClassInfo::getSecondClass);
         queryWrapper.eq(ClassInfo::getType, type);
-        queryWrapper.eq(ClassInfo::getStatus, Status.USABLE.getStatus());
+        queryWrapper.eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus());
         queryWrapper.orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);
@@ -74,7 +74,7 @@ public class ClassInfoRepository {
         queryWrapper.select("distinct secondClass").lambda()
                 .eq(ClassInfo::getTopClass, topClass)
                 .eq(ClassInfo::getType, type)
-                .eq(ClassInfo::getStatus, Status.USABLE.getStatus())
+                .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())
                 .orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
 
         return classInfoMapper.selectList(queryWrapper);

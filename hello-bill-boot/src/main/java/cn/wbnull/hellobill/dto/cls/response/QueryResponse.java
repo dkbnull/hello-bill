@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.dto.cls.response;
 
-import cn.wbnull.hellobill.common.core.constant.ClassType;
+import cn.wbnull.hellobill.common.core.constant.ClassTypeEnum;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -26,6 +26,6 @@ public class QueryResponse {
     private LocalDateTime updateTime;
 
     public void analyse() {
-        this.typeName = ClassType.getClassType(this.type).getTypeName();
+        this.typeName = ClassTypeEnum.getClassType(this.type).getTypeName();
     }
 }

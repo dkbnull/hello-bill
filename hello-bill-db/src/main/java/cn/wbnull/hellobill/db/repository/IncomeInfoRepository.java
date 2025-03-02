@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.db.repository;
 
-import cn.wbnull.hellobill.common.core.constant.ClassType;
+import cn.wbnull.hellobill.common.core.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.core.util.DateUtils;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
@@ -47,7 +47,7 @@ public class IncomeInfoRepository {
     public void insertIncomeInfo(String username, IncomeInfo incomeInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, incomeInfo.getSecondClass());
-        queryWrapper.eq(ClassInfo::getType, ClassType.INCOME.getTypeCode());
+        queryWrapper.eq(ClassInfo::getType, ClassTypeEnum.INCOME.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         incomeInfo.build(username, classInfo.getTopClass());
@@ -61,7 +61,7 @@ public class IncomeInfoRepository {
     public void updateIncomeInfo(IncomeInfo incomeInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, incomeInfo.getSecondClass());
-        queryWrapper.eq(ClassInfo::getType, ClassType.INCOME.getTypeCode());
+        queryWrapper.eq(ClassInfo::getType, ClassTypeEnum.INCOME.getTypeCode());
         ClassInfo classInfo = classInfoMapper.selectOne(queryWrapper);
 
         incomeInfo.setTopClass(classInfo.getTopClass());

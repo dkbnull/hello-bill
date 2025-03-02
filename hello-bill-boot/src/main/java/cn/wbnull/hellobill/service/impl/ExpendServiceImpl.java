@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.service.impl;
 
-import cn.wbnull.hellobill.common.core.constant.ClassType;
+import cn.wbnull.hellobill.common.core.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.BeanUtils;
@@ -48,7 +48,7 @@ public class ExpendServiceImpl implements ExpendService {
     @Override
     public ApiResponse<Object> add(ApiRequest<AddRequest> request) {
         ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
-        ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(ClassType.EXPEND.getTypeCode(),
+        ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(ClassTypeEnum.EXPEND.getTypeCode(),
                 expendInfo.getSecondClass());
         expendInfo.build(request.getUsername(), classInfo.getTopClass());
 
@@ -68,7 +68,7 @@ public class ExpendServiceImpl implements ExpendService {
     @Override
     public ApiResponse<Object> update(ApiRequest<UpdateRequest> request) {
         ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
-        ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(ClassType.EXPEND.getTypeCode(),
+        ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(ClassTypeEnum.EXPEND.getTypeCode(),
                 expendInfo.getSecondClass());
         expendInfo.setTopClass(classInfo.getTopClass());
 

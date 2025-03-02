@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.common.security.component;
 
-import cn.wbnull.hellobill.common.core.constant.ResponseCode;
+import cn.wbnull.hellobill.common.core.constant.ResponseCodeEnum;
 import cn.wbnull.hellobill.common.core.exception.BusinessException;
 import cn.wbnull.hellobill.common.security.properties.JwtProperties;
 import cn.wbnull.hellobill.common.security.model.TokenModel;
@@ -49,7 +49,7 @@ public class JwtTokenProvider {
 
     public boolean isTokenExpired(String token) {
         if (token == null || token.isEmpty()) {
-            throw new BusinessException(ResponseCode.INVALID_TOKEN);
+            throw new BusinessException(ResponseCodeEnum.INVALID_TOKEN);
         }
 
         try {
@@ -59,7 +59,7 @@ public class JwtTokenProvider {
                     .getExpiresAt()
                     .after(new Date());
         } catch (TokenExpiredException e) {
-            throw new BusinessException(ResponseCode.TOKEN_TIME_OUT.getCode(), e.getMessage());
+            throw new BusinessException(ResponseCodeEnum.TOKEN_TIME_OUT.getCode(), e.getMessage());
         }
     }
 }

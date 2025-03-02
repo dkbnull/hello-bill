@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.service.impl;
 
-import cn.wbnull.hellobill.common.core.constant.ClassType;
+import cn.wbnull.hellobill.common.core.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
@@ -134,7 +134,7 @@ public class ReportServiceImpl implements ReportService {
         List<ExpendInfo> expendInfos = expendInfoRepository.listAmountByDateAndClass(request.getUsername(),
                 data.getReportDate(), data.getTopClass());
 
-        List<ClassInfo> classInfos = classInfoRepository.listSecondByTypeAndTop(ClassType.EXPEND.getTypeCode(),
+        List<ClassInfo> classInfos = classInfoRepository.listSecondByTypeAndTop(ClassTypeEnum.EXPEND.getTypeCode(),
                 data.getTopClass());
 
         return ApiResponse.success(ReportClassResponse.build(classInfos, expendInfos));
@@ -157,7 +157,7 @@ public class ReportServiceImpl implements ReportService {
         List<IncomeInfo> incomeInfos = incomeInfoRepository.listAmountByDate(request.getUsername(),
                 data.getReportDate());
 
-        List<ClassInfo> classInfos = classInfoRepository.listTopByType(ClassType.INCOME.getTypeCode());
+        List<ClassInfo> classInfos = classInfoRepository.listTopByType(ClassTypeEnum.INCOME.getTypeCode());
 
         return ApiResponse.success(ReportClassResponse.buildIncome(classInfos, incomeInfos));
     }

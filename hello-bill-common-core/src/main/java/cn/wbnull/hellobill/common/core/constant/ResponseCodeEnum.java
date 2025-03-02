@@ -10,7 +10,7 @@ import lombok.Getter;
  * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Getter
-public enum ResponseCode {
+public enum ResponseCodeEnum {
 
     SUCCESS("1000", "成功"),
     FAIL("2000", "失败"),
@@ -29,7 +29,7 @@ public enum ResponseCode {
     private final String code;
     private final String message;
 
-    ResponseCode(String code, String message) {
+    ResponseCodeEnum(String code, String message) {
         this.code = code;
         this.message = message;
     }

@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.common.core.dto;
 
-import cn.wbnull.hellobill.common.core.constant.ResponseCode;
+import cn.wbnull.hellobill.common.core.constant.ResponseCodeEnum;
 import cn.wbnull.hellobill.common.core.util.LoggerUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
@@ -24,7 +24,7 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> fail(String message) {
         ApiResponse<T> response = new ApiResponse<>();
-        response.code = ResponseCode.FAIL.getCode();
+        response.code = ResponseCodeEnum.FAIL.getCode();
         response.message = message;
         response.timestamp = System.currentTimeMillis();
 
@@ -33,7 +33,7 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> success(String message) {
         ApiResponse<T> response = new ApiResponse<>();
-        response.code = ResponseCode.SUCCESS.getCode();
+        response.code = ResponseCodeEnum.SUCCESS.getCode();
         response.message = message;
         response.timestamp = System.currentTimeMillis();
 
@@ -42,8 +42,8 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> success(T data) {
         ApiResponse<T> response = new ApiResponse<>();
-        response.code = ResponseCode.SUCCESS.getCode();
-        response.message = ResponseCode.SUCCESS.getMessage();
+        response.code = ResponseCodeEnum.SUCCESS.getCode();
+        response.message = ResponseCodeEnum.SUCCESS.getMessage();
         response.timestamp = System.currentTimeMillis();
         response.data = data;
 

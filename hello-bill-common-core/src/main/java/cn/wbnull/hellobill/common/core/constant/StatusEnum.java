@@ -10,7 +10,7 @@ import lombok.Getter;
  * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
  */
 @Getter
-public enum Status {
+public enum StatusEnum {
 
     FORBIDDEN("0"),
     USABLE("1"),
@@ -18,7 +18,7 @@ public enum Status {
 
     private final String status;
 
-    Status(String status) {
+    StatusEnum(String status) {
         this.status = status;
     }
 }

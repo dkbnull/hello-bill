@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.service.impl;
 
-import cn.wbnull.hellobill.common.core.constant.ClassType;
+import cn.wbnull.hellobill.common.core.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.*;
@@ -382,7 +382,7 @@ public class ImportServiceImpl implements ImportService {
             return ApiResponse.fail("账单信息不完整");
         }
 
-        if (ClassType.INCOME.getTypeCode().equals(String.valueOf(importBillInfo.getBillType()))) {
+        if (ClassTypeEnum.INCOME.getTypeCode().equals(String.valueOf(importBillInfo.getBillType()))) {
             IncomeInfo incomeInfo = BeanUtils.copyProperties(importBillInfo, IncomeInfo.class);
             incomeInfo.setIncomeDate(importBillInfo.getBillTime().toLocalDate());
             incomeInfo.setDetail(importBillInfo.getDetailConvert());

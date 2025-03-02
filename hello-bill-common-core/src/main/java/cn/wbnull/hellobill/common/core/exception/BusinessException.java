@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.common.core.exception;
 
-import cn.wbnull.hellobill.common.core.constant.ResponseCode;
+import cn.wbnull.hellobill.common.core.constant.ResponseCodeEnum;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
 import lombok.Getter;
 
@@ -34,7 +34,7 @@ public class BusinessException extends RuntimeException {
         this.message = message;
     }
 
-    public BusinessException(ResponseCode responseCode) {
+    public BusinessException(ResponseCodeEnum responseCode) {
         this.code = responseCode.getCode();
         this.message = responseCode.getMessage();
     }

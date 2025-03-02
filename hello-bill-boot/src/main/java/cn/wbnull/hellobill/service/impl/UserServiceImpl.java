@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
             return ApiResponse.fail("用户名或密码错误");
         }
 
-        //再次检查大小写是否一致
+        // 再次检查大小写是否一致
         if (!userInfo.getUsername().equals(data.getUsername())) {
             return ApiResponse.fail("用户名或密码错误");
         }
