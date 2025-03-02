@@ -1,11 +1,11 @@
 package cn.wbnull.hellobill.service;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.db.entity.ClassInfo;
-import cn.wbnull.hellobill.model.cls.QueryClassRequestModel;
-import cn.wbnull.hellobill.model.cls.QueryRequestModel;
-import cn.wbnull.hellobill.model.cls.UpdateRequestModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.cls.request.QueryClassRequest;
+import cn.wbnull.hellobill.dto.cls.request.QueryRequest;
+import cn.wbnull.hellobill.dto.cls.request.UpdateRequest;
+import cn.wbnull.hellobill.dto.cls.response.QueryResponse;
 
 import java.util.List;
 
@@ -17,11 +17,11 @@ import java.util.List;
  */
 public interface ClassService {
 
-    ResponseModel<List<ClassInfo>> query(RequestModel<QueryRequestModel> request);
+    ApiResponse<List<QueryResponse>> query(ApiRequest<QueryRequest> request);
 
-    ResponseModel<Object> update(RequestModel<UpdateRequestModel> request);
+    ApiResponse<Object> update(ApiRequest<UpdateRequest> request);
 
-    ResponseModel<List<String>> secondClassQuery(RequestModel<QueryRequestModel> request);
+    ApiResponse<List<String>> secondClassQuery(ApiRequest<QueryRequest> request);
 
-    ResponseModel<List<String>> queryClass(RequestModel<QueryClassRequestModel> request);
+    ApiResponse<List<String>> queryClass(ApiRequest<QueryClassRequest> request);
 }

@@ -1,14 +1,14 @@
 package cn.wbnull.hellobill.service.impl;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.security.component.JwtTokenProvider;
 import cn.wbnull.hellobill.common.security.model.TokenModel;
 import cn.wbnull.hellobill.db.entity.UserInfo;
 import cn.wbnull.hellobill.db.service.UserInfoService;
-import cn.wbnull.hellobill.model.user.ChangePasswordRequestModel;
-import cn.wbnull.hellobill.model.user.LoginRequestModel;
-import cn.wbnull.hellobill.model.user.LoginResponseModel;
+import cn.wbnull.hellobill.dto.user.request.ChangePasswordRequest;
+import cn.wbnull.hellobill.dto.user.request.LoginRequest;
+import cn.wbnull.hellobill.dto.user.response.LoginResponse;
 import cn.wbnull.hellobill.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,46 +30,46 @@ public class UserServiceImpl implements UserService {
     private UserInfoService userInfoService;
 
     @Override
-    public ResponseModel<LoginResponseModel> login(RequestModel<LoginRequestModel> request) {
-        LoginRequestModel data = request.getData();
+    public ApiResponse<LoginResponse> login(ApiRequest<LoginRequest> request) {
+        LoginRequest data = request.getData();
 
         UserInfo userInfo = userInfoService.getUserInfo(data.getUsername());
         if (userInfo == null) {
-            return ResponseModel.fail("用户名或密码错误");
+            return ApiResponse.fail("用户名或密码错误");
         }
 
         String password = DigestUtils.md5Hex(data.getPassword() + userInfo.getSalt()).toUpperCase();
         if (!userInfo.getPassword().equals(password)) {
-            return ResponseModel.fail("用户名或密码错误");
+            return ApiResponse.fail("用户名或密码错误");
         }
 
         //再次检查大小写是否一致
         if (!userInfo.getUsername().equals(data.getUsername())) {
-            return ResponseModel.fail("用户名或密码错误");
+            return ApiResponse.fail("用户名或密码错误");
         }
 
         TokenModel tokenModel = TokenModel.build(userInfo.getUsername());
         String token = jwtTokenProvider.generateToken(tokenModel);
 
-        return ResponseModel.success(LoginResponseModel.build(token, userInfo.getUsername()));
+        return ApiResponse.success(LoginResponse.build(token, userInfo.getUsername()));
     }
 
     @Override
-    public ResponseModel<Object> changePassword(RequestModel<ChangePasswordRequestModel> request) {
-        ChangePasswordRequestModel data = request.getData();
+    public ApiResponse<Object> changePassword(ApiRequest<ChangePasswordRequest> request) {
+        ChangePasswordRequest data = request.getData();
 
         UserInfo userInfo = userInfoService.getUserInfo(request.getUsername());
         if (userInfo == null) {
-            return ResponseModel.fail("用户不存在");
+            return ApiResponse.fail("用户不存在");
         }
 
         if (!userInfo.getPassword().equals(DigestUtils.md5Hex(data.getOldPassword()).toUpperCase())) {
-            return ResponseModel.fail("原密码错误");
+            return ApiResponse.fail("原密码错误");
         }
 
         String password = DigestUtils.md5Hex(data.getNewPassword() + userInfo.getSalt()).toUpperCase();
         userInfoService.updateUserInfo(request.getUsername(), password);
 
-        return ResponseModel.success("密码修改成功");
+        return ApiResponse.success("密码修改成功");
     }
 }

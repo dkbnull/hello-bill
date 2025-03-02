@@ -41,7 +41,7 @@ function callbackQuery(result) {
         cols: [[
             {field: 'topClass', title: '顶级分类'},
             {field: 'secondClass', title: '二级分类'},
-            {field: 'type', title: '类别'},
+            {field: 'typeName', title: '类别'},
             {
                 field: 'serialNo', title: '序号', edit: 'number',
                 style: 'cursor: pointer; font-weight:bold; background-color: #07C180; color: #fff;'

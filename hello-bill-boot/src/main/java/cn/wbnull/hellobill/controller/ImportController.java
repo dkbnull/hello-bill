@@ -1,13 +1,13 @@
 package cn.wbnull.hellobill.controller;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.LoggerUtils;
-import cn.wbnull.hellobill.model.common.DeleteRequestModel;
-import cn.wbnull.hellobill.model.common.QueryRequestModel;
-import cn.wbnull.hellobill.model.imp.ConfirmRequestModel;
-import cn.wbnull.hellobill.model.imp.ImportBillInfoModel;
-import cn.wbnull.hellobill.model.imp.UpdateRequestModel;
+import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
+import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.imp.request.ConfirmRequest;
+import cn.wbnull.hellobill.dto.imp.response.QueryResponse;
+import cn.wbnull.hellobill.dto.imp.request.UpdateRequest;
 import cn.wbnull.hellobill.service.ImportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -39,11 +39,11 @@ public class ImportController {
      * @return
      */
     @PostMapping(value = "billFile")
-    public ResponseModel<Object> billFile(@RequestParam("file") MultipartFile file,
-                                          @RequestParam("username") String username) {
+    public ApiResponse<Object> billFile(@RequestParam("file") MultipartFile file,
+                                        @RequestParam("username") String username) {
         LoggerUtils.info("billFile", "请求", file.getOriginalFilename());
 
-        ResponseModel<Object> response = importService.billFile(file, username);
+        ApiResponse<Object> response = importService.billFile(file, username);
 
         LoggerUtils.info("billFile", "响应", response.toString());
 
@@ -57,7 +57,7 @@ public class ImportController {
      * @return
      */
     @PostMapping(value = "queryList")
-    public ResponseModel<List<ImportBillInfoModel>> queryList(@RequestBody @Validated RequestModel<Object> request) {
+    public ApiResponse<List<QueryResponse>> queryList(@RequestBody @Validated ApiRequest<Object> request) {
         return importService.queryList(request);
     }
 
@@ -68,7 +68,7 @@ public class ImportController {
      * @return
      */
     @PostMapping(value = "query")
-    public ResponseModel<ImportBillInfoModel> query(@RequestBody @Validated RequestModel<QueryRequestModel> request) {
+    public ApiResponse<QueryResponse> query(@RequestBody @Validated ApiRequest<QueryRequest> request) {
         return importService.query(request);
     }
 
@@ -79,7 +79,7 @@ public class ImportController {
      * @return
      */
     @PostMapping(value = "update")
-    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request) {
+    public ApiResponse<Object> update(@RequestBody @Validated ApiRequest<UpdateRequest> request) {
         return importService.update(request);
     }
 
@@ -90,7 +90,7 @@ public class ImportController {
      * @return
      */
     @PostMapping(value = "delete")
-    public ResponseModel<Object> delete(@RequestBody @Validated RequestModel<DeleteRequestModel> request) {
+    public ApiResponse<Object> delete(@RequestBody @Validated ApiRequest<DeleteRequest> request) {
         return importService.delete(request);
     }
 
@@ -101,7 +101,7 @@ public class ImportController {
      * @return
      */
     @PostMapping(value = "confirm")
-    public ResponseModel<Object> confirm(@RequestBody @Validated RequestModel<ConfirmRequestModel> request) {
+    public ApiResponse<Object> confirm(@RequestBody @Validated ApiRequest<ConfirmRequest> request) {
         return importService.confirm(request);
     }
 }

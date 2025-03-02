@@ -22,7 +22,7 @@ public enum ClassType {
         this.typeName = typeName;
     }
 
-    public static ClassType getClassTypeEnum(String typeCode) {
+    public static ClassType getClassType(String typeCode) {
         for (ClassType classType : ClassType.values()) {
             if (classType.typeCode.equals(typeCode)) {
                 return classType;

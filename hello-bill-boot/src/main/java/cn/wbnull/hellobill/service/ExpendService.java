@@ -1,11 +1,13 @@
 package cn.wbnull.hellobill.service;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.common.core.model.common.QueryListRequestModel;
-import cn.wbnull.hellobill.model.common.DeleteRequestModel;
-import cn.wbnull.hellobill.model.common.QueryRequestModel;
-import cn.wbnull.hellobill.model.expend.*;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.common.request.QueryListRequest;
+import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
+import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.expend.request.AddRequest;
+import cn.wbnull.hellobill.dto.expend.request.UpdateRequest;
+import cn.wbnull.hellobill.dto.expend.response.QueryResponse;
 
 import java.util.List;
 
@@ -17,13 +19,13 @@ import java.util.List;
  */
 public interface ExpendService {
 
-    ResponseModel<List<ExpendInfoModel>> queryList(RequestModel<QueryListRequestModel> request);
+    ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request);
 
-    ResponseModel<Object> add(RequestModel<AddRequestModel> request);
+    ApiResponse<Object> add(ApiRequest<AddRequest> request);
 
-    ResponseModel<ExpendInfoModel> query(RequestModel<QueryRequestModel> request);
+    ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request);
 
-    ResponseModel<Object> update(RequestModel<UpdateRequestModel> request);
+    ApiResponse<Object> update(ApiRequest<UpdateRequest> request);
 
-    ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request);
+    ApiResponse<Object> delete(ApiRequest<DeleteRequest> request);
 }

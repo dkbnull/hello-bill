@@ -1,6 +1,5 @@
 package cn.wbnull.hellobill.db.entity;
 
-import cn.wbnull.hellobill.common.core.constant.ClassType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -46,8 +45,4 @@ public class ClassInfo {
 
     @TableField("updateTime")
     private LocalDateTime updateTime;
-
-    public void analyseInfo() {
-        this.type = ClassType.getClassTypeEnum(this.type).getTypeName();
-    }
 }

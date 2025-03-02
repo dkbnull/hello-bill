@@ -1,8 +1,8 @@
 package cn.wbnull.hellobill.service.impl;
 
 import cn.wbnull.hellobill.common.core.constant.ClassType;
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.*;
 import cn.wbnull.hellobill.db.entity.*;
 import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
@@ -11,11 +11,11 @@ import cn.wbnull.hellobill.db.mapper.ImportBillInfoMapper;
 import cn.wbnull.hellobill.db.mapper.IncomeInfoMapper;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
 import cn.wbnull.hellobill.db.service.ImportBillService;
-import cn.wbnull.hellobill.model.common.DeleteRequestModel;
-import cn.wbnull.hellobill.model.common.QueryRequestModel;
-import cn.wbnull.hellobill.model.imp.ConfirmRequestModel;
-import cn.wbnull.hellobill.model.imp.ImportBillInfoModel;
-import cn.wbnull.hellobill.model.imp.UpdateRequestModel;
+import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
+import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.imp.request.ConfirmRequest;
+import cn.wbnull.hellobill.dto.imp.request.UpdateRequest;
+import cn.wbnull.hellobill.dto.imp.response.QueryResponse;
 import cn.wbnull.hellobill.service.ImportService;
 import com.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +58,12 @@ public class ImportServiceImpl implements ImportService {
     private IncomeInfoMapper incomeInfoMapper;
 
     @Override
-    public ResponseModel<Object> billFile(MultipartFile file, String username) {
+    public ApiResponse<Object> billFile(MultipartFile file, String username) {
         File fileBill;
         try {
             fileBill = FileUtils.transfer("data", file);
         } catch (Exception e) {
-            return ResponseModel.fail(e.getMessage());
+            return ApiResponse.fail(e.getMessage());
         }
 
         try (FileReader fileReader = new FileReader(fileBill.getAbsoluteFile());
@@ -86,10 +86,10 @@ public class ImportServiceImpl implements ImportService {
             }
         } catch (Exception e) {
             LoggerUtils.error("账单文件导入异常", e);
-            return ResponseModel.fail("账单文件导入异常: " + e);
+            return ApiResponse.fail("账单文件导入异常: " + e);
         }
 
-        return ResponseModel.success("导入成功");
+        return ApiResponse.success("导入成功");
     }
 
     private List<ImportBillInfo> importWeixinBill(String username, CSVReader csvReader) throws Exception {
@@ -323,31 +323,32 @@ public class ImportServiceImpl implements ImportService {
     }
 
     @Override
-    public ResponseModel<List<ImportBillInfoModel>> queryList(RequestModel<Object> request) {
+    public ApiResponse<List<QueryResponse>> queryList(ApiRequest<Object> request) {
         List<ImportBillInfo> importBillInfoList = importBillService.getImportBillInfos(request.getUsername());
-        List<ImportBillInfoModel> importBillInfoModelList = BeanUtils.copyPropertyList(importBillInfoList, ImportBillInfoModel.class);
-        for (ImportBillInfoModel importBillInfo : importBillInfoModelList) {
-            if ("0".equals(importBillInfo.getBillType())) {
-                importBillInfo.setBillTypeValue("支出");
+        List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(importBillInfoList, QueryResponse.class);
+        for (QueryResponse queryResponse : queryResponseList) {
+            if ("0".equals(queryResponse.getBillType())) {
+                queryResponse.setBillTypeValue("支出");
             }
-            if ("1".equals(importBillInfo.getBillType())) {
-                importBillInfo.setBillTypeValue("收入");
+            if ("1".equals(queryResponse.getBillType())) {
+                queryResponse.setBillTypeValue("收入");
             }
         }
 
-        return ResponseModel.success(importBillInfoModelList);
+        return ApiResponse.success(queryResponseList);
     }
 
     @Override
-    public ResponseModel<ImportBillInfoModel> query(RequestModel<QueryRequestModel> request) {
+    public ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request) {
         ImportBillInfo importBillInfo = importBillInfoMapper.selectById(request.getData().getId());
-        ImportBillInfoModel importBillInfoModel = BeanUtils.copyProperties(importBillInfo, ImportBillInfoModel.class);
-        return ResponseModel.success(importBillInfoModel);
+        QueryResponse queryResponse = BeanUtils.copyProperties(importBillInfo, QueryResponse.class);
+
+        return ApiResponse.success(queryResponse);
     }
 
     @Override
-    public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) {
-        UpdateRequestModel data = request.getData();
+    public ApiResponse<Object> update(ApiRequest<UpdateRequest> request) {
+        UpdateRequest data = request.getData();
         ImportBillInfo importBillInfo = BeanUtils.copyProperties(data, ImportBillInfo.class);
         ClassInfo classInfo = classInfoService.getClassInfoBySecondClass(data.getBillType(),
                 data.getSecondClass());
@@ -355,21 +356,22 @@ public class ImportServiceImpl implements ImportService {
 
         importBillService.updateImportBillInfo(importBillInfo);
 
-        return ResponseModel.success("修改成功");
+        return ApiResponse.success("修改成功");
     }
 
     @Override
-    public ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request) {
+    public ApiResponse<Object> delete(ApiRequest<DeleteRequest> request) {
         importBillInfoMapper.deleteById(request.getData().getId());
-        return ResponseModel.success("删除成功");
+
+        return ApiResponse.success("删除成功");
     }
 
     @Override
-    public ResponseModel<Object> confirm(RequestModel<ConfirmRequestModel> request) {
+    public ApiResponse<Object> confirm(ApiRequest<ConfirmRequest> request) {
         ImportBillInfo importBillInfo = importBillInfoMapper.selectById(request.getData().getId());
         if (!StringUtils.areNotEmpty(importBillInfo.getUsername(), importBillInfo.getTopClass(),
                 importBillInfo.getSecondClass(), importBillInfo.getDetail())) {
-            return ResponseModel.fail("账单信息不完整");
+            return ApiResponse.fail("账单信息不完整");
         }
 
         if (ClassType.INCOME.getTypeCode().equals(String.valueOf(importBillInfo.getBillType()))) {
@@ -406,6 +408,6 @@ public class ImportServiceImpl implements ImportService {
         importBillService.updateImportBillClass(importBillInfo);
         importBillInfoMapper.deleteById(importBillInfo.getId());
 
-        return ResponseModel.success("确认成功");
+        return ApiResponse.success("确认成功");
     }
 }

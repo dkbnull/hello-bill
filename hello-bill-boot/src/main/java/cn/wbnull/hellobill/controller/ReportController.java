@@ -1,8 +1,13 @@
 package cn.wbnull.hellobill.controller;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.model.report.*;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.report.request.ExpendClassRequest;
+import cn.wbnull.hellobill.dto.report.request.ExpendDetailRequest;
+import cn.wbnull.hellobill.dto.report.request.ReportRequest;
+import cn.wbnull.hellobill.dto.report.response.ReportClassResponse;
+import cn.wbnull.hellobill.dto.report.response.ReportDetailResponse;
+import cn.wbnull.hellobill.dto.report.response.QueryResponse;
 import cn.wbnull.hellobill.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -33,7 +38,7 @@ public class ReportController {
      * @return
      */
     @PostMapping(value = "query")
-    public ResponseModel<QueryResponseModel> query(@RequestBody @Validated RequestModel<Object> request) {
+    public ApiResponse<QueryResponse> query(@RequestBody @Validated ApiRequest<Object> request) {
         return reportService.query(request);
     }
 
@@ -44,7 +49,7 @@ public class ReportController {
      * @return
      */
     @PostMapping(value = "queryNet")
-    public ResponseModel<QueryResponseModel> queryNet(@RequestBody @Validated RequestModel<Object> request) {
+    public ApiResponse<QueryResponse> queryNet(@RequestBody @Validated ApiRequest<Object> request) {
         return reportService.queryNet(request);
     }
 
@@ -55,7 +60,7 @@ public class ReportController {
      * @return
      */
     @PostMapping(value = "expend")
-    public ResponseModel<Object> expend(@RequestBody @Validated RequestModel<ReportRequestModel> request) {
+    public ApiResponse<Object> expend(@RequestBody @Validated ApiRequest<ReportRequest> request) {
         return reportService.expend(request);
     }
 
@@ -66,7 +71,7 @@ public class ReportController {
      * @return
      */
     @PostMapping(value = "income")
-    public ResponseModel<Object> income(@RequestBody @Validated RequestModel<ReportRequestModel> request) {
+    public ApiResponse<Object> income(@RequestBody @Validated ApiRequest<ReportRequest> request) {
         return reportService.income(request);
     }
 
@@ -77,7 +82,7 @@ public class ReportController {
      * @return
      */
     @PostMapping(value = "expendClass")
-    public ResponseModel<ExpendClassResponseModel> expendClass(@RequestBody @Validated RequestModel<ExpendClassRequestModel> request) {
+    public ApiResponse<ReportClassResponse> expendClass(@RequestBody @Validated ApiRequest<ExpendClassRequest> request) {
         return reportService.expendClass(request);
     }
 
@@ -88,7 +93,7 @@ public class ReportController {
      * @return
      */
     @PostMapping(value = "expendDetail")
-    public ResponseModel<ExpendDetailResponseModel> expendDetail(@RequestBody @Validated RequestModel<ExpendDetailRequestModel> request) {
+    public ApiResponse<ReportDetailResponse> expendDetail(@RequestBody @Validated ApiRequest<ExpendDetailRequest> request) {
         return reportService.expendDetail(request);
     }
 
@@ -99,7 +104,7 @@ public class ReportController {
      * @return
      */
     @PostMapping(value = "incomeClass")
-    public ResponseModel<ExpendClassResponseModel> incomeClass(@RequestBody @Validated RequestModel<ReportRequestModel> request) {
+    public ApiResponse<ReportClassResponse> incomeClass(@RequestBody @Validated ApiRequest<ReportRequest> request) {
         return reportService.incomeClass(request);
     }
 
@@ -110,7 +115,7 @@ public class ReportController {
      * @return
      */
     @PostMapping(value = "incomeDetail")
-    public ResponseModel<ExpendDetailResponseModel> incomeDetail(@RequestBody @Validated RequestModel<ReportRequestModel> request) {
+    public ApiResponse<ReportDetailResponse> incomeDetail(@RequestBody @Validated ApiRequest<ReportRequest> request) {
         return reportService.incomeDetail(request);
     }
 }

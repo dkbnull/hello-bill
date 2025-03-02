@@ -1,0 +1,20 @@
+package cn.wbnull.hellobill.dto.report.request;
+
+import lombok.Data;
+
+import javax.validation.constraints.NotEmpty;
+
+/**
+ * 支出分类报表查询接口请求参数
+ *
+ * @author null  2024-02-11
+ * https://github.com/dkbnull/HelloBill
+ */
+@Data
+public class ExpendClassRequest {
+
+    @NotEmpty(message = "reportDate 不能为空")
+    private String reportDate;
+
+    private String topClass;
+}

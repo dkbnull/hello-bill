@@ -1,16 +1,17 @@
 package cn.wbnull.hellobill.service.impl;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.common.core.model.common.QueryListRequestModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
+import cn.wbnull.hellobill.db.param.QueryListParam;
 import cn.wbnull.hellobill.db.service.IncomeInfoService;
-import cn.wbnull.hellobill.model.common.DeleteRequestModel;
-import cn.wbnull.hellobill.model.common.QueryRequestModel;
-import cn.wbnull.hellobill.model.income.AddRequestModel;
-import cn.wbnull.hellobill.model.income.IncomeInfoModel;
-import cn.wbnull.hellobill.model.income.UpdateRequestModel;
+import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
+import cn.wbnull.hellobill.dto.common.request.QueryListRequest;
+import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.income.request.AddRequest;
+import cn.wbnull.hellobill.dto.income.request.UpdateRequest;
+import cn.wbnull.hellobill.dto.income.response.QueryResponse;
 import cn.wbnull.hellobill.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,40 +31,42 @@ public class IncomeServiceImpl implements IncomeService {
     private IncomeInfoService incomeInfoService;
 
     @Override
-    public ResponseModel<List<IncomeInfoModel>> queryList(RequestModel<QueryListRequestModel> request) {
-        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfos(request.getUsername(), request.getData());
-        List<IncomeInfoModel> incomeInfoModelList = BeanUtils.copyPropertyList(incomeInfos, IncomeInfoModel.class);
+    public ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request) {
+        QueryListParam queryListParam = BeanUtils.copyProperties(request.getData(), QueryListParam.class);
+        List<IncomeInfo> incomeInfos = incomeInfoService.getIncomeInfos(request.getUsername(), queryListParam);
+        List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(incomeInfos, QueryResponse.class);
 
-        return ResponseModel.success(incomeInfoModelList);
+        return ApiResponse.success(queryResponseList);
     }
 
     @Override
-    public ResponseModel<Object> add(RequestModel<AddRequestModel> request) {
+    public ApiResponse<Object> add(ApiRequest<AddRequest> request) {
         IncomeInfo incomeInfo = BeanUtils.copyProperties(request.getData(), IncomeInfo.class);
         incomeInfoService.addIncomeInfo(request.getUsername(), incomeInfo);
 
-        return ResponseModel.success("记账成功");
+        return ApiResponse.success("记账成功");
     }
 
     @Override
-    public ResponseModel<IncomeInfoModel> query(RequestModel<QueryRequestModel> request) {
+    public ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request) {
         IncomeInfo incomeInfo = incomeInfoService.getIncomeInfo(request.getData().getId());
-        IncomeInfoModel incomeInfoModel = BeanUtils.copyProperties(incomeInfo, IncomeInfoModel.class);
-        return ResponseModel.success(incomeInfoModel);
+        QueryResponse queryResponse = BeanUtils.copyProperties(incomeInfo, QueryResponse.class);
+
+        return ApiResponse.success(queryResponse);
     }
 
     @Override
-    public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) {
+    public ApiResponse<Object> update(ApiRequest<UpdateRequest> request) {
         IncomeInfo incomeInfo = BeanUtils.copyProperties(request.getData(), IncomeInfo.class);
         incomeInfoService.updateIncomeInfo(incomeInfo);
 
-        return ResponseModel.success("修改成功");
+        return ApiResponse.success("修改成功");
     }
 
     @Override
-    public ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request) {
+    public ApiResponse<Object> delete(ApiRequest<DeleteRequest> request) {
         incomeInfoService.deleteIncomeInfo(request.getData().getId());
 
-        return ResponseModel.success("删除成功");
+        return ApiResponse.success("删除成功");
     }
 }

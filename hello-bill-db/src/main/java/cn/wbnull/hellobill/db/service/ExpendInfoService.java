@@ -1,8 +1,8 @@
 package cn.wbnull.hellobill.db.service;
 
-import cn.wbnull.hellobill.common.core.model.common.QueryListRequestModel;
 import cn.wbnull.hellobill.common.core.util.DateUtils;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
+import cn.wbnull.hellobill.db.param.QueryListParam;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -25,15 +25,15 @@ public class ExpendInfoService {
     @Autowired
     private ExpendInfoMapper expendInfoMapper;
 
-    public List<ExpendInfo> getExpendInfos(String username, QueryListRequestModel request) {
+    public List<ExpendInfo> getExpendInfos(String username, QueryListParam param) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ExpendInfo::getUsername, username);
-        queryWrapper.like(!StringUtils.isEmpty(request.getTopClass()), ExpendInfo::getTopClass, request.getTopClass());
-        queryWrapper.like(!StringUtils.isEmpty(request.getSecondClass()), ExpendInfo::getSecondClass, request.getSecondClass());
-        queryWrapper.like(!StringUtils.isEmpty(request.getDetail()), ExpendInfo::getDetail, request.getDetail());
-        queryWrapper.ge(!StringUtils.isEmpty(request.getBeginDate()), ExpendInfo::getExpendTime, request.getBeginDate() + " 00:00:00");
-        queryWrapper.le(!StringUtils.isEmpty(request.getEndDate()), ExpendInfo::getExpendTime, request.getEndDate() + " 23:59:59");
-        queryWrapper.orderBy(true, request.orderByAsc(), ExpendInfo::getExpendTime, ExpendInfo::getId);
+        queryWrapper.like(!StringUtils.isEmpty(param.getTopClass()), ExpendInfo::getTopClass, param.getTopClass());
+        queryWrapper.like(!StringUtils.isEmpty(param.getSecondClass()), ExpendInfo::getSecondClass, param.getSecondClass());
+        queryWrapper.like(!StringUtils.isEmpty(param.getDetail()), ExpendInfo::getDetail, param.getDetail());
+        queryWrapper.ge(!StringUtils.isEmpty(param.getBeginDate()), ExpendInfo::getExpendTime, param.getBeginDate() + " 00:00:00");
+        queryWrapper.le(!StringUtils.isEmpty(param.getEndDate()), ExpendInfo::getExpendTime, param.getEndDate() + " 23:59:59");
+        queryWrapper.orderBy(true, param.orderByAsc(), ExpendInfo::getExpendTime, ExpendInfo::getId);
 
         return expendInfoMapper.selectList(queryWrapper);
     }

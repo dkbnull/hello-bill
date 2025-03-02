@@ -1,12 +1,12 @@
 package cn.wbnull.hellobill.service;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.model.common.DeleteRequestModel;
-import cn.wbnull.hellobill.model.common.QueryRequestModel;
-import cn.wbnull.hellobill.model.imp.ConfirmRequestModel;
-import cn.wbnull.hellobill.model.imp.ImportBillInfoModel;
-import cn.wbnull.hellobill.model.imp.UpdateRequestModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
+import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.imp.request.ConfirmRequest;
+import cn.wbnull.hellobill.dto.imp.response.QueryResponse;
+import cn.wbnull.hellobill.dto.imp.request.UpdateRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -19,15 +19,15 @@ import java.util.List;
  */
 public interface ImportService {
 
-    ResponseModel<Object> billFile(MultipartFile file, String username);
+    ApiResponse<Object> billFile(MultipartFile file, String username);
 
-    ResponseModel<List<ImportBillInfoModel>> queryList(RequestModel<Object> request);
+    ApiResponse<List<QueryResponse>> queryList(ApiRequest<Object> request);
 
-    ResponseModel<ImportBillInfoModel> query(RequestModel<QueryRequestModel> request);
+    ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request);
 
-    ResponseModel<Object> update(RequestModel<UpdateRequestModel> request);
+    ApiResponse<Object> update(ApiRequest<UpdateRequest> request);
 
-    ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request);
+    ApiResponse<Object> delete(ApiRequest<DeleteRequest> request);
 
-    ResponseModel<Object> confirm(RequestModel<ConfirmRequestModel> request);
+    ApiResponse<Object> confirm(ApiRequest<ConfirmRequest> request);
 }

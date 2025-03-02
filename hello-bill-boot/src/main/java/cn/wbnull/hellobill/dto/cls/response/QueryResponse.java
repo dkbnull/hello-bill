@@ -1,0 +1,30 @@
+package cn.wbnull.hellobill.dto.cls.response;
+
+import cn.wbnull.hellobill.common.core.constant.ClassType;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+/**
+ * 分类信息查询接口响应参数
+ *
+ * @author null  2025-03-02
+ * https://github.com/dkbnull/HelloBill
+ */
+@Data
+public class QueryResponse {
+
+    private String uuid;
+    private String topClass;
+    private String secondClass;
+    private String type;
+    private String typeName;
+    private Integer serialNo;
+    private String status;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
+
+    public void analyse() {
+        this.typeName = ClassType.getClassType(this.type).getTypeName();
+    }
+}

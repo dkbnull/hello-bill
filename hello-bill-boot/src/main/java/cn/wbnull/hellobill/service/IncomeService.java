@@ -1,13 +1,13 @@
 package cn.wbnull.hellobill.service;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.common.core.model.common.QueryListRequestModel;
-import cn.wbnull.hellobill.model.common.DeleteRequestModel;
-import cn.wbnull.hellobill.model.common.QueryRequestModel;
-import cn.wbnull.hellobill.model.income.AddRequestModel;
-import cn.wbnull.hellobill.model.income.IncomeInfoModel;
-import cn.wbnull.hellobill.model.income.UpdateRequestModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.common.request.QueryListRequest;
+import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
+import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.income.request.AddRequest;
+import cn.wbnull.hellobill.dto.income.response.QueryResponse;
+import cn.wbnull.hellobill.dto.income.request.UpdateRequest;
 
 import java.util.List;
 
@@ -19,13 +19,13 @@ import java.util.List;
  */
 public interface IncomeService {
 
-    ResponseModel<List<IncomeInfoModel>> queryList(RequestModel<QueryListRequestModel> request);
+    ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request);
 
-    ResponseModel<Object> add(RequestModel<AddRequestModel> request);
+    ApiResponse<Object> add(ApiRequest<AddRequest> request);
 
-    ResponseModel<IncomeInfoModel> query(RequestModel<QueryRequestModel> request);
+    ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request);
 
-    ResponseModel<Object> update(RequestModel<UpdateRequestModel> request);
+    ApiResponse<Object> update(ApiRequest<UpdateRequest> request);
 
-    ResponseModel<Object> delete(RequestModel<DeleteRequestModel> request);
+    ApiResponse<Object> delete(ApiRequest<DeleteRequest> request);
 }

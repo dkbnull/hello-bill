@@ -1,13 +1,13 @@
 package cn.wbnull.hellobill.controller;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.common.core.model.common.QueryListRequestModel;
-import cn.wbnull.hellobill.model.common.DeleteRequestModel;
-import cn.wbnull.hellobill.model.common.QueryRequestModel;
-import cn.wbnull.hellobill.model.income.AddRequestModel;
-import cn.wbnull.hellobill.model.income.IncomeInfoModel;
-import cn.wbnull.hellobill.model.income.UpdateRequestModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.common.request.QueryListRequest;
+import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
+import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.income.request.AddRequest;
+import cn.wbnull.hellobill.dto.income.response.QueryResponse;
+import cn.wbnull.hellobill.dto.income.request.UpdateRequest;
 import cn.wbnull.hellobill.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -40,7 +40,7 @@ public class IncomeController {
      * @return
      */
     @PostMapping(value = "queryList")
-    public ResponseModel<List<IncomeInfoModel>> queryList(@RequestBody @Validated RequestModel<QueryListRequestModel> request) {
+    public ApiResponse<List<QueryResponse>> queryList(@RequestBody @Validated ApiRequest<QueryListRequest> request) {
         return incomeService.queryList(request);
     }
 
@@ -51,7 +51,7 @@ public class IncomeController {
      * @return
      */
     @PostMapping(value = "add")
-    public ResponseModel<Object> add(@RequestBody @Validated RequestModel<AddRequestModel> request) {
+    public ApiResponse<Object> add(@RequestBody @Validated ApiRequest<AddRequest> request) {
         return incomeService.add(request);
     }
 
@@ -62,7 +62,7 @@ public class IncomeController {
      * @return
      */
     @PostMapping(value = "query")
-    public ResponseModel<IncomeInfoModel> query(@RequestBody @Validated RequestModel<QueryRequestModel> request) {
+    public ApiResponse<QueryResponse> query(@RequestBody @Validated ApiRequest<QueryRequest> request) {
         return incomeService.query(request);
     }
 
@@ -73,7 +73,7 @@ public class IncomeController {
      * @return
      */
     @PostMapping(value = "update")
-    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request) {
+    public ApiResponse<Object> update(@RequestBody @Validated ApiRequest<UpdateRequest> request) {
         return incomeService.update(request);
     }
 
@@ -84,7 +84,7 @@ public class IncomeController {
      * @return
      */
     @PostMapping(value = "delete")
-    public ResponseModel<Object> delete(@RequestBody @Validated RequestModel<DeleteRequestModel> request) {
+    public ApiResponse<Object> delete(@RequestBody @Validated ApiRequest<DeleteRequest> request) {
         return incomeService.delete(request);
     }
 }

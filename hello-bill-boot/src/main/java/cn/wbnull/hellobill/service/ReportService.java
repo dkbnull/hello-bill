@@ -1,8 +1,13 @@
 package cn.wbnull.hellobill.service;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.model.report.*;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.report.request.ExpendClassRequest;
+import cn.wbnull.hellobill.dto.report.request.ExpendDetailRequest;
+import cn.wbnull.hellobill.dto.report.request.ReportRequest;
+import cn.wbnull.hellobill.dto.report.response.ReportClassResponse;
+import cn.wbnull.hellobill.dto.report.response.ReportDetailResponse;
+import cn.wbnull.hellobill.dto.report.response.QueryResponse;
 
 /**
  * 支出信息接口服务类
@@ -12,19 +17,19 @@ import cn.wbnull.hellobill.model.report.*;
  */
 public interface ReportService {
 
-    ResponseModel<QueryResponseModel> query(RequestModel<Object> request);
+    ApiResponse<QueryResponse> query(ApiRequest<Object> request);
 
-    ResponseModel<QueryResponseModel> queryNet(RequestModel<Object> request);
+    ApiResponse<QueryResponse> queryNet(ApiRequest<Object> request);
 
-    ResponseModel<Object> expend(RequestModel<ReportRequestModel> request);
+    ApiResponse<Object> expend(ApiRequest<ReportRequest> request);
 
-    ResponseModel<Object> income(RequestModel<ReportRequestModel> request);
+    ApiResponse<Object> income(ApiRequest<ReportRequest> request);
 
-    ResponseModel<ExpendClassResponseModel> expendClass(RequestModel<ExpendClassRequestModel> request);
+    ApiResponse<ReportClassResponse> expendClass(ApiRequest<ExpendClassRequest> request);
 
-    ResponseModel<ExpendDetailResponseModel> expendDetail(RequestModel<ExpendDetailRequestModel> request);
+    ApiResponse<ReportDetailResponse> expendDetail(ApiRequest<ExpendDetailRequest> request);
 
-    ResponseModel<ExpendClassResponseModel> incomeClass(RequestModel<ReportRequestModel> request);
+    ApiResponse<ReportClassResponse> incomeClass(ApiRequest<ReportRequest> request);
 
-    ResponseModel<ExpendDetailResponseModel> incomeDetail(RequestModel<ReportRequestModel> request);
+    ApiResponse<ReportDetailResponse> incomeDetail(ApiRequest<ReportRequest> request);
 }

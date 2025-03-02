@@ -1,13 +1,15 @@
 package cn.wbnull.hellobill.service.impl;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.service.ClassInfoService;
-import cn.wbnull.hellobill.model.cls.QueryClassRequestModel;
-import cn.wbnull.hellobill.model.cls.QueryRequestModel;
-import cn.wbnull.hellobill.model.cls.UpdateRequestModel;
+import cn.wbnull.hellobill.dto.cls.request.QueryClassRequest;
+import cn.wbnull.hellobill.dto.cls.request.QueryRequest;
+import cn.wbnull.hellobill.dto.cls.request.UpdateRequest;
+import cn.wbnull.hellobill.dto.cls.response.QueryResponse;
 import cn.wbnull.hellobill.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,34 +30,35 @@ public class ClassServiceImpl implements ClassService {
     private ClassInfoService classInfoService;
 
     @Override
-    public ResponseModel<List<ClassInfo>> query(RequestModel<QueryRequestModel> request) {
-        List<ClassInfo> classInfos = classInfoService.getClassInfos(request.getData().getType());
-        for (ClassInfo classInfo : classInfos) {
-            classInfo.analyseInfo();
+    public ApiResponse<List<QueryResponse>> query(ApiRequest<QueryRequest> request) {
+        List<ClassInfo> classInfoList = classInfoService.getClassInfos(request.getData().getType());
+        List<QueryResponse> queryResponseList = BeanUtils.copyPropertyList(classInfoList, QueryResponse.class);
+        for (QueryResponse queryResponse : queryResponseList) {
+            queryResponse.analyse();
         }
 
-        return ResponseModel.success(classInfos);
+        return ApiResponse.success(queryResponseList);
     }
 
     @Override
-    public ResponseModel<Object> update(RequestModel<UpdateRequestModel> request) {
-        UpdateRequestModel data = request.getData();
+    public ApiResponse<Object> update(ApiRequest<UpdateRequest> request) {
+        UpdateRequest data = request.getData();
 
         classInfoService.updateClassInfo(data.getUuid(), data.getKey(), data.getValue());
-        return ResponseModel.success("分类信息更新成功");
+        return ApiResponse.success("分类信息更新成功");
     }
 
     @Override
-    public ResponseModel<List<String>> secondClassQuery(RequestModel<QueryRequestModel> request) {
+    public ApiResponse<List<String>> secondClassQuery(ApiRequest<QueryRequest> request) {
         List<ClassInfo> classInfos = classInfoService.getSecondClassInfos(request.getData().getType());
         List<String> secondClasses = classInfos.stream().map(ClassInfo::getSecondClass).collect(Collectors.toList());
 
-        return ResponseModel.success(secondClasses);
+        return ApiResponse.success(secondClasses);
     }
 
     @Override
-    public ResponseModel<List<String>> queryClass(RequestModel<QueryClassRequestModel> request) {
-        QueryClassRequestModel data = request.getData();
+    public ApiResponse<List<String>> queryClass(ApiRequest<QueryClassRequest> request) {
+        QueryClassRequest data = request.getData();
 
         List<String> classes;
         if (StringUtils.isEmpty(data.getTopClass())) {
@@ -66,6 +69,6 @@ public class ClassServiceImpl implements ClassService {
             classes = classInfos.stream().map(ClassInfo::getSecondClass).collect(Collectors.toList());
         }
 
-        return ResponseModel.success(classes);
+        return ApiResponse.success(classes);
     }
 }

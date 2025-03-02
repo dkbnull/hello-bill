@@ -1,10 +1,10 @@
 package cn.wbnull.hellobill.service;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.model.user.ChangePasswordRequestModel;
-import cn.wbnull.hellobill.model.user.LoginRequestModel;
-import cn.wbnull.hellobill.model.user.LoginResponseModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.user.request.ChangePasswordRequest;
+import cn.wbnull.hellobill.dto.user.request.LoginRequest;
+import cn.wbnull.hellobill.dto.user.response.LoginResponse;
 
 /**
  * 用户接口服务类
@@ -14,7 +14,7 @@ import cn.wbnull.hellobill.model.user.LoginResponseModel;
  */
 public interface UserService {
 
-    ResponseModel<LoginResponseModel> login(RequestModel<LoginRequestModel> request);
+    ApiResponse<LoginResponse> login(ApiRequest<LoginRequest> request);
 
-    ResponseModel<Object> changePassword(RequestModel<ChangePasswordRequestModel> request);
+    ApiResponse<Object> changePassword(ApiRequest<ChangePasswordRequest> request);
 }

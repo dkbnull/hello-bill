@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.common.core.aop;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,15 +28,15 @@ public class LoggingAspect {
     @SuppressWarnings({"rawtypes"})
     @Before("loggingAspect()")
     public void doBefore(JoinPoint joinPoint) {
-        RequestModel request = (RequestModel) joinPoint.getArgs()[0];
+        ApiRequest request = (ApiRequest) joinPoint.getArgs()[0];
 
         request.log();
     }
 
     @SuppressWarnings({"rawtypes"})
     @AfterReturning(value = "loggingAspect()", returning = "response")
-    public ResponseModel doAfter(JoinPoint joinPoint, ResponseModel response) {
-        response.log((RequestModel) joinPoint.getArgs()[0]);
+    public ApiResponse doAfter(JoinPoint joinPoint, ApiResponse response) {
+        response.log((ApiRequest) joinPoint.getArgs()[0]);
 
         return response;
     }

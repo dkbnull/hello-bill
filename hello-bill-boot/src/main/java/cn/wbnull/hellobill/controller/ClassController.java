@@ -1,11 +1,11 @@
 package cn.wbnull.hellobill.controller;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.db.entity.ClassInfo;
-import cn.wbnull.hellobill.model.cls.QueryClassRequestModel;
-import cn.wbnull.hellobill.model.cls.QueryRequestModel;
-import cn.wbnull.hellobill.model.cls.UpdateRequestModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.cls.request.QueryClassRequest;
+import cn.wbnull.hellobill.dto.cls.request.QueryRequest;
+import cn.wbnull.hellobill.dto.cls.request.UpdateRequest;
+import cn.wbnull.hellobill.dto.cls.response.QueryResponse;
 import cn.wbnull.hellobill.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -38,7 +38,7 @@ public class ClassController {
      * @return
      */
     @PostMapping(value = "query")
-    public ResponseModel<List<ClassInfo>> query(@RequestBody @Validated RequestModel<QueryRequestModel> request) {
+    public ApiResponse<List<QueryResponse>> query(@RequestBody @Validated ApiRequest<QueryRequest> request) {
         return classService.query(request);
     }
 
@@ -49,7 +49,7 @@ public class ClassController {
      * @return
      */
     @PostMapping(value = "update")
-    public ResponseModel<Object> update(@RequestBody @Validated RequestModel<UpdateRequestModel> request) {
+    public ApiResponse<Object> update(@RequestBody @Validated ApiRequest<UpdateRequest> request) {
         return classService.update(request);
     }
 
@@ -60,7 +60,7 @@ public class ClassController {
      * @return
      */
     @PostMapping(value = "secondClassQuery")
-    public ResponseModel<List<String>> secondClassQuery(@RequestBody @Validated RequestModel<QueryRequestModel> request) {
+    public ApiResponse<List<String>> secondClassQuery(@RequestBody @Validated ApiRequest<QueryRequest> request) {
         return classService.secondClassQuery(request);
     }
 
@@ -71,7 +71,7 @@ public class ClassController {
      * @return
      */
     @PostMapping(value = "queryClass")
-    public ResponseModel<List<String>> queryClass(@RequestBody @Validated RequestModel<QueryClassRequestModel> request) {
+    public ApiResponse<List<String>> queryClass(@RequestBody @Validated ApiRequest<QueryClassRequest> request) {
         return classService.queryClass(request);
     }
 }

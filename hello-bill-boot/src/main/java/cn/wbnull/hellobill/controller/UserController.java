@@ -1,10 +1,10 @@
 package cn.wbnull.hellobill.controller;
 
-import cn.wbnull.hellobill.common.core.model.RequestModel;
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
-import cn.wbnull.hellobill.model.user.ChangePasswordRequestModel;
-import cn.wbnull.hellobill.model.user.LoginRequestModel;
-import cn.wbnull.hellobill.model.user.LoginResponseModel;
+import cn.wbnull.hellobill.common.core.dto.ApiRequest;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.user.request.ChangePasswordRequest;
+import cn.wbnull.hellobill.dto.user.request.LoginRequest;
+import cn.wbnull.hellobill.dto.user.response.LoginResponse;
 import cn.wbnull.hellobill.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -35,7 +35,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "login")
-    public ResponseModel<LoginResponseModel> login(@RequestBody @Validated RequestModel<LoginRequestModel> request) {
+    public ApiResponse<LoginResponse> login(@RequestBody @Validated ApiRequest<LoginRequest> request) {
         return userService.login(request);
     }
 
@@ -46,7 +46,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "changePassword")
-    public ResponseModel<Object> changePassword(@RequestBody @Validated RequestModel<ChangePasswordRequestModel> request) {
+    public ApiResponse<Object> changePassword(@RequestBody @Validated ApiRequest<ChangePasswordRequest> request) {
         return userService.changePassword(request);
     }
 }

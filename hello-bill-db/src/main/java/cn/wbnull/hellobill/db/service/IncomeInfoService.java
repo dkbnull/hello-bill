@@ -1,13 +1,13 @@
 package cn.wbnull.hellobill.db.service;
 
 import cn.wbnull.hellobill.common.core.constant.ClassType;
-import cn.wbnull.hellobill.common.core.model.common.QueryListRequestModel;
 import cn.wbnull.hellobill.common.core.util.DateUtils;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.mapper.ClassInfoMapper;
 import cn.wbnull.hellobill.db.mapper.IncomeInfoMapper;
+import cn.wbnull.hellobill.db.param.QueryListParam;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +31,14 @@ public class IncomeInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<IncomeInfo> getIncomeInfos(String username, QueryListRequestModel request) {
+    public List<IncomeInfo> getIncomeInfos(String username, QueryListParam param) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(IncomeInfo::getUsername, username);
-        queryWrapper.like(!StringUtils.isEmpty(request.getSecondClass()), IncomeInfo::getSecondClass, request.getSecondClass());
-        queryWrapper.like(!StringUtils.isEmpty(request.getDetail()), IncomeInfo::getDetail, request.getDetail());
-        queryWrapper.ge(!StringUtils.isEmpty(request.getBeginDate()), IncomeInfo::getIncomeDate, request.getBeginDate());
-        queryWrapper.le(!StringUtils.isEmpty(request.getBeginDate()), IncomeInfo::getIncomeDate, request.getEndDate());
-        queryWrapper.orderBy(true, request.orderByAsc(), IncomeInfo::getIncomeDate, IncomeInfo::getId);
+        queryWrapper.like(!StringUtils.isEmpty(param.getSecondClass()), IncomeInfo::getSecondClass, param.getSecondClass());
+        queryWrapper.like(!StringUtils.isEmpty(param.getDetail()), IncomeInfo::getDetail, param.getDetail());
+        queryWrapper.ge(!StringUtils.isEmpty(param.getBeginDate()), IncomeInfo::getIncomeDate, param.getBeginDate());
+        queryWrapper.le(!StringUtils.isEmpty(param.getBeginDate()), IncomeInfo::getIncomeDate, param.getEndDate());
+        queryWrapper.orderBy(true, param.orderByAsc(), IncomeInfo::getIncomeDate, IncomeInfo::getId);
 
         return incomeInfoMapper.selectList(queryWrapper);
     }

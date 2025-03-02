@@ -1,6 +1,6 @@
 package cn.wbnull.hellobill.common.core.exception;
 
-import cn.wbnull.hellobill.common.core.model.ResponseModel;
+import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.LoggerUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,8 +23,8 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public ResponseModel<Object> exceptionHandler(HttpServletRequest servletRequest, Exception e) {
-        ResponseModel<Object> response = ResponseModel.fail(e.getMessage());
+    public ApiResponse<Object> exceptionHandler(HttpServletRequest servletRequest, Exception e) {
+        ApiResponse<Object> response = ApiResponse.fail(e.getMessage());
         LoggerUtils.error("响应", servletRequest.getRequestURI(), response.toString());
 
         if (!notPrintStackTrace(e)) {
@@ -36,18 +36,18 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(BusinessException.class)
-    public ResponseModel<Object> globalExceptionHandler(HttpServletRequest servletRequest, BusinessException e) {
-        ResponseModel<Object> response = ResponseModel.response(e.getCode(), e.getMessage());
+    public ApiResponse<Object> globalExceptionHandler(HttpServletRequest servletRequest, BusinessException e) {
+        ApiResponse<Object> response = ApiResponse.response(e.getCode(), e.getMessage());
         LoggerUtils.error("响应", servletRequest.getRequestURI(), response.toString());
         return response;
     }
 
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseModel<Object> methodArgumentNotValidExceptionHandler(HttpServletRequest servletRequest,
-                                                                        MethodArgumentNotValidException e) {
+    public ApiResponse<Object> methodArgumentNotValidExceptionHandler(HttpServletRequest servletRequest,
+                                                                      MethodArgumentNotValidException e) {
         String message = Objects.requireNonNull(e.getFieldError()).getDefaultMessage();
-        return ResponseModel.fail(message);
+        return ApiResponse.fail(message);
     }
 
     private boolean notPrintStackTrace(Exception e) {
