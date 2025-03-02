@@ -10,6 +10,24 @@
 
 # 版本信息
 
+## 1.3.1
+
+`2024-03-02`
+
+* <mark style='background:Orange'> 风格 </mark> 模块划分调整
+- <mark style='background:Orange'> 风格 </mark> 包名命名调整
+- <mark style='background:Orange'> 风格 </mark> 类名命名调整
+- <mark style='background:Orange'> 风格 </mark> 方法命名调整
+- <mark style='background:Orange'> 风格 </mark> 对象命名调整
+- <mark style='background:Orange'> 风格 </mark> 类注解格式调整
+- <mark style='background:Orange'> 风格 </mark> 数据库字段名调整为小写字母下划线格式
+- <mark style='background:LightGreen'> 新增 </mark> 收入、支出信息表增加索引
+- <mark style='background:Yellow'> 优化 </mark> 接口请求token传值格式调整
+- <mark style='background:Yellow'> 优化 </mark> Web端接口请求错误时报错信息调整
+- <mark style='background:Yellow'> 优化 </mark> 账单导入分类表查询SQL优化
+- <mark style='background:Yellow'> 优化 </mark> 分类类型枚举类，分类编码参数属性类型调整
+- <mark style='background:Yellow'> 优化 </mark> 工具类逻辑优化
+
 ## 1.2.4
 
 `2024-03-02`
