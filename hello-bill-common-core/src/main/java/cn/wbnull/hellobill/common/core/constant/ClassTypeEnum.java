@@ -24,7 +24,11 @@ public enum ClassTypeEnum {
         this.typeName = typeName;
     }
 
-    public static String getTypeName(int typeCode) {
+    public static String getTypeName(Integer typeCode) {
+        if (typeCode == null) {
+            return null;
+        }
+
         for (ClassTypeEnum classTypeEnum : ClassTypeEnum.values()) {
             if (classTypeEnum.typeCode == typeCode) {
                 return classTypeEnum.getTypeName();
