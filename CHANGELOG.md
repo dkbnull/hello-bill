@@ -15,42 +15,42 @@
 `2024-03-02`
 
 * <mark style='background:Orange'> 风格 </mark> 模块划分调整
-- <mark style='background:Orange'> 风格 </mark> 包名命名调整
-- <mark style='background:Orange'> 风格 </mark> 类名命名调整
-- <mark style='background:Orange'> 风格 </mark> 方法命名调整
-- <mark style='background:Orange'> 风格 </mark> 对象命名调整
-- <mark style='background:Orange'> 风格 </mark> 类注解格式调整
-- <mark style='background:Orange'> 风格 </mark> 数据库字段名调整为小写字母下划线格式
-- <mark style='background:LightGreen'> 新增 </mark> 收入、支出信息表增加索引
-- <mark style='background:Yellow'> 优化 </mark> 接口请求token传值格式调整
-- <mark style='background:Yellow'> 优化 </mark> Web端接口请求错误时报错信息调整
-- <mark style='background:Yellow'> 优化 </mark> 账单导入分类表查询SQL优化
-- <mark style='background:Yellow'> 优化 </mark> 分类类型枚举类，分类编码参数属性类型调整
-- <mark style='background:Yellow'> 优化 </mark> 工具类逻辑优化
+* <mark style='background:Orange'> 风格 </mark> 包名命名调整
+* <mark style='background:Orange'> 风格 </mark> 类名命名调整
+* <mark style='background:Orange'> 风格 </mark> 方法命名调整
+* <mark style='background:Orange'> 风格 </mark> 对象命名调整
+* <mark style='background:Orange'> 风格 </mark> 类注解格式调整
+* <mark style='background:Orange'> 风格 </mark> 数据库字段名调整为小写字母下划线格式
+* <mark style='background:LightGreen'> 新增 </mark> 收入、支出信息表增加索引
+* <mark style='background:Yellow'> 优化 </mark> 接口请求token传值格式调整
+* <mark style='background:Yellow'> 优化 </mark> Web端接口请求错误时报错信息调整
+* <mark style='background:Yellow'> 优化 </mark> 账单导入分类表查询SQL优化
+* <mark style='background:Yellow'> 优化 </mark> 分类类型枚举类，分类编码参数属性类型调整
+* <mark style='background:Yellow'> 优化 </mark> 工具类逻辑优化
 
 ## 1.2.4
 
 `2024-03-02`
 
-- <mark style='background:LightGreen'> 新增 </mark> 新增账单导入信息表
-- <mark style='background:LightGreen'> 新增 </mark> 新增账单导入分类表
-- <mark style='background:LightGreen'> 新增 </mark> 新增账单导入明细转换表
-- <mark style='background:LightGreen'> 新增 </mark> 新增导入数据页面
-- <mark style='background:LightGreen'> 新增 </mark> 新增导入数据修改页面
-- <mark style='background:LightGreen'> 新增 </mark> 支持账单文件导入
-- <mark style='background:LightGreen'> 新增 </mark> 账单导入支持自动转换明细信息
-- <mark style='background:LightGreen'> 新增 </mark> 支持账单明细列表查询
-- <mark style='background:LightGreen'> 新增 </mark> 支持查询、修改、删除、确认账单信息
-- <mark style='background:LightGreen'> 新增 </mark> 确认账单信息同步更新账单导入分类表
-- <mark style='background:LightGreen'> 新增 </mark> 确认账单信息同步更新账单导入明细转换表
-- <mark style='background:LightGreen'> 新增 </mark> 支持导入微信账单
-- <mark style='background:LightGreen'> 新增 </mark> 支持导入支付宝账单
-- <mark style='background:LightGreen'> 新增 </mark> 支持导入京东账单
-- <mark style='background:Yellow'> 优化 </mark> 报表显示效果优化
-- <mark style='background:Yellow'> 优化 </mark> 收入、支出明细保存逻辑优化
-- <mark style='background:Yellow'> 优化 </mark> 收入、支出明细，修改、删除提示框增加图标标识
-- <mark style='background:Yellow'> 优化 </mark> 收入、支出明细列表查询增加按主键ID排序
-- <mark style='background:Red'> 修复 </mark> 修复总收支报表、净收支报表，收入、支出汇总年份不匹配时报表展示问题
+* <mark style='background:LightGreen'> 新增 </mark> 新增账单导入信息表
+* <mark style='background:LightGreen'> 新增 </mark> 新增账单导入分类表
+* <mark style='background:LightGreen'> 新增 </mark> 新增账单导入明细转换表
+* <mark style='background:LightGreen'> 新增 </mark> 新增导入数据页面
+* <mark style='background:LightGreen'> 新增 </mark> 新增导入数据修改页面
+* <mark style='background:LightGreen'> 新增 </mark> 支持账单文件导入
+* <mark style='background:LightGreen'> 新增 </mark> 账单导入支持自动转换明细信息
+* <mark style='background:LightGreen'> 新增 </mark> 支持账单明细列表查询
+* <mark style='background:LightGreen'> 新增 </mark> 支持查询、修改、删除、确认账单信息
+* <mark style='background:LightGreen'> 新增 </mark> 确认账单信息同步更新账单导入分类表
+* <mark style='background:LightGreen'> 新增 </mark> 确认账单信息同步更新账单导入明细转换表
+* <mark style='background:LightGreen'> 新增 </mark> 支持导入微信账单
+* <mark style='background:LightGreen'> 新增 </mark> 支持导入支付宝账单
+* <mark style='background:LightGreen'> 新增 </mark> 支持导入京东账单
+* <mark style='background:Yellow'> 优化 </mark> 报表显示效果优化
+* <mark style='background:Yellow'> 优化 </mark> 收入、支出明细保存逻辑优化
+* <mark style='background:Yellow'> 优化 </mark> 收入、支出明细，修改、删除提示框增加图标标识
+* <mark style='background:Yellow'> 优化 </mark> 收入、支出明细列表查询增加按主键ID排序
+* <mark style='background:Red'> 修复 </mark> 修复总收支报表、净收支报表，收入、支出汇总年份不匹配时报表展示问题
 
 ## 1.1.11
 
