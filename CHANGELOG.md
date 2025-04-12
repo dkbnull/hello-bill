@@ -88,6 +88,13 @@
 
 # 更新日志
 
+## 1.4.1.46
+
+`2025-04-12`
+
+* <mark style='background:Orange'> 风格 </mark> 代码仓库注解调整
+* <mark style='background:Orange'> 风格 </mark> 父模块名调整
+
 ## 1.4.0.45
 
 `2025-04-12`
