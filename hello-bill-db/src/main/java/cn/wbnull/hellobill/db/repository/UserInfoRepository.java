@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 用户信息表 服务类
  *
@@ -19,6 +21,13 @@ public class UserInfoRepository {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+
+    public List<UserInfo> list() {
+        LambdaQueryWrapper<UserInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(UserInfo::getUsername);
+
+        return userInfoMapper.selectList(queryWrapper);
+    }
 
     public UserInfo getByUsername(String username) {
         LambdaQueryWrapper<UserInfo> queryWrapper = new LambdaQueryWrapper<>();

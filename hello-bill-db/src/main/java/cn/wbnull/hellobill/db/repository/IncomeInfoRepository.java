@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +76,25 @@ public class IncomeInfoRepository {
 
     public void deleteIncomeInfo(String id) {
         incomeInfoMapper.deleteById(id);
+    }
+
+    public IncomeInfo getEarliestByUsername(String username) {
+        LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(IncomeInfo::getUsername, username);
+        queryWrapper.orderByAsc(IncomeInfo::getIncomeDate);
+        queryWrapper.last("LIMIT 1");
+
+        return incomeInfoMapper.selectOne(queryWrapper);
+    }
+
+    public IncomeInfo getByIncomeDate(String username, LocalDate incomeDate) {
+        QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("sum(amount) as amount").lambda()
+                .eq(IncomeInfo::getUsername, username)
+                .ge(IncomeInfo::getIncomeDate, incomeDate)
+                .lt(IncomeInfo::getIncomeDate, incomeDate.plusMonths(1));
+
+        return incomeInfoMapper.selectOne(queryWrapper);
     }
 
     public List<IncomeInfo> listReport(String username) {

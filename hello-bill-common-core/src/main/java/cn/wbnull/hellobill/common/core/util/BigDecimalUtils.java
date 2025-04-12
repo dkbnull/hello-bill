@@ -261,4 +261,26 @@ public class BigDecimalUtils {
     public static int compareTo(String value1, String value2) {
         return new BigDecimal(value1).compareTo(new BigDecimal(value2));
     }
+
+    /**
+     * 比较大小
+     *
+     * @param value1
+     * @param value2
+     * @return -1:<, 0:=, 1:>
+     */
+    public static boolean isEqual(String value1, String value2) {
+        return new BigDecimal(value1).compareTo(new BigDecimal(value2)) == 0;
+    }
+
+    /**
+     * 比较大小
+     *
+     * @param value1
+     * @param value2
+     * @return -1:<, 0:=, 1:>
+     */
+    public static boolean isEqual(BigDecimal value1, BigDecimal value2) {
+        return value1.compareTo(value2) == 0;
+    }
 }

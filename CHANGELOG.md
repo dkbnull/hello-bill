@@ -88,6 +88,15 @@
 
 # 更新日志
 
+## 1.4.0.45
+
+`2025-04-12`
+
+* <mark style='background:LightGreen'> 新增 </mark> 新增资产负债信息表
+* <mark style='background:LightGreen'> 新增 </mark> 新增资产信息页面
+* <mark style='background:LightGreen'> 新增 </mark> 新增资产负债信息定时任务
+* <mark style='background:LightGreen'> 新增 </mark> 支持初始化资产负债信息
+
 ## 1.3.1.44
 
 `2025-03-02`

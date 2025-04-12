@@ -1,0 +1,11 @@
+CREATE TABLE `balance_sheet` (
+  `id` BIGINT(20) UNSIGNED NOT NULL,
+  `username` VARCHAR(20) NOT NULL,
+  `balance_date` DATE NOT NULL,
+  `income_amount` DECIMAL(10,2) NOT NULL,
+  `expend_amount` DECIMAL(10,2) NOT NULL,
+  `balance_amount` DECIMAL(10,2) NOT NULL,
+  `remark` VARCHAR(100) NULL,
+  `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`));

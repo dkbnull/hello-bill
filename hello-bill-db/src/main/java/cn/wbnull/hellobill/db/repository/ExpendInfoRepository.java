@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,25 @@ public class ExpendInfoRepository {
 
     public void deleteById(String id) {
         expendInfoMapper.deleteById(id);
+    }
+
+    public ExpendInfo getEarliestByUsername(String username) {
+        LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ExpendInfo::getUsername, username);
+        queryWrapper.orderByAsc(ExpendInfo::getExpendTime);
+        queryWrapper.last("LIMIT 1");
+
+        return expendInfoMapper.selectOne(queryWrapper);
+    }
+
+    public ExpendInfo getByExpendTime(String username, LocalDate expendTime) {
+        QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("sum(amount) as amount").lambda()
+                .eq(ExpendInfo::getUsername, username)
+                .ge(ExpendInfo::getExpendTime, expendTime.atStartOfDay())
+                .lt(ExpendInfo::getExpendTime, expendTime.plusMonths(1).atStartOfDay());
+
+        return expendInfoMapper.selectOne(queryWrapper);
     }
 
     public List<ExpendInfo> listReport(String username) {
