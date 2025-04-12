@@ -7,7 +7,7 @@ import lombok.Data;
  *
  * @author null
  * @date 2020-12-31
- * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
+ * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Data
 public class QueryListRequest {

@@ -9,7 +9,7 @@ import lombok.Getter;
  *
  * @author null
  * @date 2020-12-29
- * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
+ * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 public class BusinessException extends RuntimeException {
 

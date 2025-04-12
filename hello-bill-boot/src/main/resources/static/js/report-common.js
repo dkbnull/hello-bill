@@ -3,7 +3,7 @@
  *
  * @author null
  * @date 2021-01-27
- * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
+ * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 function barChartQuery(result, title, id) {
     const option = {

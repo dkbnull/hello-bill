@@ -1,6 +1,6 @@
-GitHub：[https://github.com/dkbnull/HelloBill](https://github.com/dkbnull/HelloBill)
+GitHub：[https://github.com/dkbnull/hello-bill](https://github.com/dkbnull/hello-bill)
 
-Gitee：[https://gitee.com/dkbnull/HelloBill](https://gitee.com/dkbnull/HelloBill)
+Gitee：[https://gitee.com/dkbnull/hello-bill](https://gitee.com/dkbnull/hello-bill)
 
 # 开发环境
 

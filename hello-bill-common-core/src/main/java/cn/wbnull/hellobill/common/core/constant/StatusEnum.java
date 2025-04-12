@@ -7,7 +7,7 @@ import lombok.Getter;
  *
  * @author null
  * @date 2022-01-04
- * @link <a href="https://github.com/dkbnull/HelloBill">GitHub</a>
+ * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Getter
 public enum StatusEnum {
