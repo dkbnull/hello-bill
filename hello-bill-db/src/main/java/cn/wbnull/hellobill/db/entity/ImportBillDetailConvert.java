@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- *
+ * 账单导入详情转换表
  * </p>
  *
  * @author null
@@ -26,21 +26,39 @@ import java.time.LocalDateTime;
 @TableName("import_bill_detail_convert")
 public class ImportBillDetailConvert {
 
+    /**
+     * 主键ID
+     */
     @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
+    /**
+     * 用户名
+     */
     @TableField("username")
     private String username;
 
+    /**
+     * 详情
+     */
     @TableField("detail")
     private String detail;
 
+    /**
+     * 转换后详情
+     */
     @TableField("detail_convert")
     private String detailConvert;
 
+    /**
+     * 创建时间
+     */
     @TableField("gmt_create")
     private LocalDateTime gmtCreate;
 
+    /**
+     * 修改时间
+     */
     @TableField("gmt_modified")
     private LocalDateTime gmtModified;
 }

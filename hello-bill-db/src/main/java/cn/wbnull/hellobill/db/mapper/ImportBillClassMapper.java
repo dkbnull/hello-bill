@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
- * Mapper 接口
+ * 账单导入分类表 Mapper 接口
  * </p>
  *
  * @author null

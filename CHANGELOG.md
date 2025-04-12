@@ -94,6 +94,7 @@
 
 * <mark style='background:Orange'> 风格 </mark> 代码仓库注解调整
 * <mark style='background:Orange'> 风格 </mark> 父模块名调整
+* <mark style='background:Orange'> 风格 </mark> 数据库表、数据库实体类增加注释
 
 ## 1.4.0.45
 

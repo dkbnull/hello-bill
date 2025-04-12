@@ -1,11 +1,13 @@
-CREATE TABLE `user_info`
-(
-    `id`           int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-    `username`     varchar(20)  NOT NULL,
-    `salt`         varchar(32)  NOT NULL,
-    `password`     varchar(100) NOT NULL,
-    `mobile`       varchar(16)           DEFAULT NULL,
-    `gmt_create`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `gmt_modified` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+CREATE TABLE `user_info` (
+    `id` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+    `username` VARCHAR(20) NOT NULL COMMENT '用户名',
+    `salt` VARCHAR(32) NOT NULL COMMENT '盐值',
+    `password` VARCHAR(100) NOT NULL COMMENT '密码',
+    `mobile` VARCHAR(16) DEFAULT NULL COMMENT '手机',
+    `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     PRIMARY KEY (`id`)
-);
+)  COMMENT='用户信息表';
+
+ALTER TABLE `user_info`
+ADD INDEX `idx_user_info_username` (`username` ASC) VISIBLE;

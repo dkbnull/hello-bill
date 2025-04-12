@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- * Mapper 接口
+ * 账单导入信息表 Mapper 接口
  * </p>
  *
  * @author null

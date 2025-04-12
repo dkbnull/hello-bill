@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- *
+ * 账单导入分类表
  * </p>
  *
  * @author null
@@ -26,21 +26,39 @@ import java.time.LocalDateTime;
 @TableName("import_bill_class")
 public class ImportBillClass {
 
+    /**
+     * 主键ID
+     */
     @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
+    /**
+     * 详情
+     */
     @TableField("detail")
     private String detail;
 
+    /**
+     * 顶级分类
+     */
     @TableField("top_class")
     private String topClass;
 
+    /**
+     * 二级分类
+     */
     @TableField("second_class")
     private String secondClass;
 
+    /**
+     * 创建时间
+     */
     @TableField("gmt_create")
     private LocalDateTime gmtCreate;
 
+    /**
+     * 修改时间
+     */
     @TableField("gmt_modified")
     private LocalDateTime gmtModified;
 }

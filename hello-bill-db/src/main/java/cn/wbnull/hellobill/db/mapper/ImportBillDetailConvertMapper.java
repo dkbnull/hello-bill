@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- * Mapper 接口
+ * 账单导入详情转换表 Mapper 接口
  * </p>
  *
  * @author null

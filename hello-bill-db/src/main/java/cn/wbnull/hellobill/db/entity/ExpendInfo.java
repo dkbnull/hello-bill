@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- *
+ * 支出信息表
  * </p>
  *
  * @author null
@@ -32,35 +32,65 @@ import java.time.LocalDateTime;
 @TableName("expend_info")
 public class ExpendInfo {
 
+    /**
+     * 支出信息ID
+     */
     @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
+    /**
+     * 用户名
+     */
     @TableField("username")
     private String username;
 
+    /**
+     * 支出时间
+     */
     @JSONField(format = UtilConstants.DATE_FORMAT)
     @JsonFormat(pattern = UtilConstants.DATE_FORMAT)
     @TableField("expend_time")
     private LocalDateTime expendTime;
 
+    /**
+     * 顶级分类
+     */
     @TableField("top_class")
     private String topClass;
 
+    /**
+     * 二级分类
+     */
     @TableField("second_class")
     private String secondClass;
 
+    /**
+     * 详情
+     */
     @TableField("detail")
     private String detail;
 
+    /**
+     * 金额
+     */
     @TableField("amount")
     private BigDecimal amount;
 
+    /**
+     * 备注
+     */
     @TableField("remark")
     private String remark;
 
+    /**
+     * 创建时间
+     */
     @TableField("gmt_create")
     private LocalDateTime gmtCreate;
 
+    /**
+     * 修改时间
+     */
     @TableField("gmt_modified")
     private LocalDateTime gmtModified;
 

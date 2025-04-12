@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017-2025 null. All rights reserved.
+ */
+
 package cn.wbnull.hellobill.db.mapper;
 
 import cn.wbnull.hellobill.db.entity.BalanceSheet;
@@ -6,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- * Mapper 接口
+ * 资产负债信息表 Mapper 接口
  * </p>
  *
  * @author null
