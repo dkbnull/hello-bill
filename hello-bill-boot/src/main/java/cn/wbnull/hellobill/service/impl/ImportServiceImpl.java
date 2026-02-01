@@ -139,8 +139,15 @@ public class ImportServiceImpl implements ImportService {
             LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
             importBillInfo.setBillTime(localDateTime);
 
-            importBillInfo.setDetail(line[2]);
-            importBillInfo.setDetailConvert(convertDetail(line[2]));
+            String detail;
+            // 美团账单使用商品名称
+            if (line[2].contains("美团")) {
+                detail = line[3].contains("-") ? line[3].substring(0, line[3].indexOf("-")) : line[3];
+            } else {
+                detail = line[2];
+            }
+            importBillInfo.setDetail(detail);
+            importBillInfo.setDetailConvert(convertDetail(detail));
 
             ImportBillClass importBillClass = importBillClassMapper.getByDetail(importBillInfo.getDetailConvert());
             if (importBillClass == null) {
@@ -210,7 +217,14 @@ public class ImportServiceImpl implements ImportService {
             importBillInfo.setBillTime(localDateTime);
 
             // 交易对方列为脱敏商家名称，则使用商品名称
-            String detail = line[7].contains("**") ? line[8].trim() : line[7].trim();
+            // 饿了么账单使用商品名称
+            String detail;
+            if (line[7].contains("**") || line[7].contains("饿了么") || line[7].contains("淘宝闪购")) {
+                detail = line[8].trim();
+            } else {
+                detail = line[7].trim();
+            }
+
             importBillInfo.setDetail(detail);
             importBillInfo.setDetailConvert(convertDetail(detail));
 
