@@ -20,6 +20,7 @@ layui.use(['element', 'layer', 'laydate', 'form'], function () {
     doPostExpendDaily();
     doPostExpendLiving();
     doPostExpendChild();
+    doPostExpendChildEdu();
 
     doPostIncome();
 });
@@ -63,6 +64,16 @@ function doPostExpendChild() {
 
     doPost("report/expend", data, function (result) {
         barChartClass(result, '子女支出', "report-expend-child-bar-chart");
+    })
+}
+
+function doPostExpendChildEdu() {
+    const data = {
+        reportClass: 4
+    }
+
+    doPost("report/expend", data, function (result) {
+        barChartClass(result, '子女教育', "report-expend-child-edu-bar-chart");
     })
 }
 

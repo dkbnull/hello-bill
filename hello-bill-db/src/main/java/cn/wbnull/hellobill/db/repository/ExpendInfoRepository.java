@@ -144,6 +144,9 @@ public class ExpendInfoRepository {
         if ("3".equals(reportClass)) {
             queryWrapper.eq("top_class", "子女支出");
         }
+        if ("4".equals(reportClass)) {
+            queryWrapper.eq("top_class", "子女教育");
+        }
     }
 
     public List<ExpendInfo> listAmountByDateAndClass(String username, String reportDate, String topClass) {
