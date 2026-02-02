@@ -1,4 +1,4 @@
-# Hello Bill
+<h1 align="center">Hello Bill</h1>
 
 <p align="center">
 	<a href="https://github.com/dkbnull/hello-bill" target="_blank">
