@@ -47,7 +47,7 @@ public class ImportBillDetailConvertRepository {
             queryWrapper.set(ImportBillDetailConvert::getDetailConvert, importBillInfo.getDetailConvert());
             queryWrapper.eq(ImportBillDetailConvert::getDetail, importBillInfo.getDetail());
 
-            importBillDetailConvertMapper.update(null, queryWrapper);
+            importBillDetailConvertMapper.update(queryWrapper);
             return;
         }
 

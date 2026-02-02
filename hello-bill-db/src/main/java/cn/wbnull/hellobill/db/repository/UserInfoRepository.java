@@ -41,6 +41,6 @@ public class UserInfoRepository {
         updateWrapper.set(UserInfo::getPassword, password);
         updateWrapper.eq(UserInfo::getUsername, username);
 
-        userInfoMapper.update(null, updateWrapper);
+        userInfoMapper.update(updateWrapper);
     }
 }

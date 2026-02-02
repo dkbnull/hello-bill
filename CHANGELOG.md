@@ -88,6 +88,13 @@
 
 # 更新日志
 
+## 1.4.2.47
+
+`2026-02-01`
+
+* <mark style='background:LightGreen'> 新增 </mark> 增加子女教育报表
+* <mark style='background:Yellow'> 优化 </mark> 美团、饿了么账单使用真实商品名称
+
 ## 1.4.1.46
 
 `2025-04-12`

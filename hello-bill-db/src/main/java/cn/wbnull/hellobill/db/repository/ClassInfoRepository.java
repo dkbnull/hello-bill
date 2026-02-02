@@ -43,15 +43,17 @@ public class ClassInfoRepository {
 
     public void updateByUuid(String uuid, String key, String value) {
         UpdateWrapper<ClassInfo> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.set(key, value).lambda()
+        updateWrapper.set(key, value)
+                .lambda()
                 .eq(ClassInfo::getUuid, uuid);
 
-        classInfoMapper.update(null, updateWrapper);
+        classInfoMapper.update(updateWrapper);
     }
 
     public List<ClassInfo> listTopByType(int type) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("distinct top_class").lambda()
+        queryWrapper.select("distinct top_class")
+                .lambda()
                 .eq(ClassInfo::getType, type)
                 .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())
                 .orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
@@ -71,7 +73,8 @@ public class ClassInfoRepository {
 
     public List<ClassInfo> listSecondByTypeAndTop(int type, String topClass) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("distinct second_class").lambda()
+        queryWrapper.select("distinct second_class")
+                .lambda()
                 .eq(ClassInfo::getTopClass, topClass)
                 .eq(ClassInfo::getType, type)
                 .eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus())

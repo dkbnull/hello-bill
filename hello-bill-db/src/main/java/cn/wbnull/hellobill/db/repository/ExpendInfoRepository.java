@@ -2,6 +2,7 @@ package cn.wbnull.hellobill.db.repository;
 
 import cn.wbnull.hellobill.common.core.util.DateUtils;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
+import cn.wbnull.hellobill.db.constants.ExpendConstants;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
 import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
 import cn.wbnull.hellobill.db.param.QueryListParam;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -45,22 +46,6 @@ public class ExpendInfoRepository {
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    public void insertExpendInfo(ExpendInfo expendInfo) {
-        expendInfoMapper.insert(expendInfo);
-    }
-
-    public ExpendInfo getById(String id) {
-        return expendInfoMapper.selectById(id);
-    }
-
-    public void updateExpendInfo(ExpendInfo expendInfo) {
-        expendInfoMapper.updateById(expendInfo);
-    }
-
-    public void deleteById(String id) {
-        expendInfoMapper.deleteById(id);
-    }
-
     public ExpendInfo getEarliestByUsername(String username) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ExpendInfo::getUsername, username);
@@ -71,11 +56,15 @@ public class ExpendInfoRepository {
     }
 
     public ExpendInfo getByExpendTime(String username, LocalDate expendTime) {
+        LocalDateTime startDate = expendTime.atStartOfDay();
+        LocalDateTime endDate = expendTime.plusMonths(1).atStartOfDay();
+
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("sum(amount) as amount").lambda()
+        queryWrapper.select("sum(amount) as amount")
+                .lambda()
                 .eq(ExpendInfo::getUsername, username)
-                .ge(ExpendInfo::getExpendTime, expendTime.atStartOfDay())
-                .lt(ExpendInfo::getExpendTime, expendTime.plusMonths(1).atStartOfDay());
+                .ge(ExpendInfo::getExpendTime, startDate)
+                .lt(ExpendInfo::getExpendTime, endDate);
 
         return expendInfoMapper.selectOne(queryWrapper);
     }
@@ -94,10 +83,7 @@ public class ExpendInfoRepository {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(expend_time, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        List<String> topClasses = new ArrayList<>();
-        topClasses.add("人情往来");
-        topClasses.add("五险一金");
-        queryWrapper.notIn("top_class", topClasses);
+        queryWrapper.notIn("top_class", ExpendConstants.EXCLUDED_EXPEND_CLASSES);
         queryWrapper.groupBy("DATE_FORMAT(expend_time, '%Y')");
         queryWrapper.orderByAsc("DATE_FORMAT(expend_time, '%Y')");
 
@@ -108,7 +94,9 @@ public class ExpendInfoRepository {
         QueryWrapper<ExpendInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(expend_time, '%Y-%m') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        convertQueryWrapper(queryWrapper, reportDate, reportClass);
+
+        addDateAndClassConditions(queryWrapper, reportDate, reportClass);
+
         queryWrapper.groupBy("DATE_FORMAT(expend_time, '%Y-%m')");
         queryWrapper.orderByAsc("DATE_FORMAT(expend_time, '%Y-%m')");
 
@@ -121,31 +109,37 @@ public class ExpendInfoRepository {
         queryWrapper.select("DATE_FORMAT(expend_time, '%Y-%m') as remark, top_class, second_class, " +
                 "sum(amount) as amount");
         queryWrapper.eq("username", username);
-        convertQueryWrapper(queryWrapper, reportDate, reportClass);
-        queryWrapper.groupBy("DATE_FORMAT(expend_time, '%Y-%m')", "top_class", "second_class");
-        queryWrapper.orderByAsc("DATE_FORMAT(expend_time, '%Y-%m')", "second_class");
+
+        addDateAndClassConditions(queryWrapper, reportDate, reportClass);
+
+        queryWrapper.groupBy("DATE_FORMAT(expend_time, '%Y-%m'), top_class, second_class");
+        queryWrapper.orderByAsc("DATE_FORMAT(expend_time, '%Y-%m'), second_class");
 
         return expendInfoMapper.selectList(queryWrapper);
     }
 
-    private void convertQueryWrapper(QueryWrapper<ExpendInfo> queryWrapper, String reportDate, String reportClass) {
+    private void addDateAndClassConditions(QueryWrapper<ExpendInfo> queryWrapper, String reportDate, String reportClass) {
         if (StringUtils.isEmpty(reportDate)) {
             queryWrapper.ge("expend_time", DateUtils.atStartOfMonth(11).atStartOfDay());
         } else {
-            queryWrapper.like("DATE_FORMAT(expend_time, '%Y-%m-%d %H:%i:%s')", reportDate);
+            queryWrapper.apply("DATE_FORMAT(expend_time, '%Y-%m-%d %H:%i:%s') LIKE {0}", reportDate + "%");
         }
 
-        if ("1".equals(reportClass)) {
-            queryWrapper.eq("top_class", "日常支出");
-        }
-        if ("2".equals(reportClass)) {
-            queryWrapper.eq("top_class", "生活支出");
-        }
-        if ("3".equals(reportClass)) {
-            queryWrapper.eq("top_class", "子女支出");
-        }
-        if ("4".equals(reportClass)) {
-            queryWrapper.eq("top_class", "子女教育");
+        switch (reportClass) {
+            case "1":
+                queryWrapper.eq("top_class", ExpendConstants.CLASS_DAILY);
+                break;
+            case "2":
+                queryWrapper.eq("top_class", ExpendConstants.CLASS_LIFE);
+                break;
+            case "3":
+                queryWrapper.eq("top_class", ExpendConstants.CLASS_CHILDREN);
+                break;
+            case "4":
+                queryWrapper.eq("top_class", ExpendConstants.CLASS_CHILDREN_EDU);
+                break;
+            default:
+                break;
         }
     }
 
@@ -154,7 +148,7 @@ public class ExpendInfoRepository {
         queryWrapper.select("second_class, sum(amount) as amount");
         queryWrapper.eq("username", username);
         queryWrapper.eq("top_class", topClass);
-        queryWrapper.like("DATE_FORMAT(expend_time, '%Y-%m-%d %H:%i:%s')", reportDate);
+        queryWrapper.apply("DATE_FORMAT(expend_time, '%Y-%m-%d %H:%i:%s') LIKE {0}", reportDate + "%");
         queryWrapper.groupBy("second_class");
 
         return expendInfoMapper.selectList(queryWrapper);
@@ -166,10 +160,12 @@ public class ExpendInfoRepository {
         queryWrapper.select("detail, sum(amount) as amount");
         queryWrapper.eq("username", username);
         queryWrapper.eq("top_class", topClass);
+
         if (!StringUtils.isEmpty(secondClass)) {
             queryWrapper.eq("second_class", secondClass);
         }
-        queryWrapper.like("DATE_FORMAT(expend_time, '%Y-%m-%d %H:%i:%s')", reportDate);
+
+        queryWrapper.apply("DATE_FORMAT(expend_time, '%Y-%m-%d %H:%i:%s') LIKE {0}", reportDate + "%");
         queryWrapper.groupBy("detail");
         queryWrapper.orderByDesc("amount");
 

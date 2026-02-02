@@ -44,7 +44,7 @@ public class ImportBillClassRepository {
             queryWrapper.set(ImportBillClass::getSecondClass, importBillInfo.getSecondClass());
             queryWrapper.eq(ImportBillClass::getDetail, importBillInfo.getDetailConvert());
 
-            importBillClassMapper.update(null, queryWrapper);
+            importBillClassMapper.update(queryWrapper);
             return;
         }
 

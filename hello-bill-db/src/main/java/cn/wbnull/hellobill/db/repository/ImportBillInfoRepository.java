@@ -38,6 +38,6 @@ public class ImportBillInfoRepository {
         queryWrapper.set(ImportBillInfo::getRemark, importBillInfo.getRemark());
         queryWrapper.eq(ImportBillInfo::getId, importBillInfo.getId());
 
-        importBillInfoMapper.update(null, queryWrapper);
+        importBillInfoMapper.update(queryWrapper);
     }
 }

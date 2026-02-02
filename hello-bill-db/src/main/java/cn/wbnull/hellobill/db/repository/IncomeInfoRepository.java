@@ -3,6 +3,7 @@ package cn.wbnull.hellobill.db.repository;
 import cn.wbnull.hellobill.common.core.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.core.util.DateUtils;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
+import cn.wbnull.hellobill.db.constants.ExpendConstants;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.mapper.ClassInfoMapper;
@@ -59,10 +60,6 @@ public class IncomeInfoRepository {
         incomeInfoMapper.insert(incomeInfo);
     }
 
-    public IncomeInfo getIncomeInfo(String id) {
-        return incomeInfoMapper.selectById(id);
-    }
-
     public void updateIncomeInfo(IncomeInfo incomeInfo) {
         LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ClassInfo::getSecondClass, incomeInfo.getSecondClass());
@@ -72,10 +69,6 @@ public class IncomeInfoRepository {
         incomeInfo.setTopClass(classInfo.getTopClass());
 
         incomeInfoMapper.updateById(incomeInfo);
-    }
-
-    public void deleteIncomeInfo(String id) {
-        incomeInfoMapper.deleteById(id);
     }
 
     public IncomeInfo getEarliestByUsername(String username) {
@@ -89,7 +82,8 @@ public class IncomeInfoRepository {
 
     public IncomeInfo getByIncomeDate(String username, LocalDate incomeDate) {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("sum(amount) as amount").lambda()
+        queryWrapper.select("sum(amount) as amount")
+                .lambda()
                 .eq(IncomeInfo::getUsername, username)
                 .ge(IncomeInfo::getIncomeDate, incomeDate)
                 .lt(IncomeInfo::getIncomeDate, incomeDate.plusMonths(1));
@@ -111,10 +105,7 @@ public class IncomeInfoRepository {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(income_date, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        List<String> topClasses = new ArrayList<>();
-        topClasses.add("人情往来");
-        topClasses.add("父母补贴");
-        queryWrapper.notIn("top_class", topClasses);
+        queryWrapper.notIn("top_class", ExpendConstants.EXCLUDED_INCOME_CLASSES);
         queryWrapper.groupBy("DATE_FORMAT(income_date, '%Y')");
         queryWrapper.orderByAsc("DATE_FORMAT(income_date, '%Y')");
 
@@ -125,7 +116,9 @@ public class IncomeInfoRepository {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("DATE_FORMAT(income_date, '%Y') as remark, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        convertQueryWrapper(queryWrapper, reportDate);
+
+        addDateAndClassConditions(queryWrapper, reportDate);
+
         queryWrapper.groupBy("DATE_FORMAT(income_date, '%Y')");
         queryWrapper.orderByAsc("DATE_FORMAT(income_date, '%Y')");
 
@@ -137,14 +130,16 @@ public class IncomeInfoRepository {
         queryWrapper.select("DATE_FORMAT(income_date, '%Y') as remark, top_class, second_class, " +
                 "sum(amount) as amount");
         queryWrapper.eq("username", username);
-        convertQueryWrapper(queryWrapper, reportDate);
+
+        addDateAndClassConditions(queryWrapper, reportDate);
+
         queryWrapper.groupBy("DATE_FORMAT(income_date, '%Y')", "top_class", "second_class");
         queryWrapper.orderByAsc("DATE_FORMAT(income_date, '%Y')", "second_class");
 
         return incomeInfoMapper.selectList(queryWrapper);
     }
 
-    private void convertQueryWrapper(QueryWrapper<IncomeInfo> queryWrapper, String reportDate) {
+    private void addDateAndClassConditions(QueryWrapper<IncomeInfo> queryWrapper, String reportDate) {
         List<String> topClasses = new ArrayList<>();
         topClasses.add("工资收入");
         topClasses.add("职外收入");
@@ -160,7 +155,7 @@ public class IncomeInfoRepository {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("top_class, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        queryWrapper.like("DATE_FORMAT(income_date, '%Y-%m-%d %H:%i:%s')", reportDate);
+        queryWrapper.apply("DATE_FORMAT(income_date, '%Y-%m-%d %H:%i:%s') LIKE {0}", reportDate + "%");
         queryWrapper.groupBy("top_class");
 
         return incomeInfoMapper.selectList(queryWrapper);
@@ -170,7 +165,7 @@ public class IncomeInfoRepository {
         QueryWrapper<IncomeInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("detail, sum(amount) as amount");
         queryWrapper.eq("username", username);
-        queryWrapper.like("DATE_FORMAT(income_date, '%Y-%m-%d %H:%i:%s')", reportDate);
+        queryWrapper.apply("DATE_FORMAT(income_date, '%Y-%m-%d %H:%i:%s') LIKE {0}", reportDate + "%");
         queryWrapper.groupBy("detail");
         queryWrapper.orderByDesc("amount");
 

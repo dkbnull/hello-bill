@@ -6,6 +6,7 @@ import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
+import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
 import cn.wbnull.hellobill.db.param.QueryListParam;
 import cn.wbnull.hellobill.db.repository.ClassInfoRepository;
 import cn.wbnull.hellobill.db.repository.ExpendInfoRepository;
@@ -32,6 +33,9 @@ import java.util.List;
 public class ExpendServiceImpl implements ExpendService {
 
     @Autowired
+    private ExpendInfoMapper expendInfoMapper;
+
+    @Autowired
     private ExpendInfoRepository expendInfoRepository;
     @Autowired
     private ClassInfoRepository classInfoRepository;
@@ -52,14 +56,14 @@ public class ExpendServiceImpl implements ExpendService {
                 expendInfo.getSecondClass());
         expendInfo.build(request.getUsername(), classInfo.getTopClass());
 
-        expendInfoRepository.insertExpendInfo(expendInfo);
+        expendInfoMapper.insert(expendInfo);
 
         return ApiResponse.success("记账成功");
     }
 
     @Override
     public ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request) {
-        ExpendInfo expendInfo = expendInfoRepository.getById(request.getData().getId());
+        ExpendInfo expendInfo = expendInfoMapper.selectById(request.getData().getId());
         QueryResponse queryResponse = BeanUtils.copyProperties(expendInfo, QueryResponse.class);
 
         return ApiResponse.success(queryResponse);
@@ -72,14 +76,14 @@ public class ExpendServiceImpl implements ExpendService {
                 expendInfo.getSecondClass());
         expendInfo.setTopClass(classInfo.getTopClass());
 
-        expendInfoRepository.updateExpendInfo(expendInfo);
+        expendInfoMapper.updateById(expendInfo);
 
         return ApiResponse.success("修改成功");
     }
 
     @Override
     public ApiResponse<Object> delete(ApiRequest<DeleteRequest> request) {
-        expendInfoRepository.deleteById(request.getData().getId());
+        expendInfoMapper.deleteById(request.getData().getId());
 
         return ApiResponse.success("删除成功");
     }

@@ -4,6 +4,7 @@ import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
+import cn.wbnull.hellobill.db.mapper.IncomeInfoMapper;
 import cn.wbnull.hellobill.db.param.QueryListParam;
 import cn.wbnull.hellobill.db.repository.IncomeInfoRepository;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
@@ -29,6 +30,9 @@ import java.util.List;
 public class IncomeServiceImpl implements IncomeService {
 
     @Autowired
+    private IncomeInfoMapper incomeInfoMapper;
+
+    @Autowired
     private IncomeInfoRepository incomeInfoRepository;
 
     @Override
@@ -50,7 +54,7 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request) {
-        IncomeInfo incomeInfo = incomeInfoRepository.getIncomeInfo(request.getData().getId());
+        IncomeInfo incomeInfo = incomeInfoMapper.selectById(request.getData().getId());
         QueryResponse queryResponse = BeanUtils.copyProperties(incomeInfo, QueryResponse.class);
 
         return ApiResponse.success(queryResponse);
@@ -66,7 +70,7 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public ApiResponse<Object> delete(ApiRequest<DeleteRequest> request) {
-        incomeInfoRepository.deleteIncomeInfo(request.getData().getId());
+        incomeInfoMapper.deleteById(request.getData().getId());
 
         return ApiResponse.success("删除成功");
     }
