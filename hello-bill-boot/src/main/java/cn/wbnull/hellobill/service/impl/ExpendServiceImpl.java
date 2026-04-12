@@ -17,7 +17,7 @@ import cn.wbnull.hellobill.dto.expend.request.AddRequest;
 import cn.wbnull.hellobill.dto.expend.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.expend.response.QueryResponse;
 import cn.wbnull.hellobill.service.ExpendService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,15 +30,12 @@ import java.util.List;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Service
+@RequiredArgsConstructor
 public class ExpendServiceImpl implements ExpendService {
 
-    @Autowired
-    private ExpendInfoMapper expendInfoMapper;
-
-    @Autowired
-    private ExpendInfoRepository expendInfoRepository;
-    @Autowired
-    private ClassInfoRepository classInfoRepository;
+    private final ExpendInfoMapper expendInfoMapper;
+    private final ExpendInfoRepository expendInfoRepository;
+    private final ClassInfoRepository classInfoRepository;
 
     @Override
     public ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request) {

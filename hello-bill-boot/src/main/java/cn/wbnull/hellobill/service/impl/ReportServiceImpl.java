@@ -18,7 +18,7 @@ import cn.wbnull.hellobill.dto.report.response.ReportClassResponse;
 import cn.wbnull.hellobill.dto.report.response.ReportDetailResponse;
 import cn.wbnull.hellobill.dto.report.response.ReportResponse;
 import cn.wbnull.hellobill.service.ReportService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Year;
@@ -34,16 +34,12 @@ import java.util.List;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Service
+@RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService {
 
-    @Autowired
-    private ClassInfoRepository classInfoRepository;
-
-    @Autowired
-    private ExpendInfoRepository expendInfoRepository;
-
-    @Autowired
-    private IncomeInfoRepository incomeInfoRepository;
+    private final ClassInfoRepository classInfoRepository;
+    private final ExpendInfoRepository expendInfoRepository;
+    private final IncomeInfoRepository incomeInfoRepository;
 
     @Override
     public ApiResponse<QueryResponse> query(ApiRequest<Object> request) {
@@ -67,34 +63,14 @@ public class ReportServiceImpl implements ReportService {
 
         List<ExpendInfo> expendInfosDate = expendInfoRepository.listReportByDateAndClass(request.getUsername(),
                 data.getReportDate(), data.getReportClass());
-        List<ExpendInfo> expendInfosClass = expendInfoRepository.listReportWithClassByDateAndClass(request.getUsername(),
-                data.getReportDate(), data.getReportClass());
+        List<ExpendInfo> expendInfosClass = expendInfoRepository.listReportWithClassByDateAndClass(
+                request.getUsername(), data.getReportDate(), data.getReportClass());
 
-        List<String> date = getReportDateMonth(data.getReportDate());
+        List<String> date = getReportDateMonths(data.getReportDate());
 
         ReportResponse<ExpendInfo> response = ReportResponse.buildExpend(date, expendInfosDate, expendInfosClass);
 
         return ApiResponse.success(response);
-    }
-
-    private List<String> getReportDateMonth(String reportDate) {
-        YearMonth beginMonth;
-        YearMonth endMonth;
-        if (StringUtils.isEmpty(reportDate)) {
-            beginMonth = YearMonth.now().minusMonths(11);
-            endMonth = YearMonth.now();
-        } else {
-            beginMonth = YearMonth.of(Integer.parseInt(reportDate), 1);
-            endMonth = YearMonth.of(Integer.parseInt(reportDate), 12);
-        }
-
-        List<String> date = new ArrayList<>();
-        while (!beginMonth.isAfter(endMonth)) {
-            date.add(beginMonth.toString());
-            beginMonth = beginMonth.plusMonths(1);
-        }
-
-        return date;
     }
 
     @Override
@@ -103,28 +79,15 @@ public class ReportServiceImpl implements ReportService {
 
         List<IncomeInfo> incomeReportDate = incomeInfoRepository.listReportByDate(request.getUsername(),
                 data.getReportDate());
-        List<IncomeInfo> incomeInfosClass = incomeInfoRepository.listReportWithClassByDate(request.getUsername(),
-                data.getReportDate());
+        List<IncomeInfo> incomeInfosClass = incomeInfoRepository.listReportWithClassByDate(
+                request.getUsername(), data.getReportDate());
 
-        List<String> date = getReportDateYear(data.getReportDate());
+        List<String> date = getReportDateYears(data.getReportDate());
 
         ReportResponse<IncomeInfo> response = ReportResponse.buildIncome(date, incomeReportDate,
                 incomeInfosClass);
 
         return ApiResponse.success(response);
-    }
-
-    private List<String> getReportDateYear(String reportDate) {
-        Year beginYear = StringUtils.isEmpty(reportDate) ?
-                Year.now().minusYears(4) : Year.of(Integer.parseInt(reportDate));
-        Year endYear = Year.now();
-        List<String> date = new ArrayList<>();
-        while (!beginYear.isAfter(endYear)) {
-            date.add(beginYear.toString());
-            beginYear = beginYear.plusYears(1);
-        }
-
-        return date;
     }
 
     @Override
@@ -170,5 +133,38 @@ public class ReportServiceImpl implements ReportService {
                 data.getReportDate());
 
         return ApiResponse.success(ReportDetailResponse.buildIncome(incomeInfos));
+    }
+
+    private List<String> getReportDateMonths(String reportDate) {
+        YearMonth beginMonth;
+        YearMonth endMonth;
+        if (StringUtils.isEmpty(reportDate)) {
+            beginMonth = YearMonth.now().minusMonths(11);
+            endMonth = YearMonth.now();
+        } else {
+            beginMonth = YearMonth.of(Integer.parseInt(reportDate), 1);
+            endMonth = YearMonth.of(Integer.parseInt(reportDate), 12);
+        }
+
+        List<String> date = new ArrayList<>();
+        while (!beginMonth.isAfter(endMonth)) {
+            date.add(beginMonth.toString());
+            beginMonth = beginMonth.plusMonths(1);
+        }
+
+        return date;
+    }
+
+    private List<String> getReportDateYears(String reportDate) {
+        Year beginYear = StringUtils.isEmpty(reportDate) ?
+                Year.now().minusYears(4) : Year.of(Integer.parseInt(reportDate));
+        Year endYear = Year.now();
+        List<String> date = new ArrayList<>();
+        while (!beginYear.isAfter(endYear)) {
+            date.add(beginYear.toString());
+            beginYear = beginYear.plusYears(1);
+        }
+
+        return date;
     }
 }

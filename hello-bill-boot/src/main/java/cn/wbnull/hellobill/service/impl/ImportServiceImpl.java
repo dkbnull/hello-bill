@@ -20,7 +20,7 @@ import cn.wbnull.hellobill.dto.imp.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.imp.response.QueryResponse;
 import cn.wbnull.hellobill.service.ImportService;
 import com.opencsv.CSVReader;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,26 +44,17 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
+@RequiredArgsConstructor
 public class ImportServiceImpl implements ImportService {
 
-    @Autowired
-    private ClassInfoRepository classInfoRepository;
-
-    @Autowired
-    private ImportBillInfoRepository importBillInfoRepository;
-    @Autowired
-    private ImportBillClassRepository importBillClassRepository;
-    @Autowired
-    private ImportBillDetailConvertRepository importBillDetailConvertRepository;
-
-    @Autowired
-    private ExpendInfoMapper expendInfoMapper;
-    @Autowired
-    private IncomeInfoMapper incomeInfoMapper;
-    @Autowired
-    private ImportBillClassMapper importBillClassMapper;
-    @Autowired
-    private ImportBillInfoMapper importBillInfoMapper;
+    private final ClassInfoRepository classInfoRepository;
+    private final ImportBillInfoRepository importBillInfoRepository;
+    private final ImportBillClassRepository importBillClassRepository;
+    private final ImportBillDetailConvertRepository importBillDetailConvertRepository;
+    private final ExpendInfoMapper expendInfoMapper;
+    private final IncomeInfoMapper incomeInfoMapper;
+    private final ImportBillClassMapper importBillClassMapper;
+    private final ImportBillInfoMapper importBillInfoMapper;
 
     @Override
     public ApiResponse<Object> billFile(MultipartFile file, String username) {
@@ -112,7 +103,6 @@ public class ImportServiceImpl implements ImportService {
                 tag = true;
                 continue;
             }
-
             if (!tag) {
                 continue;
             }
@@ -183,11 +173,9 @@ public class ImportServiceImpl implements ImportService {
                 tag = true;
                 continue;
             }
-
             if (!tag) {
                 continue;
             }
-
             if ("------------------------------------------------------------------------------------".equals(line[0].trim())) {
                 break;
             }
@@ -261,7 +249,6 @@ public class ImportServiceImpl implements ImportService {
                 tag = true;
                 continue;
             }
-
             if (!tag) {
                 continue;
             }
@@ -388,39 +375,45 @@ public class ImportServiceImpl implements ImportService {
         }
 
         if (ClassTypeEnum.INCOME.getTypeCode() == importBillInfo.getBillType()) {
-            IncomeInfo incomeInfo = BeanUtils.copyProperties(importBillInfo, IncomeInfo.class);
-            incomeInfo.setIncomeDate(importBillInfo.getBillTime().toLocalDate());
-            incomeInfo.setDetail(importBillInfo.getDetailConvert());
-            incomeInfo.setGmtModified(null);
-            try {
-                incomeInfoMapper.insert(incomeInfo);
-            } catch (DuplicateKeyException e) {
-                LoggerUtils.error("确认账单信息异常", e);
-                long epochMilli = DateUtils.toEpochMilli(importBillInfo.getBillTime());
-                incomeInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
-                incomeInfoMapper.insert(incomeInfo);
-            }
+            confirmIncome(importBillInfo);
         } else {
-            ExpendInfo expendInfo = BeanUtils.copyProperties(importBillInfo, ExpendInfo.class);
-            expendInfo.setExpendTime(importBillInfo.getBillTime());
-            expendInfo.setDetail(importBillInfo.getDetailConvert());
-            expendInfo.setGmtModified(null);
-            try {
-                expendInfoMapper.insert(expendInfo);
-            } catch (DuplicateKeyException e) {
-                LoggerUtils.error("确认账单信息异常", e);
-                long epochMilli = DateUtils.toEpochMilli(importBillInfo.getBillTime());
-                expendInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
-                expendInfoMapper.insert(expendInfo);
-            }
+            confirmExpend(importBillInfo);
         }
 
-        // 保存或更新明细转换对应信息
         importBillDetailConvertRepository.updateByImportBillInfo(importBillInfo);
-        // 保存或更新明细品类对应信息
         importBillClassRepository.updateByImportBillInfo(importBillInfo);
         importBillInfoMapper.deleteById(importBillInfo.getId());
 
         return ApiResponse.success("确认成功");
+    }
+
+    private void confirmIncome(ImportBillInfo importBillInfo) {
+        IncomeInfo incomeInfo = BeanUtils.copyProperties(importBillInfo, IncomeInfo.class);
+        incomeInfo.setIncomeDate(importBillInfo.getBillTime().toLocalDate());
+        incomeInfo.setDetail(importBillInfo.getDetailConvert());
+        incomeInfo.setGmtModified(null);
+        try {
+            incomeInfoMapper.insert(incomeInfo);
+        } catch (DuplicateKeyException e) {
+            LoggerUtils.error("确认账单信息异常", e);
+            long epochMilli = DateUtils.toEpochMilli(importBillInfo.getBillTime());
+            incomeInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
+            incomeInfoMapper.insert(incomeInfo);
+        }
+    }
+
+    private void confirmExpend(ImportBillInfo importBillInfo) {
+        ExpendInfo expendInfo = BeanUtils.copyProperties(importBillInfo, ExpendInfo.class);
+        expendInfo.setExpendTime(importBillInfo.getBillTime());
+        expendInfo.setDetail(importBillInfo.getDetailConvert());
+        expendInfo.setGmtModified(null);
+        try {
+            expendInfoMapper.insert(expendInfo);
+        } catch (DuplicateKeyException e) {
+            LoggerUtils.error("确认账单信息异常", e);
+            long epochMilli = DateUtils.toEpochMilli(importBillInfo.getBillTime());
+            expendInfo.setId(SnowflakeUtils.getInstance().nextId(epochMilli));
+            expendInfoMapper.insert(expendInfo);
+        }
     }
 }

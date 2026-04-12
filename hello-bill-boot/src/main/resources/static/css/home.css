@@ -5,10 +5,6 @@
  * @date 2020-12-29
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
-.layui-layout-admin .layui-header {
-    /*background-color: #B58F61;*/
-}
-
 .layui-layout-admin .layui-body {
     top: 50px;
     bottom: 0;
@@ -29,11 +25,6 @@
     color: #FFFFFF;
 }
 
-.layui-nav-tree .layui-nav-item a:hover,
-.layui-nav-tree .layui-nav-child a:hover {
-    background-color: #666666;
-}
-
 .layui-bg-black,
 .layui-side-scroll,
 .layui-nav-tree,
@@ -41,21 +32,11 @@
     font-size: 16px;
     font-weight: bold;
     color: #FFFFFF;
-    /*background-color: #B58F61 !important;*/
-}
-
-.layui-nav-itemed > .layui-nav-child {
-    /*background-color: rgba(0, 0, 0, .1) !important;*/
 }
 
 .layui-nav-tree .layui-nav-item a:hover,
 .layui-nav-tree .layui-nav-child a:hover {
-    /*background-color: #EEAE78;*/
-}
-
-.layui-nav-tree .layui-nav-child dd.layui-this,
-.layui-nav-tree .layui-nav-child dd.layui-this a {
-    /*background-color: #C9B58C;*/
+    background-color: #666666;
 }
 
 .layui-nav-item a {

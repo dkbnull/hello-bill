@@ -1,0 +1,110 @@
+:root {
+    --primary-color: #333333;
+    --primary-hover: #666666;
+    --text-light: #FFFFFF;
+    --text-dark: #333333;
+    --bg-light: #F2F3FA;
+    --border-color: #EEEEEE;
+    --error-color: #FD482C;
+}
+
+.btn-primary {
+    width: 90px;
+    height: 38px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 38px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    font-weight: bold;
+}
+
+.btn-default {
+    width: 90px;
+    height: 38px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 38px;
+    color: var(--text-dark);
+}
+
+.layui-layer-custom .layui-layer-title {
+    background-color: var(--primary-color);
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--text-light);
+}
+
+.layui-layer-custom .layui-layer-setwin {
+    display: none;
+}
+
+.layui-layer-custom .layui-layer-btn .layui-layer-btn0 {
+    width: 90px;
+    height: 38px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 38px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.layui-layer-custom .layui-layer-btn .layui-layer-btn1 {
+    width: 90px;
+    height: 38px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 38px;
+    color: var(--text-dark);
+}
+
+.reload-info .layui-input-block {
+    margin-left: 20px;
+    padding: 10px 15px 0 15px;
+}
+
+.reload-info .layui-btn {
+    width: 90px;
+    background-color: var(--primary-color);
+}
+
+.reload-info .layui-btn-lgc {
+    width: 150px;
+    background-color: var(--primary-color);
+}
+
+.error {
+    color: var(--error-color);
+    height: 10px;
+}
+
+.password-error {
+    color: var(--error-color);
+    height: 10px;
+}
+
+.layui-form-item {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.layui-form-item .layui-inline {
+    margin-bottom: 0;
+}
+
+.layui-form-item .layui-input {
+    width: 85%;
+}
+
+.layui-btn.btn-confirm {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.layui-btn.btn-cancel {
+    color: var(--text-dark);
+}

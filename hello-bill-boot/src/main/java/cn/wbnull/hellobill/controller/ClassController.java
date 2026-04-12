@@ -7,8 +7,7 @@ import cn.wbnull.hellobill.dto.cls.request.QueryRequest;
 import cn.wbnull.hellobill.dto.cls.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.cls.response.QueryResponse;
 import cn.wbnull.hellobill.service.ClassService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,52 +24,27 @@ import java.util.List;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @RestController
-@Scope("prototype")
 @RequestMapping("class")
+@RequiredArgsConstructor
 public class ClassController {
 
-    @Autowired
-    private ClassService classService;
+    private final ClassService classService;
 
-    /**
-     * 分类信息查询接口
-     *
-     * @param request
-     * @return
-     */
     @PostMapping(value = "query")
     public ApiResponse<List<QueryResponse>> query(@RequestBody @Validated ApiRequest<QueryRequest> request) {
         return classService.query(request);
     }
 
-    /**
-     * 分类信息更新接口
-     *
-     * @param request
-     * @return
-     */
     @PostMapping(value = "update")
     public ApiResponse<Object> update(@RequestBody @Validated ApiRequest<UpdateRequest> request) {
         return classService.update(request);
     }
 
-    /**
-     * 二级分类信息查询接口
-     *
-     * @param request
-     * @return
-     */
     @PostMapping(value = "secondClassQuery")
     public ApiResponse<List<String>> secondClassQuery(@RequestBody @Validated ApiRequest<QueryRequest> request) {
         return classService.secondClassQuery(request);
     }
 
-    /**
-     * 报表分类查询接口
-     *
-     * @param request
-     * @return
-     */
     @PostMapping(value = "queryClass")
     public ApiResponse<List<String>> queryClass(@RequestBody @Validated ApiRequest<QueryClassRequest> request) {
         return classService.queryClass(request);

@@ -12,7 +12,7 @@ import cn.wbnull.hellobill.dto.cls.request.QueryRequest;
 import cn.wbnull.hellobill.dto.cls.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.cls.response.QueryResponse;
 import cn.wbnull.hellobill.service.ClassService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,10 +26,10 @@ import java.util.stream.Collectors;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Service
+@RequiredArgsConstructor
 public class ClassServiceImpl implements ClassService {
 
-    @Autowired
-    private ClassInfoRepository classInfoRepository;
+    private final ClassInfoRepository classInfoRepository;
 
     @Override
     public ApiResponse<List<QueryResponse>> query(ApiRequest<QueryRequest> request) {

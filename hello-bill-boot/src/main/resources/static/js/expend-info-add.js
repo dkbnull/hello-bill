@@ -5,166 +5,120 @@
  * @date 2020-12-31
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
+const expendAddConfig = {
+    classType: '0',
+    formFilter: 'expendInfo',
+    queryUrl: "expend/query",
+    addUrl: "expend/add",
+    updateUrl: "expend/update",
+    requiredFields: [
+        {name: 'expendTime', message: '时间不能为空'},
+        {name: 'secondClass', message: '分类不能为空'},
+        {name: 'detail', message: '明细不能为空'},
+        {name: 'amount', message: '金额不能为空'}
+    ],
+    initDatetime: function ($, form) {
+        const laydate = layui.laydate;
+        laydate.render({
+            elem: '#expend-date-input',
+            type: 'datetime',
+            theme: 'grid',
+            value: datetimeCalc(0),
+            max: 1,
+            done: function (value) {
+                $("#expend-time-value-input").val(value);
+            }
+        });
+    },
+    fillForm: function (data) {
+        $("#expend-time-value-input").val(data.expendTime);
+        $("#second-class-select").val(data.secondClass);
+        $("#detail-input").val(data.detail);
+        $("#amount-input").val(data.amount);
+        $("#remark-input").val(data.remark);
+    },
+    onDataLoaded: function (data) {
+        const laydate = layui.laydate;
+        laydate.render({
+            elem: '#expend-date-input',
+            type: 'datetime',
+            theme: 'grid',
+            value: data.expendTime,
+            max: 1,
+            done: function (value) {
+                $("#expend-time-value-input").val(value);
+            }
+        });
+    },
+    bindKeyEvents: function () {
+        $("#expend-time-value-input").on("input", function (e) {
+            let value = e.delegateTarget.value.replaceAll("：", ":");
+            if (value.indexOf("-") === -1) {
+                value = formatDateYyyy(value);
+            }
+            const laydate = layui.laydate;
+            laydate.render({
+                elem: '#expend-date-input',
+                type: 'datetime',
+                theme: 'grid',
+                value: value,
+                max: 1,
+                done: function (val) {
+                    $("#expend-time-value-input").val(val);
+                }
+            });
+        });
+
+        $('#expend-time-value-input').focus();
+        $('#expend-time-value-input').on('keydown', function (event) {
+            if (event.keyCode === 13) {
+                $('#second-class-select').focus();
+                return false;
+            }
+        });
+        $('#second-class-select').on('keydown', function (event) {
+            if (event.keyCode === 13) {
+                $('#detail-input').focus();
+                return false;
+            }
+        });
+        $('#detail-input').on('keydown', function (event) {
+            if (event.keyCode === 13) {
+                $('#amount-input').focus();
+                return false;
+            }
+        });
+        $('#amount-input').on('keydown', function (event) {
+            if (event.keyCode === 13) {
+                $('#remark-input').focus();
+                return false;
+            }
+        });
+        $('#remark-input').on('keydown', function (event) {
+            if (event.keyCode === 13) {
+                addInfo();
+                return false;
+            }
+        });
+    }
+};
+
 let $, form;
 
 layui.use(['layer', 'form', 'laydate'], function () {
     $ = layui.jquery;
     form = layui.form;
 
-    initDatetime(datetimeCalc(0));
-    initClass();
-    initData();
-    initMethod();
-})
-
-function initDatetime(dateTime) {
-    const laydate = layui.laydate;
-
-    laydate.render({
-        elem: '#expend-date-input',
-        type: 'datetime',
-        theme: 'grid',
-        value: dateTime,
-        max: 1,
-        done: function (value, date) {
-            $("#expend-time-value-input").val(value);
-        }
-    });
-}
-
-function initClass() {
-    const data = {
-        type: '0'
-    };
-
-    doPost("class/secondClassQuery", data, callback)
-}
-
-function initData() {
-    const search = window.location.search;
-    if (search.startsWith("?id")) {
-        const data = {
-            id: search.substring(4, search.length)
-        };
-
-        doPost("expend/query", data, callbackQuery)
-    }
-}
-
-function initMethod() {
-    $("#expend-time-value-input").on("input", function (e) {
-        let value = e.delegateTarget.value.replaceAll("：", ":");
-        if (value.indexOf("-") === -1) {
-            value = formatDateYyyy(value);
-        }
-
-        initDatetime(value);
-    });
-
-    $('#expend-time-value-input').focus();
-    $('#expend-time-value-input').on('keydown', function (event) {
-        if (event.keyCode === 13) {
-            $('#second-class-select').focus();
-            return false
-        }
-    });
-    $('#second-class-select').on('keydown', function (event) {
-        if (event.keyCode === 13) {
-            $('#detail-input').focus();
-            return false
-        }
-    });
-    $('#detail-input').on('keydown', function (event) {
-        if (event.keyCode === 13) {
-            $('#amount-input').focus();
-            return false
-        }
-    });
-    $('#amount-input').on('keydown', function (event) {
-        if (event.keyCode === 13) {
-            $('#remark-input').focus();
-            return false
-        }
-    });
-    $('#remark-input').on('keydown', function (event) {
-        if (event.keyCode === 13) {
-            addInfo();
-            return false
-        }
-    });
-}
+    expendAddConfig.initDatetime($, form);
+    initAddClass(expendAddConfig.classType);
+    initAddData(expendAddConfig);
+    initAddMethod(expendAddConfig);
+});
 
 function addInfo() {
-    const data = form.val('expendInfo');
-    if (!checkData(data)) {
-        return
-    }
-
-    doPost("expend/add", data, callbackAdd);
+    submitBillInfo(form, expendAddConfig.formFilter, expendAddConfig);
 }
 
 function updateInfo() {
-    const data = form.val('expendInfo');
-    if (!checkData(data)) {
-        return
-    }
-
-    const search = window.location.search;
-    data.id = search.substring(4, search.length);
-    doPost("expend/update", data, callbackAdd);
-}
-
-function checkData(data) {
-    const error = $(".error");
-    if (data.expendTime.length === 0) {
-        error.text("时间不能为空");
-        return false;
-    }
-    if (data.secondClass.length === 0) {
-        error.text("分类不能为空");
-        return false;
-    }
-    if (data.detail.length === 0) {
-        error.text("明细不能为空");
-        return false;
-    }
-    if (data.amount.length === 0) {
-        error.text("金额不能为空");
-        return false;
-    }
-
-    error.text("");
-    return true;
-}
-
-function callback(result) {
-    for (let i = 0; i < result.data.length; i++) {
-        $("#second-class-select").append('<option>' + result.data[i] + '</option>');
-    }
-
-    form.render();
-}
-
-function callbackQuery(result) {
-    const data = result.data;
-    $("#expend-time-value-input").val(data.expendTime);
-    $("#second-class-select").val(data.secondClass);
-    $("#detail-input").val(data.detail);
-    $("#amount-input").val(data.amount);
-    $("#remark-input").val(data.remark);
-
-    form.render();
-
-    initDatetime(data.expendTime);
-}
-
-function callbackAdd(result) {
-    const error = $(".error");
-
-    if (!isSuccess(result.code)) {
-        error.text(result.message);
-        return;
-    }
-
-    parent.closeAll(result.message);
+    submitBillInfo(form, expendAddConfig.formFilter, expendAddConfig);
 }

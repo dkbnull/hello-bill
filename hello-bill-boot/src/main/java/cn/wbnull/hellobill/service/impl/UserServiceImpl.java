@@ -10,8 +10,8 @@ import cn.wbnull.hellobill.dto.user.request.ChangePasswordRequest;
 import cn.wbnull.hellobill.dto.user.request.LoginRequest;
 import cn.wbnull.hellobill.dto.user.response.LoginResponse;
 import cn.wbnull.hellobill.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,13 +22,11 @@ import org.springframework.stereotype.Service;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
-    private UserInfoRepository userInfoRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserInfoRepository userInfoRepository;
 
     @Override
     public ApiResponse<LoginResponse> login(ApiRequest<LoginRequest> request) {

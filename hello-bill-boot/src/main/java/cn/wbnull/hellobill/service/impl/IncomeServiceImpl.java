@@ -14,7 +14,7 @@ import cn.wbnull.hellobill.dto.income.request.AddRequest;
 import cn.wbnull.hellobill.dto.income.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.income.response.QueryResponse;
 import cn.wbnull.hellobill.service.IncomeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,13 +27,11 @@ import java.util.List;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Service
+@RequiredArgsConstructor
 public class IncomeServiceImpl implements IncomeService {
 
-    @Autowired
-    private IncomeInfoMapper incomeInfoMapper;
-
-    @Autowired
-    private IncomeInfoRepository incomeInfoRepository;
+    private final IncomeInfoMapper incomeInfoMapper;
+    private final IncomeInfoRepository incomeInfoRepository;
 
     @Override
     public ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request) {
