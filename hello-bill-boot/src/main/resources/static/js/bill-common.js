@@ -5,8 +5,6 @@
  * @date 2026-04-12
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
-let $;
-
 function initBillListPage(config) {
     layui.use(['layer', 'table', 'laydate'], function () {
         if (!validate()) {
@@ -63,7 +61,7 @@ function initListMethod(config) {
                 skin: 'layui-layer-custom',
                 title: '记账',
                 content: config.addPageUrl,
-                area: ['350px', config.addPageHeight],
+                area: ['400px', config.addPageHeight],
                 shade: 0,
                 btn: ['确认', '取消'],
                 yes: function (index, layero) {
@@ -108,7 +106,7 @@ function renderListTable(result, config) {
                     type: 2,
                     title: '修改',
                     content: config.addPageUrl + '?id=' + obj.data.id,
-                    area: ['350px', '500px'],
+                    area: ['400px', '500px'],
                     maxmin: true,
                     shade: 0,
                     btn: ['确认', '取消'],
@@ -158,9 +156,9 @@ function initBillAddPage(config) {
 }
 
 function initAddClass(classType) {
-    doPost("class/secondClassQuery", {type: classType}, function (result) {
+    doPost('class/secondClassQuery', {type: classType}, function (result) {
         for (let i = 0; i < result.data.length; i++) {
-            $("#second-class-select").append('<option>' + result.data[i] + '</option>');
+            $('#second-class-select').append('<option>' + result.data[i] + '</option>');
         }
         layui.form.render();
     });
@@ -168,7 +166,7 @@ function initAddClass(classType) {
 
 function initAddData(config) {
     const search = window.location.search;
-    if (search.startsWith("?id")) {
+    if (search.startsWith('?id')) {
         const data = {id: search.substring(4, search.length)};
         doPost(config.queryUrl, data, function (result) {
             config.fillForm(result.data);
@@ -191,7 +189,7 @@ function submitBillInfo(form, formFilter, config) {
     }
 
     const search = window.location.search;
-    if (search.startsWith("?id")) {
+    if (search.startsWith('?id')) {
         data.id = search.substring(4, search.length);
         doPost(config.updateUrl, data, handleBillCallback);
     } else {
@@ -200,7 +198,7 @@ function submitBillInfo(form, formFilter, config) {
 }
 
 function validateBillData(data, config) {
-    const error = $(".error");
+    const error = $('.error');
     const fields = config.requiredFields;
 
     for (let i = 0; i < fields.length; i++) {
@@ -210,12 +208,12 @@ function validateBillData(data, config) {
         }
     }
 
-    error.text("");
+    error.text('');
     return true;
 }
 
 function handleBillCallback(result) {
-    const error = $(".error");
+    const error = $('.error');
     if (!isSuccess(result.code)) {
         error.text(result.message);
         return;

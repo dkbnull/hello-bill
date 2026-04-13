@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Hello Bill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Bill - 首页</title>
+    <link rel="icon" href="img/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="lib/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="css/app.css" media="all">
     <link rel="stylesheet" href="css/home.css" media="all">
@@ -11,17 +13,20 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo"><img src="img/logo.svg" style="height:30px;vertical-align:middle;margin-right:8px;">Hello Bill</div>
+        <div class="layui-logo">
+            <img src="img/logo.svg" alt="Logo">
+            <span>Hello Bill</span>
+        </div>
         <div class="layui-layout-right">
             <ul class="layui-nav">
                 <li class="layui-nav-item">
-                    <a class="cursor-pointer" href="javascript:;">
-                        <label class="layui-icon layui-icon-username"></label>
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-username"></i>
                         <span class="username">姓名</span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd data-method="changePassword"><a>修改密码</a></dd>
-                        <dd data-method="logout"><a>退出</a></dd>
+                        <dd data-method="logout"><a>退出登录</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -32,70 +37,63 @@
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree">
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;">收支报表</a>
+                    <a href="javascript:;">收支报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;"
                                data-method="openTab"
                                data-id="10"
                                data-title="收支报表"
-                               data-href="report.html">&nbsp;&nbsp;&nbsp;&nbsp;收支报表</a></dd>
+                               data-href="report.html">收支报表</a></dd>
                         <dd><a href="javascript:;"
                                data-method="openTab"
                                data-id="11"
                                data-title="支出分类报表"
-                               data-href="report-expend-class.html">&nbsp;&nbsp;&nbsp;&nbsp;支出分类报表</a></dd>
+                               data-href="report-expend-class.html">支出分类报表</a></dd>
                         <dd><a href="javascript:;"
                                data-method="openTab"
                                data-id="12"
                                data-title="收入分类报表"
-                               data-href="report-income-class.html">&nbsp;&nbsp;&nbsp;&nbsp;收入分类报表</a></dd>
+                               data-href="report-income-class.html">收入分类报表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;">收支信息</a>
+                    <a href="javascript:;">收支信息</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;"
                                data-method="openTab"
                                data-id="20"
                                data-title="支出明细"
-                               data-href="expend-info.html">&nbsp;&nbsp;&nbsp;&nbsp;支出明细</a>
-                        </dd>
-                    </dl>
-                    <dl class="layui-nav-child">
+                               data-href="expend-info.html">支出明细</a></dd>
                         <dd><a href="javascript:;"
                                data-method="openTab"
                                data-id="21"
                                data-title="收入明细"
-                               data-href="income-info.html">&nbsp;&nbsp;&nbsp;&nbsp;收入明细</a>
-                        </dd>
-                    </dl>
-                    <dl class="layui-nav-child">
+                               data-href="income-info.html">收入明细</a></dd>
                         <dd><a href="javascript:;"
                                data-method="openTab"
                                data-id="22"
                                data-title="导入数据"
-                               data-href="import.html">&nbsp;&nbsp;&nbsp;&nbsp;导入数据</a>
-                        </dd>
+                               data-href="import.html">导入数据</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;">资产管理</a>
+                    <a href="javascript:;">资产管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;"
                                data-method="openTab"
                                data-id="30"
                                data-title="资产信息"
-                               data-href="balance-sheet.html">&nbsp;&nbsp;&nbsp;&nbsp;资产信息</a></dd>
+                               data-href="balance-sheet.html">资产信息</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;">分类管理</a>
+                    <a href="javascript:;">分类管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;"
                                data-method="openTab"
                                data-id="90"
                                data-title="分类信息"
-                               data-href="class-info.html">&nbsp;&nbsp;&nbsp;&nbsp;分类信息</a></dd>
+                               data-href="class-info.html">分类信息</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -104,18 +102,14 @@
 
     <div class="layui-body">
         <div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="navTab">
-            <ul class="layui-tab-title">
-
-            </ul>
+            <ul class="layui-tab-title"></ul>
             <ul class="tab-popup-menu">
                 <li data-type="refreshThis">刷新</li>
                 <li data-type="closeThis">关闭当前</li>
                 <li data-type="closeOther">关闭其他</li>
                 <li data-type="closeAll">关闭所有</li>
             </ul>
-            <div class="layui-tab-content">
-
-            </div>
+            <div class="layui-tab-content"></div>
         </div>
     </div>
 </div>

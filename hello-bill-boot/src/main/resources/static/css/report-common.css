@@ -18,7 +18,8 @@
 .report-chart {
     height: 500px;
     margin: 0 auto;
-    background-color: #FFFFFF;
+    background-color: var(--bg-white);
+    border-radius: 4px;
 }
 
 .report-second-class-pie-chart-item {
@@ -28,5 +29,5 @@
 }
 
 .report-display-none {
-    display: none
+    display: none;
 }

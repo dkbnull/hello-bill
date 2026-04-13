@@ -7,10 +7,10 @@
  */
 const expendListConfig = {
     defaultBeginDate: dateBeginTheMonth(),
-    queryUrl: "expend/queryList",
+    queryUrl: 'expend/queryList',
     addPageUrl: 'expend-info-add.html',
     addPageHeight: '620px',
-    deleteUrl: "expend/delete",
+    deleteUrl: 'expend/delete',
     editConfirmMsg: '是否修改当前支出明细？',
     deleteConfirmMsg: '是否删除当前支出明细？',
     columns: [

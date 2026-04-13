@@ -39,16 +39,16 @@ function initMethod() {
             doPostQuery();
         } else {
             const reUploadFile = $('#re-upload-file');
-            reUploadFile.removeClass("layui-hide");
+            reUploadFile.removeClass('layui-hide');
             reUploadFile.on('click', function () {
                 uploadFile.upload();
             });
         }
-    })
+    });
 }
 
 function doPostQuery() {
-    doPost("import/queryList", null, callback)
+    doPost('import/queryList', null, callback);
 }
 
 function callback(result) {
@@ -96,7 +96,7 @@ function callback(result) {
                     id: obj.data.id
                 };
 
-                doPost("import/confirm", data, callbackQuery)
+                doPost('import/confirm', data, callbackQuery);
                 layer.close(index);
             });
         } else if (obj.event === 'del') {
@@ -105,7 +105,7 @@ function callback(result) {
                     id: obj.data.id
                 };
 
-                doPost("import/delete", data, callbackQuery)
+                doPost('import/delete', data, callbackQuery);
                 layer.close(index);
             });
         }

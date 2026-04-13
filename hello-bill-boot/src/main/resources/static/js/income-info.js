@@ -7,10 +7,10 @@
  */
 const incomeListConfig = {
     defaultBeginDate: dateBeginTheYear(),
-    queryUrl: "income/queryList",
+    queryUrl: 'income/queryList',
     addPageUrl: 'income-info-add.html',
     addPageHeight: '560px',
-    deleteUrl: "income/delete",
+    deleteUrl: 'income/delete',
     editConfirmMsg: '是否修改当前收入明细？',
     deleteConfirmMsg: '是否删除当前收入明细？',
     columns: [

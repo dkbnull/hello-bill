@@ -5,38 +5,87 @@
  * @date 2020-12-29
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
+.layui-layout-admin .layui-header {
+    background-color: var(--header-bg) !important;
+}
+
 .layui-layout-admin .layui-body {
     top: 50px;
     bottom: 0;
+    background-color: var(--bg-light);
 }
 
-.layui-layout-admin .layui-header .layui-logo,
+.layui-layout-admin .layui-header .layui-logo {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.layui-layout-admin .layui-header .layui-logo img {
+    height: 28px;
+    margin-right: 10px;
+}
+
 .layui-layout-admin .layui-header .layui-nav-item,
 .layui-layout-admin .layui-header .layui-nav-item .layui-icon-username,
 .layui-layout-admin .layui-header .layui-nav-item .username {
-    font-size: 16px;
-    font-weight: bold;
-    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-light);
 }
 
-.layui-header .layui-nav .layui-nav-child a:hover,
-.layui-header .layui-nav .layui-nav-child dd.layui-this a:hover {
-    background-color: #666666;
-    color: #FFFFFF;
+.layui-header .layui-nav .layui-nav-child {
+    background-color: var(--bg-white) !important;
+}
+
+.layui-header .layui-nav .layui-nav-child a {
+    color: var(--text-dark) !important;
+}
+
+.layui-header .layui-nav .layui-nav-child a:hover {
+    background-color: var(--primary-bg) !important;
+    color: var(--primary-dark) !important;
+}
+
+.layui-side {
+    background-color: var(--sidebar-bg) !important;
 }
 
 .layui-bg-black,
 .layui-side-scroll,
 .layui-nav-tree,
-.layui-nav-child {
-    font-size: 16px;
-    font-weight: bold;
-    color: #FFFFFF;
+.layui-side .layui-nav-child {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-light);
+    background-color: var(--sidebar-bg) !important;
 }
 
-.layui-nav-tree .layui-nav-item a:hover,
+.layui-nav-tree .layui-nav-item a {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.layui-nav-tree .layui-nav-item a:hover {
+    background-color: rgba(66, 184, 131, 0.25) !important;
+    color: var(--text-light);
+}
+
 .layui-nav-tree .layui-nav-child a:hover {
-    background-color: #666666;
+    background-color: rgba(66, 184, 131, 0.25) !important;
+    color: var(--text-light);
+}
+
+.layui-nav-tree .layui-nav-child dd.layui-this,
+.layui-nav-tree .layui-nav-child dd.layui-this a {
+    background-color: var(--sidebar-active) !important;
+    color: var(--text-light);
+}
+
+.layui-nav-tree .layui-nav-child {
+    padding-left: 20px;
 }
 
 .layui-nav-item a {
@@ -66,14 +115,15 @@
 .tab-popup-menu {
     width: 100px;
     z-index: 9999;
-    background-color: #FFFFFF;
+    background-color: var(--bg-white);
     padding: 4px;
-    color: #333333;
-    border: 1px solid #EEEEEE;
-    border-radius: 2px;
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     display: none;
-    position: absolute
+    position: absolute;
 }
 
 .tab-popup-menu li {
@@ -81,16 +131,31 @@
     display: block;
     height: 30px;
     line-height: 30px;
+    border-radius: 2px;
 }
 
 .tab-popup-menu li:hover {
-    background-color: #666666;
-    color: #FFFFFF;
+    background-color: var(--primary-color);
+    color: var(--text-light);
 }
 
 .layui-tab-title .layui-this {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
+    color: var(--primary-dark) !important;
+    background-color: var(--primary-bg) !important;
+}
+
+.layui-tab-title .layui-this::after {
+    /*background-color: var(--primary-color) !important;*/
+}
+
+.layui-tab-title li {
+    color: var(--text-dark);
+}
+
+.layui-tab-title li:hover {
+    color: var(--primary-dark);
 }
 
 input::-webkit-outer-spin-button,

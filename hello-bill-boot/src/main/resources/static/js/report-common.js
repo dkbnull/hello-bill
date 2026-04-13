@@ -64,12 +64,10 @@ function barChartClass(result, title, id, tag) {
     const amountData = new Map(Object.entries(result.data.amountData));
     for (let i = 0; i < result.data.date.length; i++) {
         const date = result.data.date[i];
-        const seriesDataItem = {
+        seriesData.push({
             value: amountData.get(date),
             groupId: date
-        };
-
-        seriesData.push(seriesDataItem)
+        });
     }
 
     const option = {
@@ -110,24 +108,19 @@ function barChartClass(result, title, id, tag) {
 
     let drilldownData = [];
     for (let i = 0; i < result.data.date.length; i++) {
-        const date = result.data.date[i];
-        const classAmountData = result.data.classAmountData[date];
+        const drillDate = result.data.date[i];
+        const classAmountData = result.data.classAmountData[drillDate];
         const classAmountDataMap = new Map(Object.entries(isEmpty(classAmountData) ? {} : classAmountData));
 
         const data = [];
-        classAmountDataMap.forEach((value, key) => {
-            const dataItem = [];
-            dataItem.push(key);
-            dataItem.push(value);
-            data.push(dataItem);
-        })
+        classAmountDataMap.forEach(function (value, key) {
+            data.push([key, value]);
+        });
 
-        const drilldownDataItem = {
+        drilldownData.push({
             data: data,
-            dataGroupId: date
-        };
-
-        drilldownData.push(drilldownDataItem)
+            dataGroupId: drillDate
+        });
     }
 
     const dom = document.getElementById(id);
@@ -135,10 +128,11 @@ function barChartClass(result, title, id, tag) {
         renderer: 'canvas',
         useDirtyRect: false
     });
+
     barChart.on('click', function (event) {
         if (event.data) {
-            const subData = drilldownData.find(function (data) {
-                return data.dataGroupId === event.data.groupId;
+            const subData = drilldownData.find(function (item) {
+                return item.dataGroupId === event.data.groupId;
             });
             if (!subData) {
                 return;
@@ -183,7 +177,7 @@ function barChartClass(result, title, id, tag) {
 }
 
 function barChartReportClass(data, seriesData) {
-    let option = {
+    const option = {
         grid: {
             left: '3%',
             right: '4%',
@@ -209,17 +203,17 @@ function barChartReportClass(data, seriesData) {
         ]
     };
 
-    const barChart = echarts.init(document.getElementById("report-class-bar-chart"));
+    const barChart = echarts.init(document.getElementById('report-class-bar-chart'));
     barChart.setOption(option);
 }
 
 function pieChartReportClass(data, seriesData) {
-    let seriesDataNew = [];
+    const seriesDataNew = [];
     for (let i = 0; i < data.length; i++) {
         seriesDataNew.push({
             value: seriesData[i],
             name: data[i]
-        })
+        });
     }
 
     const option = {
@@ -243,7 +237,6 @@ function pieChartReportClass(data, seriesData) {
                 data: seriesDataNew,
                 label: {
                     formatter: '{name|{b}}\n{per|{d}%}',
-                    // formatter: '{b}{abg}\n  {c}  {d}%  ',
                     rich: {
                         per: {
                             fontSize: 10,
@@ -265,12 +258,12 @@ function pieChartReportClass(data, seriesData) {
         ]
     };
 
-    const pieChart = echarts.init(document.getElementById("report-class-pie-chart"));
+    const pieChart = echarts.init(document.getElementById('report-class-pie-chart'));
     pieChart.setOption(option);
 }
 
 function barChartReportDetail(data, seriesData) {
-    let option = {
+    const option = {
         grid: {
             left: '3%',
             bottom: '3%',
@@ -295,6 +288,6 @@ function barChartReportDetail(data, seriesData) {
         ]
     };
 
-    const barChart = echarts.init(document.getElementById("report-detail-bar-chart"));
+    const barChart = echarts.init(document.getElementById('report-detail-bar-chart'));
     barChart.setOption(option);
 }

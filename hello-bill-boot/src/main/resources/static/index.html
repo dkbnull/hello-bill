@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Hello Bill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Bill - 登录</title>
+    <link rel="icon" href="img/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="lib/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="css/app.css" media="all">
     <link rel="stylesheet" href="css/index.css" media="all">
@@ -10,10 +12,10 @@
 <body>
 <div class="login-container">
     <div class="login-img">
-        <div style="position:relative;top:50%;transform:translateY(-50%);text-align:center;">
-            <img src="img/logo.svg" style="width:120px;height:120px;">
-            <div style="color:#FFFFFF;font-size:28px;font-weight:bold;margin-top:20px;">Hello Bill</div>
-            <div style="color:#B2BEC3;font-size:14px;margin-top:10px;">个人智能记账系统</div>
+        <div class="login-brand">
+            <img src="img/logo.svg" alt="Hello Bill Logo" class="login-logo">
+            <div class="login-title">Hello Bill</div>
+            <div class="login-subtitle">个人智能记账系统</div>
         </div>
     </div>
     <div class="login-main">
@@ -30,9 +32,9 @@
                     <input type="password" name="password" lay-verify="password" placeholder="密码"
                            autocomplete="off" class="layui-input" id="password">
                 </div>
-
                 <div class="layui-form-item">
-                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="login"><span>登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="login">
+                        <span>登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
                     </button>
                 </div>
             </form>

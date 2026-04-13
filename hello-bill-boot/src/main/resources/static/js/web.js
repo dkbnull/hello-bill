@@ -5,22 +5,20 @@
  * @date 2020-12-29
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
-doPost = function (url, data, callback) {
+const doPost = function (url, data, callback) {
     const $ = layui.jquery;
 
-    let loading = layer.load(1, {
-        shade: false,
-    });
+    const loading = layer.load(1, {shade: false});
 
     const request = getRequest(data);
 
     $.ajax({
-        type: "POST",
-        contentType: "application/json;charset=UTF-8",
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
         url: url,
         data: JSON.stringify(request),
-        headers: {"Authorization": 'Bearer ' + getItem("token")},
-        dataType: "json",
+        headers: {'Authorization': 'Bearer ' + getItem('token')},
+        dataType: 'json',
         success: function (result) {
             callbackSuccess(loading, result, callback);
         },
@@ -28,15 +26,13 @@ doPost = function (url, data, callback) {
             callbackFail(loading, XMLHttpRequest, callback);
         }
     });
-}
+};
 
-doUpload = function (elem, exts, url, data, callback) {
+const doUpload = function (elem, exts, url, data, callback) {
     const upload = layui.upload;
     const element = layui.element;
 
-    let loading = layer.load(1, {
-        shade: false,
-    });
+    const loading = layer.load(1, {shade: false});
 
     const request = getRequest(data);
 
@@ -46,7 +42,7 @@ doUpload = function (elem, exts, url, data, callback) {
         accept: 'file',
         exts: exts,
         data: request,
-        headers: {"Authorization": 'Bearer ' + getItem("token")},
+        headers: {'Authorization': 'Bearer ' + getItem('token')},
         progress: function (n, elem, res, index) {
             element.progress('uploadProgress', n + '%');
         },
@@ -58,7 +54,7 @@ doUpload = function (elem, exts, url, data, callback) {
             layer.close(loading);
         }
     });
-}
+};
 
 function getRequest(data) {
     if (data == null) {
@@ -69,17 +65,17 @@ function getRequest(data) {
     const nonce = Math.round(Math.random() * 10000000000);
 
     return {
-        username: isEmpty(getItem("username")) ? data.username : getItem("username"),
+        username: isEmpty(getItem('username')) ? data.username : getItem('username'),
         timestamp: timestamp,
         nonce: nonce,
-        sign: "sign",
+        sign: 'sign',
         data: data
     };
 }
 
 function callbackSuccess(loading, result, callback) {
     if (isEmpty(result)) {
-        layer.alert("返回参数为空");
+        layer.alert('返回参数为空');
         layer.close(loading);
         return;
     }
@@ -90,9 +86,7 @@ function callbackSuccess(loading, result, callback) {
             parent.window.location.href = 'index.html';
             layer.close(index);
         });
-
         layer.close(loading);
-
         return;
     }
 
@@ -108,7 +102,7 @@ function callbackSuccess(loading, result, callback) {
 
 function callbackFail(loading, XMLHttpRequest, callback) {
     if (isEmpty(XMLHttpRequest.responseJSON)) {
-        layer.alert("未知异常");
+        layer.alert('未知异常');
         layer.close(loading);
         return;
     }
@@ -118,10 +112,10 @@ function callbackFail(loading, XMLHttpRequest, callback) {
     layer.close(loading);
 }
 
-isSuccess = function (code) {
-    return code === "1000";
-}
+const isSuccess = function (code) {
+    return code === '1000';
+};
 
-isTokenExpired = function (code) {
-    return code.length === 4 && code.startsWith("30");
-}
+const isTokenExpired = function (code) {
+    return code.length === 4 && code.startsWith('30');
+};

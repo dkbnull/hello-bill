@@ -8,9 +8,9 @@
 const expendAddConfig = {
     classType: '0',
     formFilter: 'expendInfo',
-    queryUrl: "expend/query",
-    addUrl: "expend/add",
-    updateUrl: "expend/update",
+    queryUrl: 'expend/query',
+    addUrl: 'expend/add',
+    updateUrl: 'expend/update',
     requiredFields: [
         {name: 'expendTime', message: '时间不能为空'},
         {name: 'secondClass', message: '分类不能为空'},
@@ -26,16 +26,16 @@ const expendAddConfig = {
             value: datetimeCalc(0),
             max: 1,
             done: function (value) {
-                $("#expend-time-value-input").val(value);
+                $('#expend-time-value-input').val(value);
             }
         });
     },
     fillForm: function (data) {
-        $("#expend-time-value-input").val(data.expendTime);
-        $("#second-class-select").val(data.secondClass);
-        $("#detail-input").val(data.detail);
-        $("#amount-input").val(data.amount);
-        $("#remark-input").val(data.remark);
+        $('#expend-time-value-input').val(data.expendTime);
+        $('#second-class-select').val(data.secondClass);
+        $('#detail-input').val(data.detail);
+        $('#amount-input').val(data.amount);
+        $('#remark-input').val(data.remark);
     },
     onDataLoaded: function (data) {
         const laydate = layui.laydate;
@@ -46,14 +46,14 @@ const expendAddConfig = {
             value: data.expendTime,
             max: 1,
             done: function (value) {
-                $("#expend-time-value-input").val(value);
+                $('#expend-time-value-input').val(value);
             }
         });
     },
     bindKeyEvents: function () {
-        $("#expend-time-value-input").on("input", function (e) {
-            let value = e.delegateTarget.value.replaceAll("：", ":");
-            if (value.indexOf("-") === -1) {
+        $('#expend-time-value-input').on('input', function (e) {
+            let value = e.delegateTarget.value.replaceAll('：', ':');
+            if (value.indexOf('-') === -1) {
                 value = formatDateYyyy(value);
             }
             const laydate = layui.laydate;
@@ -64,7 +64,7 @@ const expendAddConfig = {
                 value: value,
                 max: 1,
                 done: function (val) {
-                    $("#expend-time-value-input").val(val);
+                    $('#expend-time-value-input').val(val);
                 }
             });
         });
@@ -103,7 +103,7 @@ const expendAddConfig = {
     }
 };
 
-let $, form;
+let form;
 
 layui.use(['layer', 'form', 'laydate'], function () {
     $ = layui.jquery;

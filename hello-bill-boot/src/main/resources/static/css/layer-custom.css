@@ -26,6 +26,11 @@
     color: var(--text-light);
     font-weight: bold;
     margin-right: 20px;
+    border-radius: 4px;
+}
+
+.layui-layer-custom .layui-layer-btn .layui-layer-btn0:hover {
+    background-color: var(--primary-dark);
 }
 
 .layui-layer-custom .layui-layer-btn .layui-layer-btn1 {

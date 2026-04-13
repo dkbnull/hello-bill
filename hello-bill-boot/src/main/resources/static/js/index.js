@@ -6,20 +6,21 @@
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 layui.use(['layer', 'form'], function () {
-    if (!isEmpty(getItem("username"))) {
-        window.location.href = "home.html";
+    if (!isEmpty(getItem('username'))) {
+        window.location.href = 'home.html';
         return;
     }
 
     const $ = layui.jquery;
     const form = layui.form;
+
     form.on('submit(login)', function (obj) {
         if (document.activeElement.id === 'username') {
             $('#password').focus();
             return false;
         }
 
-        const data = obj.field
+        const data = obj.field;
         if (isEmpty(data.username)) {
             layer.msg('用户名不能为空');
             $('#username').focus();
@@ -31,14 +32,13 @@ layui.use(['layer', 'form'], function () {
             return false;
         }
 
-        doPost("user/login", data, callback)
+        doPost('user/login', data, callback);
         return false;
     });
 });
 
 function callback(result) {
-    setItem("username", result.data.username);
-    setItem("token", result.data.token);
-
-    window.location.href = "home.html";
+    setItem('username', result.data.username);
+    setItem('token', result.data.token);
+    window.location.href = 'home.html';
 }

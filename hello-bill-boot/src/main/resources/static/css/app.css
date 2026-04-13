@@ -1,11 +1,22 @@
 :root {
-    --primary-color: #333333;
-    --primary-hover: #666666;
+    --primary-color: #42b883;
+    --primary-dark: #36a06f;
+    --primary-light: #5ec49b;
+    --primary-bg: #e8f5ef;
+    --accent-color: #42b883;
+    --accent-light: #5ec49b;
+    --header-bg: #1E2A3A;
+    --sidebar-bg: #243447;
+    --sidebar-active: #42b883;
     --text-light: #FFFFFF;
-    --text-dark: #333333;
-    --bg-light: #F2F3FA;
-    --border-color: #EEEEEE;
-    --error-color: #FD482C;
+    --text-dark: #2D3436;
+    --text-muted: #636E72;
+    --bg-light: #F5F7FA;
+    --bg-white: #FFFFFF;
+    --border-color: #E0E6ED;
+    --error-color: #E74C3C;
+    --warning-color: #F39C12;
+    --success-color: #42b883;
 }
 
 .btn-primary {
@@ -17,6 +28,11 @@
     background-color: var(--primary-color);
     color: var(--text-light);
     font-weight: bold;
+    border-radius: 4px;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
 }
 
 .btn-default {
@@ -49,6 +65,11 @@
     color: var(--text-light);
     font-weight: bold;
     margin-right: 20px;
+    border-radius: 4px;
+}
+
+.layui-layer-custom .layui-layer-btn .layui-layer-btn0:hover {
+    background-color: var(--primary-dark);
 }
 
 .layui-layer-custom .layui-layer-btn .layui-layer-btn1 {
@@ -60,6 +81,12 @@
     color: var(--text-dark);
 }
 
+.reload-info {
+    padding: 15px 20px;
+    background-color: var(--bg-white);
+    border-bottom: 1px solid var(--border-color);
+}
+
 .reload-info .layui-input-block {
     margin-left: 20px;
     padding: 10px 15px 0 15px;
@@ -68,6 +95,11 @@
 .reload-info .layui-btn {
     width: 90px;
     background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+.reload-info .layui-btn:hover {
+    background-color: var(--primary-dark);
 }
 
 .reload-info .layui-btn-lgc {
@@ -76,11 +108,6 @@
 }
 
 .error {
-    color: var(--error-color);
-    height: 10px;
-}
-
-.password-error {
     color: var(--error-color);
     height: 10px;
 }
@@ -94,8 +121,9 @@
     margin-bottom: 0;
 }
 
-.layui-form-item .layui-input {
-    width: 85%;
+.layui-form-item .layui-input,
+.layui-form-item .layui-select {
+    width: 100%;
 }
 
 .layui-btn.btn-confirm {
@@ -103,6 +131,11 @@
     color: var(--text-light);
     font-weight: bold;
     margin-right: 20px;
+    border-radius: 4px;
+}
+
+.layui-btn.btn-confirm:hover {
+    background-color: var(--primary-dark);
 }
 
 .layui-btn.btn-cancel {

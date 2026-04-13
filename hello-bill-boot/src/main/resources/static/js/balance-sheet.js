@@ -18,7 +18,7 @@ layui.use(['layer', 'table', 'laydate'], function () {
 });
 
 function doPostQuery() {
-    doPost("balance/query", null, callback)
+    doPost('balance/query', null, callback);
 }
 
 function callback(result) {

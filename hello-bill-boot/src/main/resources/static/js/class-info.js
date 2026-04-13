@@ -30,7 +30,7 @@ function doPostQuery() {
         type: $('input[name="type"]:checked').val()
     };
 
-    doPost("class/query", data, callbackQuery)
+    doPost('class/query', data, callbackQuery);
 }
 
 function callbackQuery(result) {
@@ -45,7 +45,7 @@ function callbackQuery(result) {
             {field: 'typeName', title: '类别'},
             {
                 field: 'serialNo', title: '序号', edit: 'number',
-                style: 'cursor: pointer; font-weight:bold; background-color: #07C180; color: #fff;'
+                style: 'cursor: pointer; font-weight:bold; background-color: var(--accent-color); color: #fff;'
             },
             {
                 field: 'status', title: '状态',
@@ -56,7 +56,7 @@ function callbackQuery(result) {
                     }
 
                     return '<input type="checkbox" name="status" lay-skin="switch" lay-text="启用|禁用" ' +
-                        ' data-uuid="' + d.uuid + '"lay-filter="status"' + status + ' />';
+                        'data-uuid="' + d.uuid + '" lay-filter="status"' + status + ' />';
                 }
             }
         ]],
@@ -87,7 +87,7 @@ function doPostUpdate(uuid, key, value) {
         value: value
     };
 
-    doPost("class/update", data, function (result) {
+    doPost('class/update', data, function (result) {
         layer.msg(result.message);
-    })
+    });
 }

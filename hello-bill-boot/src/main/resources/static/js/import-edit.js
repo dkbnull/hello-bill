@@ -13,7 +13,7 @@ layui.use(['layer', 'form', 'laydate'], function () {
 
     initData();
     initMethod();
-})
+});
 
 function initData() {
     const search = window.location.search;
@@ -21,7 +21,7 @@ function initData() {
         id: search.substring(4, search.length)
     };
 
-    doPost("import/query", data, callbackQuery)
+    doPost('import/query', data, callbackQuery);
 }
 
 function callbackQuery(result) {
@@ -29,10 +29,10 @@ function callbackQuery(result) {
     type = data.billType;
     secondClass = data.secondClass;
 
-    $("#bill-time-input").val(data.billTime);
-    $("#detail-convert-input").val(data.detailConvert);
-    $("#amount-input").val(data.amount);
-    $("#remark-input").val(data.remark);
+    $('#bill-time-input').val(data.billTime);
+    $('#detail-convert-input').val(data.detailConvert);
+    $('#amount-input').val(data.amount);
+    $('#remark-input').val(data.remark);
 
     form.render();
 
@@ -44,15 +44,14 @@ function initClass() {
         type: type
     };
 
-    doPost("class/secondClassQuery", data, callbackClass)
+    doPost('class/secondClassQuery', data, callbackClass);
 }
 
 function callbackClass(result) {
     for (let i = 0; i < result.data.length; i++) {
-        $("#second-class-select").append('<option>' + result.data[i] + '</option>');
+        $('#second-class-select').append('<option>' + result.data[i] + '</option>');
     }
-
-    $("#second-class-select").val(secondClass);
+    $('#second-class-select').val(secondClass);
 
     form.render();
 }
@@ -61,25 +60,25 @@ function initMethod() {
     $('#second-class-select').on('keydown', function (event) {
         if (event.keyCode === 13) {
             $('#detail-convert-input').focus();
-            return false
+            return false;
         }
     });
     $('#detail-convert-input').on('keydown', function (event) {
         if (event.keyCode === 13) {
             $('#amount-input').focus();
-            return false
+            return false;
         }
     });
     $('#amount-input').on('keydown', function (event) {
         if (event.keyCode === 13) {
             $('#remark-input').focus();
-            return false
+            return false;
         }
     });
     $('#remark-input').on('keydown', function (event) {
         if (event.keyCode === 13) {
             updateInfo();
-            return false
+            return false;
         }
     });
 }
@@ -87,37 +86,36 @@ function initMethod() {
 function updateInfo() {
     const data = form.val('billInfo');
     if (!checkData(data)) {
-        return
+        return;
     }
 
     const search = window.location.search;
     data.id = search.substring(4, search.length);
     data.billType = type;
-    doPost("import/update", data, callbackUpdate);
+    doPost('import/update', data, callbackUpdate);
 }
 
 function checkData(data) {
-    const error = $(".error");
+    const error = $('.error');
     if (data.secondClass.length === 0) {
-        error.text("分类不能为空");
+        error.text('分类不能为空');
         return false;
     }
     if (data.detailConvert.length === 0) {
-        error.text("明细不能为空");
+        error.text('明细不能为空');
         return false;
     }
     if (data.amount.length === 0) {
-        error.text("金额不能为空");
+        error.text('金额不能为空');
         return false;
     }
 
-    error.text("");
+    error.text('');
     return true;
 }
 
 function callbackUpdate(result) {
-    const error = $(".error");
-
+    const error = $('.error');
     if (!isSuccess(result.code)) {
         error.text(result.message);
         return;

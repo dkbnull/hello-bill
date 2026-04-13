@@ -8,9 +8,9 @@
 const incomeAddConfig = {
     classType: '1',
     formFilter: 'incomeInfo',
-    queryUrl: "income/query",
-    addUrl: "income/add",
-    updateUrl: "income/update",
+    queryUrl: 'income/query',
+    addUrl: 'income/add',
+    updateUrl: 'income/update',
     requiredFields: [
         {name: 'incomeDate', message: '时间不能为空'},
         {name: 'secondClass', message: '分类不能为空'},
@@ -27,10 +27,10 @@ const incomeAddConfig = {
         });
     },
     fillForm: function (data) {
-        $("#second-class-select").val(data.secondClass);
-        $("#detail-input").val(data.detail);
-        $("#amount-input").val(data.amount);
-        $("#remark-input").val(data.remark);
+        $('#second-class-select').val(data.secondClass);
+        $('#detail-input').val(data.detail);
+        $('#amount-input').val(data.amount);
+        $('#remark-input').val(data.remark);
     },
     onDataLoaded: function (data) {
         const laydate = layui.laydate;
@@ -63,7 +63,7 @@ const incomeAddConfig = {
     }
 };
 
-let $, form;
+let form;
 
 layui.use(['layer', 'form', 'laydate'], function () {
     $ = layui.jquery;

@@ -43,7 +43,7 @@ function doPostReportClass(reportDate) {
         topClass: $('#top-class-select').val()
     };
 
-    doPost("report/incomeClass", data, callbackReportClass)
+    doPost('report/incomeClass', data, callbackReportClass);
 }
 
 function callbackReportClass(result) {
@@ -59,7 +59,7 @@ function doPostReportDetail(reportDate) {
         secondClass: $('#second-class-select').val()
     };
 
-    doPost("report/incomeDetail", data, callbackReportDetail)
+    doPost('report/incomeDetail', data, callbackReportDetail);
 }
 
 function callbackReportDetail(result) {
