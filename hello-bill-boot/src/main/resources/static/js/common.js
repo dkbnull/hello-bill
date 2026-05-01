@@ -93,3 +93,21 @@ function setItem(key, value) {
 function getItem(key) {
     return localStorage.getItem(key);
 }
+
+function renderPage(pageData, jumpCallback) {
+    const laypage = layui.laypage;
+
+    laypage.render({
+        elem: 'info-table-page',
+        count: pageData.total,
+        limit: pageData.size,
+        curr: pageData.current,
+        limits: [10, 20, 50, 100],
+        layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+        jump: function (obj, first) {
+            if (!first) {
+                jumpCallback(obj.curr, obj.limit);
+            }
+        }
+    });
+}

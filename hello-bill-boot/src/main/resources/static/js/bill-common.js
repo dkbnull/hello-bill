@@ -6,7 +6,7 @@
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 function initBillListPage(config) {
-    layui.use(['layer', 'table', 'laydate', 'laypage'], function () {
+    layui.use(['layer', 'table', 'laydate'], function () {
         if (!validate()) {
             return;
         }
@@ -95,7 +95,6 @@ function doPostListQuery(beginDate, endDate, config, pageNum, pageSize) {
 
 function renderListTable(result, config) {
     const table = layui.table;
-    const laypage = layui.laypage;
     const pageData = result.data;
 
     table.render({
@@ -105,18 +104,8 @@ function renderListTable(result, config) {
         cols: [config.columns]
     });
 
-    laypage.render({
-        elem: 'info-table-page',
-        count: pageData.total,
-        limit: pageData.size,
-        curr: pageData.current,
-        limits: [10, 20, 50, 100],
-        layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
-        jump: function (obj, first) {
-            if (!first) {
-                doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig, obj.curr, obj.limit);
-            }
-        }
+    renderPage(pageData, function (curr, limit) {
+        doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig, curr, limit);
     });
 
     table.on('tool(infoTable)', function (obj) {

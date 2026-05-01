@@ -82,14 +82,32 @@
 }
 
 .reload-info {
-    padding: 15px 20px;
+    padding: 10px 20px;
     background-color: var(--bg-white);
     border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px 10px;
+}
+
+.reload-info .layui-inline {
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.reload-info .layui-form-label {
+    padding: 9px 5px;
+    width: auto;
+}
+
+.reload-info .layui-input-inline {
+    width: 150px;
 }
 
 .reload-info .layui-input-block {
-    margin-left: 20px;
-    padding: 10px 15px 0 15px;
+    margin-left: 0;
+    padding: 0;
 }
 
 .reload-info .layui-btn {

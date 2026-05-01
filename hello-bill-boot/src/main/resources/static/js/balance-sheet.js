@@ -9,7 +9,7 @@ let $;
 let currentPageNum = 1;
 let currentPageSize = 10;
 
-layui.use(['layer', 'table', 'laydate', 'laypage'], function () {
+layui.use(['layer', 'table', 'laydate'], function () {
     if (!validate()) {
         return;
     }
@@ -27,7 +27,6 @@ function doPostQuery(pageNum, pageSize) {
 
 function callback(result) {
     const table = layui.table;
-    const laypage = layui.laypage;
     const pageData = result.data;
 
     table.render({
@@ -44,17 +43,7 @@ function callback(result) {
         ]]
     });
 
-    laypage.render({
-        elem: 'info-table-page',
-        count: pageData.total,
-        limit: pageData.size,
-        curr: pageData.current,
-        limits: [10, 20, 50, 100],
-        layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
-        jump: function (obj, first) {
-            if (!first) {
-                doPostQuery(obj.curr, obj.limit);
-            }
-        }
+    renderPage(pageData, function (curr, limit) {
+        doPostQuery(curr, limit);
     });
 }
