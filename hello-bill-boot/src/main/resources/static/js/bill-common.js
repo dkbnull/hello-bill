@@ -110,9 +110,10 @@ function renderListTable(result, config) {
 
     table.on('tool(infoTable)', function (obj) {
         if (obj.event === 'edit') {
-            layer.confirm(config.editConfirmMsg, {icon: 3}, function (index) {
+            layer.confirm(config.editConfirmMsg, {skin: 'layui-layer-confirm', icon: 3}, function (index) {
                 layer.open({
                     type: 2,
+                    skin: 'layui-layer-custom',
                     title: '修改',
                     content: config.addPageUrl + '?id=' + obj.data.id,
                     area: ['400px', '500px'],
@@ -131,7 +132,7 @@ function renderListTable(result, config) {
                 layer.close(index);
             });
         } else if (obj.event === 'del') {
-            layer.confirm(config.deleteConfirmMsg, {icon: 2}, function (index) {
+            layer.confirm(config.deleteConfirmMsg, {skin: 'layui-layer-confirm', icon: 2}, function (index) {
                 const data = {id: obj.data.id};
                 doPost(config.deleteUrl, data, function () {
                     doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig, currentPageNum, currentPageSize);

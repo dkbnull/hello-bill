@@ -72,7 +72,7 @@ function callback(result) {
             {field: 'amount', title: '金额'},
             {field: 'payMode', title: '支付方式'},
             {field: 'remark', title: '备注'},
-            {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 160}
+            {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 200}
         ]]
     });
 
@@ -82,12 +82,12 @@ function callback(result) {
 
     table.on('tool(infoTable)', function (obj) {
         if (obj.event === 'edit') {
-            layer.open({
+            editLayerIndex = layer.open({
                 type: 2,
+                skin: 'layui-layer-custom',
                 title: '修改',
                 content: 'import-edit.html?id=' + obj.data.id,
-                area: ['350px', '500px'],
-                maxmin: true,
+                area: ['400px', '500px'],
                 shade: 0,
                 btn: ['确认', '取消'],
                 yes: function (index, layero) {
@@ -99,7 +99,7 @@ function callback(result) {
                 }
             });
         } else if (obj.event === 'confirm') {
-            layer.confirm('是否确认当前账单明细？', {icon: 1}, function (index) {
+            layer.confirm('是否确认当前账单明细？', {skin: 'layui-layer-confirm', icon: 1}, function (index) {
                 const data = {
                     id: obj.data.id
                 };
@@ -108,7 +108,7 @@ function callback(result) {
                 layer.close(index);
             });
         } else if (obj.event === 'del') {
-            layer.confirm('是否删除当前账单明细？', {icon: 2}, function (index) {
+            layer.confirm('是否删除当前账单明细？', {skin: 'layui-layer-confirm', icon: 2}, function (index) {
                 const data = {
                     id: obj.data.id
                 };

@@ -86,7 +86,7 @@ function callbackSuccess(loading, result, callback) {
     }
 
     if (isTokenExpired(result.code)) {
-        layer.confirm(result.msg + '，是否重新登录？', function (index) {
+        layer.confirm(result.msg + '，是否重新登录？', {skin: 'layui-layer-confirm'}, function (index) {
             localStorage.clear();
             parent.window.location.href = 'index.html';
             layer.close(index);

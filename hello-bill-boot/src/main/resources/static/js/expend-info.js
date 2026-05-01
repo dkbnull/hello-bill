@@ -20,7 +20,7 @@ const expendListConfig = {
         {field: 'detail', title: '明细'},
         {field: 'amount', title: '金额', width: 120, totalRow: true},
         {field: 'remark', title: '备注'},
-        {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 120}
+        {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 150}
     ],
     buildQueryData: function (beginDate, endDate) {
         return {

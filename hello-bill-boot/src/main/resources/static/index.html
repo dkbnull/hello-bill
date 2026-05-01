@@ -11,31 +11,29 @@
 </head>
 <body>
 <div class="login-container">
-    <div class="login-img">
+    <div class="login-left">
         <div class="login-brand">
             <img src="img/logo.svg" alt="Hello Bill Logo" class="login-logo">
             <div class="login-title">Hello Bill</div>
             <div class="login-subtitle">个人智能记账系统</div>
         </div>
     </div>
-    <div class="login-main">
-        <div class="layui-inline login-form">
-            <span>Hello Bill</span>
-            <form class="layui-form layui-form-pane">
-                <div class="layui-form-item username-form-item">
-                    <label class="username-label" for="username"></label>
+    <div class="login-right">
+        <div class="login-form-wrapper">
+            <div class="login-form-title">欢迎登录</div>
+            <form class="layui-form layui-form-pane" lay-filter="loginForm">
+                <div class="login-input-group">
+                    <img src="img/user.svg" alt="" class="login-input-icon">
                     <input type="text" name="username" lay-verify="username" autocomplete="off"
                            placeholder="用户名" class="layui-input" id="username" autofocus>
                 </div>
-                <div class="layui-form-item password-form-item">
-                    <label class="password-label" for="password"></label>
+                <div class="login-input-group">
+                    <img src="img/lock.svg" alt="" class="login-input-icon">
                     <input type="password" name="password" lay-verify="password" placeholder="密码"
                            autocomplete="off" class="layui-input" id="password">
                 </div>
-                <div class="layui-form-item">
-                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="login">
-                        <span>登&nbsp;&nbsp;&nbsp;&nbsp;录</span>
-                    </button>
+                <div class="login-btn-group">
+                    <button type="submit" class="layui-btn login-btn" lay-submit="" lay-filter="login">登 录</button>
                 </div>
             </form>
         </div>
