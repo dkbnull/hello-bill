@@ -1,10 +1,15 @@
 /**
- * web js
+ * web js - 网络请求与回调处理模块
  *
  * @author null
  * @date 2020-12-29
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
+const RESPONSE_CODE = {
+    SUCCESS: '1000',
+    TOKEN_EXPIRED_PREFIX: '30'
+};
+
 const doPost = function (url, data, callback) {
     const $ = layui.jquery;
 
@@ -57,7 +62,7 @@ const doUpload = function (elem, exts, url, data, callback) {
 };
 
 function getRequest(data) {
-    if (data == null) {
+    if (data === null || data === undefined) {
         data = {};
     }
 
@@ -75,13 +80,13 @@ function getRequest(data) {
 
 function callbackSuccess(loading, result, callback) {
     if (isEmpty(result)) {
-        layer.alert('返回参数为空');
+        layer.msg('返回参数为空');
         layer.close(loading);
         return;
     }
 
     if (isTokenExpired(result.code)) {
-        layer.confirm(result.message + '，是否重新登录？', function (index) {
+        layer.confirm(result.msg + '，是否重新登录？', function (index) {
             localStorage.clear();
             parent.window.location.href = 'index.html';
             layer.close(index);
@@ -91,7 +96,7 @@ function callbackSuccess(loading, result, callback) {
     }
 
     if (!isSuccess(result.code)) {
-        layer.msg(result.message);
+        layer.msg(result.msg);
         layer.close(loading);
         return;
     }
@@ -102,20 +107,20 @@ function callbackSuccess(loading, result, callback) {
 
 function callbackFail(loading, XMLHttpRequest, callback) {
     if (isEmpty(XMLHttpRequest.responseJSON)) {
-        layer.alert('未知异常');
+        layer.msg('未知异常');
         layer.close(loading);
         return;
     }
 
-    layer.alert(XMLHttpRequest.responseJSON);
+    layer.msg(XMLHttpRequest.responseJSON.message || '请求异常');
     callback(XMLHttpRequest.responseJSON);
     layer.close(loading);
 }
 
 const isSuccess = function (code) {
-    return code === '1000';
+    return code === RESPONSE_CODE.SUCCESS;
 };
 
 const isTokenExpired = function (code) {
-    return code.length === 4 && code.startsWith('30');
+    return typeof code === 'string' && code.length === 4 && code.startsWith(RESPONSE_CODE.TOKEN_EXPIRED_PREFIX);
 };

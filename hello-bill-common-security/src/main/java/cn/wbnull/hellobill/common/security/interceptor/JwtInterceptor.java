@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.common.security.interceptor;
 
 import cn.wbnull.hellobill.common.security.component.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Component
+@RequiredArgsConstructor
 public class JwtInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

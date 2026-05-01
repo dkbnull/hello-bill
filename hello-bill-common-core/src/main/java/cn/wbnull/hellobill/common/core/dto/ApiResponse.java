@@ -18,15 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 public class ApiResponse<T> {
 
     private String code;
-    private String message;
-    private Long timestamp;
+    private String msg;
     private T data;
 
     public static <T> ApiResponse<T> fail(String message) {
         ApiResponse<T> response = new ApiResponse<>();
         response.code = ResponseCodeEnum.FAIL.getCode();
-        response.message = message;
-        response.timestamp = System.currentTimeMillis();
+        response.msg = message;
 
         return response;
     }
@@ -34,8 +32,7 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> success(String message) {
         ApiResponse<T> response = new ApiResponse<>();
         response.code = ResponseCodeEnum.SUCCESS.getCode();
-        response.message = message;
-        response.timestamp = System.currentTimeMillis();
+        response.msg = message;
 
         return response;
     }
@@ -43,8 +40,7 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> success(T data) {
         ApiResponse<T> response = new ApiResponse<>();
         response.code = ResponseCodeEnum.SUCCESS.getCode();
-        response.message = ResponseCodeEnum.SUCCESS.getMessage();
-        response.timestamp = System.currentTimeMillis();
+        response.msg = ResponseCodeEnum.SUCCESS.getMessage();
         response.data = data;
 
         return response;
@@ -53,8 +49,7 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> response(String code, String message) {
         ApiResponse<T> response = new ApiResponse<>();
         response.code = code;
-        response.message = message;
-        response.timestamp = System.currentTimeMillis();
+        response.msg = message;
 
         return response;
     }

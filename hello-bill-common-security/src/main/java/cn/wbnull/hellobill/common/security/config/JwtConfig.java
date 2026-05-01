@@ -1,7 +1,7 @@
 package cn.wbnull.hellobill.common.security.config;
 
 import cn.wbnull.hellobill.common.security.interceptor.JwtInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,10 +14,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Configuration
+@RequiredArgsConstructor
 public class JwtConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private JwtInterceptor jwtInterceptor;
+    private final JwtInterceptor jwtInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -29,6 +29,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ClassServiceImpl implements ClassService {
 
+    private static final String KEY_SERIAL_NO = "serialNo";
+    private static final String KEY_STATUS = "status";
+    private static final String COLUMN_SERIAL_NO = "serial_no";
+    private static final String COLUMN_STATUS = "status";
+
     private final ClassInfoRepository classInfoRepository;
 
     @Override
@@ -46,10 +51,10 @@ public class ClassServiceImpl implements ClassService {
     public ApiResponse<Object> update(ApiRequest<UpdateRequest> request) {
         UpdateRequest data = request.getData();
 
-        if ("serialNo".equals(data.getKey())) {
-            classInfoRepository.updateByUuid(data.getUuid(), "serial_no", data.getValue());
-        } else if ("status".equals(data.getKey())) {
-            classInfoRepository.updateByUuid(data.getUuid(), "status", data.getValue());
+        if (KEY_SERIAL_NO.equals(data.getKey())) {
+            classInfoRepository.updateByUuid(data.getUuid(), COLUMN_SERIAL_NO, data.getValue());
+        } else if (KEY_STATUS.equals(data.getKey())) {
+            classInfoRepository.updateByUuid(data.getUuid(), COLUMN_STATUS, data.getValue());
         }
 
         return ApiResponse.success("分类信息更新成功");

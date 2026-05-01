@@ -3,6 +3,7 @@ package cn.wbnull.hellobill.service.impl;
 import cn.wbnull.hellobill.common.core.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.common.core.exception.BusinessException;
 import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.entity.ExpendInfo;
@@ -51,6 +52,9 @@ public class ExpendServiceImpl implements ExpendService {
         ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
         ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(ClassTypeEnum.EXPEND.getTypeCode(),
                 expendInfo.getSecondClass());
+        if (classInfo == null) {
+            throw new BusinessException("分类信息不存在");
+        }
         expendInfo.build(request.getUsername(), classInfo.getTopClass());
 
         expendInfoMapper.insert(expendInfo);
@@ -61,6 +65,9 @@ public class ExpendServiceImpl implements ExpendService {
     @Override
     public ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request) {
         ExpendInfo expendInfo = expendInfoMapper.selectById(request.getData().getId());
+        if (expendInfo == null) {
+            throw new BusinessException("支出信息不存在");
+        }
         QueryResponse queryResponse = BeanUtils.copyProperties(expendInfo, QueryResponse.class);
 
         return ApiResponse.success(queryResponse);
@@ -71,6 +78,9 @@ public class ExpendServiceImpl implements ExpendService {
         ExpendInfo expendInfo = BeanUtils.copyProperties(request.getData(), ExpendInfo.class);
         ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(ClassTypeEnum.EXPEND.getTypeCode(),
                 expendInfo.getSecondClass());
+        if (classInfo == null) {
+            throw new BusinessException("分类信息不存在");
+        }
         expendInfo.setTopClass(classInfo.getTopClass());
 
         expendInfoMapper.updateById(expendInfo);

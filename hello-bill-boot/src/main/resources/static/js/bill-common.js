@@ -1,5 +1,5 @@
 /**
- * bill-common.js
+ * bill-common.js - 账单列表与新增页面公共逻辑模块
  *
  * @author null
  * @date 2026-04-12
@@ -68,8 +68,8 @@ function initListMethod(config) {
                     const childWindow = layero.find('iframe')[0].contentWindow;
                     childWindow.addInfo();
                 },
-                btn2: function () {
-                    layer.closeAll();
+                btn2: function (index) {
+                    layer.close(index);
                 }
             });
         }
@@ -114,8 +114,8 @@ function renderListTable(result, config) {
                         const childWindow = layero.find('iframe')[0].contentWindow;
                         childWindow.updateInfo();
                     },
-                    btn2: function () {
-                        layer.closeAll();
+                    btn2: function (index) {
+                        layer.close(index);
                     }
                 });
 

@@ -3,6 +3,7 @@ package cn.wbnull.hellobill.service.impl;
 import cn.wbnull.hellobill.common.core.constant.ClassTypeEnum;
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.common.core.exception.BusinessException;
 import cn.wbnull.hellobill.common.core.util.*;
 import cn.wbnull.hellobill.db.entity.*;
 import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
@@ -32,7 +33,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -125,8 +125,7 @@ public class ImportServiceImpl implements ImportService {
             }
 
             // 交易时间
-            Date date = DateUtils.dateParse(line[0], "yyyy-MM-dd HH:mm:ss");
-            LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
+            LocalDateTime localDateTime = DateUtils.parseLocalDateTime(line[0]);
             importBillInfo.setBillTime(localDateTime);
 
             String detail;
@@ -176,7 +175,9 @@ public class ImportServiceImpl implements ImportService {
             if (!tag) {
                 continue;
             }
-            if ("------------------------------------------------------------------------------------".equals(line[0].trim())) {
+
+            String alipaySeparator = "------------------------------------------------------------------------------------";
+            if (alipaySeparator.equals(line[0].trim())) {
                 break;
             }
 
@@ -186,22 +187,24 @@ public class ImportServiceImpl implements ImportService {
             ImportBillInfo importBillInfo = new ImportBillInfo();
             importBillInfo.setUsername(username);
 
-            if ("支出".equals(line[10].trim())) {
+            String incomeExpenseType = line[10].trim();
+            String fundStatus = line[15].trim();
+
+            if ("支出".equals(incomeExpenseType)) {
                 importBillInfo.setBillType((byte) ClassTypeEnum.EXPEND.getTypeCode());
             }
-            if ("收入".equals(line[10].trim())) {
+            if ("收入".equals(incomeExpenseType)) {
                 importBillInfo.setBillType((byte) ClassTypeEnum.INCOME.getTypeCode());
             }
-            if ("不计收支".equals(line[10].trim()) && ("已支出".equals(line[15].trim()) || StringUtils.isEmpty(line[15].trim()))) {
+            if ("不计收支".equals(incomeExpenseType) && ("已支出".equals(fundStatus) || StringUtils.isEmpty(fundStatus))) {
                 importBillInfo.setBillType((byte) ClassTypeEnum.EXPEND.getTypeCode());
             }
-            if ("不计收支".equals(line[10].trim()) && "已收入".equals(line[15].trim())) {
+            if ("不计收支".equals(incomeExpenseType) && "已收入".equals(fundStatus)) {
                 importBillInfo.setBillType((byte) ClassTypeEnum.INCOME.getTypeCode());
             }
 
             // 交易时间
-            Date date = DateUtils.dateParse(line[2].trim(), "yyyy-MM-dd HH:mm:ss");
-            LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
+            LocalDateTime localDateTime = DateUtils.parseLocalDateTime(line[2].trim());
             importBillInfo.setBillTime(localDateTime);
 
             // 交易对方列为脱敏商家名称，则使用商品名称
@@ -270,8 +273,7 @@ public class ImportServiceImpl implements ImportService {
             }
 
             // 交易时间
-            Date date = DateUtils.dateParse(line[0], "yyyy-MM-dd HH:mm:ss");
-            LocalDateTime localDateTime = DateUtils.toLocalDateTime(date);
+            LocalDateTime localDateTime = DateUtils.parseLocalDateTime(line[0]);
             importBillInfo.setBillTime(localDateTime);
 
             importBillInfo.setDetail(line[2]);
@@ -290,7 +292,7 @@ public class ImportServiceImpl implements ImportService {
                 String[] amounts = amount.replace("(", "").replace(")", "").split("已退款");
                 importBillInfo.setAmount(new BigDecimal(amounts[0]).subtract(new BigDecimal(amounts[1])));
             } else if (amount.contains("已全额退款")) {
-                importBillInfo.setAmount(new BigDecimal(0));
+                importBillInfo.setAmount(BigDecimal.ZERO);
             } else {
                 importBillInfo.setAmount(new BigDecimal(amount));
             }
@@ -341,6 +343,9 @@ public class ImportServiceImpl implements ImportService {
     @Override
     public ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request) {
         ImportBillInfo importBillInfo = importBillInfoMapper.selectById(request.getData().getId());
+        if (importBillInfo == null) {
+            throw new BusinessException("导入账单信息不存在");
+        }
         QueryResponse queryResponse = BeanUtils.copyProperties(importBillInfo, QueryResponse.class);
 
         return ApiResponse.success(queryResponse);
@@ -352,6 +357,9 @@ public class ImportServiceImpl implements ImportService {
         ImportBillInfo importBillInfo = BeanUtils.copyProperties(data, ImportBillInfo.class);
         ClassInfo classInfo = classInfoRepository.getByTypeAndSecondClass(data.getBillType(),
                 data.getSecondClass());
+        if (classInfo == null) {
+            throw new BusinessException("分类信息不存在");
+        }
         importBillInfo.setTopClass(classInfo.getTopClass());
 
         importBillInfoRepository.updateImportBillInfo(importBillInfo);
@@ -374,7 +382,7 @@ public class ImportServiceImpl implements ImportService {
             return ApiResponse.fail("账单信息不完整");
         }
 
-        if (ClassTypeEnum.INCOME.getTypeCode() == importBillInfo.getBillType()) {
+        if (importBillInfo.getBillType() == ClassTypeEnum.INCOME.getTypeCode()) {
             confirmIncome(importBillInfo);
         } else {
             confirmExpend(importBillInfo);

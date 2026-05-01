@@ -2,7 +2,7 @@ package cn.wbnull.hellobill.scheduler;
 
 import cn.wbnull.hellobill.common.core.util.LoggerUtils;
 import cn.wbnull.hellobill.service.BalanceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -16,14 +16,13 @@ import org.springframework.stereotype.Component;
  */
 @EnableScheduling
 @Component
+@RequiredArgsConstructor
 public class BalanceScheduler {
 
-    @Autowired
-    private BalanceService balanceService;
+    private final BalanceService balanceService;
 
     @Scheduled(cron = "0 0 0 1 * ?")
     public void create() {
-        // 每月定期生成资产负债
         LoggerUtils.info("定时生成资产负债信息 开始");
         balanceService.create();
         LoggerUtils.info("定时生成资产负债信息 完成");

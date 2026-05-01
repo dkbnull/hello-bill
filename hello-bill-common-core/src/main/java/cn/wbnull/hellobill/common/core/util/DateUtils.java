@@ -18,6 +18,7 @@ public class DateUtils {
     private static final String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final String DATE_ONLY_FORMAT = "yyyy-MM-dd";
     private static final ZoneOffset ZONE_OFFSET = ZoneOffset.ofHours(8);
+    private static final DateTimeFormatter DEFAULT_FORMATTER = DateTimeFormatter.ofPattern(DEFAULT_FORMAT);
 
     private DateUtils() {
     }
@@ -55,6 +56,13 @@ public class DateUtils {
 
     public static LocalDateTime toLocalDateTime(Date date) {
         return date.toInstant().atZone(ZONE_OFFSET).toLocalDateTime();
+    }
+
+    public static LocalDateTime parseLocalDateTime(String dateValue) {
+        if (StringUtils.isEmpty(dateValue)) {
+            return null;
+        }
+        return LocalDateTime.parse(dateValue.trim(), DEFAULT_FORMATTER);
     }
 
     public static LocalDate atStartOfMonth(long monthsToSubtract) {

@@ -1,5 +1,5 @@
 /**
- * js
+ * import.html js - 账单导入页面逻辑模块
  *
  * @author null
  * @date 2025-01-27
@@ -33,7 +33,7 @@ function initMethod() {
     };
 
     doUpload('#upload-file', 'csv', '/import/billFile', null, function (res) {
-        if (res != null) {
+        if (res !== null) {
             layer.msg(res.message);
 
             doPostQuery();
@@ -86,8 +86,8 @@ function callback(result) {
                     const childWindow = layero.find('iframe')[0].contentWindow;
                     childWindow.updateInfo();
                 },
-                btn2: function () {
-                    layer.closeAll();
+                btn2: function (index) {
+                    layer.close(index);
                 }
             });
         } else if (obj.event === 'confirm') {
@@ -116,8 +116,13 @@ function callbackQuery(result) {
     doPostQuery();
 }
 
+let editLayerIndex = null;
+
 function closeAll(message) {
-    layer.closeAll();
+    if (editLayerIndex !== null) {
+        layer.close(editLayerIndex);
+        editLayerIndex = null;
+    }
     layer.msg(message);
 
     doPostQuery();

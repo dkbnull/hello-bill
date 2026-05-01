@@ -2,7 +2,7 @@ package cn.wbnull.hellobill.runner;
 
 import cn.wbnull.hellobill.common.core.util.LoggerUtils;
 import cn.wbnull.hellobill.service.BalanceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,14 +14,13 @@ import org.springframework.stereotype.Component;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Component
+@RequiredArgsConstructor
 public class GlobalRunner implements CommandLineRunner {
 
-    @Autowired
-    private BalanceService balanceService;
+    private final BalanceService balanceService;
 
     @Override
     public void run(String... args) throws Exception {
-        // 服务启动检查并生成资产负债
         LoggerUtils.info("自动生成资产负债信息 开始");
         balanceService.create();
         LoggerUtils.info("自动生成资产负债信息 完成");

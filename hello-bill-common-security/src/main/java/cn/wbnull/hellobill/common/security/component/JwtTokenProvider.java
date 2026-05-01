@@ -2,14 +2,14 @@ package cn.wbnull.hellobill.common.security.component;
 
 import cn.wbnull.hellobill.common.core.constant.ResponseCodeEnum;
 import cn.wbnull.hellobill.common.core.exception.BusinessException;
-import cn.wbnull.hellobill.common.security.properties.JwtProperties;
 import cn.wbnull.hellobill.common.security.model.TokenModel;
+import cn.wbnull.hellobill.common.security.properties.JwtProperties;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -24,10 +24,10 @@ import java.util.Date;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
 
-    @Autowired
-    private JwtProperties jwtProperties;
+    private final JwtProperties jwtProperties;
 
     public String generateToken(TokenModel tokenModel) {
         LocalDateTime localDateTime = LocalDateTime.now().plusSeconds(jwtProperties.getExpireTime());

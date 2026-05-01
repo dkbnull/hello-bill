@@ -2,6 +2,7 @@ package cn.wbnull.hellobill.service.impl;
 
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.common.core.exception.BusinessException;
 import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.db.entity.IncomeInfo;
 import cn.wbnull.hellobill.db.mapper.IncomeInfoMapper;
@@ -53,6 +54,9 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public ApiResponse<QueryResponse> query(ApiRequest<QueryRequest> request) {
         IncomeInfo incomeInfo = incomeInfoMapper.selectById(request.getData().getId());
+        if (incomeInfo == null) {
+            throw new BusinessException("收入信息不存在");
+        }
         QueryResponse queryResponse = BeanUtils.copyProperties(incomeInfo, QueryResponse.class);
 
         return ApiResponse.success(queryResponse);
