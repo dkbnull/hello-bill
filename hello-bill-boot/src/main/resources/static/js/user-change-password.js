@@ -110,7 +110,7 @@ function changePassword() {
 
 function callbackChangePassword(result) {
     closeContent();
-    parent.layer.msg(result.message);
+    parent.layer.msg(result.msg);
 }
 
 function closeContent() {

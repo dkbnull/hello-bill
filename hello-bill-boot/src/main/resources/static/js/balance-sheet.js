@@ -6,26 +6,33 @@
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 let $;
+let currentPageNum = 1;
+let currentPageSize = 10;
 
-layui.use(['layer', 'table', 'laydate'], function () {
+layui.use(['layer', 'table', 'laydate', 'laypage'], function () {
     if (!validate()) {
         return;
     }
 
     $ = layui.jquery;
 
-    doPostQuery();
+    doPostQuery(1, 10);
 });
 
-function doPostQuery() {
-    doPost('balance/query', null, callback);
+function doPostQuery(pageNum, pageSize) {
+    currentPageNum = pageNum;
+    currentPageSize = pageSize;
+    doPost('balance/list', {pageNum: pageNum, pageSize: pageSize}, callback);
 }
 
 function callback(result) {
     const table = layui.table;
+    const laypage = layui.laypage;
+    const pageData = result.data;
+
     table.render({
         elem: '#info-table',
-        data: result.data,
+        data: pageData.records,
         cellMinWidth: 100,
         totalRow: true,
         cols: [[
@@ -34,8 +41,20 @@ function callback(result) {
             {field: 'expendAmount', title: '支出'},
             {field: 'balanceAmount', title: '余额'},
             {field: 'remark', title: '备注'},
-        ]],
-        page: true,
-        limit: 10
+        ]]
+    });
+
+    laypage.render({
+        elem: 'info-table-page',
+        count: pageData.total,
+        limit: pageData.size,
+        curr: pageData.current,
+        limits: [10, 20, 50, 100],
+        layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+        jump: function (obj, first) {
+            if (!first) {
+                doPostQuery(obj.curr, obj.limit);
+            }
+        }
     });
 }

@@ -2,9 +2,9 @@ package cn.wbnull.hellobill.service;
 
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.balance.request.ListRequest;
 import cn.wbnull.hellobill.dto.balance.response.QueryResponse;
-
-import java.util.List;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 
 /**
  * 资产信息接口服务类
@@ -17,5 +17,5 @@ public interface BalanceService {
 
     void create();
 
-    ApiResponse<List<QueryResponse>> query(ApiRequest<Object> request);
+    ApiResponse<PageResponse<QueryResponse>> list(ApiRequest<ListRequest> request);
 }

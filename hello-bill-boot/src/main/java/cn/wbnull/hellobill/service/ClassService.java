@@ -2,10 +2,12 @@ package cn.wbnull.hellobill.service;
 
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.cls.request.ListRequest;
 import cn.wbnull.hellobill.dto.cls.request.QueryClassRequest;
 import cn.wbnull.hellobill.dto.cls.request.QueryRequest;
 import cn.wbnull.hellobill.dto.cls.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.cls.response.QueryResponse;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ import java.util.List;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 public interface ClassService {
+
+    ApiResponse<PageResponse<QueryResponse>> list(ApiRequest<ListRequest> request);
 
     ApiResponse<List<QueryResponse>> query(ApiRequest<QueryRequest> request);
 

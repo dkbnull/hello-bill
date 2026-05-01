@@ -117,9 +117,9 @@ function checkData(data) {
 function callbackUpdate(result) {
     const error = $('.error');
     if (!isSuccess(result.code)) {
-        error.text(result.message);
+        error.text(result.msg);
         return;
     }
 
-    parent.closeAll(result.message);
+    parent.closeAll(result.msg);
 }

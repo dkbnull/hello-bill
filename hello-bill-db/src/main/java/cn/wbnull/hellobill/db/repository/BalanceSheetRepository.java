@@ -4,10 +4,10 @@ import cn.wbnull.hellobill.common.core.util.SnowflakeUtils;
 import cn.wbnull.hellobill.db.entity.BalanceSheet;
 import cn.wbnull.hellobill.db.mapper.BalanceSheetMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 资产负债信息表
@@ -38,11 +38,12 @@ public class BalanceSheetRepository {
         return balanceSheetMapper.selectOne(queryWrapper);
     }
 
-    public List<BalanceSheet> listByParam(String username) {
+    public IPage<BalanceSheet> pageByParam(String username, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<BalanceSheet> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(BalanceSheet::getUsername, username);
         queryWrapper.orderByDesc(BalanceSheet::getId);
 
-        return balanceSheetMapper.selectList(queryWrapper);
+        Page<BalanceSheet> page = new Page<>(pageNum, pageSize);
+        return balanceSheetMapper.selectPage(page, queryWrapper);
     }
 }

@@ -6,7 +6,7 @@
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 function initBillListPage(config) {
-    layui.use(['layer', 'table', 'laydate'], function () {
+    layui.use(['layer', 'table', 'laydate', 'laypage'], function () {
         if (!validate()) {
             return;
         }
@@ -15,7 +15,7 @@ function initBillListPage(config) {
 
         initListDatetime(config.defaultBeginDate);
         initListMethod(config);
-        doPostListQuery(config.defaultBeginDate, dateCalc(0), config);
+        doPostListQuery(config.defaultBeginDate, dateCalc(0), config, 1, 10);
     });
 }
 
@@ -28,7 +28,7 @@ function initListDatetime(defaultBeginDate) {
         value: defaultBeginDate,
         max: 0,
         done: function (value) {
-            doPostListQuery(value, $('#end-date-input').val(), currentListConfig);
+            doPostListQuery(value, $('#end-date-input').val(), currentListConfig, 1, currentPageSize);
         }
     });
     laydate.render({
@@ -37,7 +37,7 @@ function initListDatetime(defaultBeginDate) {
         value: dateCalc(0),
         max: 0,
         done: function (value) {
-            doPostListQuery($('#begin-date-input').val(), value, currentListConfig);
+            doPostListQuery($('#begin-date-input').val(), value, currentListConfig, 1, currentPageSize);
         }
     });
 }
@@ -52,7 +52,7 @@ function initListMethod(config) {
 
     const active = {
         reloadInfo: function () {
-            doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig);
+            doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig, 1, currentPageSize);
         },
 
         addInfo: function () {
@@ -77,11 +77,17 @@ function initListMethod(config) {
 }
 
 let currentListConfig = null;
+let currentPageNum = 1;
+let currentPageSize = 10;
 
-function doPostListQuery(beginDate, endDate, config) {
+function doPostListQuery(beginDate, endDate, config, pageNum, pageSize) {
     currentListConfig = config;
+    currentPageNum = pageNum;
+    currentPageSize = pageSize;
 
     const data = config.buildQueryData(beginDate, endDate);
+    data.pageNum = pageNum;
+    data.pageSize = pageSize;
     doPost(config.queryUrl, data, function (result) {
         renderListTable(result, config);
     });
@@ -89,14 +95,28 @@ function doPostListQuery(beginDate, endDate, config) {
 
 function renderListTable(result, config) {
     const table = layui.table;
+    const laypage = layui.laypage;
+    const pageData = result.data;
+
     table.render({
         elem: '#info-table',
-        data: result.data,
+        data: pageData.records,
         cellMinWidth: 100,
-        totalRow: true,
-        cols: [config.columns],
-        page: true,
-        limit: 10
+        cols: [config.columns]
+    });
+
+    laypage.render({
+        elem: 'info-table-page',
+        count: pageData.total,
+        limit: pageData.size,
+        curr: pageData.current,
+        limits: [10, 20, 50, 100],
+        layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+        jump: function (obj, first) {
+            if (!first) {
+                doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig, obj.curr, obj.limit);
+            }
+        }
     });
 
     table.on('tool(infoTable)', function (obj) {
@@ -125,7 +145,7 @@ function renderListTable(result, config) {
             layer.confirm(config.deleteConfirmMsg, {icon: 2}, function (index) {
                 const data = {id: obj.data.id};
                 doPost(config.deleteUrl, data, function () {
-                    doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig);
+                    doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig, currentPageNum, currentPageSize);
                 });
                 layer.close(index);
             });
@@ -136,7 +156,7 @@ function renderListTable(result, config) {
 function closeAllAndRefresh(message) {
     layer.closeAll();
     layer.msg(message);
-    doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig);
+    doPostListQuery($('#begin-date-input').val(), $('#end-date-input').val(), currentListConfig, currentPageNum, currentPageSize);
 }
 
 function initBillAddPage(config) {
@@ -215,8 +235,8 @@ function validateBillData(data, config) {
 function handleBillCallback(result) {
     const error = $('.error');
     if (!isSuccess(result.code)) {
-        error.text(result.message);
+        error.text(result.msg);
         return;
     }
-    parent.closeAllAndRefresh(result.message);
+    parent.closeAllAndRefresh(result.msg);
 }

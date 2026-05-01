@@ -5,7 +5,9 @@ import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.common.core.util.LoggerUtils;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.dto.imp.request.ConfirmRequest;
+import cn.wbnull.hellobill.dto.imp.request.ListRequest;
 import cn.wbnull.hellobill.dto.imp.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.imp.response.QueryResponse;
 import cn.wbnull.hellobill.service.ImportService;
@@ -13,8 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 /**
  * 账单导入接口
@@ -42,9 +42,9 @@ public class ImportController {
         return response;
     }
 
-    @PostMapping(value = "queryList")
-    public ApiResponse<List<QueryResponse>> queryList(@RequestBody @Validated ApiRequest<Object> request) {
-        return importService.queryList(request);
+    @PostMapping(value = "list")
+    public ApiResponse<PageResponse<QueryResponse>> list(@RequestBody @Validated ApiRequest<ListRequest> request) {
+        return importService.list(request);
     }
 
     @PostMapping(value = "query")

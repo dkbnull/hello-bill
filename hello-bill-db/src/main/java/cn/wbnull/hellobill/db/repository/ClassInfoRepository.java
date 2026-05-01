@@ -7,6 +7,8 @@ import cn.wbnull.hellobill.db.mapper.ClassInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +33,15 @@ public class ClassInfoRepository {
         queryWrapper.eq(ClassInfo::getType, type);
 
         return classInfoMapper.selectOne(queryWrapper);
+    }
+
+    public IPage<ClassInfo> pageByParam(String type, Integer pageNum, Integer pageSize) {
+        LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(!StringUtils.isEmpty(type), ClassInfo::getType, type);
+        queryWrapper.orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
+
+        Page<ClassInfo> page = new Page<>(pageNum, pageSize);
+        return classInfoMapper.selectPage(page, queryWrapper);
     }
 
     public List<ClassInfo> listByType(String type) {

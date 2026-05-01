@@ -7,7 +7,7 @@
  */
 const incomeListConfig = {
     defaultBeginDate: dateBeginTheYear(),
-    queryUrl: 'income/queryList',
+    queryUrl: 'income/list',
     addPageUrl: 'income-info-add.html',
     addPageHeight: '560px',
     deleteUrl: 'income/delete',

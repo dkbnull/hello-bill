@@ -6,8 +6,10 @@
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 let $;
+let currentPageNum = 1;
+let currentPageSize = 10;
 
-layui.use(['layer', 'table', 'upload', 'element'], function () {
+layui.use(['layer', 'table', 'upload', 'element', 'laypage'], function () {
     if (!validate()) {
         return;
     }
@@ -15,7 +17,7 @@ layui.use(['layer', 'table', 'upload', 'element'], function () {
     $ = layui.jquery;
 
     initMethod();
-    doPostQuery();
+    doPostQuery(1, 10);
 });
 
 function initMethod() {
@@ -28,15 +30,15 @@ function initMethod() {
 
     const active = {
         reloadInfo: function () {
-            doPostQuery();
+            doPostQuery(1, currentPageSize);
         }
     };
 
     doUpload('#upload-file', 'csv', '/import/billFile', null, function (res) {
         if (res !== null) {
-            layer.msg(res.message);
+            layer.msg(res.msg);
 
-            doPostQuery();
+            doPostQuery(1, currentPageSize);
         } else {
             const reUploadFile = $('#re-upload-file');
             reUploadFile.removeClass('layui-hide');
@@ -47,15 +49,20 @@ function initMethod() {
     });
 }
 
-function doPostQuery() {
-    doPost('import/queryList', null, callback);
+function doPostQuery(pageNum, pageSize) {
+    currentPageNum = pageNum;
+    currentPageSize = pageSize;
+    doPost('import/list', {pageNum: pageNum, pageSize: pageSize}, callback);
 }
 
 function callback(result) {
     const table = layui.table;
+    const laypage = layui.laypage;
+    const pageData = result.data;
+
     table.render({
         elem: '#info-table',
-        data: result.data,
+        data: pageData.records,
         totalRow: true,
         cols: [[
             {field: 'billTypeName', title: '类型'},
@@ -67,9 +74,21 @@ function callback(result) {
             {field: 'payMode', title: '支付方式'},
             {field: 'remark', title: '备注'},
             {fixed: 'right', title: '操作', toolbar: '#info-table-bar', width: 160}
-        ]],
-        page: true,
-        limit: 10
+        ]]
+    });
+
+    laypage.render({
+        elem: 'info-table-page',
+        count: pageData.total,
+        limit: pageData.size,
+        curr: pageData.current,
+        limits: [10, 20, 50, 100],
+        layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+        jump: function (obj, first) {
+            if (!first) {
+                doPostQuery(obj.curr, obj.limit);
+            }
+        }
     });
 
     table.on('tool(infoTable)', function (obj) {
@@ -113,7 +132,7 @@ function callback(result) {
 }
 
 function callbackQuery(result) {
-    doPostQuery();
+    doPostQuery(currentPageNum, currentPageSize);
 }
 
 let editLayerIndex = null;
@@ -125,5 +144,5 @@ function closeAll(message) {
     }
     layer.msg(message);
 
-    doPostQuery();
+    doPostQuery(currentPageNum, currentPageSize);
 }

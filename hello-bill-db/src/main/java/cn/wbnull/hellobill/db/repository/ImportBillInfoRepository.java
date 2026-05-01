@@ -4,10 +4,10 @@ import cn.wbnull.hellobill.db.entity.ImportBillInfo;
 import cn.wbnull.hellobill.db.mapper.ImportBillInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 导入账单信息表服务
@@ -22,11 +22,12 @@ public class ImportBillInfoRepository {
     @Autowired
     private ImportBillInfoMapper importBillInfoMapper;
 
-    public List<ImportBillInfo> list(String username) {
+    public IPage<ImportBillInfo> pageByParam(String username, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<ImportBillInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ImportBillInfo::getUsername, username);
 
-        return importBillInfoMapper.selectList(queryWrapper);
+        Page<ImportBillInfo> page = new Page<>(pageNum, pageSize);
+        return importBillInfoMapper.selectPage(page, queryWrapper);
     }
 
     public void updateImportBillInfo(ImportBillInfo importBillInfo) {

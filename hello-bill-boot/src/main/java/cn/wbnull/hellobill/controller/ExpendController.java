@@ -3,8 +3,9 @@ package cn.wbnull.hellobill.controller;
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
-import cn.wbnull.hellobill.dto.common.request.QueryListRequest;
+import cn.wbnull.hellobill.dto.common.request.ListRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.dto.expend.request.AddRequest;
 import cn.wbnull.hellobill.dto.expend.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.expend.response.QueryResponse;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * 支出信息接口
@@ -32,9 +31,9 @@ public class ExpendController {
 
     private final ExpendService expendService;
 
-    @PostMapping(value = "queryList")
-    public ApiResponse<List<QueryResponse>> queryList(@RequestBody @Validated ApiRequest<QueryListRequest> request) {
-        return expendService.queryList(request);
+    @PostMapping(value = "list")
+    public ApiResponse<PageResponse<QueryResponse>> list(@RequestBody @Validated ApiRequest<ListRequest> request) {
+        return expendService.list(request);
     }
 
     @PostMapping(value = "add")

@@ -3,8 +3,9 @@ package cn.wbnull.hellobill.controller;
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
-import cn.wbnull.hellobill.dto.common.request.QueryListRequest;
+import cn.wbnull.hellobill.dto.common.request.ListRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.dto.income.request.AddRequest;
 import cn.wbnull.hellobill.dto.income.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.income.response.QueryResponse;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * 收入信息接口
@@ -32,9 +31,9 @@ public class IncomeController {
 
     private final IncomeService incomeService;
 
-    @PostMapping(value = "queryList")
-    public ApiResponse<List<QueryResponse>> queryList(@RequestBody @Validated ApiRequest<QueryListRequest> request) {
-        return incomeService.queryList(request);
+    @PostMapping(value = "list")
+    public ApiResponse<PageResponse<QueryResponse>> list(@RequestBody @Validated ApiRequest<ListRequest> request) {
+        return incomeService.list(request);
     }
 
     @PostMapping(value = "add")

@@ -12,12 +12,14 @@ import cn.wbnull.hellobill.db.param.QueryListParam;
 import cn.wbnull.hellobill.db.repository.ClassInfoRepository;
 import cn.wbnull.hellobill.db.repository.ExpendInfoRepository;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
-import cn.wbnull.hellobill.dto.common.request.QueryListRequest;
+import cn.wbnull.hellobill.dto.common.request.ListRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.dto.expend.request.AddRequest;
 import cn.wbnull.hellobill.dto.expend.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.expend.response.QueryResponse;
 import cn.wbnull.hellobill.service.ExpendService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,12 +41,16 @@ public class ExpendServiceImpl implements ExpendService {
     private final ClassInfoRepository classInfoRepository;
 
     @Override
-    public ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request) {
-        QueryListParam queryListParam = BeanUtils.copyProperties(request.getData(), QueryListParam.class);
-        List<ExpendInfo> expendInfos = expendInfoRepository.listByParam(request.getUsername(), queryListParam);
-        List<QueryResponse> queryResponses = BeanUtils.copyToList(expendInfos, QueryResponse.class);
+    public ApiResponse<PageResponse<QueryResponse>> list(ApiRequest<ListRequest> request) {
+        ListRequest data = request.getData();
+        QueryListParam queryListParam = BeanUtils.copyProperties(data, QueryListParam.class);
+        IPage<ExpendInfo> page = expendInfoRepository.pageByParam(request.getUsername(), queryListParam,
+                data.getPageNum(), data.getPageSize());
+        List<QueryResponse> records = BeanUtils.copyToList(page.getRecords(), QueryResponse.class);
+        PageResponse<QueryResponse> response = PageResponse.of(records, page.getTotal(),
+                page.getSize(), page.getCurrent());
 
-        return ApiResponse.success(queryResponses);
+        return ApiResponse.success(response);
     }
 
     @Override

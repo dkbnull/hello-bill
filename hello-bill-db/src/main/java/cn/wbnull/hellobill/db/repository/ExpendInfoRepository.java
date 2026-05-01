@@ -8,6 +8,8 @@ import cn.wbnull.hellobill.db.mapper.ExpendInfoMapper;
 import cn.wbnull.hellobill.db.param.QueryListParam;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +30,7 @@ public class ExpendInfoRepository {
     @Autowired
     private ExpendInfoMapper expendInfoMapper;
 
-    public List<ExpendInfo> listByParam(String username, QueryListParam param) {
+    public IPage<ExpendInfo> pageByParam(String username, QueryListParam param, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<ExpendInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ExpendInfo::getUsername, username);
         queryWrapper.like(!StringUtils.isEmpty(param.getTopClass()), ExpendInfo::getTopClass,
@@ -43,7 +45,8 @@ public class ExpendInfoRepository {
                 param.getEndDate() + " 23:59:59");
         queryWrapper.orderBy(true, param.orderByAsc(), ExpendInfo::getExpendTime, ExpendInfo::getId);
 
-        return expendInfoMapper.selectList(queryWrapper);
+        Page<ExpendInfo> page = new Page<>(pageNum, pageSize);
+        return expendInfoMapper.selectPage(page, queryWrapper);
     }
 
     public ExpendInfo getEarliestByUsername(String username) {

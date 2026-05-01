@@ -93,6 +93,11 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus-boot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
+                <version>${mybatis-plus-boot.version}</version>
+            </dependency>
 
             <!--    mybatis plus 自动生成代码    -->
             <dependency>

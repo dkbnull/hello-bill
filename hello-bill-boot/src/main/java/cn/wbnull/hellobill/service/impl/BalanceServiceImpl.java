@@ -13,8 +13,11 @@ import cn.wbnull.hellobill.db.repository.BalanceSheetRepository;
 import cn.wbnull.hellobill.db.repository.ExpendInfoRepository;
 import cn.wbnull.hellobill.db.repository.IncomeInfoRepository;
 import cn.wbnull.hellobill.db.repository.UserInfoRepository;
+import cn.wbnull.hellobill.dto.balance.request.ListRequest;
 import cn.wbnull.hellobill.dto.balance.response.QueryResponse;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.service.BalanceService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -127,10 +130,14 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
-    public ApiResponse<List<QueryResponse>> query(ApiRequest<Object> request) {
-        List<BalanceSheet> balanceSheets = balanceSheetRepository.listByParam(request.getUsername());
-        List<QueryResponse> responses = BeanUtils.copyToList(balanceSheets, QueryResponse.class);
+    public ApiResponse<PageResponse<QueryResponse>> list(ApiRequest<ListRequest> request) {
+        ListRequest data = request.getData();
+        IPage<BalanceSheet> page = balanceSheetRepository.pageByParam(request.getUsername(),
+                data.getPageNum(), data.getPageSize());
+        List<QueryResponse> records = BeanUtils.copyToList(page.getRecords(), QueryResponse.class);
+        PageResponse<QueryResponse> response = PageResponse.of(records, page.getTotal(),
+                page.getSize(), page.getCurrent());
 
-        return ApiResponse.success(responses);
+        return ApiResponse.success(response);
     }
 }

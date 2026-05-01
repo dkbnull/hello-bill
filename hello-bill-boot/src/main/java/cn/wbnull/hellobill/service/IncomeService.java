@@ -2,14 +2,13 @@ package cn.wbnull.hellobill.service;
 
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
-import cn.wbnull.hellobill.dto.common.request.QueryListRequest;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
+import cn.wbnull.hellobill.dto.common.request.ListRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.dto.income.request.AddRequest;
-import cn.wbnull.hellobill.dto.income.response.QueryResponse;
 import cn.wbnull.hellobill.dto.income.request.UpdateRequest;
-
-import java.util.List;
+import cn.wbnull.hellobill.dto.income.response.QueryResponse;
 
 /**
  * 收入信息接口服务类
@@ -20,7 +19,7 @@ import java.util.List;
  */
 public interface IncomeService {
 
-    ApiResponse<List<QueryResponse>> queryList(ApiRequest<QueryListRequest> request);
+    ApiResponse<PageResponse<QueryResponse>> list(ApiRequest<ListRequest> request);
 
     ApiResponse<Object> add(ApiRequest<AddRequest> request);
 

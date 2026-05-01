@@ -7,11 +7,14 @@ import cn.wbnull.hellobill.common.core.util.BeanUtils;
 import cn.wbnull.hellobill.common.core.util.StringUtils;
 import cn.wbnull.hellobill.db.entity.ClassInfo;
 import cn.wbnull.hellobill.db.repository.ClassInfoRepository;
+import cn.wbnull.hellobill.dto.cls.request.ListRequest;
 import cn.wbnull.hellobill.dto.cls.request.QueryClassRequest;
 import cn.wbnull.hellobill.dto.cls.request.QueryRequest;
 import cn.wbnull.hellobill.dto.cls.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.cls.response.QueryResponse;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.service.ClassService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +38,20 @@ public class ClassServiceImpl implements ClassService {
     private static final String COLUMN_STATUS = "status";
 
     private final ClassInfoRepository classInfoRepository;
+
+    @Override
+    public ApiResponse<PageResponse<QueryResponse>> list(ApiRequest<ListRequest> request) {
+        ListRequest data = request.getData();
+        IPage<ClassInfo> page = classInfoRepository.pageByParam(data.getType(), data.getPageNum(), data.getPageSize());
+        List<QueryResponse> records = BeanUtils.copyToList(page.getRecords(), QueryResponse.class);
+        for (QueryResponse record : records) {
+            record.setTypeName(ClassTypeEnum.getTypeName(record.getType()));
+        }
+        PageResponse<QueryResponse> response = PageResponse.of(records, page.getTotal(),
+                page.getSize(), page.getCurrent());
+
+        return ApiResponse.success(response);
+    }
 
     @Override
     public ApiResponse<List<QueryResponse>> query(ApiRequest<QueryRequest> request) {

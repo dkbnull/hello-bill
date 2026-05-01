@@ -16,10 +16,13 @@ import cn.wbnull.hellobill.db.repository.ImportBillDetailConvertRepository;
 import cn.wbnull.hellobill.db.repository.ImportBillInfoRepository;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.dto.imp.request.ConfirmRequest;
+import cn.wbnull.hellobill.dto.imp.request.ListRequest;
 import cn.wbnull.hellobill.dto.imp.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.imp.response.QueryResponse;
 import cn.wbnull.hellobill.service.ImportService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.opencsv.CSVReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
@@ -330,14 +333,18 @@ public class ImportServiceImpl implements ImportService {
     }
 
     @Override
-    public ApiResponse<List<QueryResponse>> queryList(ApiRequest<Object> request) {
-        List<ImportBillInfo> importBillInfos = importBillInfoRepository.list(request.getUsername());
-        List<QueryResponse> queryResponses = BeanUtils.copyToList(importBillInfos, QueryResponse.class);
-        for (QueryResponse queryResponse : queryResponses) {
-            queryResponse.setBillTypeName(ClassTypeEnum.getTypeName(queryResponse.getBillType()));
+    public ApiResponse<PageResponse<QueryResponse>> list(ApiRequest<ListRequest> request) {
+        ListRequest data = request.getData();
+        IPage<ImportBillInfo> page = importBillInfoRepository.pageByParam(request.getUsername(),
+                data.getPageNum(), data.getPageSize());
+        List<QueryResponse> records = BeanUtils.copyToList(page.getRecords(), QueryResponse.class);
+        for (QueryResponse record : records) {
+            record.setBillTypeName(ClassTypeEnum.getTypeName(record.getBillType()));
         }
+        PageResponse<QueryResponse> response = PageResponse.of(records, page.getTotal(),
+                page.getSize(), page.getCurrent());
 
-        return ApiResponse.success(queryResponses);
+        return ApiResponse.success(response);
     }
 
     @Override

@@ -2,10 +2,12 @@ package cn.wbnull.hellobill.controller;
 
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.cls.request.ListRequest;
 import cn.wbnull.hellobill.dto.cls.request.QueryClassRequest;
 import cn.wbnull.hellobill.dto.cls.request.QueryRequest;
 import cn.wbnull.hellobill.dto.cls.request.UpdateRequest;
 import cn.wbnull.hellobill.dto.cls.response.QueryResponse;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.service.ClassService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +31,11 @@ import java.util.List;
 public class ClassController {
 
     private final ClassService classService;
+
+    @PostMapping(value = "list")
+    public ApiResponse<PageResponse<QueryResponse>> list(@RequestBody @Validated ApiRequest<ListRequest> request) {
+        return classService.list(request);
+    }
 
     @PostMapping(value = "query")
     public ApiResponse<List<QueryResponse>> query(@RequestBody @Validated ApiRequest<QueryRequest> request) {

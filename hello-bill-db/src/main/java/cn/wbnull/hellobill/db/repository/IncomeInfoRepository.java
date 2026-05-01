@@ -11,6 +11,8 @@ import cn.wbnull.hellobill.db.mapper.IncomeInfoMapper;
 import cn.wbnull.hellobill.db.param.QueryListParam;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,7 +36,7 @@ public class IncomeInfoRepository {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-    public List<IncomeInfo> listByParam(String username, QueryListParam param) {
+    public IPage<IncomeInfo> pageByParam(String username, QueryListParam param, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(IncomeInfo::getUsername, username);
         queryWrapper.like(!StringUtils.isEmpty(param.getSecondClass()), IncomeInfo::getSecondClass,
@@ -47,7 +49,8 @@ public class IncomeInfoRepository {
                 param.getEndDate());
         queryWrapper.orderBy(true, param.orderByAsc(), IncomeInfo::getIncomeDate, IncomeInfo::getId);
 
-        return incomeInfoMapper.selectList(queryWrapper);
+        Page<IncomeInfo> page = new Page<>(pageNum, pageSize);
+        return incomeInfoMapper.selectPage(page, queryWrapper);
     }
 
     public void insertIncomeInfo(String username, IncomeInfo incomeInfo) {

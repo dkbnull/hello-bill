@@ -1,6 +1,7 @@
 package cn.wbnull.hellobill.dto.common.request;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 收入/支出信息明细查询接口请求参数
@@ -10,7 +11,8 @@ import lombok.Data;
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 @Data
-public class QueryListRequest {
+@EqualsAndHashCode(callSuper = true)
+public class ListRequest extends PageRequest {
 
     private String beginDate;
     private String endDate;

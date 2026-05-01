@@ -6,7 +6,9 @@ package cn.wbnull.hellobill.controller;
 
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.dto.balance.request.ListRequest;
 import cn.wbnull.hellobill.dto.balance.response.QueryResponse;
+import cn.wbnull.hellobill.dto.common.response.PageResponse;
 import cn.wbnull.hellobill.service.BalanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * 资产信息接口
@@ -31,8 +31,8 @@ public class BalanceController {
 
     private final BalanceService balanceService;
 
-    @PostMapping(value = "query")
-    public ApiResponse<List<QueryResponse>> query(@RequestBody @Validated ApiRequest<Object> request) {
-        return balanceService.query(request);
+    @PostMapping(value = "list")
+    public ApiResponse<PageResponse<QueryResponse>> list(@RequestBody @Validated ApiRequest<ListRequest> request) {
+        return balanceService.list(request);
     }
 }

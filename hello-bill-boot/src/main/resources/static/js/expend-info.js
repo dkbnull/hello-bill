@@ -7,7 +7,7 @@
  */
 const expendListConfig = {
     defaultBeginDate: dateBeginTheMonth(),
-    queryUrl: 'expend/queryList',
+    queryUrl: 'expend/list',
     addPageUrl: 'expend-info-add.html',
     addPageHeight: '620px',
     deleteUrl: 'expend/delete',

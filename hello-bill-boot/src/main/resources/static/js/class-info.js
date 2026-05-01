@@ -6,8 +6,10 @@
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 let $, form;
+let currentPageNum = 1;
+let currentPageSize = 10;
 
-layui.use(['layer', 'table', 'form'], function () {
+layui.use(['layer', 'table', 'form', 'laypage'], function () {
     if (!validate()) {
         return;
     }
@@ -16,28 +18,35 @@ layui.use(['layer', 'table', 'form'], function () {
     form = layui.form;
 
     initMethod();
-    doPostQuery();
+    doPostQuery(1, 10);
 });
 
 function initMethod() {
     form.on('radio(type)', function (obj) {
-        doPostQuery();
+        doPostQuery(1, currentPageSize);
     });
 }
 
-function doPostQuery() {
+function doPostQuery(pageNum, pageSize) {
+    currentPageNum = pageNum;
+    currentPageSize = pageSize;
     const data = {
-        type: $('input[name="type"]:checked').val()
+        type: $('input[name="type"]:checked').val(),
+        pageNum: pageNum,
+        pageSize: pageSize
     };
 
-    doPost('class/query', data, callbackQuery);
+    doPost('class/list', data, callbackQuery);
 }
 
 function callbackQuery(result) {
     const table = layui.table;
+    const laypage = layui.laypage;
+    const pageData = result.data;
+
     table.render({
         elem: '#info-table',
-        data: result.data,
+        data: pageData.records,
         cellMinWidth: 100,
         cols: [[
             {field: 'topClass', title: '顶级分类'},
@@ -59,9 +68,21 @@ function callbackQuery(result) {
                         'data-uuid="' + d.uuid + '" lay-filter="status"' + status + ' />';
                 }
             }
-        ]],
-        page: true,
-        limit: 10
+        ]]
+    });
+
+    laypage.render({
+        elem: 'info-table-page',
+        count: pageData.total,
+        limit: pageData.size,
+        curr: pageData.current,
+        limits: [10, 20, 50, 100],
+        layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+        jump: function (obj, first) {
+            if (!first) {
+                doPostQuery(obj.curr, obj.limit);
+            }
+        }
     });
 
     table.on('edit(infoTable)', function (obj) {
@@ -88,6 +109,6 @@ function doPostUpdate(uuid, key, value) {
     };
 
     doPost('class/update', data, function (result) {
-        layer.msg(result.message);
+        layer.msg(result.msg);
     });
 }
