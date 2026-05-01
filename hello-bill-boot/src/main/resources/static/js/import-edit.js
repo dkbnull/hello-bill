@@ -5,7 +5,7 @@
  * @date 2025-01-27
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
-let $, form, type, secondClass;
+let $, form, type, topClass, secondClass;
 
 layui.use(['layer', 'form', 'laydate'], function () {
     $ = layui.jquery;
@@ -27,6 +27,7 @@ function initData() {
 function callbackQuery(result) {
     const data = result.data;
     type = data.billType;
+    topClass = data.topClass;
     secondClass = data.secondClass;
 
     $('#bill-time-input').val(data.billTime);
@@ -40,20 +41,7 @@ function callbackQuery(result) {
 }
 
 function initClass() {
-    const data = {
-        type: type
-    };
-
-    doPost('class/secondClassQuery', data, callbackClass);
-}
-
-function callbackClass(result) {
-    for (let i = 0; i < result.data.length; i++) {
-        $('#second-class-select').append('<option>' + result.data[i] + '</option>');
-    }
-    $('#second-class-select').val(secondClass);
-
-    form.render();
+    initClassSelect(type, {topClass: topClass, secondClass: secondClass});
 }
 
 function initMethod() {

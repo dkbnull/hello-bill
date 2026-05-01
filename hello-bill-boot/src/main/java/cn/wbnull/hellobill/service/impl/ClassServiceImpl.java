@@ -78,15 +78,6 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public ApiResponse<List<String>> secondClassQuery(ApiRequest<QueryRequest> request) {
-        List<ClassInfo> classInfos = classInfoRepository.listSecondByType(request.getData().getType());
-        List<String> secondClasses = classInfos.stream().map(ClassInfo::getSecondClass)
-                .collect(Collectors.toList());
-
-        return ApiResponse.success(secondClasses);
-    }
-
-    @Override
     public ApiResponse<List<String>> queryClass(ApiRequest<QueryClassRequest> request) {
         QueryClassRequest data = request.getData();
 

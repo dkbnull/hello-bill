@@ -7,6 +7,7 @@
  */
 const expendListConfig = {
     defaultBeginDate: dateBeginTheMonth(),
+    classType: '0',
     queryUrl: 'expend/list',
     addPageUrl: 'expend-info-add.html',
     addPageHeight: '620px',
@@ -26,8 +27,8 @@ const expendListConfig = {
         return {
             beginDate: beginDate,
             endDate: endDate,
-            topClass: $('#top-class-input').val(),
-            secondClass: $('#second-class-input').val(),
+            topClass: $('#top-class-select').val(),
+            secondClass: $('#second-class-select').val(),
             detail: $('#detail-input').val(),
             order: $('input[name="order"]:checked').val()
         };

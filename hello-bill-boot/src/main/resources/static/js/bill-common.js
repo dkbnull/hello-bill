@@ -6,7 +6,7 @@
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 function initBillListPage(config) {
-    layui.use(['layer', 'table', 'laydate'], function () {
+    layui.use(['layer', 'table', 'laydate', 'form'], function () {
         if (!validate()) {
             return;
         }
@@ -15,6 +15,7 @@ function initBillListPage(config) {
 
         initListDatetime(config.defaultBeginDate);
         initListMethod(config);
+        initClassSelect(config.classType);
         doPostListQuery(config.defaultBeginDate, dateCalc(0), config, 1, 10);
     });
 }
@@ -74,6 +75,61 @@ function initListMethod(config) {
             });
         }
     };
+}
+
+function initClassSelect(classType, options) {
+    const form = layui.form;
+    const opts = options || {};
+
+    doPost('class/queryClass', {type: classType}, function (result) {
+        const topClassSelect = $('#top-class-select');
+        topClassSelect.empty();
+        topClassSelect.append('<option></option>');
+        for (let i = 0; i < result.data.length; i++) {
+            topClassSelect.append('<option>' + result.data[i] + '</option>');
+        }
+        if (opts.topClass) {
+            topClassSelect.val(opts.topClass);
+        }
+        form.render();
+
+        if (opts.topClass) {
+            doPost('class/queryClass', {type: classType, topClass: opts.topClass}, function (result2) {
+                const secondClassSelect = $('#second-class-select');
+                secondClassSelect.empty();
+                secondClassSelect.append('<option></option>');
+                for (let i = 0; i < result2.data.length; i++) {
+                    secondClassSelect.append('<option>' + result2.data[i] + '</option>');
+                }
+                if (opts.secondClass) {
+                    secondClassSelect.val(opts.secondClass);
+                }
+                form.render();
+            });
+        } else {
+            const secondClassSelect = $('#second-class-select');
+            secondClassSelect.empty();
+            secondClassSelect.append('<option></option>');
+            form.render();
+        }
+    });
+
+    form.on('select(topClass)', function (data) {
+        const secondClassSelect = $('#second-class-select');
+        secondClassSelect.empty();
+        secondClassSelect.append('<option></option>');
+
+        if (data.value) {
+            doPost('class/queryClass', {type: classType, topClass: data.value}, function (result) {
+                for (let i = 0; i < result.data.length; i++) {
+                    secondClassSelect.append('<option>' + result.data[i] + '</option>');
+                }
+                form.render();
+            });
+        } else {
+            form.render();
+        }
+    });
 }
 
 let currentListConfig = null;
@@ -158,21 +214,12 @@ function initBillAddPage(config) {
         form = layui.form;
 
         config.initDatetime($, form);
-        initAddClass(config.classType);
+        initClassSelect(config.classType);
         initAddData(config);
         initAddMethod(config);
     });
 
     return {$: $, form: form};
-}
-
-function initAddClass(classType) {
-    doPost('class/secondClassQuery', {type: classType}, function (result) {
-        for (let i = 0; i < result.data.length; i++) {
-            $('#second-class-select').append('<option>' + result.data[i] + '</option>');
-        }
-        layui.form.render();
-    });
 }
 
 function initAddData(config) {
@@ -181,7 +228,10 @@ function initAddData(config) {
         const data = {id: search.substring(4, search.length)};
         doPost(config.queryUrl, data, function (result) {
             config.fillForm(result.data);
-            layui.form.render();
+            initClassSelect(config.classType, {
+                topClass: result.data.topClass,
+                secondClass: result.data.secondClass
+            });
             config.onDataLoaded(result.data);
         });
     }

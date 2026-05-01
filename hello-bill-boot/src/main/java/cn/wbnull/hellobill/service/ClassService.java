@@ -26,7 +26,5 @@ public interface ClassService {
 
     ApiResponse<Object> update(ApiRequest<UpdateRequest> request);
 
-    ApiResponse<List<String>> secondClassQuery(ApiRequest<QueryRequest> request);
-
     ApiResponse<List<String>> queryClass(ApiRequest<QueryClassRequest> request);
 }

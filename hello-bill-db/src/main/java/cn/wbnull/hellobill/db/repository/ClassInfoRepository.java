@@ -72,16 +72,6 @@ public class ClassInfoRepository {
         return classInfoMapper.selectList(queryWrapper);
     }
 
-    public List<ClassInfo> listSecondByType(String type) {
-        LambdaQueryWrapper<ClassInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.select(ClassInfo::getSecondClass);
-        queryWrapper.eq(ClassInfo::getType, type);
-        queryWrapper.eq(ClassInfo::getStatus, StatusEnum.USABLE.getStatus());
-        queryWrapper.orderByAsc(ClassInfo::getSerialNo, ClassInfo::getUuid);
-
-        return classInfoMapper.selectList(queryWrapper);
-    }
-
     public List<ClassInfo> listSecondByTypeAndTop(int type, String topClass) {
         QueryWrapper<ClassInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("distinct second_class")

@@ -47,11 +47,6 @@ public class ClassController {
         return classService.update(request);
     }
 
-    @PostMapping(value = "secondClassQuery")
-    public ApiResponse<List<String>> secondClassQuery(@RequestBody @Validated ApiRequest<QueryRequest> request) {
-        return classService.secondClassQuery(request);
-    }
-
     @PostMapping(value = "queryClass")
     public ApiResponse<List<String>> queryClass(@RequestBody @Validated ApiRequest<QueryClassRequest> request) {
         return classService.queryClass(request);

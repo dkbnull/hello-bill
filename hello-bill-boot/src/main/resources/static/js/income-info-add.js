@@ -27,6 +27,7 @@ const incomeAddConfig = {
         });
     },
     fillForm: function (data) {
+        $('#top-class-select').val(data.topClass);
         $('#second-class-select').val(data.secondClass);
         $('#detail-input').val(data.detail);
         $('#amount-input').val(data.amount);

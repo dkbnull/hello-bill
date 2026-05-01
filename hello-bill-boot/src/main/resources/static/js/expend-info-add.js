@@ -32,6 +32,7 @@ const expendAddConfig = {
     },
     fillForm: function (data) {
         $('#expend-time-value-input').val(data.expendTime);
+        $('#top-class-select').val(data.topClass);
         $('#second-class-select').val(data.secondClass);
         $('#detail-input').val(data.detail);
         $('#amount-input').val(data.amount);

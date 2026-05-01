@@ -7,6 +7,7 @@
  */
 const incomeListConfig = {
     defaultBeginDate: dateBeginTheYear(),
+    classType: '1',
     queryUrl: 'income/list',
     addPageUrl: 'income-info-add.html',
     addPageHeight: '560px',
@@ -15,7 +16,8 @@ const incomeListConfig = {
     deleteConfirmMsg: '是否删除当前收入明细？',
     columns: [
         {field: 'incomeDate', title: '日期', sort: true},
-        {field: 'secondClass', title: '分类', sort: true},
+        {field: 'topClass', title: '顶级分类', sort: true},
+        {field: 'secondClass', title: '二级分类', sort: true},
         {field: 'detail', title: '明细'},
         {field: 'amount', title: '金额', totalRow: true},
         {field: 'remark', title: '备注'},
@@ -25,7 +27,8 @@ const incomeListConfig = {
         return {
             beginDate: beginDate,
             endDate: endDate,
-            secondClass: $('#second-class-input').val(),
+            topClass: $('#top-class-select').val(),
+            secondClass: $('#second-class-select').val(),
             detail: $('#detail-input').val(),
             order: $('input[name="order"]:checked').val()
         };
