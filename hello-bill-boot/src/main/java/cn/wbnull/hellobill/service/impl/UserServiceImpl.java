@@ -2,6 +2,7 @@ package cn.wbnull.hellobill.service.impl;
 
 import cn.wbnull.hellobill.common.core.dto.ApiRequest;
 import cn.wbnull.hellobill.common.core.dto.ApiResponse;
+import cn.wbnull.hellobill.common.core.util.PasswordUtils;
 import cn.wbnull.hellobill.common.security.component.JwtTokenProvider;
 import cn.wbnull.hellobill.common.security.model.TokenModel;
 import cn.wbnull.hellobill.db.entity.UserInfo;
@@ -11,7 +12,6 @@ import cn.wbnull.hellobill.dto.user.request.LoginRequest;
 import cn.wbnull.hellobill.dto.user.response.LoginResponse;
 import cn.wbnull.hellobill.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,12 +37,10 @@ public class UserServiceImpl implements UserService {
             return ApiResponse.fail("用户名或密码错误");
         }
 
-        String password = DigestUtils.md5Hex(data.getPassword() + userInfo.getSalt()).toUpperCase();
-        if (!userInfo.getPassword().equals(password)) {
+        if (!PasswordUtils.matches(data.getPassword(), userInfo.getPassword())) {
             return ApiResponse.fail("用户名或密码错误");
         }
 
-        // 再次检查大小写是否一致
         if (!userInfo.getUsername().equals(data.getUsername())) {
             return ApiResponse.fail("用户名或密码错误");
         }
@@ -62,11 +60,11 @@ public class UserServiceImpl implements UserService {
             return ApiResponse.fail("用户不存在");
         }
 
-        if (!userInfo.getPassword().equals(DigestUtils.md5Hex(data.getOldPassword()).toUpperCase())) {
+        if (!PasswordUtils.matches(data.getOldPassword(), userInfo.getPassword())) {
             return ApiResponse.fail("原密码错误");
         }
 
-        String password = DigestUtils.md5Hex(data.getNewPassword() + userInfo.getSalt()).toUpperCase();
+        String password = PasswordUtils.encode(data.getNewPassword());
         userInfoRepository.updatePasswordByUsername(request.getUsername(), password);
 
         return ApiResponse.success("密码修改成功");

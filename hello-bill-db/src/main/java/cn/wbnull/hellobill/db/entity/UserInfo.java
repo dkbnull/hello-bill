@@ -41,12 +41,6 @@ public class UserInfo {
     private String username;
 
     /**
-     * 盐值
-     */
-    @TableField("salt")
-    private String salt;
-
-    /**
      * 密码
      */
     @TableField("password")
