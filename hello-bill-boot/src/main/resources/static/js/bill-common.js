@@ -100,6 +100,7 @@ function renderListTable(result, config) {
     table.render({
         elem: '#info-table',
         data: pageData.records,
+        limit: pageData.size,
         cellMinWidth: 100,
         cols: [config.columns]
     });

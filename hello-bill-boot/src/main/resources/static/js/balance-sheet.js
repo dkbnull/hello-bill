@@ -32,6 +32,7 @@ function callback(result) {
     table.render({
         elem: '#info-table',
         data: pageData.records,
+        limit: pageData.size,
         cellMinWidth: 100,
         totalRow: true,
         cols: [[

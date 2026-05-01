@@ -62,6 +62,7 @@ function callback(result) {
     table.render({
         elem: '#info-table',
         data: pageData.records,
+        limit: pageData.size,
         totalRow: true,
         cols: [[
             {field: 'billTypeName', title: '类型'},

@@ -6,14 +6,25 @@
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 .layui-layer-custom .layui-layer-title {
-    background-color: var(--primary-color);
+    background: var(--header-gradient);
     font-size: 15px;
     font-weight: bold;
     color: var(--text-light);
+    border: none;
 }
 
 .layui-layer-custom .layui-layer-setwin {
     display: none;
+}
+
+.layui-layer-custom .layui-layer-content {
+    padding: 0;
+}
+
+.layui-layer-custom .layui-layer-btn {
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    padding: 12px 0;
 }
 
 .layui-layer-custom .layui-layer-btn .layui-layer-btn0 {
@@ -26,7 +37,9 @@
     color: var(--text-light);
     font-weight: bold;
     margin-right: 20px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
+    border: none;
+    transition: var(--transition);
 }
 
 .layui-layer-custom .layui-layer-btn .layui-layer-btn0:hover {
@@ -40,4 +53,69 @@
     text-align: center;
     line-height: 38px;
     color: var(--text-dark);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-white);
+    transition: var(--transition);
+}
+
+.layui-layer-custom .layui-layer-btn .layui-layer-btn1:hover {
+    background-color: var(--bg-light);
+}
+
+.layui-layer-confirm .layui-layer-title {
+    background: var(--header-gradient);
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--text-light);
+    border: none;
+}
+
+.layui-layer-confirm .layui-layer-content {
+    padding: 20px;
+    font-size: 14px;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.layui-layer-confirm .layui-layer-btn {
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    padding: 12px 0;
+}
+
+.layui-layer-confirm .layui-layer-btn .layui-layer-btn0 {
+    width: 90px;
+    height: 38px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 38px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    font-weight: bold;
+    margin-right: 20px;
+    border-radius: var(--radius-sm);
+    border: none;
+    transition: var(--transition);
+}
+
+.layui-layer-confirm .layui-layer-btn .layui-layer-btn0:hover {
+    background-color: var(--primary-dark);
+}
+
+.layui-layer-confirm .layui-layer-btn .layui-layer-btn1 {
+    width: 90px;
+    height: 38px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 38px;
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-white);
+    transition: var(--transition);
+}
+
+.layui-layer-confirm .layui-layer-btn .layui-layer-btn1:hover {
+    background-color: var(--bg-light);
 }

@@ -6,7 +6,8 @@
  * @link <a href="https://github.com/dkbnull/hello-bill">GitHub</a>
  */
 .layui-layout-admin .layui-header {
-    background-color: var(--header-bg) !important;
+    background: var(--header-gradient) !important;
+    box-shadow: var(--shadow-md);
 }
 
 .layui-layout-admin .layui-body {
@@ -37,8 +38,16 @@
     color: var(--text-light);
 }
 
+.layui-header .layui-nav {
+    background: transparent !important;
+}
+
 .layui-header .layui-nav .layui-nav-child {
     background-color: var(--bg-white) !important;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
 }
 
 .layui-header .layui-nav .layui-nav-child a {
@@ -52,6 +61,7 @@
 
 .layui-side {
     background-color: var(--sidebar-bg) !important;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .layui-bg-black,
@@ -66,15 +76,16 @@
 
 .layui-nav-tree .layui-nav-item a {
     color: rgba(255, 255, 255, 0.75);
+    transition: var(--transition);
 }
 
 .layui-nav-tree .layui-nav-item a:hover {
-    background-color: rgba(66, 184, 131, 0.25) !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
     color: var(--text-light);
 }
 
 .layui-nav-tree .layui-nav-child a:hover {
-    background-color: rgba(66, 184, 131, 0.25) !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
     color: var(--text-light);
 }
 
@@ -119,8 +130,8 @@
     padding: 4px;
     color: var(--text-dark);
     border: 1px solid var(--border-color);
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
     cursor: pointer;
     display: none;
     position: absolute;
@@ -129,9 +140,10 @@
 .tab-popup-menu li {
     text-align: center;
     display: block;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 2px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
 }
 
 .tab-popup-menu li:hover {
@@ -144,14 +156,12 @@
     font-weight: bold;
     color: var(--primary-dark) !important;
     background-color: var(--primary-bg) !important;
-}
-
-.layui-tab-title .layui-this::after {
-    /*background-color: var(--primary-color) !important;*/
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 }
 
 .layui-tab-title li {
     color: var(--text-dark);
+    transition: var(--transition);
 }
 
 .layui-tab-title li:hover {

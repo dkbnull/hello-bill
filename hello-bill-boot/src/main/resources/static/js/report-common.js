@@ -8,7 +8,9 @@
 function barChartQuery(result, title, id) {
     const option = {
         title: {
-            text: title
+            text: title,
+            padding: [10, 0, 0, 10],
+            left: 'center'
         },
         tooltip: {
             trigger: 'axis',
@@ -16,11 +18,14 @@ function barChartQuery(result, title, id) {
                 type: 'shadow'
             }
         },
-        legend: {},
+        legend: {
+            top: 30
+        },
         grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
+            left: '8%',
+            right: '8%',
+            top: '20%',
+            bottom: '8%',
             containLabel: true
         },
         xAxis: {
@@ -72,12 +77,15 @@ function barChartClass(result, title, id, tag) {
 
     const option = {
         title: {
-            text: title
+            text: title,
+            padding: [10, 0, 0, 10],
+            left: 'center'
         },
         grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
+            left: '8%',
+            right: '8%',
+            top: '15%',
+            bottom: '8%',
             containLabel: true
         },
         xAxis: {
@@ -179,9 +187,10 @@ function barChartClass(result, title, id, tag) {
 function barChartReportClass(data, seriesData) {
     const option = {
         grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
+            left: '8%',
+            right: '8%',
+            top: '10%',
+            bottom: '8%',
             containLabel: true
         },
         xAxis: {
@@ -222,12 +231,14 @@ function pieChartReportClass(data, seriesData) {
         },
         legend: {
             orient: 'vertical',
-            left: 'right'
+            left: 'right',
+            padding: [10, 10, 0, 0]
         },
         grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
+            left: '8%',
+            right: '15%',
+            top: '10%',
+            bottom: '8%',
             containLabel: true
         },
         series: [
@@ -265,8 +276,10 @@ function pieChartReportClass(data, seriesData) {
 function barChartReportDetail(data, seriesData) {
     const option = {
         grid: {
-            left: '3%',
-            bottom: '3%',
+            left: '8%',
+            right: '8%',
+            top: '10%',
+            bottom: '8%',
             containLabel: true
         },
         yAxis: {

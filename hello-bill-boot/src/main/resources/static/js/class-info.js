@@ -46,6 +46,7 @@ function callbackQuery(result) {
     table.render({
         elem: '#info-table',
         data: pageData.records,
+        limit: pageData.size,
         cellMinWidth: 100,
         cols: [[
             {field: 'topClass', title: '顶级分类'},
@@ -53,7 +54,7 @@ function callbackQuery(result) {
             {field: 'typeName', title: '类别'},
             {
                 field: 'serialNo', title: '序号', edit: 'number',
-                style: 'cursor: pointer; font-weight:bold; background-color: var(--accent-color); color: #fff;'
+                style: 'cursor: pointer; font-weight:bold; background-color: var(--primary-color); color: #fff;'
             },
             {
                 field: 'status', title: '状态',
