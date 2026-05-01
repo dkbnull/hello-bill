@@ -26,15 +26,22 @@ import cn.wbnull.hellobill.service.ImportService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.opencsv.CSVReader;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -69,34 +76,127 @@ public class ImportServiceImpl implements ImportService {
             return ApiResponse.fail(e.getMessage());
         }
 
-        try (FileReader fileReader = new FileReader(fileBill.getAbsoluteFile());
-             CSVReader csvReader = new CSVReader(fileReader)) {
-            String[] line = csvReader.readNext();
-            // 微信支付账单格式，第一行为： 微信支付账单明细
-            if (line[0].contains("微信")) {
-                List<ImportBillInfo> importBillInfos = importWeixinBill(username, csvReader);
-                importBillInfoMapper.insertBatch(importBillInfos);
-            }
-            // 支付宝账单格式，第一行为：支付宝交易记录明细查询
-            else if (line[0].contains("支付宝")) {
-                List<ImportBillInfo> importBillInfos = importAlipayBill(username, csvReader);
-                importBillInfoMapper.insertBatch(importBillInfos);
-            }
-            // 京东账单格式，第一行为：导出信息：   第二行为：京东账号名
-            else if (line[0].contains("导出信息") && csvReader.readNext()[0].contains("京东")) {
-                List<ImportBillInfo> importBillInfos = importJdBill(username, csvReader);
-                importBillInfoMapper.insertBatch(importBillInfos);
+        try {
+            String fileName = fileBill.getName().toLowerCase();
+
+            if (fileName.endsWith(".xlsx") || fileName.endsWith(".xls")) {
+                importExcelBill(fileBill, username);
+            } else if (fileName.endsWith(".csv") || fileName.endsWith(".txt")) {
+                importCsvBill(fileBill, username);
+            } else {
+                return ApiResponse.fail("不支持的账单文件格式");
             }
         } catch (Exception e) {
             LoggerUtils.error("账单文件导入异常", e);
             return ApiResponse.fail("账单文件导入异常: " + e);
-        }
-
-        if (fileBill.exists()) {
-            fileBill.delete();
+        } finally {
+            if (fileBill.exists()) {
+                fileBill.delete();
+            }
         }
 
         return ApiResponse.success("导入成功");
+    }
+
+    private void importCsvBill(File fileBill, String username) throws Exception {
+        Charset charset = detectCharset(fileBill);
+
+        try (InputStreamReader fileReader = new InputStreamReader(Files.newInputStream(fileBill.toPath()), charset);
+             CSVReader csvReader = new CSVReader(fileReader)) {
+            String[] line = csvReader.readNext();
+            if (line == null || line.length == 0) {
+                throw new BusinessException("账单文件内容为空");
+            }
+
+            // 微信支付账单格式，第一行为： 微信支付账单明细
+            // 支付宝账单格式，第一行为：支付宝交易记录明细查询
+            // 京东账单格式，第一行为：导出信息：   第二行为：京东账号名
+            if (line[0].contains("微信")) {
+                List<ImportBillInfo> importBillInfos = importWeixinBill(username, csvReader);
+                importBillInfoMapper.insertBatch(importBillInfos);
+            } else if (line[0].contains("支付宝")) {
+                List<ImportBillInfo> importBillInfos = importAlipayBill(username, csvReader);
+                importBillInfoMapper.insertBatch(importBillInfos);
+            } else if (line[0].contains("导出信息") && csvReader.readNext()[0].contains("京东")) {
+                List<ImportBillInfo> importBillInfos = importJdBill(username, csvReader);
+                importBillInfoMapper.insertBatch(importBillInfos);
+            }
+        }
+    }
+
+    private void importExcelBill(File fileBill, String username) throws Exception {
+        try (InputStream inputStream = Files.newInputStream(fileBill.toPath());
+             Workbook workbook = WorkbookFactory.create(inputStream)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+            Row firstRow = sheet.getRow(0);
+            if (firstRow == null) {
+                throw new BusinessException("账单文件内容为空");
+            }
+
+            String firstCellValue = getCellStringValue(firstRow.getCell(0));
+
+            if (firstCellValue.contains("微信")) {
+                List<ImportBillInfo> importBillInfos = importWeixinExcelBill(username, sheet);
+                importBillInfoMapper.insertBatch(importBillInfos);
+            }
+        }
+    }
+
+    private Charset detectCharset(File file) {
+        byte[] bom = new byte[4];
+        try (InputStream inputStream = Files.newInputStream(file.toPath())) {
+            int read = inputStream.read(bom);
+            if (read >= 3 && (bom[0] & 0xFF) == 0xEF && (bom[1] & 0xFF) == 0xBB && (bom[2] & 0xFF) == 0xBF) {
+                return StandardCharsets.UTF_8;
+            }
+        } catch (IOException e) {
+            return StandardCharsets.UTF_8;
+        }
+
+        try (InputStreamReader gbkReader = new InputStreamReader(Files.newInputStream(file.toPath()), Charset.forName("GBK"))) {
+            char[] buffer = new char[4096];
+            gbkReader.read(buffer);
+            String content = new String(buffer).trim();
+
+            if (content.contains("微信") || content.contains("支付宝") || content.contains("京东")
+                    || content.contains("交易") || content.contains("导出")) {
+                return Charset.forName("GBK");
+            }
+        } catch (IOException ignore) {
+
+        }
+
+        return StandardCharsets.UTF_8;
+    }
+
+    private String getCellStringValue(Cell cell) {
+        if (cell == null) {
+            return "";
+        }
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue().trim();
+            case NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    return cell.getLocalDateTimeCellValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                }
+                double numVal = cell.getNumericCellValue();
+                if (numVal == Math.floor(numVal) && !Double.isInfinite(numVal)) {
+                    return String.valueOf((long) numVal);
+                }
+                return String.valueOf(numVal);
+            case BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            case FORMULA:
+                try {
+                    return cell.getStringCellValue().trim();
+                } catch (Exception e) {
+                    return String.valueOf(cell.getNumericCellValue());
+                }
+            default:
+                return "";
+        }
     }
 
     private List<ImportBillInfo> importWeixinBill(String username, CSVReader csvReader) throws Exception {
@@ -315,6 +415,87 @@ public class ImportServiceImpl implements ImportService {
         reverseImportBillInfos(importBillInfos);
 
         return importBillInfos;
+    }
+
+    private List<ImportBillInfo> importWeixinExcelBill(String username, Sheet sheet) {
+        List<ImportBillInfo> importBillInfos = new ArrayList<>();
+
+        boolean tag = false;
+        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+            Row row = sheet.getRow(i);
+            if (row == null) {
+                continue;
+            }
+
+            String[] line = rowToStringArray(row);
+
+            if ("交易时间".equals(line[0])) {
+                tag = true;
+                continue;
+            }
+            if (!tag) {
+                continue;
+            }
+
+            if (line.length <= 4 || "/".equals(line[4])) {
+                continue;
+            }
+
+            ImportBillInfo importBillInfo = new ImportBillInfo();
+            importBillInfo.setUsername(username);
+
+            if ("支出".equals(line[4])) {
+                importBillInfo.setBillType((byte) ClassTypeEnum.EXPEND.getTypeCode());
+            }
+            if ("收入".equals(line[4])) {
+                importBillInfo.setBillType((byte) ClassTypeEnum.INCOME.getTypeCode());
+            }
+
+            LocalDateTime localDateTime = DateUtils.parseLocalDateTime(line[0]);
+            importBillInfo.setBillTime(localDateTime);
+
+            String detail;
+            if (line[2].contains("美团")) {
+                detail = line[3].contains("-") ? line[3].substring(0, line[3].indexOf("-")) : line[3];
+            } else {
+                detail = line[2];
+            }
+            importBillInfo.setDetail(detail);
+            importBillInfo.setDetailConvert(convertDetail(detail));
+
+            ImportBillClass importBillClass = importBillClassMapper.getByDetail(importBillInfo.getDetailConvert());
+            if (importBillClass == null) {
+                importBillClass = importBillClassMapper.getByDetail(line[3]);
+            }
+            if (importBillClass != null) {
+                importBillInfo.setTopClass(importBillClass.getTopClass());
+                importBillInfo.setSecondClass(importBillClass.getSecondClass());
+            }
+
+            importBillInfo.setAmount(new BigDecimal(line[5].replace("¥", "")));
+            importBillInfo.setPayMode(line.length > 6 ? line[6] : "");
+            importBillInfo.setGmtCreate(LocalDateTime.now());
+            importBillInfo.setGmtModified(LocalDateTime.now());
+
+            importBillInfos.add(importBillInfo);
+        }
+
+        reverseImportBillInfos(importBillInfos);
+
+        return importBillInfos;
+    }
+
+    private String[] rowToStringArray(Row row) {
+        int lastCellNum = row.getLastCellNum();
+        if (lastCellNum <= 0) {
+            return new String[]{""};
+        }
+
+        String[] result = new String[lastCellNum];
+        for (int i = 0; i < lastCellNum; i++) {
+            result[i] = getCellStringValue(row.getCell(i));
+        }
+        return result;
     }
 
     private String convertDetail(String detail) {

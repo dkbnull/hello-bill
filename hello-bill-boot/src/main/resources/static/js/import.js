@@ -55,7 +55,7 @@ function initMethod() {
         }
     };
 
-    doUpload('#upload-file', 'csv', '/import/billFile', null, function (res) {
+    doUpload('#upload-file', 'csv||xlsx||xls||txt', '/import/billFile', null, function (res) {
         if (res !== null) {
             layer.msg(res.msg);
 
