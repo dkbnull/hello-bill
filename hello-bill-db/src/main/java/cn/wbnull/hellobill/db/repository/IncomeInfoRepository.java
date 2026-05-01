@@ -39,6 +39,8 @@ public class IncomeInfoRepository {
     public IPage<IncomeInfo> pageByParam(String username, QueryListParam param, Integer pageNum, Integer pageSize) {
         LambdaQueryWrapper<IncomeInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(IncomeInfo::getUsername, username);
+        queryWrapper.like(!StringUtils.isEmpty(param.getTopClass()), IncomeInfo::getTopClass,
+                param.getTopClass());
         queryWrapper.like(!StringUtils.isEmpty(param.getSecondClass()), IncomeInfo::getSecondClass,
                 param.getSecondClass());
         queryWrapper.like(!StringUtils.isEmpty(param.getDetail()), IncomeInfo::getDetail,

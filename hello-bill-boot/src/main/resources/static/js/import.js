@@ -8,6 +8,7 @@
 let $;
 let currentPageNum = 1;
 let currentPageSize = 10;
+let currentTableData = [];
 
 layui.use(['layer', 'table', 'upload', 'element'], function () {
     if (!validate()) {
@@ -31,6 +32,26 @@ function initMethod() {
     const active = {
         reloadInfo: function () {
             doPostQuery(1, currentPageSize);
+        },
+
+        batchConfirm: function () {
+            if (!Array.isArray(currentTableData) || currentTableData.length === 0) {
+                layer.msg('当前页无数据');
+                return;
+            }
+
+            const ids = [];
+            for (let i = 0; i < currentTableData.length; i++) {
+                ids.push(currentTableData[i].id);
+            }
+
+            layer.confirm('是否确认当前页 ' + ids.length + ' 条账单明细？', {skin: 'layui-layer-confirm', icon: 1}, function (index) {
+                doPost('import/batchConfirm', {ids: ids}, function(result) {
+                    layer.msg(result.msg);
+                    callbackQuery(result);
+                });
+                layer.close(index);
+            });
         }
     };
 
@@ -58,6 +79,7 @@ function doPostQuery(pageNum, pageSize) {
 function callback(result) {
     const table = layui.table;
     const pageData = result.data;
+    currentTableData = pageData.records;
 
     table.render({
         elem: '#info-table',

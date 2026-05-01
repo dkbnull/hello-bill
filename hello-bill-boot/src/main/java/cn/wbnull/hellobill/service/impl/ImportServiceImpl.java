@@ -17,6 +17,7 @@ import cn.wbnull.hellobill.db.repository.ImportBillInfoRepository;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
 import cn.wbnull.hellobill.dto.common.response.PageResponse;
+import cn.wbnull.hellobill.dto.imp.request.BatchConfirmRequest;
 import cn.wbnull.hellobill.dto.imp.request.ConfirmRequest;
 import cn.wbnull.hellobill.dto.imp.request.ListRequest;
 import cn.wbnull.hellobill.dto.imp.request.UpdateRequest;
@@ -89,6 +90,10 @@ public class ImportServiceImpl implements ImportService {
         } catch (Exception e) {
             LoggerUtils.error("账单文件导入异常", e);
             return ApiResponse.fail("账单文件导入异常: " + e);
+        }
+
+        if (fileBill.exists()) {
+            fileBill.delete();
         }
 
         return ApiResponse.success("导入成功");
@@ -384,9 +389,39 @@ public class ImportServiceImpl implements ImportService {
     @Override
     public ApiResponse<Object> confirm(ApiRequest<ConfirmRequest> request) {
         ImportBillInfo importBillInfo = importBillInfoMapper.selectById(request.getData().getId());
+
+        confirmImport(importBillInfo);
+
+        return ApiResponse.success("确认成功");
+    }
+
+    @Override
+    public ApiResponse<Object> batchConfirm(ApiRequest<BatchConfirmRequest> request) {
+        List<String> ids = request.getData().getIds();
+        int successCount = 0;
+
+        for (String id : ids) {
+            try {
+                ImportBillInfo importBillInfo = importBillInfoMapper.selectById(id);
+                if (importBillInfo == null) {
+                    continue;
+                }
+
+                confirmImport(importBillInfo);
+
+                successCount++;
+            } catch (Exception e) {
+                LoggerUtils.error("批量确认账单异常，id：" + id, e);
+            }
+        }
+
+        return ApiResponse.success("批量确认完成，成功 " + successCount + " 条，失败 " + (ids.size() - successCount) + " 条");
+    }
+
+    private void confirmImport(ImportBillInfo importBillInfo) {
         if (!StringUtils.areNotEmpty(importBillInfo.getUsername(), importBillInfo.getTopClass(),
                 importBillInfo.getSecondClass(), importBillInfo.getDetail())) {
-            return ApiResponse.fail("账单信息不完整");
+            throw new BusinessException("账单信息不完整");
         }
 
         if (importBillInfo.getBillType() == ClassTypeEnum.INCOME.getTypeCode()) {
@@ -398,8 +433,6 @@ public class ImportServiceImpl implements ImportService {
         importBillDetailConvertRepository.updateByImportBillInfo(importBillInfo);
         importBillClassRepository.updateByImportBillInfo(importBillInfo);
         importBillInfoMapper.deleteById(importBillInfo.getId());
-
-        return ApiResponse.success("确认成功");
     }
 
     private void confirmIncome(ImportBillInfo importBillInfo) {

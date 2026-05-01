@@ -6,6 +6,7 @@ import cn.wbnull.hellobill.common.core.util.LoggerUtils;
 import cn.wbnull.hellobill.dto.common.request.DeleteRequest;
 import cn.wbnull.hellobill.dto.common.request.QueryRequest;
 import cn.wbnull.hellobill.dto.common.response.PageResponse;
+import cn.wbnull.hellobill.dto.imp.request.BatchConfirmRequest;
 import cn.wbnull.hellobill.dto.imp.request.ConfirmRequest;
 import cn.wbnull.hellobill.dto.imp.request.ListRequest;
 import cn.wbnull.hellobill.dto.imp.request.UpdateRequest;
@@ -65,5 +66,10 @@ public class ImportController {
     @PostMapping(value = "confirm")
     public ApiResponse<Object> confirm(@RequestBody @Validated ApiRequest<ConfirmRequest> request) {
         return importService.confirm(request);
+    }
+
+    @PostMapping(value = "batchConfirm")
+    public ApiResponse<Object> batchConfirm(@RequestBody @Validated ApiRequest<BatchConfirmRequest> request) {
+        return importService.batchConfirm(request);
     }
 }
